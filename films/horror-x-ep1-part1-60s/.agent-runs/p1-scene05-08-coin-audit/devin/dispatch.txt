@@ -1,0 +1,8 @@
+{
+  "dispatchId": "ctx_022b9955c99c",
+  "taskId": "task_0206dcee956d",
+  "agent": "devin",
+  "status": "succeeded",
+  "ledgerReceipt": "20261116-172034-a7a5af",
+  "report": "reviews/devin-scene05-08-coin-audit.md"
+}

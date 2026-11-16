@@ -1,0 +1,41 @@
+{
+  "ok": false,
+  "status": "failed",
+  "agent": "gemini-cli",
+  "task_id": "panel-gemini-cli",
+  "cwd": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\panel-gemini-cli\\gemini-cli",
+  "command": [
+    "gemini",
+    "--approval-mode",
+    "plan",
+    "--skip-trust",
+    "-o",
+    "json"
+  ],
+  "model": null,
+  "attempts": [
+    {
+      "attempt": 1,
+      "outcome": "failed",
+      "returncode": null,
+      "elapsed_seconds": 0.013299,
+      "command": [
+        "gemini",
+        "--approval-mode",
+        "plan",
+        "--skip-trust",
+        "-o",
+        "json"
+      ],
+      "request_attempted": false,
+      "stdout_file": "raw-response-1.txt",
+      "stderr_file": "raw-stderr-1.txt",
+      "name": "GEMINI_API_KEY",
+      "account": "account 1"
+    }
+  ],
+  "access": "free",
+  "mode": "plan",
+  "dispatch_id": "82b516d7257b45f590b5e81952343bcd",
+  "error": "CLI attempt ended with failed"
+}

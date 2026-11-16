@@ -1,0 +1,9 @@
+{
+  "voice": "th-TH-NiwatNeural",
+  "duration": 60.0,
+  "channels": 2,
+  "sample_rate": 48000,
+  "scene_count": 12,
+  "declared_max_gap": 0.2018,
+  "spoken_text_matches_voice_metadata": true
+}

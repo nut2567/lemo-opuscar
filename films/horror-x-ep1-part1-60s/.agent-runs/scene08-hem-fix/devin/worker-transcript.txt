@@ -1,0 +1,12 @@
+Source: terminal
+Worker: stopped
+Archived: false
+Terminal liveness: exited
+Agent liveness: exited
+Source exact: false
+Fallback reason: session_not_reported
+Content complete: false
+Clipping: terminal_fallback
+Continuation cursor (opaque; pass unchanged to --cursor): owr1_eyJ2IjoxLCJkIjoiY3R4X2Q5Nzk5ZWJjYzk1ZSIsInMiOiJ0ZXJtaW5hbCIsImkiOiJ1SUpldG9rN3YxSmQ1ck53Z1NCYWhBMGtudDg5anhpWCIsInAiOjB9
+
+No terminal output returned.

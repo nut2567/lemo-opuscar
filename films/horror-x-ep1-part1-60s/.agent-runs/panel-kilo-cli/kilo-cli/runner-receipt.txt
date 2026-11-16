@@ -1,0 +1,1 @@
+agent-profile: Kilo requires an explicit model ending in :free

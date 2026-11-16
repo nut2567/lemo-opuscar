@@ -1,0 +1,30 @@
+Source: transcript (provider=opencode)
+Worker: stopped
+Archived: false
+Terminal liveness: exited
+Continuation cursor (opaque; pass unchanged to --cursor): owr1_eyJ2IjoxLCJkIjoiY3R4Xzg5MmE4NTYyZjc2YSIsInMiOiJ0cmFuc2NyaXB0IiwiaSI6InNNd2QzR19EamtKYm5ERnlKZEFOTzEzZnN4SGExWDBjIiwicCI6MX0
+Warning: Oversized transcript text was clipped.
+
+[user] You are working inside Orca, a multi-agent IDE. You are a dispatched worker.
+Your coordinator's Orca session ID is: orca_session_id:codex_d6094bc1_23b3_4788_9dae_2bf80017ac51
+Your task ID is: task_55d39b3824eb
+Your Orca session ID is: orca_session_id:f718826d-326d-4796-878d-133414aeff1b
+
+The coordinator cannot see this chat. Reach it with the `orca orchestration` commands
+below, and message it only to ask, report a blocker, or finish; it needs no progress updates
+unless the task asks.
+Do only this task, yourself: no subagents or helper workers unless the task asks.
+
+=== CLI COMMANDS ===
+
+```sh
+  # Ask the coordinator, then end your turn; Orca wakes you with the answer.
+  # Never use a local question prompt such as AskUserQuestion; the
+  # coordinator cannot see or answer it.
+  orca orchestration ask --from orca_session_id:f718826d-326d-4796-878d-133414aeff1b --question "<your question>"
+
+  # Blocked, and the coordinator must act before you can continue:
+  orca orchestration send --from orca_session_id:f718826d-326d-4796-878d-133414aeff1b --type escalation --subject "Blocked: <reason>" --body "<details>" --task-id task_55d39b3824eb --dispatch-id ctx_892a8562f76a
+
+  # Finish: send ex
+… (truncated)

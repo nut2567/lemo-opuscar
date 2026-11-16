@@ -1,0 +1,7 @@
+{
+  "taskId": "task_36dc33b63cc3",
+  "dispatchId": "ctx_323b29ffe981",
+  "status": "dispatched",
+  "ledgerReceipt": "20261116-173026-ed506e",
+  "note": "Orca worker dispatched."
+}

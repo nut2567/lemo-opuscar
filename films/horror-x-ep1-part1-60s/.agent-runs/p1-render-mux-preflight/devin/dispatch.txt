@@ -1,0 +1,8 @@
+{
+  "dispatchId": "ctx_af36a2d61696",
+  "taskId": "task_ff5d96a085af",
+  "agent": "devin",
+  "status": "succeeded",
+  "ledgerReceipt": "20261116-172022-4d9083",
+  "report": "qa/devin-render-mux-preflight.md"
+}

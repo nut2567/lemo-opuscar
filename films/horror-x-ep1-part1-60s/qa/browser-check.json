@@ -1,0 +1,1209 @@
+{
+  "project": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s",
+  "viewport": {
+    "w": 1080,
+    "h": 1920
+  },
+  "query": "film=1",
+  "fps": 30,
+  "status": "ok",
+  "timeline": {
+    "path": "timeline.json",
+    "count": 12
+  },
+  "scenes": [
+    {
+      "id": "01",
+      "start": 0,
+      "end": 5.79,
+      "mid": 2.895,
+      "sceneId": "01",
+      "frame": "qa/frames/scene01-mid.png",
+      "ok": true
+    },
+    {
+      "id": "02",
+      "start": 5.79,
+      "end": 10.6518,
+      "mid": 8.2209,
+      "sceneId": "02",
+      "frame": "qa/frames/scene02-mid.png",
+      "ok": true
+    },
+    {
+      "id": "03",
+      "start": 10.6518,
+      "end": 15.1836,
+      "mid": 12.9177,
+      "sceneId": "03",
+      "frame": "qa/frames/scene03-mid.png",
+      "ok": true
+    },
+    {
+      "id": "04",
+      "start": 15.1836,
+      "end": 20.4155,
+      "mid": 17.79955,
+      "sceneId": "04",
+      "frame": "qa/frames/scene04-mid.png",
+      "ok": true
+    },
+    {
+      "id": "05",
+      "start": 20.4155,
+      "end": 24.6673,
+      "mid": 22.5414,
+      "sceneId": "05",
+      "frame": "qa/frames/scene05-mid.png",
+      "ok": true
+    },
+    {
+      "id": "06",
+      "start": 24.6673,
+      "end": 29.5391,
+      "mid": 27.1032,
+      "sceneId": "06",
+      "frame": "qa/frames/scene06-mid.png",
+      "ok": true
+    },
+    {
+      "id": "07",
+      "start": 29.5391,
+      "end": 33.8509,
+      "mid": 31.695,
+      "sceneId": "07",
+      "frame": "qa/frames/scene07-mid.png",
+      "ok": true
+    },
+    {
+      "id": "08",
+      "start": 33.8509,
+      "end": 38.7527,
+      "mid": 36.3018,
+      "sceneId": "08",
+      "frame": "qa/frames/scene08-mid.png",
+      "ok": true
+    },
+    {
+      "id": "09",
+      "start": 38.7527,
+      "end": 43.8645,
+      "mid": 41.3086,
+      "sceneId": "09",
+      "frame": "qa/frames/scene09-mid.png",
+      "ok": true
+    },
+    {
+      "id": "10",
+      "start": 43.8645,
+      "end": 49.5664,
+      "mid": 46.71545,
+      "sceneId": "10",
+      "frame": "qa/frames/scene10-mid.png",
+      "ok": true
+    },
+    {
+      "id": "11",
+      "start": 49.5664,
+      "end": 54.9982,
+      "mid": 52.2823,
+      "sceneId": "11",
+      "frame": "qa/frames/scene11-mid.png",
+      "ok": true
+    },
+    {
+      "id": "12",
+      "start": 54.9982,
+      "end": 60,
+      "mid": 57.4991,
+      "sceneId": "12",
+      "frame": "qa/frames/scene12-mid.png",
+      "ok": true
+    }
+  ],
+  "checks": {
+    "timeline": {
+      "expectedScenes": 12,
+      "actualScenes": 12,
+      "endsAt": 60,
+      "ok": true
+    },
+    "dur": {
+      "expected": 60,
+      "actual": 60,
+      "ok": true
+    },
+    "ready": {
+      "ok": true,
+      "actual": true
+    },
+    "viewport": {
+      "expected": {
+        "w": 1080,
+        "h": 1920
+      },
+      "actual": {
+        "w": 1080,
+        "h": 1920
+      },
+      "ok": true
+    },
+    "render": {
+      "ok": true,
+      "actual": "function"
+    },
+    "font": {
+      "ok": true,
+      "check": true,
+      "status": "loaded",
+      "kanitLoaded": true
+    },
+    "svgCount": {
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    "determinism": {
+      "ok": true,
+      "checked": 12,
+      "expected": 12
+    }
+  },
+  "frames": [
+    {
+      "key": "start",
+      "t": 0,
+      "file": "qa/frames/start.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "e1e27621487184663d93adfc97b4783e6a4a0b98ac0e2ac29639130e7f207c32",
+      "svgCount": 1,
+      "sceneId": "01",
+      "badAttributes": [],
+      "caption": {
+        "present": false,
+        "text": "",
+        "bbox": null,
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "b779b8aeff80a1a607a4b59bc031ad4ecb195c6057e8ac22ed8c362bbd185581"
+    },
+    {
+      "key": "last-frame",
+      "t": 59.966667,
+      "file": "qa/frames/last-frame.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "306b24eea7177ea3a00e764d29f5fd80478ad2c7130ead27ae10d2f317c843ea",
+      "svgCount": 1,
+      "sceneId": "12",
+      "badAttributes": [],
+      "caption": {
+        "present": false,
+        "text": "",
+        "bbox": null,
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "4ca3281c7e9dd2d50e3e592aa7f8d75aacd0d713ca5fef5eeba55fbbebcbbbb0"
+    },
+    {
+      "key": "scene01-mid",
+      "t": 2.895,
+      "file": "qa/frames/scene01-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "0f4500c593d161ea62412019ce028d369acdf9dc3c746c6f3c91d3cef61cecf1",
+      "svgCount": 1,
+      "sceneId": "01",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้า ที่เปิดตลอดยี่สิบสี่ชั่วโมง",
+        "bbox": {
+          "x": 178.2,
+          "y": 1514,
+          "right": 841.8,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "60ecd7909aca9f9f072031eadb77b2df74e0dbb40f2b1ca9f257dcb2cc818f34",
+      "expectedSceneId": "01"
+    },
+    {
+      "key": "scene02-mid",
+      "t": 8.2209,
+      "file": "qa/frames/scene02-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "8a4159d88124237dba41d5b6157c32472de949b63fdbe75838cc297719c76870",
+      "svgCount": 1,
+      "sceneId": "02",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
+        "bbox": {
+          "x": 180.7,
+          "y": 1514,
+          "right": 839.3,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "87ae07dc72e8137c4528e608961d03ceb4d85dbfd8185f90df869dc7c220a119",
+      "expectedSceneId": "02"
+    },
+    {
+      "key": "scene03-mid",
+      "t": 12.9177,
+      "file": "qa/frames/scene03-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "535fcc481ecdcf1a4bf48c18cc83fa34b7d4f3aa5cf815d80795524589caa7aa",
+      "svgCount": 1,
+      "sceneId": "03",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "หน้าที่วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
+        "bbox": {
+          "x": 218.3,
+          "y": 1514,
+          "right": 801.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "dee0be94b957409228d7044737b7a4965b7dc746fd9a4cf4295b4e2b1e138b21",
+      "expectedSceneId": "03"
+    },
+    {
+      "key": "scene04-mid",
+      "t": 17.79955,
+      "file": "qa/frames/scene04-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "0a451600bd44f4f1934e62b1162dd860644a94355e0ef3bd58e07fac61f82ff9",
+      "svgCount": 1,
+      "sceneId": "04",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "พอดึกลง ร้านแทบไม่มีคน เหลือเสียงเครื่องซักผ้าหมุนอยู่ข้างตัว",
+        "bbox": {
+          "x": 186.3,
+          "y": 1514,
+          "right": 833.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "1b15dcaac8cbc31cf8ab1c145b89b329f78f43f6d50ae02c821eb71ca88a761d",
+      "expectedSceneId": "04"
+    },
+    {
+      "key": "scene05-mid",
+      "t": 22.5414,
+      "file": "qa/frames/scene05-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "38951bf8485b5fc2a9162a46a163fcb295a3d43b8d98bfebeeb749174aa78b12",
+      "svgCount": 1,
+      "sceneId": "05",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
+        "bbox": {
+          "x": 144.3,
+          "y": 1514,
+          "right": 875.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "23229009f3456c6604abe71ea5ed2e1d3e273e80af09fc1c0d01e643ef9f37a6",
+      "expectedSceneId": "05"
+    },
+    {
+      "key": "scene06-mid",
+      "t": 27.1032,
+      "file": "qa/frames/scene06-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "dd33b30744e51bda7196b31fc91a7f8d1277a464512f81bed1940fb40ff7af0a",
+      "svgCount": 1,
+      "sceneId": "06",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม",
+        "bbox": {
+          "x": 233.1,
+          "y": 1514,
+          "right": 786.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "985fb57a0b4f208701b8dde3286a4d1d1ae64c78122f1b06039a39c3d30fd0f8",
+      "expectedSceneId": "06"
+    },
+    {
+      "key": "scene07-mid",
+      "t": 31.695,
+      "file": "qa/frames/scene07-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "13df1d45e3b97d810158220d64b522e51583865fb4637f091022de4348fde4da",
+      "svgCount": 1,
+      "sceneId": "07",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ฉันไม่เคยเห็นหน้าเขาเลย เงยขึ้นมาเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
+        "bbox": {
+          "x": 161.8,
+          "y": 1514,
+          "right": 858.2,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "f3e9b85c8df1f6f7d8e315641269dfd44f50c6b5cd5bc0ed1d2bf0f061539349",
+      "expectedSceneId": "07"
+    },
+    {
+      "key": "scene08-mid",
+      "t": 36.3018,
+      "file": "qa/frames/scene08-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
+      "svgCount": 1,
+      "sceneId": "08",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับหยอดเหรียญลงเครื่องเอง",
+        "bbox": {
+          "x": 211.1,
+          "y": 1514,
+          "right": 808.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "da3f7861f96ea2222ca5552eff353f0711986920d3bb489df6548f258a903e65",
+      "expectedSceneId": "08"
+    },
+    {
+      "key": "scene09-mid",
+      "t": 41.3086,
+      "file": "qa/frames/scene09-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "8692e3a8ae3213c06e2da0e72ed3199bc3bdc3f69487402f5dc46af2b83ccc83",
+      "svgCount": 1,
+      "sceneId": "09",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ผ้าขาวหมุนวนอยู่หลังฝากระจก ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
+        "bbox": {
+          "x": 109.2,
+          "y": 1514,
+          "right": 910.8,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "6f4bf3b4bf385084695b063958f72146449d650bb086572171826af54019fca8",
+      "expectedSceneId": "09"
+    },
+    {
+      "key": "scene10-mid",
+      "t": 46.71545,
+      "file": "qa/frames/scene10-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "26160a25cc582b4eecd2c602833d116bc2bd48c0bc4e9631e39ca7f0976980b3",
+      "svgCount": 1,
+      "sceneId": "10",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินสักครั้ง",
+        "bbox": {
+          "x": 221.1,
+          "y": 1514,
+          "right": 797.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "b34b568b5372f29697ed9a821a62fc00781dd7e94d3245849cc534fbf10e3887",
+      "expectedSceneId": "10"
+    },
+    {
+      "key": "scene11-mid",
+      "t": 52.2823,
+      "file": "qa/frames/scene11-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "6fe02864d2a5b118c4c95f07552c7a40c1ae0d067c9cd5cf57e94207830a2895",
+      "svgCount": 1,
+      "sceneId": "11",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "คืนแรกฉันคิดว่าเขาแค่ไม่อยากคุย แต่คืนที่สอง และคืนที่สาม ก็ยังเหมือนเดิม",
+        "bbox": {
+          "x": 112.2,
+          "y": 1514,
+          "right": 907.8,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "6eafd32b494c7ad88dedc8a459f4d88e4163dcccf57250c3865363c17358d6ba",
+      "expectedSceneId": "11"
+    },
+    {
+      "key": "scene12-mid",
+      "t": 57.4991,
+      "file": "qa/frames/scene12-mid.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+      "svgCount": 1,
+      "sceneId": "12",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "คืนนั้นฉันจึงหยุดเก็บเหรียญ แล้วเฝ้ามองประตูหลัง เพื่อดูว่าเขามาจากไหน",
+        "bbox": {
+          "x": 123.9,
+          "y": 1514,
+          "right": 896.1,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "111e68498cc9d48218556a203f3a1b446f9f371d2cbdbc814616dbc380e8b0ab",
+      "expectedSceneId": "12"
+    },
+    {
+      "key": "cut02-before",
+      "t": 5.756667,
+      "file": "qa/frames/cut02-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "1a58debeb4833ae54fd496e177ee57b9840fa5a77f6c19253d9e65d22fa5cbcd",
+      "svgCount": 1,
+      "sceneId": "01",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
+        "bbox": {
+          "x": 180.7,
+          "y": 1514,
+          "right": 839.3,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "6a903c8f324a5bbe5be922133457044ebaf5e5647423b0c1c43eb24565300162"
+    },
+    {
+      "key": "cut02-after",
+      "t": 5.79,
+      "file": "qa/frames/cut02-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "de509b356ac4b71e9088673d2a1ada62b75ca8c5aad7c476fae6a956c8fcc107",
+      "svgCount": 1,
+      "sceneId": "02",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
+        "bbox": {
+          "x": 180.7,
+          "y": 1514,
+          "right": 839.3,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "ed3815aac7f03bcff29034e4575b5dfb7222d70c8aae83eab3b2db1775173e3b"
+    },
+    {
+      "key": "cut03-before",
+      "t": 10.618467,
+      "file": "qa/frames/cut03-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "b53dbb0c92494c3e7ef2a7dba3f1229b2ef4d29a146f1d87952e5154e9615434",
+      "svgCount": 1,
+      "sceneId": "02",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "หน้าที่วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
+        "bbox": {
+          "x": 218.3,
+          "y": 1514,
+          "right": 801.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "54623a26b8ead882b78604c4af4038607a6d8bb2689a00107c14bec2dee77008"
+    },
+    {
+      "key": "cut03-after",
+      "t": 10.6518,
+      "file": "qa/frames/cut03-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "0f9642d61faca2db7731669e578059235f1edbd77bfb19bbe7e78e55fb0de64d",
+      "svgCount": 1,
+      "sceneId": "03",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "หน้าที่วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
+        "bbox": {
+          "x": 218.3,
+          "y": 1514,
+          "right": 801.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "db589ca824ff8819d4f54553eeda83a5f401aa69c705af3b423d7741b3ee4194"
+    },
+    {
+      "key": "cut04-before",
+      "t": 15.150267,
+      "file": "qa/frames/cut04-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "e2cc62cf64332cca2a47b9a1413f007d84abd212ae1f381f1914a4b0fc4618f1",
+      "svgCount": 1,
+      "sceneId": "03",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "พอดึกลง ร้านแทบไม่มีคน เหลือเสียงเครื่องซักผ้าหมุนอยู่ข้างตัว",
+        "bbox": {
+          "x": 186.3,
+          "y": 1514,
+          "right": 833.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "8dcc1275dc72d59e9c2879d91184521a479420dcf984c5c18fda6feb3924d543"
+    },
+    {
+      "key": "cut04-after",
+      "t": 15.1836,
+      "file": "qa/frames/cut04-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "a513aab6b35a79a9b03d8d45082d5360b880bf4dc7f70972a38d02d162909011",
+      "svgCount": 1,
+      "sceneId": "04",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "พอดึกลง ร้านแทบไม่มีคน เหลือเสียงเครื่องซักผ้าหมุนอยู่ข้างตัว",
+        "bbox": {
+          "x": 186.3,
+          "y": 1514,
+          "right": 833.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "44206c6fa0a9ee5f5be1a8aea4a2b3c2a056b1d327537481dfeccdc05a21b700"
+    },
+    {
+      "key": "cut05-before",
+      "t": 20.382167,
+      "file": "qa/frames/cut05-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "d125cd0fcda6b96100a2a791b2765ef4450f9c252c538d003d5b7bacda01763a",
+      "svgCount": 1,
+      "sceneId": "04",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
+        "bbox": {
+          "x": 144.3,
+          "y": 1514,
+          "right": 875.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "8d9da1c082d9a0f6a3f5a8a9d4ee47d395b6854f4060736e375e7e6919136bb9"
+    },
+    {
+      "key": "cut05-after",
+      "t": 20.4155,
+      "file": "qa/frames/cut05-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "f617d6c66d7b3fad3cfd7c9aa7b7b99a129234cfbb1fd72087e53b69b1de9941",
+      "svgCount": 1,
+      "sceneId": "05",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
+        "bbox": {
+          "x": 144.3,
+          "y": 1514,
+          "right": 875.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "9d40b460f51347ce64f099a1d659a3faa159b429ecc235b2b43bc458a3f8b390"
+    },
+    {
+      "key": "cut06-before",
+      "t": 24.633967,
+      "file": "qa/frames/cut06-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "e58421c4ab7524db70105af7db931048b95f387b1a85382c30112295a4665dbe",
+      "svgCount": 1,
+      "sceneId": "05",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
+        "bbox": {
+          "x": 144.3,
+          "y": 1514,
+          "right": 875.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "734c0cd1505b0a6f9013213d0d3684ab01efc2c2cdd892c3ba716c157999ce43"
+    },
+    {
+      "key": "cut06-after",
+      "t": 24.6673,
+      "file": "qa/frames/cut06-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "e9116d08ae6c54b52184551fc43730ae01ce1dc4e2c225ef3964fca0174627dc",
+      "svgCount": 1,
+      "sceneId": "06",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
+        "bbox": {
+          "x": 144.3,
+          "y": 1514,
+          "right": 875.7,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "5bb9d386de180d83342adc4bfaca973a4050e83e3dc07cec2335eddc0b8f8511"
+    },
+    {
+      "key": "cut07-before",
+      "t": 29.505767,
+      "file": "qa/frames/cut07-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "dd6fc2af169c3ebfad875ca20c697733d5ebc0e568996f464da0ee8f08f9683d",
+      "svgCount": 1,
+      "sceneId": "06",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม",
+        "bbox": {
+          "x": 233.1,
+          "y": 1514,
+          "right": 786.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "5f3ed670603b9932f6a4809d21ef3d1f94c403138554f5bbac89bfcf0c60b195"
+    },
+    {
+      "key": "cut07-after",
+      "t": 29.5391,
+      "file": "qa/frames/cut07-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "8962cbe915d2ac8dd2ec9796e3406e1e5f3ee4878daa84fe57b9a349ca5370fd",
+      "svgCount": 1,
+      "sceneId": "07",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม",
+        "bbox": {
+          "x": 233.1,
+          "y": 1514,
+          "right": 786.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "e333a5009389dc1620a37a46dac50f7cbf7a74015e67f4adac70ab0bb0576fdc"
+    },
+    {
+      "key": "cut08-before",
+      "t": 33.817567,
+      "file": "qa/frames/cut08-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "8fda04b77530f52bb3571793e7d2876d246df6b43f964e44895d5dbcc5c57ce5",
+      "svgCount": 1,
+      "sceneId": "07",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ฉันไม่เคยเห็นหน้าเขาเลย เงยขึ้นมาเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
+        "bbox": {
+          "x": 161.8,
+          "y": 1514,
+          "right": 858.2,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "7d36f6654ea6393def45720bd9a82be9322f39f237cea9dfa7b3c23a182f82ce"
+    },
+    {
+      "key": "cut08-after",
+      "t": 33.8509,
+      "file": "qa/frames/cut08-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "b55f130a73ff77751118076801d2333646e10303ae274fd652e771690c35495e",
+      "svgCount": 1,
+      "sceneId": "08",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ฉันไม่เคยเห็นหน้าเขาเลย เงยขึ้นมาเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
+        "bbox": {
+          "x": 161.8,
+          "y": 1514,
+          "right": 858.2,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "d28576810d61f7f38c8d7b72585548c31287d327e44a0709565b9adaf7861028"
+    },
+    {
+      "key": "cut09-before",
+      "t": 38.719367,
+      "file": "qa/frames/cut09-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "6fca983922f351eaee35a16a869e06950947568429c0a1c3c367e96348259a6e",
+      "svgCount": 1,
+      "sceneId": "08",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับหยอดเหรียญลงเครื่องเอง",
+        "bbox": {
+          "x": 211.1,
+          "y": 1514,
+          "right": 808.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "c5646f99c4bf954aa83312f8423b288a35e65cfc3e903d755a5b4535b63137ec"
+    },
+    {
+      "key": "cut09-after",
+      "t": 38.7527,
+      "file": "qa/frames/cut09-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "7a2eedd7d3b341d25d0de661de0a30e60271ae02f45096fa0e096f200f163e23",
+      "svgCount": 1,
+      "sceneId": "09",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับหยอดเหรียญลงเครื่องเอง",
+        "bbox": {
+          "x": 211.1,
+          "y": 1514,
+          "right": 808.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "7848424837e3773820b72ec97bf4cde9110afccf2fc5f99cae4f98f233732f69"
+    },
+    {
+      "key": "cut10-before",
+      "t": 43.831167,
+      "file": "qa/frames/cut10-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "6841847c9ddcd11417149e94854467e09a8f3196b980244b47f8d7407ac15887",
+      "svgCount": 1,
+      "sceneId": "09",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ผ้าขาวหมุนวนอยู่หลังฝากระจก ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
+        "bbox": {
+          "x": 109.2,
+          "y": 1514,
+          "right": 910.8,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "5300f8aed5e92536c87298f2adfd02bfd3d142e64bbefc1a4c52e3b44506b000"
+    },
+    {
+      "key": "cut10-after",
+      "t": 43.8645,
+      "file": "qa/frames/cut10-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "31d3eef2b4729e122649cb46fad4b4997cd79fef23d239e0a5f58064266f0956",
+      "svgCount": 1,
+      "sceneId": "10",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ผ้าขาวหมุนวนอยู่หลังฝากระจก ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
+        "bbox": {
+          "x": 109.2,
+          "y": 1514,
+          "right": 910.8,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "770d03ff0a8554991fc4b29e6cd734176963d921227c0d933e1f0dcc0b793f4d"
+    },
+    {
+      "key": "cut11-before",
+      "t": 49.533067,
+      "file": "qa/frames/cut11-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "022cd32a6ffdbe9333d6918bad50154c0d1c98507400b4a0419cb0be0ac91059",
+      "svgCount": 1,
+      "sceneId": "10",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินสักครั้ง",
+        "bbox": {
+          "x": 221.1,
+          "y": 1514,
+          "right": 797.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "58d626af2aef74e51a80b2c75e4ac39c60094ec66a0c2016a7099cb3117aba5b"
+    },
+    {
+      "key": "cut11-after",
+      "t": 49.5664,
+      "file": "qa/frames/cut11-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "2b303d336984a851cf3542e3ef5d4859dbd343d1543189491719e00b08b1e3c1",
+      "svgCount": 1,
+      "sceneId": "11",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินสักครั้ง",
+        "bbox": {
+          "x": 221.1,
+          "y": 1514,
+          "right": 797.9,
+          "bottom": 1639
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "5ef8389a982a13c2c5edee716b7ece040bc6a15dc5979a52b978c97504a125ae"
+    },
+    {
+      "key": "cut12-before",
+      "t": 54.964867,
+      "file": "qa/frames/cut12-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "6d1b626a41d76f352f317c9791fd7d59bbb1a38eca64eaf8e0c54ba3183ee36e",
+      "svgCount": 1,
+      "sceneId": "11",
+      "badAttributes": [],
+      "caption": {
+        "present": false,
+        "text": "",
+        "bbox": null,
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "44f0b8ecbc0cc56d12d0daa2f31367a3eaea72036ac718ef89ff386e39f1d30d"
+    },
+    {
+      "key": "cut12-after",
+      "t": 54.9982,
+      "file": "qa/frames/cut12-after.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "f79c898c4bfeed3b8c7603f8276af488d0aafac7214c9151cc0d97b1b03c3e6b",
+      "svgCount": 1,
+      "sceneId": "12",
+      "badAttributes": [],
+      "caption": {
+        "present": false,
+        "text": "",
+        "bbox": null,
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "ad8a3b6812657f755f9e9beb68a01ead2720d973fd7c801e9f906d11060b1a88"
+    }
+  ],
+  "cuts": [
+    {
+      "at": 5.79,
+      "beforeT": 5.756667,
+      "beforeSceneId": "01",
+      "afterSceneId": "02",
+      "expectedBefore": "01",
+      "expectedAfter": "02",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut02-before.png",
+      "afterFrame": "qa/frames/cut02-after.png"
+    },
+    {
+      "at": 10.6518,
+      "beforeT": 10.618467,
+      "beforeSceneId": "02",
+      "afterSceneId": "03",
+      "expectedBefore": "02",
+      "expectedAfter": "03",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut03-before.png",
+      "afterFrame": "qa/frames/cut03-after.png"
+    },
+    {
+      "at": 15.1836,
+      "beforeT": 15.150267,
+      "beforeSceneId": "03",
+      "afterSceneId": "04",
+      "expectedBefore": "03",
+      "expectedAfter": "04",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut04-before.png",
+      "afterFrame": "qa/frames/cut04-after.png"
+    },
+    {
+      "at": 20.4155,
+      "beforeT": 20.382167,
+      "beforeSceneId": "04",
+      "afterSceneId": "05",
+      "expectedBefore": "04",
+      "expectedAfter": "05",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut05-before.png",
+      "afterFrame": "qa/frames/cut05-after.png"
+    },
+    {
+      "at": 24.6673,
+      "beforeT": 24.633967,
+      "beforeSceneId": "05",
+      "afterSceneId": "06",
+      "expectedBefore": "05",
+      "expectedAfter": "06",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut06-before.png",
+      "afterFrame": "qa/frames/cut06-after.png"
+    },
+    {
+      "at": 29.5391,
+      "beforeT": 29.505767,
+      "beforeSceneId": "06",
+      "afterSceneId": "07",
+      "expectedBefore": "06",
+      "expectedAfter": "07",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut07-before.png",
+      "afterFrame": "qa/frames/cut07-after.png"
+    },
+    {
+      "at": 33.8509,
+      "beforeT": 33.817567,
+      "beforeSceneId": "07",
+      "afterSceneId": "08",
+      "expectedBefore": "07",
+      "expectedAfter": "08",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut08-before.png",
+      "afterFrame": "qa/frames/cut08-after.png"
+    },
+    {
+      "at": 38.7527,
+      "beforeT": 38.719367,
+      "beforeSceneId": "08",
+      "afterSceneId": "09",
+      "expectedBefore": "08",
+      "expectedAfter": "09",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut09-before.png",
+      "afterFrame": "qa/frames/cut09-after.png"
+    },
+    {
+      "at": 43.8645,
+      "beforeT": 43.831167,
+      "beforeSceneId": "09",
+      "afterSceneId": "10",
+      "expectedBefore": "09",
+      "expectedAfter": "10",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut10-before.png",
+      "afterFrame": "qa/frames/cut10-after.png"
+    },
+    {
+      "at": 49.5664,
+      "beforeT": 49.533067,
+      "beforeSceneId": "10",
+      "afterSceneId": "11",
+      "expectedBefore": "10",
+      "expectedAfter": "11",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut11-before.png",
+      "afterFrame": "qa/frames/cut11-after.png"
+    },
+    {
+      "at": 54.9982,
+      "beforeT": 54.964867,
+      "beforeSceneId": "11",
+      "afterSceneId": "12",
+      "expectedBefore": "11",
+      "expectedAfter": "12",
+      "changed": true,
+      "ok": true,
+      "beforeFrame": "qa/frames/cut12-before.png",
+      "afterFrame": "qa/frames/cut12-after.png"
+    }
+  ],
+  "determinism": {
+    "checked": 12,
+    "mismatches": [],
+    "rasterRounding": [
+      {
+        "t": 57.4991,
+        "scene": "scene12-mid",
+        "changed_pixels": 4,
+        "max_channel_delta": 1,
+        "bbox": [
+          523,
+          869,
+          593,
+          984
+        ],
+        "accepted": true,
+        "baseline": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+        "reordered": "70441d6415d0babe2a13a5be240c83753c7351a3dc3a6c7ed040ef82dc3fea27",
+        "identicalSvg": true
+      },
+      {
+        "t": 36.3018,
+        "scene": "scene08-mid",
+        "changed_pixels": 2,
+        "max_channel_delta": 1,
+        "bbox": [
+          765,
+          1306,
+          767,
+          1309
+        ],
+        "accepted": true,
+        "baseline": "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
+        "reordered": "ca69c4ba1d2e942bca03cc743de410e633054b59f40aa164169ae9753a74ccba",
+        "identicalSvg": true
+      }
+    ],
+    "tolerance": {
+      "identicalSvgRequired": true,
+      "maxChangedPixels": 10,
+      "maxChannelDelta": 1
+    }
+  },
+  "pageErrors": [],
+  "issues": []
+}

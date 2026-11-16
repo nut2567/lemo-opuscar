@@ -1,0 +1,8 @@
+{
+  "dispatchId": "ctx_4cce3e9d17dc",
+  "taskId": "task_36627c9c9d41",
+  "agent": "devin",
+  "status": "succeeded",
+  "ledgerReceipt": "20261116-172028-43c6a7",
+  "report": "reviews/devin-scene02-footstep-audit.md"
+}

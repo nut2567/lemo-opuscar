@@ -1,0 +1,38 @@
+{
+  "dir": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s",
+  "frames": [
+    {
+      "u": 0,
+      "t": 49.5664,
+      "file": "u_0.png"
+    },
+    {
+      "u": 1.2,
+      "t": 50.766400000000004,
+      "file": "u_1_2.png"
+    },
+    {
+      "u": 2.5,
+      "t": 52.0664,
+      "file": "u_2_5.png"
+    },
+    {
+      "u": 3.8,
+      "t": 53.3664,
+      "file": "u_3_8.png"
+    },
+    {
+      "u": 4.8,
+      "t": 54.3664,
+      "file": "u_4_8.png"
+    }
+  ],
+  "occlusion": {
+    "nunElementsTested": 47,
+    "pointsChecked": 423,
+    "violations": [],
+    "nunTotal": 20
+  },
+  "errors": [],
+  "pageErrors": []
+}

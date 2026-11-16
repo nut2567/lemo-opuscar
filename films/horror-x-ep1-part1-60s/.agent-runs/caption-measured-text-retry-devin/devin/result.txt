@@ -1,0 +1,1 @@
+Retrying actual speech text and measured 60s captions after stopped OpenCode attempt; inspect existing files first.

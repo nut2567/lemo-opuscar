@@ -1,0 +1,1 @@
+Devin launch input delivery stalled at unsubmitted pasted task (screen evidence, session_not_reported), confirmed guarded stop after user reported2 stuck workers; no file edits from this attempt. Retry sameTask, preserve draft.

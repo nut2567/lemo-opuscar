@@ -1,0 +1,36 @@
+Source: transcript (provider=opencode)
+Worker: stopped
+Archived: false
+Terminal liveness: exited
+Continuation cursor (opaque; pass unchanged to --cursor): owr1_eyJ2IjoxLCJkIjoiY3R4Xzc3MmY0MmUwNTljZiIsInMiOiJ0cmFuc2NyaXB0IiwiaSI6IkVfS1RvSER3WjJTTkE2SjlVREZ6SlQxSGlpY2RpVjlkIiwicCI6Mn0
+Warning: Oversized transcript text was clipped.
+
+[user] You are working inside Orca, a multi-agent IDE. You are a dispatched worker.
+Your coordinator's Orca session ID is: orca_session_id:codex_d6094bc1_23b3_4788_9dae_2bf80017ac51
+Your task ID is: task_b86edd219b6e
+Your Orca session ID is: orca_session_id:908b7411-649d-4a58-a42a-22d94fa0d425
+
+The coordinator cannot see this chat. Reach it with the `orca orchestration` commands
+below, and message it only to ask, report a blocker, or finish; it needs no progress updates
+unless the task asks.
+Do only this task, yourself: no subagents or helper workers unless the task asks.
+
+=== CLI COMMANDS ===
+
+```sh
+  # Ask the coordinator, then end your turn; Orca wakes you with the answer.
+  # Never use a local question prompt such as AskUserQuestion; the
+  # coordinator cannot see or answer it.
+  orca orchestration ask --from orca_session_id:908b7411-649d-4a58-a42a-22d94fa0d425 --question "<your question>"
+
+  # Blocked, and the coordinator must act before you can continue:
+  orca orchestration send --from orca_session_id:908b7411-649d-4a58-a42a-22d94fa0d425 --type escalation --subject "Blocked: <reason>" --body "<details>" --task-id task_b86edd219b6e --dispatch-id ctx_772f42e059cf
+
+  # Finish: send ex
+… (truncated)
+
+[user] ──── From: ORCA_SESSION_ID:CODEX_D6094BC1_23B3_4788_9DAE_2BF80017AC51 (orca_session_id:codex_d6094bc1_23b3_4788_9dae_2bf80017ac51) (status) ────
+Subject: Integration inputs ready; finalize bounded scene handoff
+All dependencies now exist. Actual measured timeline.json exported from final Niwat voice,12scenes4.25-5.79s. Lead contract tests confirm your scene imports,innerSVG,determinism,motion,finite attrs all PASS. Lead has inspected your provisional look frame; no blocker sent for your scene. Finish only necessary work in your exclusive file and report worker_done with actual evidence/limitations, then stop. Coordinator owns full browser QA/render; no need wait or run whole-film checks. If blocked report exact blocker now. No shared files or recursive delegation.
+[Reply: orca orchestration reply --id msg_bc359dda4fbe --body "..."]
+────────────────────────────────────────────────────────────

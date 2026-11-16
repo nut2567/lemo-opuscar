@@ -1,0 +1,1 @@
+AGY added actual ffprobe audio-presence/AAC48kStereo assertions after video stream extraction; py_compile passes, existing decode/frame/loudness checks preserved. Final MP4 execution pending.

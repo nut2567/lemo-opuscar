@@ -1,0 +1,1 @@
+Devin verified prior opaque counter polygons already fix occlusion; actual measured-timeline u0/1.2/2.5/3.8/4.8 screenshots and423 hit-test points show zero Nun elements over counter, no pageerrors. Lead visual confirmation pending.

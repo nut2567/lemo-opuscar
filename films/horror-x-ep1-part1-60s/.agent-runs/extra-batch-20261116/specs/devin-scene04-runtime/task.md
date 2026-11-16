@@ -1,0 +1,1 @@
+Small read-only runtime smoke check for the newly reframed scenes/scene04.js. Run existing targeted tests if available, otherwise import renderScene04 at u=0,2.5,4.8 and check deterministic string output, finite markup, no root SVG, and time-varying output. Do not modify any file. Write only qa/devin-scene04-runtime-check.md with commands and results. No delegation.

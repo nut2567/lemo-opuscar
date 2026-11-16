@@ -1,0 +1,27 @@
+{
+  "coin_events": [
+    {
+      "scene": "03",
+      "time": 11.2842,
+      "basis": "flyingCoin first landing (cycle phase 0.62*P=1.02)"
+    },
+    {
+      "scene": "05",
+      "time": 22.015500000000003,
+      "basis": "Y_KEYS/IMPACTS first tray impact (absolute local u)"
+    },
+    {
+      "scene": "08",
+      "time": 36.203764,
+      "basis": "glint peak (p=u/d normalized, metallic contact flash)"
+    }
+  ],
+  "duration": 60.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "production_scheduler_tests": "4 passed",
+  "footstep_contact_verification": "pending rendered walking frames",
+  "playback_sync_verification": "pending final encoded video",
+  "soundtrack_sha256": "5c7903d2444be2a9216f7a8f1f65651075fb269604242b8bd24ed7549c9c8aef",
+  "mixed_soundtrack_sha256": "a9b0331f5c69f6422033245b1ebc10d4e5dad34279442380958e844e24686f91"
+}

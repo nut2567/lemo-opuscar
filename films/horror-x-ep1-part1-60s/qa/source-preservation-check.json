@@ -1,0 +1,30 @@
+{
+  "files": {
+    "script.md": {
+      "expected": "2b8173e8228e069b71c891dc64e10afa5e0a8c2a43672c0412dc674fb354493e",
+      "actual": "2b8173e8228e069b71c891dc64e10afa5e0a8c2a43672c0412dc674fb354493e",
+      "match": true
+    },
+    "story.json": {
+      "expected": "6ddbd4ea1dae8d81d8b226a5b61a4608c183fac553e20912941ea3790f39321d",
+      "actual": "6ddbd4ea1dae8d81d8b226a5b61a4608c183fac553e20912941ea3790f39321d",
+      "match": true
+    },
+    "visual-plan.md": {
+      "expected": "4eb0fc6c48ce843bbf708272778d56728163bd34efc64b298bbb31ac58d0bdd0",
+      "actual": "4eb0fc6c48ce843bbf708272778d56728163bd34efc64b298bbb31ac58d0bdd0",
+      "match": true
+    },
+    "timeline.json": {
+      "expected": "c1e5790074489060348cea4a8a3ee30e856d162dcb4f3323694a97b81c4ae6ca",
+      "actual": "c1e5790074489060348cea4a8a3ee30e856d162dcb4f3323694a97b81c4ae6ca",
+      "match": true
+    },
+    "voice-manifest.json": {
+      "expected": "ca0cd3e56bb1722ca5f23bd4a3e1c21d82cccaeedecfce71b173b267424e2793",
+      "actual": "ca0cd3e56bb1722ca5f23bd4a3e1c21d82cccaeedecfce71b173b267424e2793",
+      "match": true
+    }
+  },
+  "all_match": true
+}

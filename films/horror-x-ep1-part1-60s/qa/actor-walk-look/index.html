@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#142333}svg{display:block}</style></head><body><div id="picture"></div><script type="module">
+import {nun} from '../../actor.js';
+window.DUR=1;
+window.render=u=>{
+ const a=.198+u,b=.558+u;
+ document.getElementById('picture').innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1200" viewBox="0 0 1080 1200">
+ <rect width="1080" height="1200" fill="#142333"/><path d="M80 856H1000" stroke="#8fb2d4" stroke-width="2"/>
+ <g fill="#eaf4ff" font-family="sans-serif" font-size="28"><text x="140" y="110">Walk phase A</text><text x="650" y="110">Walk phase B</text></g>
+ ${nun(a,{pose:'walk',x:290,y:280,scale:.9,uid:'proof-a'})}${nun(b,{pose:'walk',x:790,y:280,scale:.9,uid:'proof-b'})}
+ <text x="80" y="990" fill="#8fb2d4" font-family="sans-serif" font-size="25">One stance foot on baseline; opposite foot lifts.</text></svg>`;
+};window.render(0);window.READY=true;
+</script></body></html>

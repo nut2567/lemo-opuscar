@@ -1,0 +1,1 @@
+User explicitly requested OpenCode reduction to2 and Devin replacement. Guarded native stop confirmed; partial source preserved. Attempt interrupted for scheduling, NOT an observed token/quota failure. Reassign or consolidate remaining verification under new owner.

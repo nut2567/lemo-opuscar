@@ -1,0 +1,1 @@
+Retrying floor-aisle/counter occlusion correction after stopped OpenCode attempt; inspect existing scene and preserve partial edits.

@@ -1,0 +1,1 @@
+Kiro delivered builder,caption module andSRT; real Kanit glyph widths fit44px within840px; syntax/runtime pass. Current timing is explicitly provisional5s-per-scene, rebuild from measured voice before final. Default latin-cps readcheck padding is not calibrated for Thai narrator.

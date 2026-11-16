@@ -1,0 +1,1 @@
+AGY actual individual quota error before scene11 code; native worker stopped after explicit quota evidence; no paid fallback. Scene11 remains required for reassignment.

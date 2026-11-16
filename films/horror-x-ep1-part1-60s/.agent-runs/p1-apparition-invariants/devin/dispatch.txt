@@ -1,0 +1,8 @@
+{
+  "dispatchId": "ctx_900251c82ed6",
+  "taskId": "task_220e0a7bb7dc",
+  "agent": "devin",
+  "status": "succeeded",
+  "ledgerReceipt": "20261116-172040-a71891",
+  "report": "reviews/devin-apparition-invariants.md"
+}

@@ -1,0 +1,74 @@
+{
+  "seq": [
+    36.3018,
+    57.4991,
+    2.895,
+    57.4991,
+    36.3018
+  ],
+  "rows": [
+    {
+      "i": 0,
+      "t": 36.3018,
+      "pngHash": "4a24d1060917ea7221ab9c4f192284deee6e703b9eb31e68e8642ffcdfc467b1",
+      "domHash": "da3f7861f96ea2222ca5552eff353f0711986920d3bb489df6548f258a903e65",
+      "tag": "seq0_t36.3018"
+    },
+    {
+      "i": 1,
+      "t": 57.4991,
+      "pngHash": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+      "domHash": "111e68498cc9d48218556a203f3a1b446f9f371d2cbdbc814616dbc380e8b0ab",
+      "tag": "seq1_t57.4991"
+    },
+    {
+      "i": 2,
+      "t": 2.895,
+      "pngHash": "0f4500c593d161ea62412019ce028d369acdf9dc3c746c6f3c91d3cef61cecf1",
+      "domHash": "60ecd7909aca9f9f072031eadb77b2df74e0dbb40f2b1ca9f257dcb2cc818f34",
+      "tag": "seq2_t2.895"
+    },
+    {
+      "i": 3,
+      "t": 57.4991,
+      "pngHash": "cd8eaab410fd6b0c8f9436c97c18aaf1f97149b9d28907ec792855f383cfa527",
+      "domHash": "111e68498cc9d48218556a203f3a1b446f9f371d2cbdbc814616dbc380e8b0ab",
+      "tag": "seq3_t57.4991"
+    },
+    {
+      "i": 4,
+      "t": 36.3018,
+      "pngHash": "4a24d1060917ea7221ab9c4f192284deee6e703b9eb31e68e8642ffcdfc467b1",
+      "domHash": "da3f7861f96ea2222ca5552eff353f0711986920d3bb489df6548f258a903e65",
+      "tag": "seq4_t36.3018"
+    }
+  ],
+  "comparisons": [
+    {
+      "t": 36.3018,
+      "pair": [
+        "seq0_t36.3018",
+        "seq4_t36.3018"
+      ],
+      "pngMatch": true,
+      "domMatch": true,
+      "pngA": "4a24d1060917ea7221ab9c4f192284deee6e703b9eb31e68e8642ffcdfc467b1",
+      "pngB": "4a24d1060917ea7221ab9c4f192284deee6e703b9eb31e68e8642ffcdfc467b1",
+      "domA": "da3f7861f96ea2222ca5552eff353f0711986920d3bb489df6548f258a903e65",
+      "domB": "da3f7861f96ea2222ca5552eff353f0711986920d3bb489df6548f258a903e65"
+    },
+    {
+      "t": 57.4991,
+      "pair": [
+        "seq1_t57.4991",
+        "seq3_t57.4991"
+      ],
+      "pngMatch": false,
+      "domMatch": true,
+      "pngA": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+      "pngB": "cd8eaab410fd6b0c8f9436c97c18aaf1f97149b9d28907ec792855f383cfa527",
+      "domA": "111e68498cc9d48218556a203f3a1b446f9f371d2cbdbc814616dbc380e8b0ab",
+      "domB": "111e68498cc9d48218556a203f3a1b446f9f371d2cbdbc814616dbc380e8b0ab"
+    }
+  ]
+}

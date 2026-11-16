@@ -1,0 +1,8 @@
+{
+  "dispatchId": "ctx_2e1376129eb0",
+  "taskId": "task_d092db40595a",
+  "agent": "devin",
+  "status": "succeeded",
+  "ledgerReceipt": "20261116-172049-8cda0d",
+  "report": "qa/devin-scene04-runtime-check.md"
+}

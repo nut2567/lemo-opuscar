@@ -1,0 +1,6 @@
+{
+  "dispatchId": "ctx_585c43e557af",
+  "taskId": "task_4c7917be0faa",
+  "status": "dispatched",
+  "ledgerReceipt": "20261116-174023-613cc2"
+}

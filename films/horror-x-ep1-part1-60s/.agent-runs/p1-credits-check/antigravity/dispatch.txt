@@ -1,0 +1,8 @@
+{
+  "dispatchId": "ctx_fa37acebe3ad",
+  "taskId": "task_bd0bbc024e64",
+  "agent": "antigravity",
+  "status": "succeeded",
+  "ledgerReceipt": "20261116-172250-fe22b1",
+  "report": "reviews/antigravity-credits-check.md"
+}

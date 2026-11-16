@@ -1,0 +1,1 @@
+Kiro removed cloth transparency; replaced emergence with fading dark occluder. Actual t0,2.5,4.8 stills supplied. Lead visual verification pending.

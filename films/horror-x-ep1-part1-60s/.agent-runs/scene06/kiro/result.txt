@@ -1,0 +1,1 @@
+Kiro delivered rear-corner faceless cloth customer scene06; smoke tests confirm deterministic innerSVG and safe-area/parallax; actual visual check pending. Extra smoke helper under scenes preserved and not imported into film.

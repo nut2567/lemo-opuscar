@@ -1,0 +1,1 @@
+permission required: Execute `if ($env:ORCA_CLI_COMMAND) { $env:ORCA_CLI_COMMAND } else { "orca" }; Write-Output "---ENV---"; Get-ChildItem Env: | Where-Object { $_.Name -match '… was not run, as a headless run cannot ask for approval

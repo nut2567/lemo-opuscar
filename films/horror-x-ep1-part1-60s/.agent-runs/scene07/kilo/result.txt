@@ -1,0 +1,1 @@
+Kilo native startup failed at agent_readiness timeout and never ran; residual terminal released/closed. No install/login/paid fallback. Scene07 remains a production requirement for later free-route reassignment.

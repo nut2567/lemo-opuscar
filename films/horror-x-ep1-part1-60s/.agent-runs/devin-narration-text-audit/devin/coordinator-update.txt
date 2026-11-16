@@ -1,0 +1,1 @@
+Clarified all source/output paths as films/horror-x-ep1-part1-60s/... because worker cwd is library root.
