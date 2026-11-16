@@ -3,11 +3,11 @@
 // the wet floor and is drawn into the dark gap beside the ajar door, sliding
 // away until nothing remains. NO customer is shown and NO footsteps occur —
 // only the cloth drags and vanishes. Foreground laundry sways and overhead pipe
-// shadows drift across wall/floor. A faint green seam glows under the door.
+// shadows drift across wall/floor. A faint cold seam glows at the door gap.
 //
 // Camera: slow low dolly FORWARD (push-in) with differential parallax via view().
 // Independent motion: cloth undulation + retraction, laundry sway, drifting pipe
-// shadows, green-seam pulse, fluorescent flicker.
+// shadows, seam pulse, fluorescent flicker.
 //
 // Export: renderScene10(u, t, d=5) -> SVG inner string (no root <svg>, no captions).
 //   u = local seconds 0..d, t = global time, d = scene duration (default 5).
@@ -126,14 +126,32 @@ function hangingTowel(t, x, top, w, h, phase, amp, fillId) {
   for (const f of [0.24, 0.48, 0.72]) {
     const tx = x + w * f;
     const bx = bl + (br - bl) * f;
-    folds += `<path d="M${n(tx)} ${n(top + 3)} Q${n((tx + bx) / 2 + sway2 * 0.4)} ${n((top + bot) / 2)} ${n(bx)} ${n(bot - 3)}" fill="none" stroke="#8c9fa8" stroke-width="1.4" opacity=".3"/>`;
+    folds += `<path d="M${n(tx)} ${n(top + 3)} Q${n((tx + bx) / 2 + sway2 * 0.4)} ${n((top + bot) / 2)} ${n(bx)} ${n(bot - 3)}" fill="none" stroke="#9a8f80" stroke-width="1.4" opacity=".3"/>`;
   }
   return `<g>
     <path d="${d}" fill="url(#${fillId})" stroke="#7e9ba8" stroke-width="1.5" opacity=".96"/>
-    <path d="M${n(x + 3)} ${n(top + 2)} L${n(x + w - 3)} ${n(top + 2)}" stroke="#eef3ef" stroke-width="2.6" opacity=".5"/>
+    <path d="M${n(x + 3)} ${n(top + 2)} L${n(x + w - 3)} ${n(top + 2)}" stroke="#f4ecdd" stroke-width="2.6" opacity=".5"/>
     ${folds}
-    <circle cx="${n(x + 14)}" cy="${n(top - 5)}" r="3" fill="#8fb2d4" opacity=".7"/>
-    <circle cx="${n(x + w - 14)}" cy="${n(top - 5)}" r="3" fill="#8fb2d4" opacity=".7"/>
+    <circle cx="${n(x + 14)}" cy="${n(top - 5)}" r="3" fill="#b18270" opacity=".7"/>
+    <circle cx="${n(x + w - 14)}" cy="${n(top - 5)}" r="3" fill="#b18270" opacity=".7"/>
+  </g>`;
+}
+
+// A washer/dryer box along the aisle — muted retro trim hue, dark porthole,
+// and a small warm display glow. `phase` only shifts the glow's flicker.
+function washer(x, y, w, h, trim, phase) {
+  const doorCy = y + h * 0.7;
+  const doorR = Math.min(w * 0.3, h * 0.17);
+  const cx = x + w * 0.5;
+  const glow = n(0.3 + 0.3 * (0.5 + 0.5 * Math.sin(phase)), 2);
+  return `<g>
+    ${rect(x, y, w, h, '#22374b', 'stroke="#0a1420" stroke-width="2"')}
+    ${rect(x + 5, y + 5, w - 10, h * 0.32, '#1b2f42', 'opacity=".85"')}
+    ${rect(x + w * 0.14, y + h * 0.09, w * 0.3, h * 0.07, trim, 'opacity=".85"')}
+    <circle cx="${n(cx)}" cy="${n(doorCy)}" r="${n(doorR)}" fill="#0a1420" stroke="${trim}" stroke-width="3.4"/>
+    <circle cx="${n(cx)}" cy="${n(doorCy)}" r="${n(doorR * 0.62)}" fill="none" stroke="#3a4e63" stroke-width="2" opacity=".8"/>
+    ${rect(x + w * 0.6, y + h * 0.08, w * 0.22, h * 0.08, '#0a1420', `stroke="${trim}" stroke-width="1.2"`)}
+    <circle cx="${n(x + w * 0.71)}" cy="${n(y + h * 0.12)}" r="${n(Math.max(2.4, w * 0.03))}" fill="#f2c894" opacity="${glow}"/>
   </g>`;
 }
 
@@ -156,27 +174,62 @@ function overheadPipes() {
   </g>`;
 }
 
-// Rear wall + dark doorway (geometry and palette from assets/interior.js).
+// Rear wall + ajar rear door. The doorway is dressed as real architecture —
+// head beam, jamb posts, a door leaf with panels/push-bar/kick plate and a
+// floor threshold — so it reads as a DOOR, not a black hole. A faint cold
+// seam glows at the gap's base where the cloth is drawn in.
 function rearDoorway(t, seamGlow) {
   return `<g>
     ${rect(300, 300, 482, 878, '#0d1a28', 'stroke="#5f7c8d" stroke-width="4"')}
     ${rect(320, 320, 442, 838, 'url(#s10-void)')}
-    ${rect(744, 320, 18, 838, '#22374b', 'stroke="#15283a" stroke-width="2"')}
-    ${line('M320 330 V1150 M762 330 V1150', '#6d8798', 1, .22)}
 
-    <path d="M336 336 L512 362 L534 1152 L364 1174 Z" fill="url(#s10-door)" stroke="#22384c" stroke-width="3"/>
+    <!-- head beam / lintel over the opening -->
+    ${rect(284, 280, 514, 46, '#22374b', 'stroke="#5f7c8d" stroke-width="3"')}
+    ${line('M296 324 H784', '#0a1420', 4, .55)}
+    ${line('M298 283 H782', '#8fb2d4', 1.5, .2)}
+
+    <!-- jamb posts flanking the recess -->
+    ${rect(304, 326, 30, 826, '#16283a', 'stroke="#4a6175" stroke-width="2"')}
+    ${rect(746, 326, 30, 826, '#16283a', 'stroke="#4a6175" stroke-width="2"')}
+    ${line('M336 340 V1140', '#6d8798', 1.5, .28)}
+    ${line('M744 340 V1140', '#6d8798', 1.5, .28)}
+
+    <!-- dim spill of shop light inside the recess, fading downward -->
+    <polygon points="352,352 730,352 700,780 380,780" fill="url(#s10-spill)" opacity=".55"/>
+
+    <!-- door leaf, ajar toward the dark gap on the right -->
+    <path d="M336 336 L512 362 L534 1152 L364 1174 Z" fill="url(#s10-door)" stroke="#3a4e63" stroke-width="3"/>
+    <!-- door edge face: gives the leaf physical thickness against the gap -->
+    <path d="M512 362 L534 1152 L522 1150 L500 368 Z" fill="#0d1a28" opacity=".85"/>
+    <path d="M534 1152 L522 1150" stroke="#6d8798" stroke-width="1.4" opacity=".4"/>
+
+    <!-- recessed panels with lit moldings -->
     <path d="M352 372 L492 394 L508 780 L372 800 Z" fill="url(#s10-doorPanel)" stroke="#15283a" stroke-width="2.5" opacity=".92"/>
     <path d="M366 796 L506 782 L514 1128 L380 1146 Z" fill="url(#s10-doorPanel)" stroke="#15283a" stroke-width="2.5" opacity=".92"/>
+    <path d="M352 372 L492 394 L508 780 L372 800 Z" fill="none" stroke="#6d8798" stroke-width="1.4" opacity=".35"/>
+    <path d="M366 796 L506 782 L514 1128 L380 1146 Z" fill="none" stroke="#6d8798" stroke-width="1.4" opacity=".35"/>
+    <path d="M368 790 L506 778" stroke="#4a6175" stroke-width="4" opacity=".55"/>
     <path d="M402 402 L470 412 L478 470 L410 460 Z" fill="#29425a" opacity=".38"/>
     <path d="M398 838 L486 828 L492 920 L404 932 Z" fill="#29425a" opacity=".33"/>
+
+    <!-- handle + push bar + kick plate -->
     ${rect(492, 900, 14, 40, '#b18270', 'stroke="#6f4d3f" stroke-width="2"')}
     ${rect(480, 936, 40, 13, '#8fb2d4', 'stroke="#22384c" stroke-width="2"')}
+    <path d="M394 1038 L508 1024 L514 1046 L400 1060 Z" fill="#3a4e63" stroke="#8fb2d4" stroke-width="1.6" opacity=".9"/>
+    <path d="M398 1042 L504 1029" stroke="#22384c" stroke-width="2" opacity=".8"/>
+    <path d="M370 1108 L516 1094 L524 1136 L378 1150 Z" fill="#29425a" opacity=".5" stroke="#15283a" stroke-width="1.5"/>
     ${line('M344 350 L520 374', '#8fb2d4', 2, .18)}
 
-    ${rect(320, 1150, 442, 24, '#31465a', 'stroke="#5f7c8d" stroke-width="2"')}
-    <ellipse cx="585" cy="1166" rx="150" ry="26" fill="url(#s10-green)" opacity="${n(0.18 * seamGlow)}"/>
-    ${line('M352 1158 H748', '#4e9e84', 2.2, n(0.42 * seamGlow))}
-    ${line('M352 1156 H748', '#9fe6c9', 1, n(0.22 * seamGlow))}
+    <!-- floor threshold: metal strip meeting the floor -->
+    ${rect(318, 1144, 446, 34, '#31465a', 'stroke="#5f7c8d" stroke-width="2"')}
+    ${line('M322 1147 H760', '#8fb2d4', 1.4, .35)}
+    ${line('M322 1174 H760', '#0a1420', 2.5, .5)}
+    <ellipse cx="600" cy="1176" rx="210" ry="20" fill="url(#s10-shadow)" opacity=".55"/>
+
+    <!-- faint COLD seam at the gap base: dark + cold light, not green energy -->
+    <ellipse cx="612" cy="1152" rx="120" ry="18" fill="url(#s10-seam)" opacity="${n(0.5 * seamGlow)}"/>
+    ${line('M566 1144 H716', '#7fa8c4', 2, n(0.3 * seamGlow))}
+    ${line('M566 1142 H716', '#a9c6d8', 1, n(0.16 * seamGlow))}
   </g>`;
 }
 
@@ -252,6 +305,14 @@ export function renderScene10(u, t, d = 5) {
   back += line('M62 300 V1178', '#33465a', 2, .4);
   back += line('M1018 300 V1178', '#33465a', 2, .4);
 
+  // warm amber practical tubes on the pilasters + their wall glow
+  back += rect(16, 690, 30, 8, '#2a1c12');
+  back += rect(20, 698, 22, 96, '#f2c894', `opacity="${n(0.34 * tube)}"`);
+  back += rect(1034, 690, 30, 8, '#2a1c12');
+  back += rect(1038, 698, 22, 96, '#f2c894', `opacity="${n(0.3 * tube)}"`);
+  back += `<ellipse cx="92" cy="762" rx="140" ry="190" fill="url(#s10-warm)" opacity="${n(0.55 * tube)}"/>`;
+  back += `<ellipse cx="988" cy="762" rx="140" ry="190" fill="url(#s10-warm)" opacity="${n(0.48 * tube)}"/>`;
+
   // wall clutter: fuse box, drain, mop (source palette, low contrast)
   back += rect(112, 560, 74, 96, '#172a3a', 'stroke="#536680" stroke-width="2"');
   back += rect(122, 574, 54, 30, '#0a1420', 'stroke="#8fb2d4" stroke-width="1"');
@@ -268,6 +329,12 @@ export function renderScene10(u, t, d = 5) {
   back += floorGrid();
   // door base shadow
   back += `<ellipse cx="560" cy="1188" rx="250" ry="34" fill="url(#s10-shadow)" opacity=".6"/>`;
+  // faint warm spill bleeding over the threshold — the shop 'leaking' warmth;
+  // the doorway itself stays dark (drawn over by the void/abyss later)
+  back += `<ellipse cx="560" cy="1164" rx="150" ry="11" fill="#e8b36a" opacity=".12"/>`;
+  back += `<ellipse cx="560" cy="1178" rx="190" ry="15" fill="#e8b36a" opacity=".08"/>`;
+  // faint cold spill of seam-light onto the floor from the door gap
+  back += `<polygon points="540,1178 740,1178 800,1280 480,1280" fill="url(#s10-spill)" opacity="${n(0.4 * seamGlow)}"/>`;
   // floor drain near the threshold
   back += `<ellipse cx="470" cy="1280" rx="34" ry="12" fill="#0a1420" stroke="#536680" stroke-width="2" opacity=".7"/>`;
   back += line('M455 1280 H485 M470 1274 V1286', '#3a4e63', 2, .6);
@@ -287,6 +354,16 @@ export function renderScene10(u, t, d = 5) {
     <path d="M${n(700 + driftB)} 1178 L${n(760 + driftB)} 1420" stroke="#050c14" stroke-width="8" opacity=".07"/>
     <path d="M${n(150 + driftC)} 430 L${n(30 + driftC)} 600" stroke="#050c14" stroke-width="7" opacity=".09"/>
   </g>`;
+
+  // washer row along both sides of the aisle — varied retro accent trims
+  mid += washer(884, 1108, 128, 196, '#e9c46a', t * 0.9);
+  mid += washer(986, 1042, 92, 148, '#e07a5f', t * 1.3 + 2);
+  mid += washer(96, 1140, 118, 176, '#7fb8a4', t * 1.1 + 1);
+  mid += washer(66, 1300, 80, 96, '#9c8fc7', t * 0.8 + 3);
+  mid += washer(214, 1076, 80, 118, '#e8a08c', t * 1.5);
+
+  // warm amber pool on the mid-ground floor, right of the cloth's path
+  mid += `<ellipse cx="800" cy="1340" rx="200" ry="60" fill="url(#s10-warm)" opacity="${n(0.6 * tube)}"/>`;
 
   // the trailing cloth (subject) — drawn before the abyss swallows its far end
   mid += `<g opacity="${clothOp}">
@@ -340,26 +417,33 @@ export function renderScene10(u, t, d = 5) {
       <stop stop-color="#3a4e63"/><stop offset="1" stop-color="#22374b"/>
     </linearGradient>
     <linearGradient id="s10-void" x2="0" y2="1">
-      <stop stop-color="#1a2634"/><stop offset=".55" stop-color="#0a1119"/><stop offset="1" stop-color="#03070c"/>
+      <stop stop-color="#22374b"/><stop offset=".4" stop-color="#101a28"/><stop offset="1" stop-color="#03070c"/>
+    </linearGradient>
+    <linearGradient id="s10-spill" x2="0" y2="1">
+      <stop stop-color="#8fb2d4" stop-opacity=".2"/><stop offset="1" stop-color="#8fb2d4" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="s10-cloth" x2=".22" y2="1">
       <stop stop-color="#eee8dc"/><stop offset=".5" stop-color="#c3ced0"/><stop offset="1" stop-color="#9fb0b6"/>
     </linearGradient>
     <linearGradient id="s10-towel" x2=".1" y2="1">
-      <stop stop-color="#d7dee0"/><stop offset=".5" stop-color="#c3ced0"/><stop offset="1" stop-color="#8c9fa8"/>
+      <stop stop-color="#b9d6ca"/><stop offset=".5" stop-color="#7fb8a4"/><stop offset="1" stop-color="#557f70"/>
     </linearGradient>
     <linearGradient id="s10-sheet" x2=".1" y2="1">
-      <stop stop-color="#e6e2d6"/><stop offset=".55" stop-color="#c9d2cf"/><stop offset="1" stop-color="#a9a393"/>
+      <stop stop-color="#efe4cd"/><stop offset=".55" stop-color="#d9c9a8"/><stop offset="1" stop-color="#a8906f"/>
     </linearGradient>
     <linearGradient id="s10-rag" x2=".1" y2="1">
-      <stop stop-color="#cbd7d6"/><stop offset="1" stop-color="#8c9fa8"/>
+      <stop stop-color="#ecc0b4"/><stop offset="1" stop-color="#a9715f"/>
     </linearGradient>
     <linearGradient id="s10-lamp" x2="0" y2="1">
       <stop stop-color="#eaf4ff" stop-opacity=".34"/><stop offset="1" stop-color="#8fb2d4" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="s10-green" cx=".5" cy=".5" r=".5">
-      <stop stop-color="#4e9e84" stop-opacity=".5"/><stop offset=".55" stop-color="#3fae86" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#3fae86" stop-opacity="0"/>
+    <radialGradient id="s10-warm" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#f2c894" stop-opacity=".4"/><stop offset=".55" stop-color="#c98f4e" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#c98f4e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s10-seam" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#7fa8c4" stop-opacity=".38"/><stop offset=".55" stop-color="#5d7f96" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#5d7f96" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="s10-abyss" cx=".5" cy=".5" r=".5">
       <stop stop-color="#03070c" stop-opacity=".95"/><stop offset=".6" stop-color="#03070c" stop-opacity=".6"/>

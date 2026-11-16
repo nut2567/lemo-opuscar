@@ -301,7 +301,7 @@ try {
         if (domHash === frame.domHash && hash !== frame.imageHash) {
           const repeatPath = path.join(framesDir, `${frame.key}-repeat.png`);
           fs.writeFileSync(repeatPath, buf);
-          const python = path.resolve(dir, '../../.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+          const python = 'D:/peoject_wepapp/ai-video/.venv/Scripts/python.exe';
           const measured = spawnSync(python, [path.join(qaDir, 'compare-pixels.py'), path.join(dir, frame.file), repeatPath], { encoding: 'utf8' });
           if (measured.status !== 0) throw new Error(`Pixel comparison failed: ${measured.stderr}`);
           const pixels = JSON.parse(measured.stdout);

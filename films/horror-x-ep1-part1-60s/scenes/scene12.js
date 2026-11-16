@@ -35,8 +35,8 @@ const DEFS = `<defs>
     <stop stop-color="#d7dee0"/><stop offset=".5" stop-color="#c3ced0"/><stop offset="1" stop-color="#8c9fa8"/>
   </linearGradient>
   <radialGradient id="s12-seam" cx=".5" cy=".5" r=".5">
-    <stop stop-color="#4e9e84" stop-opacity=".5"/><stop offset=".55" stop-color="#3fae86" stop-opacity=".14"/>
-    <stop offset="1" stop-color="#3fae86" stop-opacity="0"/>
+    <stop stop-color="#7fa8c4" stop-opacity=".4"/><stop offset=".55" stop-color="#5d7f96" stop-opacity=".12"/>
+    <stop offset="1" stop-color="#5d7f96" stop-opacity="0"/>
   </radialGradient>
   <radialGradient id="s12-shadow" cx=".5" cy=".5" r=".5">
     <stop stop-color="#050d18" stop-opacity=".72"/><stop offset="1" stop-color="#050d18" stop-opacity="0"/>
@@ -141,6 +141,34 @@ function pullCord(t, x, top, len, phase) {
 }
 
 // ---------------------------------------------------------------------------
+// Door dressing over the interior() rear door (frame x548-752, leaf x560-740,
+// y378-1170; threshold y1138-1156). Adds the architecture the base plate lacks
+// at this distance — head beam, jamb posts, panel moldings, push bar and a
+// full-width floor threshold with contact shadow — so the door reads as a
+// door, not a black shape. Kept dim: cold spill only, never inviting.
+// ---------------------------------------------------------------------------
+function rearDoorDress() {
+  return `<g>
+    ${rect(532, 358, 236, 20, '#22374b', 'stroke="#5f7c8d" stroke-width="2"')}
+    ${line('M548 378 H752', '#0a1420', 3, .5)}
+    ${line('M534 360 H748', '#8fb2d4', 1.2, .2)}
+    ${rect(546, 384, 14, 780, '#16283a', 'stroke="#4a6175" stroke-width="1.5" opacity=".9"')}
+    ${rect(740, 384, 14, 780, '#16283a', 'stroke="#4a6175" stroke-width="1.5" opacity=".9"')}
+    ${line('M564 398 V1148', '#6d8798', 1.5, .3)}
+    ${line('M736 398 V1148', '#6d8798', 1.5, .3)}
+    ${rect(586, 430, 128, 260, 'none', 'stroke="#6d8798" stroke-width="1.2" opacity=".32"')}
+    ${rect(586, 790, 128, 170, 'none', 'stroke="#6d8798" stroke-width="1.2" opacity=".32"')}
+    ${rect(586, 1010, 128, 118, 'none', 'stroke="#6d8798" stroke-width="1.2" opacity=".32"')}
+    ${rect(600, 1078, 100, 12, '#3a4e63', 'stroke="#8fb2d4" stroke-width="1.4" opacity=".85"')}
+    ${rect(596, 1074, 6, 20, '#22384c')}${rect(698, 1074, 6, 20, '#22384c')}
+    ${rect(556, 1150, 188, 16, '#31465a', 'stroke="#5f7c8d" stroke-width="1.5"')}
+    ${line('M560 1152 H744', '#8fb2d4', 1.2, .35)}
+    ${line('M560 1164 H744', '#0a1420', 2, .45)}
+    <ellipse cx="650" cy="1176" rx="110" ry="14" fill="url(#s12-shadow)" opacity=".5"/>
+  </g>`;
+}
+
+// ---------------------------------------------------------------------------
 // Cold seam at the base of the closed rear door — unresolved tension, never a
 // reveal. A hairline of cold light plus a soft floor glow that pulses faintly
 // as the Nun commits to watching. Aligned with the interior door threshold.
@@ -150,8 +178,8 @@ function doorSeam(t, intensity) {
   const op = n(clamp(intensity * pulse, 0, 1), 3);
   return `<g>
     <ellipse cx="650" cy="1158" rx="92" ry="18" fill="url(#s12-seam)" opacity="${n(0.6 * op)}"/>
-    ${line('M588 1138 H712', '#4e9e84', 2, n(0.34 * op))}
-    ${line('M588 1136 H712', '#9fe6c9', 1, n(0.20 * op))}
+    ${line('M588 1138 H712', '#7fa8c4', 2, n(0.3 * op))}
+    ${line('M588 1136 H712', '#a9c6d8', 1, n(0.18 * op))}
     <ellipse cx="650" cy="1186" rx="124" ry="22" fill="url(#s12-seam)" opacity="${n(0.22 * op)}" filter="url(#s12-soft)"/>
     <rect x="646" y="390" width="8" height="748" fill="#050c14" opacity="${n(0.12 * op)}"/>
   </g>`;
@@ -238,6 +266,7 @@ export function renderScene12(u, t, d = 5) {
   // Nun and her floor shadow, then the counter fascia occluder, then coins.
   let back = '';
   back += interior(t);
+  back += rearDoorDress();
   back += doorSeam(t, seamInt);
   back += `<g opacity=".5">
     <path d="M${n(250 + driftA)} 352 L${n(40 + driftA)} 1160" stroke="#050c14" stroke-width="12" opacity=".10"/>

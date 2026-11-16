@@ -1,0 +1,82 @@
+# MUSIC-BRIEF — ambient score for "ร้านซักผ้ายามดึก" (late-night laundromat), Part 1, 60 s
+
+You are composing an **ambient musical score** for a 60-second Thai-narrated horror short. The narration is a calm, first-person voiceover by a night-shift worker ("Nun") in a 24-hour laundromat. A faceless customer brings the same white cloth every night, never speaks, never leaves footprints, and vanishes through the rear door. The mood arc:
+
+- **Quiet night exterior → lonely interior routine** (scenes 1–5): stillness, fluorescent hum feeling, small repetitive domestic details (coins, washers).
+- **Subtle wrongness** (scenes 6–9): the same white cloth returns; something is off but unprovable. Music should stay restrained but begin to lean darker — lower, thinner, slightly detuned-feeling spacing.
+- **Dread climax** (scenes 10–12): the customer disappears with no footsteps; three-night recurrence; Nun decides to watch the rear door — cliffhanger. The score should reach its darkest, most suspended point by the end, then leave the final seconds hanging (no resolution, no cadence).
+
+This is a **bed**: it sits ~18 dB under the narration. It must never compete with speech, never have a strong beat, never be melodic in a hummable way. Think: low string drones, slow-breathing pads, sparse high glassy textures, distant piano notes — horror-ambient, not trailer music.
+
+## Hard constraints
+
+- Total length **exactly 60.0 seconds**. Every event's `t` must be in [0, 60]; `t + duration` may extend past 60 only for release tails — keep `dur` so notes mostly end by ~60.
+- **25–45 note events total.** Fewer is fine; do not pad.
+- **Ambient only**: no drums, no percussion of any kind, no rhythmic ostinato, no fast runs, no melody faster than one note per ~2 seconds.
+- **Register**: mostly low — drones/pads in C2–C4 territory (midi ~36–60); sparse high texture allowed up to ~C6 (midi ~84) at very low velocity.
+- **Velocities 0.15–0.6 only** (soft). Most events 0.2–0.4.
+- **Durations 2–8 s** for sustained instruments; short isolated high notes (piano, harmonics-like) may be 1–4 s.
+- Suggest **D minor or C minor** (or modal/dark), with a slow harmonic rhythm — one chord area per ~8–15 s, drifting. Dissonance should be gentle (minor 2nds/9ths, tritones held quietly), not screechy.
+- Leave headroom: everything quiet. A faint high "texture" layer (very sparse, e.g. one note every 4–8 s, pan ±0.6) helps the dread.
+- The score must feel like it is *already playing* at t=0 (a low drone can start at 0) and *still unresolved* at t=60.
+
+## Available instruments (names are exact; pitches are note names like "D3", "F#4", or midi numbers, C4=60)
+
+Only these instruments exist in the sample library — use ONLY these names:
+
+- `contrabass` — double bass, sustained (range ~F#1–B3; great for the deepest drone, e.g. D2, A1–D3)
+- `cellos` — cello section, sustained (C2–F5; the main pad/dron body, D3–A3 ideal)
+- `violas` — viola section, sustained (C3–D6)
+- `violins` — violin section, sustained (G3–D6; use sparingly, high and soft)
+- `violin` — solo violin, sustained (G3–C7; the "wrongness" voice — sparse high lonely notes)
+- `bassoon` — bassoon, sustained (A#1–D#5; dark woodwind drone, very horror-appropriate)
+- `clarinet` — clarinet, sustained (D3–F#6; hollow middle texture)
+- `oboe` — oboe, sustained (A#3–F6; use very rarely — its reedy tone is unsettling)
+- `flute` — flute, sustained (C4–C7; thin airy high texture)
+- `horn` — French horn, sustained (A1–F5; distant, muted-feeling pad tone)
+- `trombone` — trombone, sustained (A#1–F4; very dark low swell)
+- `tuba` — tuba, sustained (F1–D4; sub drone, extremely sparing)
+- `upright` — upright piano (C1–G7; sparse lonely notes, low register preferred, long gaps)
+- `organ_soft` — pipe organ, soft stops (C2–C7; a faint D-minor chord bed is allowed but keep it very quiet)
+- `organ` — pipe organ, full (heavy; avoid or use once at lowest velocity)
+
+Do NOT use: any percussion/drums, `piano` (grand), `harp`, `guitar`, `erhu`, `sax`, `accordion`, anything with "stac", "pizz", "spic", "trem" in the name (those are short-articulation variants — too rhythmic for this bed; the plain sustained names above are the only good choices).
+
+## Scene timeline (for arc placement; narration runs continuously)
+
+| Scene | Time (s) | Content |
+|---|---|---|
+| 01 | 0.00–5.79 | Night exterior hook — last night working here |
+| 02 | 5.79–10.65 | Nun starts her shift, introduces herself |
+| 03 | 10.65–15.18 | Routine: coins, clothes, watching machines |
+| 04 | 15.18–20.42 | Late night, shop almost empty, washers hum |
+| 05 | 20.42–24.67 | Some nights so quiet she hears every coin |
+| 06 | 24.67–29.54 | Every night the same customer with same white cloth |
+| 07 | 29.54–33.85 | Never sees his face — only cloth through rear door |
+| 08 | 33.85–38.75 | He never greets, never waits — drops coins himself |
+| 09 | 38.75–43.86 | White sheet spins behind glass; owner absent |
+| 10 | 43.86–49.57 | He vanishes through rear door, no footsteps |
+| 11 | 49.57–55.00 | First night, second night, third — same |
+| 12 | 55.00–60.00 | Nun stops counting, walks to rear door — watch |
+
+## Output contract — JSON ONLY, no prose, no markdown fences
+
+Return a JSON array of note events. Each event is a 6-element array:
+
+```
+[t_seconds, "instrument_name", "pitch", duration_seconds, velocity, pan]
+```
+
+- `t_seconds`: float, event start time in seconds (0–60)
+- `instrument_name`: one of the names above, exactly as written
+- `pitch`: note name string like `"D3"`, `"F#2"`, `"Bb1"` (or a midi number)
+- `duration_seconds`: float, how long the note is held (the sampler adds its own release tail)
+- `velocity`: float 0.15–0.6
+- `pan`: float −1.0 (left) to +1.0 (right)
+
+Example shape (do not copy these notes):
+```json
+[[0.0, "contrabass", "D2", 14.0, 0.3, 0.0], [0.0, "cellos", "D3", 12.0, 0.25, -0.2], [24.0, "upright", "A4", 3.5, 0.2, 0.4]]
+```
+
+Overlapping notes are expected and required (drones sustain under everything). Vary pan so the bed feels wide. Begin drafting the arc: sparse and open for scenes 1–5, a middle layer entering ~scene 6, the darkest cluster ~scenes 10–12, unresolved at 60 s.

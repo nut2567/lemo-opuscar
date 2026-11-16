@@ -15,7 +15,7 @@
                                          "grok"
                                      ],
     "run_id":  "run_32d499536938",
-    "video_render_complete":  false,
+    "video_render_complete":  true,
     "latest_checks":  {
                           "timeline_validation_tests":  "6 passed; two ID-validation regressions observed failing before fix",
                           "contract_tests":  "18/18 pass after runtime-angle and actor-lift fixes",
@@ -81,7 +81,7 @@
                           "opencode_caption_scene12":  "Both OpenCode workers exited without assistant output; file mtimes unchanged; stop confirmed. Same Tasks now run by Devin. Progress checkpoints sent before stop.",
                           "scene11_opacity_story":  "Worker QA passed opacity and story-fact checks; deterministic finite SVG",
                           "narration_energy":  "Read-only audit passed: speech in all 12 intervals; no unplanned silence over 0.35s",
-                          "final_video":  "Not produced: render interrupted at user-requested 5-minute cutoff before mux; no final MP4"
+                          "final_video":  "VERIFIED 2026-11-16 23:32 (music-bed rebuild, run_4c5f72bc2d22 5/5 tasks): horror-x-ep1-part1-60s.mp4 h264 1080x1920 30fps 1800 frames 60.0s + AAC; ambient music bed replaces procedural noise layers; poster.jpg and .srt (23 cues) written; previous cut kept as -prev-*.mp4. Earlier verify: qa/final-verify/ frames; audio QA: qa/final-verify-audio/REPORT.md MIX-OK. Env notes: build.ps1 python paths -> D:/peoject_wepapp/ai-video/.venv, PLAYWRIGHT_CHROME=chromium_headless_shell-1228, compare-pixels.py accepts +-1 rounding <=0.2%px (SVG DOM still identical-required)."
                       },
     "integration_notes":  [
                               "Kiro continuity audit: no blocking errors",
@@ -101,9 +101,9 @@
                                  "Lead accepted11 counter occlusion:5frames+423hitpoints",
                                  "Lead accepted04 framing at0,2.5,4.8 and scene04 runtime smoke PASS; scene11 cloth-opacity/story-fact fix pending"
                              ],
-    "audio_integration":  "Existing 60s stereo mix remains. Read-only audits found SFX timing mismatches in scenes02/03/05/08; repair was interrupted before a completion report.",
-    "estimated_progress_percent":  88,
-    "progress_basis":  "Core production assets, 12 scenes, narration, captions and scene fixes are present. The final 60s render was user-timeboxed and interrupted at about 70%; no final MP4 exists. Audio timing repair did not return before closeout; integrated browser QA and mux remain unfinished.",
+    "audio_integration":  "Final mux uses the 60s stereo mix (mean -20.6dB, max -2.6dB, no clipping). Continuous noise bed replaced by music-bed.wav: 38-event D-minor ambient score composed by Devin worker (gemini-cli route verified down; fallback approved by user), rendered via core/audio/sampler.py on VSCO 2 CE CC0 samples; SFX one-shots remain procedural. Audio QA MIX-OK (qa/final-verify-audio/REPORT.md): music corr 0.97 in stem, voice ~18-27dB over bed, SFX cues confirmed.",
+    "estimated_progress_percent":  100,
+    "progress_basis":  "Final 60s MP4 rendered, muxed and independently verified (run_123dfdeaa4f1, 3/3 tasks). Part1 deliverable complete; awaiting user review. Parts 2/3 remain not authorized.",
     "voice_service_state":  "Free Niwat narration delivered and lead verified exact60s stereo48k,57.23s speech,12 continuous scenes",
     "voice_preference_question":  "User approved whole-Part free alternative and Niwat now delivered",
     "opencode_slots":  2,
@@ -116,10 +116,10 @@
                                "antigravity":  "credits attribution check passed"
                            },
     "active_pool_snapshot":  {
-                                 "devin":  5,
+                                 "devin":  0,
                                  "opencode":  0,
                                  "grok":  0,
                                  "antigravity":  0,
-                                 "note":  "Five Devin workers active; Grok/Antigravity small tasks settled. Both OpenCode terminals exited and were guarded-stopped; original Tasks retried on Devin."
+                                 "note":  "Music-bed run_4c5f72bc2d22 settled 5/5: compose+render, sound-design swap, rebuild, credits/docs, audio QA MIX-OK. All workers released."
                              }
 }

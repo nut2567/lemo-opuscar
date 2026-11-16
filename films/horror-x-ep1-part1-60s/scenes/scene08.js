@@ -10,15 +10,20 @@ const lerp = (a, b, k) => a + (b - a) * k;
 
 const defs = `<defs>
   <linearGradient id="s08-wall" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#31485d"/>
-    <stop offset=".5" stop-color="#1C2C3E"/>
-    <stop offset="1" stop-color="#142333"/>
+    <stop offset="0" stop-color="#BBD8EC"/>
+    <stop offset=".5" stop-color="#A9CCE3"/>
+    <stop offset="1" stop-color="#8FBEDF"/>
+  </linearGradient>
+  <linearGradient id="s08-floor" x1=".2" y1="0" x2=".2" y2="1">
+    <stop offset="0" stop-color="#F0EDE2"/>
+    <stop offset=".72" stop-color="#E9E5D6"/>
+    <stop offset="1" stop-color="#D8D2C0"/>
   </linearGradient>
   <linearGradient id="s08-metal" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#8FB2D4"/>
-    <stop offset=".38" stop-color="#536680"/>
-    <stop offset=".72" stop-color="#3A4E63"/>
-    <stop offset="1" stop-color="#1C2C3E"/>
+    <stop offset="0" stop-color="#8FB2A8"/>
+    <stop offset=".38" stop-color="#4E7A76"/>
+    <stop offset=".72" stop-color="#33505A"/>
+    <stop offset="1" stop-color="#1B2B3D"/>
   </linearGradient>
   <linearGradient id="s08-panel" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0" stop-color="#3b5870"/>
@@ -49,9 +54,14 @@ const defs = `<defs>
     <stop offset=".55" stop-color="#c3ced0"/>
     <stop offset="1" stop-color="#A9A393"/>
   </linearGradient>
+  <radialGradient id="s08-amber" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#F2C894" stop-opacity=".55"/>
+    <stop offset=".55" stop-color="#C98F4E" stop-opacity=".22"/>
+    <stop offset="1" stop-color="#C98F4E" stop-opacity="0"/>
+  </radialGradient>
   <radialGradient id="s08-vignette" cx="50%" cy="44%" r="68%">
-    <stop offset=".52" stop-color="#0A121C" stop-opacity="0"/>
-    <stop offset="1" stop-color="#0A121C" stop-opacity=".42"/>
+    <stop offset=".52" stop-color="#1E3247" stop-opacity="0"/>
+    <stop offset="1" stop-color="#1E3247" stop-opacity=".42"/>
   </radialGradient>
   <filter id="s08-soft" x="-50%" y="-50%" width="200%" height="200%">
     <feGaussianBlur stdDeviation="2.4"/>
@@ -80,14 +90,14 @@ function neighborWasher(t) {
   return `<g transform="translate(20 690) scale(1.35)" opacity=".72">
     ${path('M8 18 L150 6 L168 24 V220 L20 236 Z', 'url(#s08-metal)', 'stroke="#0c1926" stroke-width="3"')}
     ${path('M20 30 L156 16 V214 L22 228 Z', 'url(#s08-panel)', 'stroke="#7f9db1" stroke-width="1.2"')}
-    <ellipse cx="88" cy="140" rx="52" ry="56" fill="#0a1724" stroke="#9cb8c7" stroke-width="4"/>
+    <ellipse cx="88" cy="140" rx="52" ry="56" fill="#0a1724" stroke="#9CC5B5" stroke-width="4"/>
     <ellipse cx="88" cy="140" rx="40" ry="44" fill="url(#s08-drum)"/>
     <g transform="rotate(${ang} 88 140)" opacity=".8">
       <ellipse cx="64" cy="118" rx="14" ry="8" fill="#8FB2D4" opacity=".35"/>
       <ellipse cx="112" cy="150" rx="12" ry="7" fill="#EAF4FF" opacity=".2"/>
       ${path('M52 140 H124', 'none', 'stroke="#8ea9b6" stroke-width="4" opacity=".35" stroke-linecap="round"')}
     </g>
-    <circle cx="88" cy="140" r="5" fill="#22384a"/>
+    <circle cx="88" cy="140" r="5" fill="#E9C46A"/>
   </g>`;
 }
 
@@ -113,15 +123,17 @@ function heroWasher({ humX, humY, spin, bite, drop, drum, display, t, coinSvg })
     ${path('M214 448 L742 396 L792 446 L770 1168 L280 1204 L196 1144 Z', 'url(#s08-metal)', 'stroke="#0c1926" stroke-width="5"')}
     ${path('M246 478 L720 434 L754 470 L736 1136 L298 1168 L232 1118 Z', 'url(#s08-panel)', 'stroke="#7f9db1" stroke-width="1.6"')}
     ${path('M246 478 L720 434 L720 560 L248 608 Z', '#2b4256', 'stroke="#8faebf" stroke-width="1.2"')}
-    ${rect(286, 500, 118, 46, '#081019', 'stroke="#8FB2D4" stroke-width="2"')}
-    ${text(345, 532, display, 28, spin > 0.15 ? '#bfe8ef' : '#5d7583', 'text-anchor="middle" font-weight="700"')}
+    ${path('M244 566 L724 532 L726 550 L246 584 Z', '#E07A5F', 'opacity=".5"')}
+    <ellipse cx="345" cy="524" rx="88" ry="32" fill="url(#s08-amber)" opacity=".55" filter="url(#s08-soft)"/>
+    ${rect(286, 500, 118, 46, '#2A1C10', 'stroke="#8FB2D4" stroke-width="2"')}
+    ${text(345, 532, display, 28, spin > 0.15 ? '#FFE3B0' : '#7a5f45', 'text-anchor="middle" font-weight="700"')}
     ${led(0, 470)}
     ${led(1, 500)}
     ${led(2, 530)}
-    ${rect(560, 508, 22, 16, '#22384a', 'stroke="#8FB2D4" stroke-width="1"')}
+    ${rect(560, 508, 22, 16, '#E07A5F', 'stroke="#5a2f26" stroke-width="1"')}
     ${path('M300 640 L430 624 L430 658 L300 674 Z', '#0a1420', 'stroke="#B18270" stroke-width="2"')}
     ${path('M312 650 H418', 'none', 'stroke="#8FB2D4" stroke-width="2" opacity=".45"')}
-    ${text(248, 700, '01', 22, '#c1d3dc', 'opacity=".8"')}
+    ${text(248, 700, '01', 22, '#E9C46A', 'opacity=".85"')}
 
     <g transform="translate(${n(jitter)} 0)">
       ${path('M392 688 L668 662 L690 704 L678 860 L404 888 L378 830 Z', 'url(#s08-slot)', 'stroke="#0c1926" stroke-width="3"')}
@@ -141,7 +153,7 @@ function heroWasher({ humX, humY, spin, bite, drop, drum, display, t, coinSvg })
       ${line('M474 886 L594 870', '#536680', 2, 0.28)}
       <g transform="rotate(${relay} 648 790)">
         ${rect(632, 760, 14, 48, '#8FB2D4', 'stroke="#142333" stroke-width="1"')}
-        <circle cx="639" cy="756" r="6" fill="#B18270"/>
+        <circle cx="639" cy="756" r="6" fill="#E07A5F"/>
       </g>
       ${text(530, 676, '10', 20, '#EAF4FF', 'text-anchor="middle" opacity=".85"')}
       ${screws([[410, 706], [650, 688], [398, 850], [662, 834]])}
@@ -222,17 +234,32 @@ export function renderScene08(u, t, d = 5) {
   const tube = n(0.78 + 0.05 * Math.sin(t * 2.1) + 0.03 * Math.sin(t * 6.7) - 0.12 * Math.exp(-((p - 0.62) * (p - 0.62)) / 0.0011), 3);
   const pipe = n(Math.sin(t * 0.7) * 10);
 
+  const floorGrid = [];
+  for (let i = -7; i <= 7; i++) {
+    floorGrid.push(line(`M540 1120 L${-160 + i * 190} 1920`, '#8C8774', 1, 0.09));
+  }
+  for (let i = 0; i < 8; i++) {
+    const yy = n(1160 + Math.pow(i / 7, 1.7) * 760);
+    const ft = (yy - 1160) / 760;
+    floorGrid.push(line(`M${n(50 * (1 - ft))} ${n(yy)}H${n(1030 + 50 * ft)}`, '#8C8774', 1, i === 0 ? 0.16 : 0.1));
+  }
+  const floorSvg = path('M40 1150 L1040 1150 L1090 1920 L0 1920 Z', 'url(#s08-floor)') + floorGrid.join('');
+
   const back = `
     ${rect(0, 0, 1080, 1920, 'url(#s08-wall)')}
-    ${rect(0, 300, 1080, 860, '#15293a', 'opacity=".35"')}
-    ${line('M80 420 H1000', '#5d7484', 2, 0.2)}
-    ${line('M80 520 H1000', '#5d7484', 2, 0.14)}
-    ${line('M80 640 H1000', '#5d7484', 2, 0.12)}
-    ${line('M180 280 V1100', '#5d7484', 2, 0.1)}
-    ${line('M360 280 V900', '#5d7484', 2, 0.08)}
-    ${line('M760 280 V980', '#5d7484', 2, 0.08)}
+    ${floorSvg}
+    <ellipse cx="540" cy="360" rx="580" ry="250" fill="url(#s08-amber)" opacity=".38"/>
+    ${rect(0, 300, 1080, 860, '#3E5A75', 'opacity=".35"')}
+    ${line('M80 420 H1000', '#7BA6BE', 2, 0.2)}
+    ${line('M80 520 H1000', '#7BA6BE', 2, 0.14)}
+    ${line('M80 640 H1000', '#7BA6BE', 2, 0.12)}
+    ${line('M180 280 V1100', '#7BA6BE', 2, 0.1)}
+    ${line('M360 280 V900', '#7BA6BE', 2, 0.08)}
+    ${line('M760 280 V980', '#7BA6BE', 2, 0.08)}
     ${rect(70, 300, 940, 16, '#101a28')}
     ${rect(90, 304, 900, 8, '#EAF4FF', `opacity="${tube}"`)}
+    ${rect(70, 320, 940, 10, '#C98F4E', 'opacity=".28"')}
+    <ellipse cx="540" cy="352" rx="520" ry="90" fill="url(#s08-amber)" opacity=".3"/>
     ${path(`M40 ${n(360 + pipe)} H1040`, 'none', 'stroke="#3A4E63" stroke-width="10" stroke-linecap="round"')}
     ${path(`M40 ${n(372 + pipe)} H1040`, 'none', 'stroke="#8FB2D4" stroke-width="2" opacity=".35"')}
     ${neighborWasher(t)}
@@ -261,7 +288,7 @@ export function renderScene08(u, t, d = 5) {
       ${path('M996 440 C 1028 620, 1040 860, 1010 1088', 'none', 'stroke="#8F8A7B" stroke-width="6" opacity=".35" stroke-linecap="round"')}
       ${path('M972 500 C 1004 680, 996 900, 986 1060', 'none', 'stroke="#A9A393" stroke-width="10" opacity=".4"')}
     </g>
-    ${path('M140 1188 Q 540 1236 960 1172', 'none', 'stroke="#0A121C" stroke-width="22" opacity=".25" stroke-linecap="round"')}
+    ${path('M140 1188 Q 540 1236 960 1172', 'none', 'stroke="#1E3247" stroke-width="22" opacity=".25" stroke-linecap="round"')}
   `;
 
   return defs + view(

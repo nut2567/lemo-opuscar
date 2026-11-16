@@ -24,7 +24,7 @@ function mulberry32(seed) {
 function sceneDefs() {
   return `<defs>
     <linearGradient id="s09-drum-body" x2="1" y2=".2">
-      <stop stop-color="#7794a5"/><stop offset=".5" stop-color="#506f83"/><stop offset="1" stop-color="#2a465b"/>
+      <stop stop-color="#8fb2a8"/><stop offset=".5" stop-color="#4e7a76"/><stop offset="1" stop-color="#2a465b"/>
     </linearGradient>
     <linearGradient id="s09-panel" x2="0" y2="1">
       <stop stop-color="#3b5870"/><stop offset=".6" stop-color="#25384e"/><stop offset="1" stop-color="#172a3a"/>
@@ -41,14 +41,18 @@ function sceneDefs() {
       <stop offset="1" stop-color="#142333" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="s09-wall" x2="0" y2="1">
-      <stop stop-color="#31485d"/><stop offset=".5" stop-color="#223850"/><stop offset="1" stop-color="#15293a"/>
+      <stop stop-color="#BBD8EC"/><stop offset=".5" stop-color="#A9CCE3"/><stop offset="1" stop-color="#8FBEDF"/>
     </linearGradient>
     <linearGradient id="s09-floor" x2=".2" y2="1">
-      <stop stop-color="#335062"/><stop offset=".7" stop-color="#4d6b7a"/><stop offset="1" stop-color="#1f3543"/>
+      <stop stop-color="#F0EDE2"/><stop offset=".72" stop-color="#E9E5D6"/><stop offset="1" stop-color="#D8D2C0"/>
     </linearGradient>
     <linearGradient id="s09-refl" x2="0" y2="1">
       <stop stop-color="#8FB2D4" stop-opacity=".14"/><stop offset="1" stop-color="#8FB2D4" stop-opacity="0"/>
     </linearGradient>
+    <radialGradient id="s09-amber" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#F2C894" stop-opacity=".5"/><stop offset=".55" stop-color="#C98F4E" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#C98F4E" stop-opacity="0"/>
+    </radialGradient>
     <radialGradient id="s09-shadow" cx=".5" cy=".5" r=".5">
       <stop stop-color="#050d18" stop-opacity=".7"/><stop offset="1" stop-color="#050d18" stop-opacity="0"/>
     </radialGradient>
@@ -251,29 +255,32 @@ function washerBody(t) {
   // Dial marker
   const dialAngle = n(Math.sin(t * 0.3) * 15 - 30);
   svg += `<g transform="translate(-120 -228) rotate(${dialAngle})">
-    <circle cx="0" cy="0" r="8" fill="#1a2d40" stroke="#8fb2d4" stroke-width="1"/>
-    <line x1="0" y1="0" x2="0" y2="-6" stroke="#cfe2ea" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="8" fill="#1a2d40" stroke="#9C8FC7" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="-6" stroke="#E8DCC8" stroke-width="1.5" stroke-linecap="round"/>
   </g>`;
 
   // Digital display — shows cycle time
-  svg += rect(-55, -252, 82, 34, '#081019', 'stroke="#8fb2d4" stroke-width="1.2"');
+  svg += rect(-55, -252, 82, 34, '#2A1C10', 'stroke="#8fb2d4" stroke-width="1.2"');
   const displayMin = Math.floor(12 + Math.sin(t * 0.15) * 0.5);
-  svg += `<text x="-42" y="-226" font-size="20" fill="#bfe8ef" font-family="Kanit">${displayMin}</text>`;
+  svg += `<text x="-42" y="-226" font-size="20" fill="#FFE3B0" font-family="Kanit">${displayMin}</text>`;
 
   // LED indicators
   const led1 = n(0.6 + 0.4 * Math.sin(t * 1.8));
   svg += `<circle cx="55" cy="-235" r="6" fill="#d8f4f6" opacity="${n(led1)}"/>`;
-  svg += `<circle cx="80" cy="-235" r="6" fill="#e8b872" opacity="${n(0.5 + 0.3 * Math.sin(t * 3.1 + 1))}"/>`;
+  svg += `<circle cx="80" cy="-235" r="6" fill="#E9C46A" opacity="${n(0.5 + 0.3 * Math.sin(t * 3.1 + 1))}"/>`;
 
   // Button cluster
   svg += rect(100, -250, 16, 14, '#22384a', 'stroke="#8fb2d4" stroke-width="1" rx="2"');
   svg += rect(124, -250, 16, 14, '#22384a', 'stroke="#8fb2d4" stroke-width="1" rx="2"');
 
   // Soap tray slot
-  svg += rect(-165, -198, 70, 16, '#0a1420', 'stroke="#b18270" stroke-width="1" rx="2"');
+  svg += rect(-165, -198, 70, 16, '#0a1420', 'stroke="#E07A5F" stroke-width="1" rx="2"');
 
   // Machine number label
-  svg += `<text x="-160" y="-120" font-size="20" fill="#c1d3dc" font-family="Kanit" opacity=".65">03</text>`;
+  svg += `<text x="-160" y="-120" font-size="20" fill="#E8DCC8" font-family="Kanit" opacity=".65">03</text>`;
+
+  // Coral accent stripe below the drum ring
+  svg += path('M-190 192 L195 182 V202 L-190 212 Z', '#E07A5F', 'opacity=".4"');
 
   // Bottom kick plate with vent holes
   svg += path('M-190 322L190 312', 'none', 'stroke="#122435" stroke-width="4" opacity=".8"');
@@ -313,6 +320,8 @@ function drumRing(t) {
   svg += `<circle cx="140" cy="30" r="5" fill="#bfd3db"/>`;
   // Rubber gasket ring
   svg += `<ellipse cx="0" cy="0" rx="145" ry="155" fill="none" stroke="#2a3e50" stroke-width="3" opacity=".6"/>`;
+  // Small accent marker on the ring
+  svg += `<circle cx="118" cy="132" r="6" fill="#E9C46A" opacity=".7"/>`;
   return svg;
 }
 
@@ -326,7 +335,7 @@ function emptySpace(t, revealP) {
   // Floor tiles in the empty area to right of the grounded washer
   for (let ty = 1120; ty < 1360; ty += 60) {
     for (let tx = 620; tx < 1010; tx += 78) {
-      svg += `<rect x="${tx}" y="${ty}" width="74" height="56" fill="none" stroke="#5d7484" stroke-width="1" opacity="${n(0.08 * op)}"/>`;
+      svg += `<rect x="${tx}" y="${ty}" width="74" height="56" fill="none" stroke="#8C8774" stroke-width="1" opacity="${n(0.08 * op)}"/>`;
     }
   }
 
@@ -356,46 +365,58 @@ function laundroBackground(t) {
   let svg = '';
 
   // Back wall
-  svg += `<rect x="0" y="0" width="1200" height="1920" fill="#0c1826"/>`;
+  svg += `<rect x="0" y="0" width="1200" height="1920" fill="#22364C"/>`;
   svg += `<rect x="60" y="250" width="1000" height="950" fill="url(#s09-wall)"/>`;
 
   // Wall tile grid
   for (let yy = 300; yy < 1160; yy += 55) {
-    svg += line(`M60 ${yy}H1060`, '#5d7484', 1, 0.08);
+    svg += line(`M60 ${yy}H1060`, '#7BA6BE', 1, 0.08);
   }
   for (let xx = 80; xx < 1060; xx += 80) {
-    svg += line(`M${xx} 250V1200`, '#5d7484', 1, 0.06);
+    svg += line(`M${xx} 250V1200`, '#7BA6BE', 1, 0.06);
   }
 
   // Wainscot
-  svg += `<rect x="60" y="850" width="1000" height="350" fill="#1b2d3e" opacity=".65"/>`;
-  svg += line('M60 850H1060', '#6d8798', 2, 0.3);
+  svg += `<rect x="60" y="850" width="1000" height="350" fill="#3E5A75" opacity=".45"/>`;
+  svg += line('M60 850H1060', '#7FA0B4', 2, 0.3);
 
   // Fluorescent ceiling light
   const glow = n(Math.max(0.7, Math.min(1, 0.85 + 0.06 * Math.sin(t * 2.2) + 0.03 * Math.sin(t * 7.1))));
   svg += rect(200, 230, 560, 14, '#101a28');
-  svg += `<rect x="215" y="234" width="530" height="8" fill="#dcebf2" opacity="${n(0.8 * glow)}"/>`;
+  svg += `<rect x="215" y="234" width="530" height="8" fill="#F5DFAF" opacity="${n(0.8 * glow)}"/>`;
   svg += `<polygon points="250,250 730,250 850,1200 100,1200" fill="url(#s09-refl)" opacity="${n(0.08 * glow)}"/>`;
+
+  // Warm practical cove under the fixture + amber wall wash
+  svg += `<rect x="190" y="252" width="620" height="9" fill="#F2C894" opacity="${n(0.35 * glow)}"/>`;
+  svg += `<ellipse cx="540" cy="330" rx="440" ry="300" fill="url(#s09-amber)" opacity="${n(0.45 * glow)}"/>`;
+
+  // Faded shop sign on the wall — cream board, mustard stripe
+  svg += `<rect x="870" y="420" width="140" height="76" fill="#E8DCC8" opacity=".1"/>`;
+  svg += `<rect x="884" y="436" width="112" height="10" fill="#E9C46A" opacity=".25"/>`;
+  svg += `<rect x="884" y="458" width="80" height="8" fill="#D9C9A8" opacity=".2"/>`;
+  svg += `<rect x="884" y="474" width="96" height="6" fill="#D9C9A8" opacity=".14"/>`;
 
   // Floor
   svg += `<polygon points="40,1200 1050,1200 1100,1920 0,1920" fill="url(#s09-floor)"/>`;
   // Floor perspective grid
   for (let i = -5; i <= 5; i++) {
-    svg += line(`M540 1180 L${n(-100 + i * 200)} 1920`, '#6f8fa0', 1, 0.1);
+    svg += line(`M540 1180 L${n(-100 + i * 200)} 1920`, '#8C8774', 1, 0.1);
   }
   for (let j = 0; j < 4; j++) {
     const yy = n(1200 + Math.pow(j / 3, 1.6) * 600);
-    svg += line(`M40 ${yy}H1060`, '#6f8fa0', 1, 0.12);
+    svg += line(`M40 ${yy}H1060`, '#8C8774', 1, 0.12);
   }
 
   // Other washers in background (small, to right side — context)
+  const accents = ['#7FB8A4', '#E07A5F', '#9C8FC7'];
   for (let w = 0; w < 3; w++) {
     const wx = 720 + w * 120;
     const wy = 680 + w * 30;
     const ws = 0.35 - w * 0.05;
     svg += `<g transform="translate(${wx} ${wy}) scale(${n(ws, 2)})" opacity=".5">
       <rect x="-80" y="-120" width="160" height="260" fill="#25384e" stroke="#506f83" stroke-width="2" rx="6"/>
-      <ellipse cx="0" cy="0" rx="55" ry="60" fill="#0a1724" stroke="#5a7a8e" stroke-width="3"/>
+      <rect x="-60" y="-112" width="120" height="8" fill="${accents[w]}" opacity=".45"/>
+      <ellipse cx="0" cy="0" rx="55" ry="60" fill="#0a1724" stroke="${accents[w]}" stroke-width="3"/>
       <circle cx="0" cy="0" r="6" fill="#1a2d40"/>
     </g>`;
   }

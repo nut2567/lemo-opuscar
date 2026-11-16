@@ -17,6 +17,8 @@ Generates a 60-second stereo 48kHz 16-bit PCM WAV soundtrack with:
 Inputs (optional — runs with defaults if missing):
   - voice-timeline.json  — scene start/end times and speech timing
   - speech.wav           — dry narration for ducking envelope
+  - music-bed.wav        — composed score bed; when present it replaces
+                           procedural continuous layers 1-5 (fallback kept)
 
 Output:
   - soundtrack.wav       — 60s stereo 48kHz 16-bit PCM
@@ -28,8 +30,13 @@ import math
 import os
 import random
 import struct
+import subprocess
 import sys
 import wave
+
+# Tolerate consoles that can't encode the report glyphs (e.g. cp1252)
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(errors="replace")
 
 # ─── Constants ────────────────────────────────────────────────────────
 SR = 48000          # sample rate
@@ -46,8 +53,15 @@ random.seed(42)
 HERE = os.path.dirname(os.path.abspath(__file__))
 TIMELINE_PATH = os.path.join(HERE, "voice-timeline.json")
 SPEECH_PATH = os.path.join(HERE, "speech.wav")
+MUSIC_BED_PATH = os.path.join(HERE, "music-bed.wav")
 OUT_WAV = os.path.join(HERE, "soundtrack.wav")
 QA_PATH = os.path.join(HERE, "SOUND-QA.md")
+
+# Target RMS for music-bed.wav. The removed procedural layers 1-5 produced a
+# pre-normalization soundtrack RMS of ~-26 dBFS (measured: post-norm RMS
+# -17.9 dBFS / gain 2.564). SFX one-shots are unchanged, so the bed is
+# normalized to the same RMS to preserve the bed-under-SFX balance.
+MUSIC_BED_TARGET_RMS_DB = -26.0
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -316,6 +330,59 @@ def gen_cloth_rustle(t_event, duration=1.2):
 # Main score + mix
 # ═══════════════════════════════════════════════════════════════════════
 
+def load_music_bed():
+    """
+    Load music-bed.wav (stereo, ~60s) decoded via ffmpeg -> f32le, the same
+    approach mix-audio.py uses. Returns (array[N,2] float64 scaled to
+    MUSIC_BED_TARGET_RMS_DB, info dict) or None when the file is absent or
+    unusable (caller then falls back to procedural layers 1-5).
+    """
+    if not os.path.isfile(MUSIC_BED_PATH):
+        return None
+    try:
+        import numpy as np
+    except ImportError:
+        print("  music-bed.wav present but numpy unavailable — using procedural layers")
+        return None
+    r = subprocess.run(
+        ["ffmpeg", "-v", "error", "-i", MUSIC_BED_PATH,
+         "-f", "f32le", "-ac", "2", "-ar", str(SR), "-"],
+        capture_output=True)
+    if r.returncode != 0:
+        print(f"  music-bed.wav decode failed ({r.stderr.decode(errors='replace').strip()})"
+              " — using procedural layers")
+        return None
+    a = np.frombuffer(r.stdout, dtype="<f4").reshape(-1, 2).astype(np.float64)
+    if len(a) == 0:
+        print("  music-bed.wav decoded empty — using procedural layers")
+        return None
+    # Pad or trim to exactly N_SAMPLES (contract is 60s @ 48kHz stereo)
+    if len(a) < N_SAMPLES:
+        a = np.vstack([a, np.zeros((N_SAMPLES - len(a), 2))])
+    elif len(a) > N_SAMPLES:
+        a = a[:N_SAMPLES]
+    rms = float(np.sqrt(np.mean(a * a)))
+    if rms < 1e-6:
+        print("  music-bed.wav is silent — using procedural layers")
+        return None
+    src_peak = float(np.max(np.abs(a)))
+    src_rms_db = 20.0 * math.log10(rms)
+    src_peak_db = 20.0 * math.log10(max(src_peak, 1e-12))
+    target = 10.0 ** (MUSIC_BED_TARGET_RMS_DB / 20.0)
+    gain = target / rms
+    a = a * gain
+    out_peak = src_peak * gain
+    info = {
+        "source_rms_db": src_rms_db,
+        "source_peak_db": src_peak_db,
+        "gain": gain,
+        "out_rms_db": MUSIC_BED_TARGET_RMS_DB,
+        "out_peak_db": 20.0 * math.log10(max(out_peak, 1e-12)),
+        "samples": int(len(a)),
+    }
+    return a, info
+
+
 def coin_event_schedule(scenes):
     """Return the actual synthesis schedule from picture contact keyframes."""
     timing = {
@@ -409,14 +476,29 @@ def build_soundtrack():
     buf_L = [0.0] * N_SAMPLES
     buf_R = [0.0] * N_SAMPLES
 
+    # ── Optional music bed: replaces procedural continuous layers 1-5 ──
+    music_bed = load_music_bed()
+    use_music_bed = music_bed is not None
+    bed_info = None
+    if use_music_bed:
+        bed, bed_info = music_bed
+        print("  Layer: music bed (music-bed.wav) — procedural layers 1-5 skipped")
+        for i in range(N_SAMPLES):
+            buf_L[i] += float(bed[i, 0])
+            buf_R[i] += float(bed[i, 1])
+    else:
+        print("  music-bed.wav not found — using procedural layers 1-5")
+    layer_iter = () if use_music_bed else range(N_SAMPLES)
+
     # ── Layer 1: Suspense drone (always present) ──────────────────────
     # Low tonal drone that slowly rises in pitch and adds harmonics
     # as tension builds through the 60s
-    print("  Layer: suspense drone...")
+    print("  Layer: suspense drone..." if not use_music_bed
+          else "  Layer: suspense drone — skipped (music bed active)")
     drone_phase = 0.0
     drone_phase2 = 0.0
     drone_lfo_phase = 0.0
-    for i in range(N_SAMPLES):
+    for i in layer_iter:
         t = i / SR
         prog = scene_progress(t)
 
@@ -446,7 +528,8 @@ def build_soundtrack():
         buf_R[i] += drone_val * 1.05
 
     # ── Layer 2: Fluorescent hum + washer bed ─────────────────────────
-    print("  Layer: fluorescent/washer ambient...")
+    print("  Layer: fluorescent/washer ambient..." if not use_music_bed
+          else "  Layer: fluorescent/washer ambient — skipped (music bed active)")
     pink_L = make_pink_state()
     pink_R = make_pink_state()
     fluor_lpf_l = LPF(200)
@@ -454,7 +537,7 @@ def build_soundtrack():
     washer_bpf_l = BPF(80, 350)
     washer_bpf_r = BPF(80, 350)
     fluor_phase = 0.0
-    for i in range(N_SAMPLES):
+    for i in layer_iter:
         t = i / SR
         sc = scene_at(t)
         sid = int(sc["id"])
@@ -477,12 +560,13 @@ def build_soundtrack():
         buf_R[i] += fluor * 0.95 + wn_r
 
     # ── Layer 3: Wind / air texture ───────────────────────────────────
-    print("  Layer: wind/air texture...")
+    print("  Layer: wind/air texture..." if not use_music_bed
+          else "  Layer: wind/air texture — skipped (music bed active)")
     wind_bpf_l = BPF(400, 2500)
     wind_bpf_r = BPF(350, 2200)
     wind_pink_l = make_pink_state()
     wind_pink_r = make_pink_state()
-    for i in range(N_SAMPLES):
+    for i in layer_iter:
         t = i / SR
         sc = scene_at(t)
         sid = int(sc["id"])
@@ -506,10 +590,11 @@ def build_soundtrack():
         buf_R[i] += wr
 
     # ── Layer 4: Neon buzz texture ────────────────────────────────────
-    print("  Layer: neon buzz...")
+    print("  Layer: neon buzz..." if not use_music_bed
+          else "  Layer: neon buzz — skipped (music bed active)")
     neon_phase = 0.0
     neon_lfo = 0.0
-    for i in range(N_SAMPLES):
+    for i in layer_iter:
         t = i / SR
         sc = scene_at(t)
         sid = int(sc["id"])
@@ -533,9 +618,10 @@ def build_soundtrack():
         buf_R[i] += neon_val * 0.9
 
     # ── Layer 5: Tension risers / scene transitions ───────────────────
-    print("  Layer: tension elements...")
+    print("  Layer: tension elements..." if not use_music_bed
+          else "  Layer: tension elements — skipped (music bed active)")
     tension_phase = 0.0
-    for i in range(N_SAMPLES):
+    for i in layer_iter:
         t = i / SR
         prog = scene_progress(t)
         sc = scene_at(t)
@@ -612,12 +698,12 @@ def build_soundtrack():
 
     # ── Write QA report ───────────────────────────────────────────────
     print("  Writing SOUND-QA.md...")
-    write_qa(scenes, has_timeline, has_speech, cue_log, peak, gain)
+    write_qa(scenes, has_timeline, has_speech, cue_log, peak, gain, bed_info)
     print("  ✓ SOUND-QA.md written")
     print("\nDone.")
 
 
-def write_qa(scenes, has_timeline, has_speech, cue_log, raw_peak, gain):
+def write_qa(scenes, has_timeline, has_speech, cue_log, raw_peak, gain, bed_info=None):
     """Write the SOUND-QA.md quality report."""
     lines = []
     lines.append("# SOUND-QA — Soundtrack Quality Report\n")
@@ -630,6 +716,10 @@ def write_qa(scenes, has_timeline, has_speech, cue_log, raw_peak, gain):
     lines.append(f"|-------|--------|")
     lines.append(f"| voice-timeline.json | {'✅ Loaded' if has_timeline else '⚠️ Missing — used 5s fallback'} |")
     lines.append(f"| speech.wav | {'✅ Loaded — ducking active' if has_speech else '⚠️ Missing — no ducking applied'} |")
+    if bed_info is not None:
+        lines.append(f"| music-bed.wav | ✅ Loaded — replaces procedural layers 1-5 |")
+    else:
+        lines.append(f"| music-bed.wav | ⚠️ Missing — procedural layers 1-5 used |")
     lines.append("")
 
     # ── Output specs ──
@@ -688,15 +778,27 @@ def write_qa(scenes, has_timeline, has_speech, cue_log, raw_peak, gain):
 
     # ── Layer inventory ──
     lines.append("## Continuous Layers\n")
-    lines.append("| Layer | Description | Level Profile |")
-    lines.append("|-------|-------------|---------------|")
-    lines.append("| Suspense drone | Tonal 48→55Hz + fifth harmonic, slow pulse increasing | 0→60s, pulse depth 15%→40% |")
-    lines.append("| Fluorescent hum | 100Hz mains hum + filtered noise | Constant, reduced in sc01 exterior |")
-    lines.append("| Washer rumble | Pink noise 80-350Hz | Louder sc04/09, present sc02-12 |")
-    lines.append("| Wind/air | Pink noise 350-2500Hz | Strongest sc01/10, subtle elsewhere, rising |")
-    lines.append("| Neon buzz | 120Hz saw + flicker | Strongest sc01/10/12, subtle sc06/07/11 |")
-    lines.append("| Tension risers | Rising sine in final 30% of scene | Active sc06/07/10/11/12 only |")
-    lines.append("")
+    if bed_info is not None:
+        lines.append("| Layer | Description | Level Profile |")
+        lines.append("|-------|-------------|---------------|")
+        lines.append(f"| Music bed | Gemini-composed ambient score rendered via core/audio/sampler.py (`music-bed.wav`) | Stereo 48kHz, RMS-normalized to {bed_info['out_rms_db']:.1f} dBFS "
+                     f"(src RMS {bed_info['source_rms_db']:.1f} dBFS, gain {bed_info['gain']:.3f}, out peak {bed_info['out_peak_db']:.1f} dBFS) |")
+        lines.append("")
+        lines.append("> Procedural layers 1-5 (suspense drone, fluorescent/washer, wind/air, neon buzz, tension risers) "
+                     "are skipped when `music-bed.wav` is present; the fallback path is used unchanged when it is absent. "
+                     "No additional ducking is applied inside the bed — the global speech duck and mix-audio.py gain still apply.\n")
+    else:
+        lines.append("| Layer | Description | Level Profile |")
+        lines.append("|-------|-------------|---------------|")
+        lines.append("| Suspense drone | Tonal 48→55Hz + fifth harmonic, slow pulse increasing | 0→60s, pulse depth 15%→40% |")
+        lines.append("| Fluorescent hum | 100Hz mains hum + filtered noise | Constant, reduced in sc01 exterior |")
+        lines.append("| Washer rumble | Pink noise 80-350Hz | Louder sc04/09, present sc02-12 |")
+        lines.append("| Wind/air | Pink noise 350-2500Hz | Strongest sc01/10, subtle elsewhere, rising |")
+        lines.append("| Neon buzz | 120Hz saw + flicker | Strongest sc01/10/12, subtle sc06/07/11 |")
+        lines.append("| Tension risers | Rising sine in final 30% of scene | Active sc06/07/10/11/12 only |")
+        lines.append("")
+        lines.append("> `music-bed.wav` was absent at render time, so the procedural layers above were used. "
+                     "Re-run after the music bed is delivered to switch to the composed score.\n")
 
     # ── Constraint compliance ──
     lines.append("## Constraint Compliance\n")
@@ -704,16 +806,21 @@ def write_qa(scenes, has_timeline, has_speech, cue_log, raw_peak, gain):
     lines.append("|------------|--------|--------------|")
     lines.append("| Continuous dry narration prominent | ✅ Score ducks under voice when speech.wav present | Gain math: -8dB duck, voice 18dB above bed RMS |")
     lines.append("| No original dead-air mix | ✅ All layers continuous, no silence gaps | Code inspection |")
-    lines.append("| Original tonal drone/pulse | ✅ Procedurally generated sine drone, no copied music | Code inspection |")
-    lines.append("| No copied music/hiss | ✅ All sounds synthesized from math primitives | Code inspection |")
-    lines.append("| Wind/neon/washer texture | ✅ Three separate texture layers | Code inspection |")
+    if bed_info is not None:
+        lines.append("| Original tonal bed | ✅ Gemini-composed ambient score (`music-bed.wav`), sampler-rendered, RMS-normalized | File + measured RMS in Continuous Layers |")
+        lines.append("| No copied music/hiss | ✅ Bed is an original composition; SFX remain procedural | Code inspection |")
+        lines.append("| Wind/neon/washer texture | ➖ Replaced by music bed; procedural texture layers used only as fallback | Code inspection |")
+    else:
+        lines.append("| Original tonal drone/pulse | ✅ Procedurally generated sine drone, no copied music | Code inspection |")
+        lines.append("| No copied music/hiss | ✅ All sounds synthesized from math primitives | Code inspection |")
+        lines.append("| Wind/neon/washer texture | ✅ Three separate texture layers | Code inspection |")
     lines.append("| Coin bounce sc03/05/08 timing | ✅ Timed to scene-source visual action events | Source-code keyframes (see audio-events.json); NOT playback-verified |")
     lines.append("| Nun footsteps sc02/12 ONLY | ✅ 3-4 steps per scene, no other scenes | Cadence-estimated; NOT visually verified against rendered foot contacts |")
     lines.append("| Cloth rustle sc06/07/10 | ✅ Filtered noise bursts at ~30% scene onset | Direction-estimated; NOT visually verified |")
     lines.append("| NO customer footsteps sc10 | ✅ No footstep generator in scene 10 | Code inspection |")
     lines.append("| Events from visual action | ✅ Coin cues derived from scene JS keyframes/phases | Source-code analysis, not rendered-frame inspection |")
     lines.append("| Exactly 60s stereo 48kHz PCM | ✅ Verified in output | File metadata |")
-    lines.append("| No APIs/downloads/samples | ✅ Pure procedural synthesis | Code inspection |")
+    lines.append("| No APIs/downloads/samples | " + ("⚠️ Music bed rendered via core/audio/sampler.py from composed score; SFX pure procedural" if bed_info is not None else "✅ Pure procedural synthesis") + " | Code inspection |")
     lines.append("")
 
     # ── Speech gap analysis ──

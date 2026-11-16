@@ -47,13 +47,18 @@ function sceneDefs() {
       <stop offset="1" stop-color="#33536e" stop-opacity="0"/>
     </linearGradient>
     <radialGradient id="s01-bulb">
-      <stop offset="0" stop-color="#dff6fb" stop-opacity=".9"/>
-      <stop offset=".4" stop-color="#9fdcef" stop-opacity=".35"/>
-      <stop offset="1" stop-color="#9fdcef" stop-opacity="0"/>
+      <stop offset="0" stop-color="#F2C894" stop-opacity=".9"/>
+      <stop offset=".4" stop-color="#E8B36A" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#E8B36A" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="s01-signhalo">
       <stop offset="0" stop-color="#a8e2f0" stop-opacity=".16"/>
       <stop offset="1" stop-color="#a8e2f0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s01-grounds">
+      <stop offset="0" stop-color="#D98E6C" stop-opacity=".22"/>
+      <stop offset=".6" stop-color="#B06A52" stop-opacity=".10"/>
+      <stop offset="1" stop-color="#B06A52" stop-opacity="0"/>
     </radialGradient>
     <clipPath id="s01-glass"><path d="M150 751L948 723V1331L150 1365Z"/></clipPath>
   </defs>`;
@@ -186,9 +191,9 @@ function pendantLamp(t) {
   return `<g transform="rotate(${n(sway)} ${lx} 786)">
     ${line(`M${lx} 786V884`, '#0d1c2b', 3, .8)}
     <path d="M${lx - 34} 884L${lx + 34} 884L${lx + 18} 922L${lx - 18} 922Z" fill="#101f30" stroke="#33536e" stroke-width="2"/>
-    <ellipse cx="${lx}" cy="924" rx="16" ry="6" fill="#dff6fb" opacity=".85"/>
-    <ellipse cx="${lx}" cy="928" rx="46" ry="18" fill="url(#s01-bulb)" opacity=".5"/>
-    <polygon points="${lx - 16},928 ${lx + 16},928 ${lx + 120},1398 ${lx - 120},1398" fill="#9fdcef" opacity=".05"/>
+    <ellipse cx="${lx}" cy="924" rx="16" ry="6" fill="#F2C894" opacity=".9"/>
+    <ellipse cx="${lx}" cy="928" rx="46" ry="18" fill="url(#s01-bulb)" opacity=".55"/>
+    <polygon points="${lx - 16},928 ${lx + 16},928 ${lx + 120},1398 ${lx - 120},1398" fill="#E8B36A" opacity=".06"/>
   </g>`;
 }
 
@@ -243,8 +248,10 @@ export function renderScene01(u, t, d = 5) {
     + exterior(t)
     + roofExtras(t);
 
-  // MID: glass atmosphere, neon, lamp, sidewalk bicycle
-  const mid = condensation(t)
+  // MID: warm bounce off the red facade on the sidewalk, glass atmosphere,
+  // neon, lamp, sidewalk bicycle
+  const mid = `<ellipse cx="540" cy="1570" rx="580" ry="180" fill="url(#s01-grounds)"/>`
+    + condensation(t)
     + glassShine(t)
     + neonTube(t)
     + pendantLamp(t)

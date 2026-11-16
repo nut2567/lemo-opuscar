@@ -26,7 +26,7 @@ Caption rules (from the task brief):
     Thai word is ever broken (Thai has no intra-word spaces).
   - Timings within a line are proportional to phrase weight (non-space char
     count), measured against the scene's speech interval.
-  - Kanit, 40-46 px (44 px default; 42/40 only if a single long phrase forces
+  - Kanit, 28-32 px (32 px default; 30/28 only if a single long phrase forces
     it), offwhite #EAF4FF on a translucent navy bar.
   - Caption area x90..930, y1480..1690 (bar drawn inside; never above y1480).
   - captionAt(t): half-open [start,end); null for t>=60 or no cue.
@@ -62,14 +62,14 @@ CAP_W = CAP_X1 - CAP_X0            # 840
 TEXT_CX = (CAP_X0 + CAP_X1) // 2   # 510  (text-anchor middle)
 
 # font geometry
-SIZE_DEFAULT = 44
-SIZE_MIN = 40
+SIZE_DEFAULT = 32
+SIZE_MIN = 28
 # two display lines
-BAR2_Y, BAR2_H = 1510, 160          # y 1510..1670  (inside 1480..1690)
-BASE2_Y, LINE_GAP = 1562, 60       # baselines 1562 / 1622
+BAR2_Y, BAR2_H = 1540, 112          # y 1540..1652  (inside 1480..1690)
+BASE2_Y, LINE_GAP = 1574, 42       # baselines 1574 / 1616
 # one display line
-BAR1_Y, BAR1_H = 1562, 66          # y 1562..1628
-BASE1_Y = 1604
+BAR1_Y, BAR1_H = 1582, 54          # y 1582..1636
+BASE1_Y = 1614
 
 # ---- Thai width measurement -------------------------------------------------
 # Primary path: real glyph advance widths read from Kanit-Regular.ttf with
@@ -189,11 +189,11 @@ def split_into_cues(text):
 
 
 def choose_size(cue_lines):
-    """Pick the largest font size in {44,42,40} such that every line in the
+    """Pick the largest font size in {32,30,28} such that every line in the
     cue stays within the 840 px hard pixel budget. Default 44; step down only
     if a single long phrase forces it."""
     widest = max(text_w(ln) for ln in cue_lines) if cue_lines else 0.0
-    for size in (44, 42, 40):
+    for size in (32, 30, 28):
         if widest * size <= CAP_W:
             return size
     return SIZE_MIN
@@ -375,14 +375,14 @@ export function captionAt(t) {
 export function renderCaptions(t) {
   const c = captionAt(t);
   if (!c) return '';
-  const sz = c.size || 44;
+  const sz = c.size || 32;
   const n = c.lines.length;
   const two = n >= 2;
-  const barY = two ? 1510 : 1562;
-  const barH = two ? 160 : 66;
-  const baseY = two ? 1562 : 1604;
-  const gap = 60;
-  let s = `<rect x="90" y="${barY}" width="840" height="${barH}" rx="18" fill="#142333" fill-opacity="0.82" stroke="#33485f" stroke-opacity="0.5" stroke-width="1"/>`;
+  const barY = two ? 1540 : 1582;
+  const barH = two ? 112 : 54;
+  const baseY = two ? 1574 : 1614;
+  const gap = 42;
+  let s = `<rect x="90" y="${barY}" width="840" height="${barH}" rx="12" fill="#142333" fill-opacity="0.55" stroke="#33485f" stroke-opacity="0.35" stroke-width="1"/>`;
   for (let i = 0; i < n; i++) {
     s += `<text x="510" y="${baseY + i * gap}" text-anchor="middle" font-family="Kanit, sans-serif" font-size="${sz}" fill="#EAF4FF">${esc(c.lines[i])}</text>`;
   }

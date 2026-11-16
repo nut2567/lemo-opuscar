@@ -32,10 +32,10 @@ function sceneDefs() {
       <stop stop-color="#759cab"/><stop offset=".38" stop-color="#132b3c"/><stop offset="1" stop-color="#456d82"/>
     </linearGradient>
     <linearGradient id="s04-wall" x2="0" y2="1">
-      <stop stop-color="#31485d"/><stop offset=".48" stop-color="#223850"/><stop offset="1" stop-color="#15293a"/>
+      <stop stop-color="#BBD8EC"/><stop offset=".48" stop-color="#A9CCE3"/><stop offset="1" stop-color="#8FBEDF"/>
     </linearGradient>
     <linearGradient id="s04-floor" x2=".25" y2="1">
-      <stop stop-color="#335062"/><stop offset=".72" stop-color="#4d6b7a"/><stop offset="1" stop-color="#1f3543"/>
+      <stop stop-color="#F0EDE2"/><stop offset=".72" stop-color="#E9E5D6"/><stop offset="1" stop-color="#D8D2C0"/>
     </linearGradient>
     <linearGradient id="s04-hose" x2="0" y2="1">
       <stop stop-color="#5d7484"/><stop offset="1" stop-color="#2a3e50"/>
@@ -46,6 +46,12 @@ function sceneDefs() {
     <radialGradient id="s04-glow">
       <stop stop-color="#bfe4f2" stop-opacity=".22"/><stop offset="1" stop-color="#8fb2d4" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="s04-warmGlow">
+      <stop stop-color="#E8B36A" stop-opacity=".36"/><stop offset=".55" stop-color="#C98F4E" stop-opacity=".15"/><stop offset="1" stop-color="#C98F4E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="s04-amber" x2="0" y2="1">
+      <stop stop-color="#F2C894"/><stop offset=".5" stop-color="#E8B36A"/><stop offset="1" stop-color="#C98F4E"/>
+    </linearGradient>
     <radialGradient id="s04-shadow" cx=".5" cy=".5" r=".5">
       <stop stop-color="#050d18" stop-opacity=".72"/><stop offset="1" stop-color="#050d18" stop-opacity="0"/>
     </radialGradient>
@@ -55,7 +61,7 @@ function sceneDefs() {
 
 // ---------- detailed washer (close-up version) ----------
 function washerClose(spec, time) {
-  const { i, x, y, scale, on, phase = 0, drumPhase } = spec;
+  const { i, x, y, scale, on, phase = 0, drumPhase, accent = '#8FB2D4' } = spec;
   // Drum rotation — three distinct phases: spin, tumble, idle
   let angle = 0;
   if (on) {
@@ -72,7 +78,7 @@ function washerClose(spec, time) {
   }
 
   const displayText = on ? (drumPhase === 'spin' ? '12' : drumPhase === 'tumble' ? '26' : '38') : '--';
-  const displayFill = on ? '#bfe8ef' : '#5d7583';
+  const displayFill = on ? '#F4ECDD' : '#5d7583';
   const led = on ? '#d8f4f6' : '#42586a';
   const led2 = on && drumPhase === 'spin' ? '#e8b872' : '#33465a';
 
@@ -110,19 +116,20 @@ function washerClose(spec, time) {
     ${path('M-82 -118L86 -126V102L-82 112Z', 'url(#s04-panel)', 'stroke="#7f9db1" stroke-width="1.4"')}
     <!-- control panel strip -->
     ${path('M-82 -118L86 -126V-82L-82 -72Z', '#2b4256', 'stroke="#8faebf" stroke-width="1"')}
+    ${path('M-80 -76L84 -68', 'none', `stroke="${accent}" stroke-width="2.5" opacity=".5" stroke-linecap="round"`)}
     <!-- dial/knob area -->
     ${path('M-70 -108L-28 -112V-90L-70 -86Z', '#101d2b', 'stroke="#9db8c4" stroke-width="1"')}
     ${path('M-66 -100L-34 -103', '#cfe2ea', 'stroke-width="2" opacity=".8"')}
     <!-- digital display -->
-    ${rect(-14, -116, 52, 22, '#081019', 'stroke="#8fb2d4" stroke-width="1"')}
+    ${rect(-14, -116, 52, 22, '#081019', `stroke="${accent}" stroke-width="1.4"`)}
     <text x="${n(-6)}" y="${n(-100)}" font-size="14" fill="${displayFill}" font-family="Kanit">${displayText}</text>
     <!-- buttons -->
-    ${rect(46, -112, 9, 9, '#22384a', 'stroke="#8fb2d4" stroke-width="1"')}
+    ${rect(46, -112, 9, 9, '#22384a', `stroke="${accent}" stroke-width="1"`)}
     <circle cx="64" cy="-107" r="5" fill="${led}"/><circle cx="78" cy="-107" r="5" fill="${led2}"/>
     <!-- soap tray -->
     ${rect(-72, -83, 44, 11, '#0a1420', 'stroke="#b18270" stroke-width="1"')}
     <!-- drum door - large circle -->
-    <ellipse cx="0" cy="0" rx="72" ry="76" fill="#0a1724" stroke="#9cb8c7" stroke-width="6"/>
+    <ellipse cx="0" cy="0" rx="72" ry="76" fill="#0a1724" stroke="${accent}" stroke-width="6" stroke-opacity="${on ? 1 : .4}"/>
     <ellipse cx="0" cy="0" rx="62" ry="66" fill="url(#s04-drum)" stroke="#35536a" stroke-width="4"/>
     <ellipse cx="0" cy="0" rx="52" ry="56" fill="#0a1a29"/>
     <!-- clothes inside drum -->
@@ -137,7 +144,7 @@ function washerClose(spec, time) {
     <!-- bottom kick plate -->
     ${path('M-80 96L76 88M-80 104L76 96', 'none', 'stroke="#122435" stroke-width="3" opacity=".8"')}
     <!-- machine number -->
-    <text x="${n(-72)}" y="${n(-52)}" font-size="14" fill="#c1d3dc" font-family="Kanit" opacity=".75">0${i}</text>
+    <text x="${n(-72)}" y="${n(-52)}" font-size="14" fill="${accent}" font-family="Kanit" opacity="${on ? .8 : .4}">0${i}</text>
   </g>`;
 }
 
@@ -205,6 +212,17 @@ function wallTiles(t) {
     const mop = n(0.03 + 0.02 * Math.sin(t * 0.15 + phase));
     svg += `<ellipse cx="${n(mx + dx)}" cy="${n(my + dy)}" rx="${n(mr)}" ry="${n(mr * 0.6)}" fill="#8FB2D4" opacity="${mop}"/>`;
   }
+  // Scattered colored accent tiles (retro laundromat palette)
+  const rng2 = mulberry32(9021);
+  const tileCols = ['#7FB8A4', '#E07A5F', '#E9C46A', '#9C8FC7', '#6FA8A0', '#E8A08C'];
+  for (let ty = 0; ty < 14; ty++) {
+    for (let tx = 0; tx < 12; tx++) {
+      if (rng2() < 0.16) {
+        const col = tileCols[Math.floor(rng2() * tileCols.length)];
+        svg += `<rect x="${100 + tx * 76}" y="${380 + ty * 52}" width="72" height="48" fill="${col}" opacity=".14"/>`;
+      }
+    }
+  }
   return svg;
 }
 
@@ -266,6 +284,22 @@ function ceilingLight(t) {
   return svg;
 }
 
+// ---------- warm practical light (amber tube + pools) ----------
+function practicalLight(t) {
+  const flick = n(0.9 + 0.06 * Math.sin(t * 3.3) + 0.04 * Math.sin(t * 9.1));
+  let svg = '';
+  // Amber tube fixture mounted on the wall below the fluorescent housing
+  svg += rect(300, 348, 480, 10, '#1a1208');
+  svg += rect(312, 351, 456, 5, 'url(#s04-amber)', `opacity="${n(.85 * flick)}"`);
+  // Soft warm cone washing down over the washer row
+  svg += `<polygon points="360,362 740,362 900,1160 180,1160" fill="url(#s04-warmGlow)" opacity="${n(.18 * flick)}"/>`;
+  // Warm halo on the wall behind the machines
+  svg += `<ellipse cx="540" cy="540" rx="400" ry="270" fill="url(#s04-warmGlow)" opacity="${n(.13 * flick)}"/>`;
+  // Warm pool on the floor in front of the row
+  svg += `<ellipse cx="540" cy="1190" rx="340" ry="80" fill="url(#s04-warmGlow)" opacity="${n(.3 * flick)}"/>`;
+  return svg;
+}
+
 // ---------- water puddle on floor ----------
 function floorPuddle(t) {
   const drift = n(Math.sin(t * 0.12) * 8);
@@ -293,26 +327,26 @@ export function renderScene04(u, t, d = 5) {
   // -- Washer specs for close-up low-angle view --
   // Feet meet the floor line (y=1160); the active drums stay inside the caption-safe band.
   const washers = [
-    { i: 1, x: 210, y: 992,    scale: 1.40, on: true,  phase: 0,   drumPhase: 'spin'   },
-    { i: 2, x: 370, y: 1010.8, scale: 1.24, on: true,  phase: 90,  drumPhase: 'tumble'  },
-    { i: 3, x: 520, y: 1028,   scale: 1.10, on: true,  phase: 180, drumPhase: 'drift'   },
-    { i: 4, x: 650, y: 1043.6, scale: 0.97, on: true,  phase: 45,  drumPhase: 'tumble'  },
-    { i: 5, x: 755, y: 1059.2, scale: 0.84, on: false, phase: 0,   drumPhase: 'idle'    },
-    { i: 6, x: 835, y: 1073.6, scale: 0.72, on: false, phase: 0,   drumPhase: 'idle'    },
+    { i: 1, x: 210, y: 992,    scale: 1.40, on: true,  phase: 0,   drumPhase: 'spin',   accent: '#7FB8A4' },
+    { i: 2, x: 370, y: 1010.8, scale: 1.24, on: true,  phase: 90,  drumPhase: 'tumble',  accent: '#E07A5F' },
+    { i: 3, x: 520, y: 1028,   scale: 1.10, on: true,  phase: 180, drumPhase: 'drift',   accent: '#E9C46A' },
+    { i: 4, x: 650, y: 1043.6, scale: 0.97, on: true,  phase: 45,  drumPhase: 'tumble',  accent: '#9C8FC7' },
+    { i: 5, x: 755, y: 1059.2, scale: 0.84, on: false, phase: 0,   drumPhase: 'idle',    accent: '#6FA8A0' },
+    { i: 6, x: 835, y: 1073.6, scale: 0.72, on: false, phase: 0,   drumPhase: 'idle',    accent: '#E8A08C' },
   ];
 
   // --- Build layers ---
   // BACK layer: wall, tiles, pipes, ceiling
   let back = '';
   // Wall background
-  back += `<polygon points="0,0 1080,0 1000,300 80,300" fill="#0c1826"/>`;
-  back += `<polygon points="0,300 80,300 50,1160 0,1500" fill="#101f30"/>`;
-  back += `<polygon points="1000,300 1080,300 1080,1700 1030,1160" fill="#0e1c2b"/>`;
+  back += `<polygon points="0,0 1080,0 1000,300 80,300" fill="#33506B"/>`;
+  back += `<polygon points="0,300 80,300 50,1160 0,1500" fill="#2C465E"/>`;
+  back += `<polygon points="1000,300 1080,300 1080,1700 1030,1160" fill="#28425A"/>`;
   back += `<polygon points="80,300 1000,300 1030,1160 50,1160" fill="url(#s04-wall)"/>`;
   back += line('M80 300H1000', '#536680', 3, .55);
   back += wallTiles(t);
   // Wainscoting
-  back += `<polygon points="90,800 1000,800 1030,1160 50,1160" fill="#1b2d3e" opacity=".72"/>`;
+  back += `<polygon points="90,800 1000,800 1030,1160 50,1160" fill="#8FAFC4" opacity=".72"/>`;
   back += line('M90 800H1000', '#6d8798', 2, .35);
   // Ceiling light
   back += ceilingLight(t);
@@ -334,6 +368,8 @@ export function renderScene04(u, t, d = 5) {
   }
   // Shadow beneath washers
   mid += `<ellipse cx="520" cy="1150" rx="430" ry="75" fill="url(#s04-shadow)" opacity=".5"/>`;
+  // Warm practical light over the floor and behind the machines
+  mid += practicalLight(t);
   // Hoses and pipes stay on the washer layer so the drops remain attached through the pan
   mid += hosesAndPipes(t);
   // Render washers back to front

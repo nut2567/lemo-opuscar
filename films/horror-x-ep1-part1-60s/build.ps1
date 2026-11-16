@@ -2,9 +2,10 @@ param([int]$RenderWorkers=3)
 $ErrorActionPreference='Stop'
 $Film=$PSScriptRoot
 $Library=(Resolve-Path (Join-Path $Film '../..')).Path
-$Python='D:/workspace/ai-video/.venv/Scripts/python.exe'
-$CaptionPython=Join-Path $Library '.venv/Scripts/python.exe'
+$Python='D:/peoject_wepapp/ai-video/.venv/Scripts/python.exe'
+$CaptionPython='D:/peoject_wepapp/ai-video/.venv/Scripts/python.exe'
 $Final=Join-Path $Film 'horror-x-ep1-part1-60s.mp4'
+$env:PYTHONIOENCODING='utf-8'
 function Check-Step([string]$Message){if($LASTEXITCODE -ne 0){throw $Message}}
 Push-Location $Library
 try{

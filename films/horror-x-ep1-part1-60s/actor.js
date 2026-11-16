@@ -9,7 +9,7 @@
 //   Defs are prefixed "actor-" (uid suffix allows multiple rigs per scene).
 
 const SKIN='#EFDCC4', SKIN_SH='#D9BEA2', INK='#141C28',
-      HAIR1='#1B2740', HAIR2='#0B1220',
+      HAIR1='#1B2740', HAIR2='#0B1220', HAIR_HI='#3A4A6E', HAIR_MID='#2E3D5E',
       SHIRT1='#2C4260', SHIRT2='#1C2D42', SHIRT_D='#1B2B3D',
       APRON1='#E4EAF1', APRON2='#C4D2DF',
       COPPER='#B18270', COPPER_D='#7E5847', ICE='#8FB2D4',
@@ -162,19 +162,35 @@ function head(P,U){
     <circle cx="1.4" cy="${N(0.8*es)}" r="${N(3.4*es)}" fill="#33291F"/><circle cx="2.3" cy="${N(-1.1*es)}" r="${N(1.1*es)}" fill="#EAF4FF"/>
     </g></g></g>`;
   return `<g transform="translate(0 ${N(P.nodY)}) rotate(${N(P.headRot)} 0 ${NECK_Y})">
-  <ellipse cx="0" cy="-4" rx="84" ry="94" fill="url(#actor${U}-hair)"/>
-  <path d="M-48 -32 C-56 3 -52 43 -40 68 C-46 72 -53 67 -53 57 C-58 27 -56 -6 -46 -32 Z" fill="url(#actor${U}-hair)"/>
-  <path d="M48 -32 C56 3 52 43 40 68 C46 72 53 67 53 57 C58 27 56 -6 46 -32 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-54 -46 C-88 -38 -110 -4 -114 60 C-118 142 -110 220 -94 270 C-70 262 -54 244 -48 210 C-44 146 -46 62 -48 0 C-50 -24 -52 -38 -54 -46 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M54 -46 C88 -38 110 -4 114 60 C118 142 110 220 94 270 C70 262 54 244 48 210 C44 146 46 62 48 0 C50 -24 52 -38 54 -46 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-30 44 C-38 116 -30 176 -16 212 L16 212 C30 176 38 116 30 44 C18 62 9 68 0 68 C-9 68 -18 62 -30 44 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M0 -84 C42 -84 68 -62 74 -30 C80 12 72 56 57 96 C51 112 45 118 39 116 L-39 116 C-45 118 -51 112 -57 96 C-72 56 -80 12 -74 -30 C-68 -62 -42 -84 0 -84 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-92 -16 C-104 60 -100 160 -88 246" fill="none" stroke="${HAIR2}" stroke-width="2.4" opacity=".55"/>
+  <path d="M-70 4 C-78 84 -76 164 -66 208" fill="none" stroke="${HAIR2}" stroke-width="2.2" opacity=".5"/>
+  <path d="M-104 44 C-112 120 -108 200 -98 254" fill="none" stroke="${HAIR_HI}" stroke-width="3" opacity=".5"/>
+  <path d="M92 -16 C104 60 100 160 88 246" fill="none" stroke="${HAIR2}" stroke-width="2.4" opacity=".55"/>
+  <path d="M70 4 C78 84 76 164 66 208" fill="none" stroke="${HAIR2}" stroke-width="2.2" opacity=".5"/>
+  <path d="M104 44 C112 120 108 200 98 254" fill="none" stroke="${HAIR_HI}" stroke-width="3" opacity=".5"/>
+  <path d="M-34 -64 C-42 -34 -38 -4 -30 26" fill="none" stroke="${HAIR2}" stroke-width="2" opacity=".4"/>
+  <path d="M34 -64 C42 -34 38 -4 30 26" fill="none" stroke="${HAIR2}" stroke-width="2" opacity=".4"/>
+  <path d="M0 -76 C-4 -48 4 -18 0 12" fill="none" stroke="${HAIR_HI}" stroke-width="2.4" opacity=".35"/>
   <ellipse cx="0" cy="0" rx="57" ry="69" fill="url(#actor${U}-skin)"/>
   <ellipse cx="0" cy="58" rx="16" ry="12" fill="${SKIN_SH}" opacity=".55"/>
   <ellipse cx="-15" cy="21" rx="8" ry="5" fill="${COPPER}" opacity=".16"/>
   <ellipse cx="15" cy="21" rx="8" ry="5" fill="${COPPER}" opacity=".16"/>
-  <path d="M-46 -10 C-47 -38 -33 -60 0 -60 C33 -60 47 -38 46 -10 C42 -30 34 -40 20 -43 C30 -30 32 -22 30 -10 C20 -24 10 -28 0 -28 C-10 -28 -20 -24 -30 -10 C-32 -22 -30 -30 -20 -43 C-34 -40 -42 -30 -46 -10 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-62 -20 C-65 -44 -51 -62 -29 -67 C-10 -71 11 -70 29 -64 C47 -58 59 -43 62 -28 C58 -32 52 -34 46 -36 C40 -40 34 -44 26 -47 C18 -50 8 -51 -2 -51 C-12 -51 -22 -49 -30 -45 C-38 -41 -44 -37 -50 -34 C-55 -31 -59 -25 -62 -20 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-30 -62 C-14 -54 4 -46 20 -38" fill="none" stroke="${HAIR_HI}" stroke-width="2" opacity=".5"/>
+  <path d="M-44 -58 C-30 -50 -12 -42 2 -36" fill="none" stroke="${HAIR2}" stroke-width="1.8" opacity=".45"/>
+  <path d="M-56 -34 C-68 -22 -72 8 -66 46 C-62 70 -56 84 -48 90 C-52 58 -50 22 -44 -6 C-42 -20 -46 -30 -56 -34 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M56 -34 C68 -22 72 8 66 46 C62 70 56 84 48 90 C52 58 50 22 44 -6 C42 -20 46 -30 56 -34 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-61 -16 C-65 14 -61 46 -53 72" fill="none" stroke="${HAIR2}" stroke-width="1.8" opacity=".45"/>
+  <path d="M61 -16 C65 14 61 46 53 72" fill="none" stroke="${HAIR2}" stroke-width="1.8" opacity=".45"/>
+  <g transform="translate(0 108)"><path d="M-13 -4 L13 -4 L9 9 L-9 9 Z" fill="#7E2A3A" stroke="#571C2B" stroke-width="1"/><circle cy="-5" r="4.5" fill="#8E3049"/></g>
   <path d="M-29 -32 Q-20 -38 -11 -33 M11 -33 Q20 -38 29 -32" fill="none" stroke="#241A12" stroke-width="2.4" stroke-linecap="round"/>
   ${eye(-18)}${eye(18)}
   <path d="M-1.5 3 q2.5 5 -0.8 8" fill="none" stroke="#C4A98C" stroke-width="1.6" stroke-linecap="round"/>
   ${mouth}
-  <path d="M-38 -20 C-40 -36 -30 -48 -18 -52 M38 -20 C40 -36 30 -48 18 -52" fill="none" stroke="${ICE}" stroke-width="1.4" opacity=".3"/>
 </g>`;
 }
 
@@ -242,7 +258,7 @@ export function nun(t,opts={}){
 
   const defs=`<defs>
 <linearGradient id="actor${U}-skin" x2="0" y2="1"><stop stop-color="#EFDFC9"/><stop offset="1" stop-color="#D9BEA2"/></linearGradient>
-<linearGradient id="actor${U}-hair" x2="0" y2="1"><stop stop-color="${HAIR1}"/><stop offset="1" stop-color="${HAIR2}"/></linearGradient>
+<linearGradient id="actor${U}-hair" x2="0" y2="1"><stop stop-color="${HAIR1}"/><stop offset=".55" stop-color="${HAIR_MID}"/><stop offset="1" stop-color="${HAIR2}"/></linearGradient>
 <linearGradient id="actor${U}-shirt" x2="0" y2="1"><stop stop-color="${SHIRT1}"/><stop offset="1" stop-color="${SHIRT2}"/></linearGradient>
 <linearGradient id="actor${U}-apron" x2="0" y2="1"><stop stop-color="${APRON1}"/><stop offset="1" stop-color="${APRON2}"/></linearGradient>
 <linearGradient id="actor${U}-skirt" x2="0" y2="1"><stop stop-color="#22334C"/><stop offset="1" stop-color="#131F30"/></linearGradient>
