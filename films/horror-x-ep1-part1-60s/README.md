@@ -40,13 +40,32 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Version v5 -Ski
 
 `-Preflight` runs `preflight.py` only (imports, sources, fonts, canonical-audio hashes, core modules, node/ffmpeg) and exits without rendering; `build.ps1` runs it automatically unless `-SkipPreflight` is passed. Rendered MP4s are local artifacts and are not tracked in Git (`.gitignore` keeps `/films/**/*.mp4` and `/films/**/out/` out of the index); the accepted `horror-x-ep1-part1-60s-v5.mp4` / `out/picture-v5.mp4` bytes stay on disk locally only — back them up yourself if needed.
 
-### Fresh-clone setup (another machine)
+### Fresh-clone setup (Windows, PowerShell)
 
-1. Clone the library and install the core tier: `sh plugin/skills/lemo-opuscar/scripts/setup.sh deps` from the repo root — this creates `.venv` from `requirements.txt` (numpy, scipy, soundfile, soxr, pillow, fonttools) and runs `npm ci` (playwright-core, three). The film needs only numpy/PIL/fontTools from that venv.
-2. Install the headless browser once: `node node_modules/playwright-core/cli.js install chromium-headless-shell` (or set `PLAYWRIGHT_CHROME` to a chrome-headless-shell executable).
-3. ffmpeg and ffprobe on PATH (needed for mux, poster, voice conversion).
-4. Voice regeneration only (not needed for the accepted rebuild): `pip install -r requirements-voice.txt` inside `.venv` for edge-tts; it is an online free service.
-5. Build as above. `build.ps1` resolves Python itself (-Python or `$env:LEMO_PYTHON` to override; film `.venv`, library `.venv`, then PATH) and fails with the missing module names if none qualifies.
+From the repository root in PowerShell (documented path; the v5 relocated verification reused this machine's existing installs rather than reinstalling from scratch):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+`requirements.txt` is the library core tier (numpy, scipy, soundfile, soxr, pillow, fonttools); the film itself only needs **numpy, pillow and fontTools** — a minimal `.venv` with just those three is enough for `-SkipRegeneration` builds. Then:
+
+```powershell
+npm ci
+node node_modules/playwright-core/cli.js install chromium-headless-shell
+```
+
+ffmpeg and ffprobe must be on PATH (used for the final mux, poster frame and voice conversion). For voice regeneration only, also `.\.venv\Scripts\python.exe -m pip install -r requirements-voice.txt` (edge-tts; online free service, not needed for the accepted rebuild).
+
+Build from this folder:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Version v5 -SkipRegeneration
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Preflight   # checks only, no render
+```
+
+`build.ps1` resolves Python itself (`-Python` or `$env:LEMO_PYTHON` to override; film `.venv`, library `.venv`, then PATH) and fails with the missing module names if none qualifies. (On non-Windows checkouts the same steps apply with `sh plugin/skills/lemo-opuscar/scripts/setup.sh deps` instead of the manual venv/npm commands.)
 
 The first voice generation is keyless/online and cached locally. Rebuilds reuse speech.wav; to deliberately revise voice, run generate-voice.py with its documented options before rebuilding. Actual timings come from voice-timeline.json, then finalize-timeline.py exports only the scene array to timeline.json and validates coverage/voice gaps.
 
