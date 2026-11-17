@@ -62,6 +62,9 @@ def sha256(path: Path) -> str:
 
 def main() -> int:
     as_json = "--json" in sys.argv[1:]
+    # --require-approved-audio: used by the accepted -SkipRegeneration rebuild, where
+    # soundtrack.wav/mixed-soundtrack.wav must be byte-identical to the approved v5 mix.
+    strict_audio = "--require-approved-audio" in sys.argv[1:]
     results: list[tuple[str, str, str]] = []  # (status, area, message)
 
     def check(ok: bool, area: str, msg: str, warn_only: bool = False) -> None:
@@ -104,8 +107,10 @@ def main() -> int:
             check(got == want, "audio-hash",
                   f"{name} sha256 {got[:12]}… matches approved v5" if got == want
                   else f"{name} sha256 {got[:12]}… differs from approved v5 {want[:12]}… "
-                       f"(ok only if audio was deliberately regenerated)",
-                  warn_only=True)
+                        + ("REJECTED: -SkipRegeneration rebuilds require the approved mix"
+                          if strict_audio else
+                          "(ok only if audio was deliberately regenerated)"),
+                  warn_only=not strict_audio)
 
     try:
         tl = json.loads((FILM / "timeline.json").read_text(encoding="utf-8"))
@@ -148,21 +153,35 @@ def main() -> int:
         check(shutil.which(tool) is not None, "tools",
               f"{tool} on PATH" if shutil.which(tool) else f"{tool} not on PATH (needed for mux/poster/voice)")
 
-    # Headless browser: playwright-core resolves its own cache; PLAYWRIGHT_CHROME
-    # may point at a chrome-headless-shell. Report-only: the render itself proves it.
-    chrome = os.environ.get("PLAYWRIGHT_CHROME")
-    if chrome:
-        check(Path(chrome).is_file(), "browser", f"PLAYWRIGHT_CHROME -> {chrome}", warn_only=True)
+    # Headless browser is REQUIRED for qa-render/video.mjs even under
+    # -SkipRegeneration. Verify it the same way core/render/page.mjs resolves it:
+    # a real chromium.launch() through playwright-core (PLAYWRIGHT_CHROME honored
+    # inside core/render/browser.mjs), launched and closed without rendering.
+    if not node:
+        check(False, "browser", "node not on PATH - cannot resolve playwright browser")
+    elif not (nm / "playwright-core").is_dir():
+        check(False, "browser", "node_modules/playwright-core missing - run: npm ci")
     else:
-        cache = Path.home() / "AppData/Local/ms-playwright"
-        shells = (list(cache.glob("chromium_headless_shell-*/chrome-headless-shell-win64/chrome-headless-shell.exe"))
-                  + list(cache.glob("chromium_headless_shell-*/chrome-headless-shell-linux*/chrome-headless-shell"))
-                  + list(cache.glob("chromium_headless_shell-*/chrome-headless-shell-mac*/**/chrome-headless-shell"))) if cache.is_dir() else []
-        check(bool(shells), "browser",
-              "playwright chromium headless shell found in user cache" if shells
-              else "no playwright chromium headless shell in the user cache - run: "
-                   "node node_modules/playwright-core/cli.js install chromium-headless-shell "
-                   "(or set PLAYWRIGHT_CHROME)", warn_only=True)
+        probe = (
+            "import('playwright-core').then(async ({chromium}) => {"
+            " const {EXE, ARGS} = await import('./core/render/browser.mjs');"
+            " const b = await chromium.launch({ executablePath: EXE, args: ARGS });"
+            " await b.close();"
+            "}).catch(e => { console.error(String(e && e.message || e).slice(0,400)); process.exit(1); })"
+        )
+        try:
+            r = subprocess.run([node, "--input-type=module", "-e", probe],
+                               cwd=str(LIB), capture_output=True, text=True, timeout=90)
+            if r.returncode == 0:
+                check(True, "browser", "headless chromium launches via core/render/browser.mjs resolution")
+            else:
+                detail = (r.stderr or r.stdout).strip().replace(chr(10)," ")[:240]
+                check(False, "browser",
+                      "headless browser launch failed: " + (detail or "unknown error")
+                      + " - run: node node_modules/playwright-core/cli.js install chromium-headless-shell "
+                        "(or set PLAYWRIGHT_CHROME to a chrome-headless-shell executable)")
+        except subprocess.TimeoutExpired:
+            check(False, "browser", "headless browser launch timed out (90s)")
 
     if as_json:
         fails = [r for r in results if r[0] == "FAIL"]

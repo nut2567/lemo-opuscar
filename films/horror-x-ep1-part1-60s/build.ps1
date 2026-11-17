@@ -14,28 +14,16 @@ $Suffix=if($Version){'-'+$Version}else{''}
 $Final=Join-Path $Film ("horror-x-ep1-part1-60s"+$Suffix+".mp4")
 $Picture=Join-Path $Film ("out/picture"+$Suffix+".mp4")
 $Poster=Join-Path $Film ("poster"+$Suffix+".jpg")
+$hint='Create one with: python -m venv .venv ; .venv/Scripts/pip install numpy pillow fonttools  (or run sh plugin/skills/lemo-opuscar/scripts/setup.sh deps at the library root)'
 
 # --- Python interpreter resolution -------------------------------------------------
-# Order: -Python, $env:LEMO_PYTHON, film .venv, library .venv, python/python3 on PATH.
-# No machine-specific paths: whatever works on this checkout is used. The chosen
-# interpreter must import numpy, PIL and fontTools (the film's Python dependencies).
-function Find-PythonCandidates {
- $c=@()
- if($Python){$c+=$Python}
- if($env:LEMO_PYTHON){$c+=$env:LEMO_PYTHON}
- foreach($root in @($Film,$Library)){
-  foreach($rel in @('.venv/Scripts/python.exe','.venv/bin/python','.venv/bin/python3')){
-   $p=Join-Path $root $rel
-   if(Test-Path -LiteralPath $p){$c+=$p}
-  }
- }
- foreach($cmd in @('python','python3','py')){
-  $hit=Get-Command $cmd -ErrorAction SilentlyContinue
-  if($hit){$c+=$hit.Source}
- }
- return ($c | Select-Object -Unique)
-}
-function Test-Python([string]$Exe,[switch]$NeedModules){
+# Explicit -Python / $env:LEMO_PYTHON must be runnable AND have numpy/PIL/fontTools:
+# an invalid explicit choice fails loudly, never falls back. Automatic discovery
+# (film .venv, library .venv, python/python3/py on PATH) picks the first
+# module-qualified interpreter for both -Preflight and real builds; only when none
+# qualifies does -Preflight fall back to the first runnable interpreter so
+# preflight.py can print the full FAIL report.
+function Get-PythonInfo([string]$Exe){
  if(-not $Exe){return $null}
  $resolved=$Exe
  if(-not(Test-Path -LiteralPath $Exe)){
@@ -43,46 +31,67 @@ function Test-Python([string]$Exe,[switch]$NeedModules){
   if(-not $hit){return $null}
   $resolved=$hit.Source
  }
- if($NeedModules){
-  $probe="import importlib.util,sys;print(','.join(m for m in ('numpy','PIL','fontTools') if importlib.util.find_spec(m) is None))"
- }else{
-  $probe="print('ok')"
- }
- $missing=& $resolved -c $probe 2>$null
+ & $resolved -c "print('ok')" 2>$null | Out-Null
  if($LASTEXITCODE -ne 0){return $null}
- $miss=if($NeedModules){("$missing").Trim()}else{''}
- return @{Exe=$resolved;Missing=$miss}
+ $miss=& $resolved -c "import importlib.util;print(','.join(m for m in ('numpy','PIL','fontTools') if importlib.util.find_spec(m) is None))" 2>$null
+ if($LASTEXITCODE -ne 0){return @{Exe=$resolved;Missing='(probe failed)'}}
+ return @{Exe=$resolved;Missing=("$miss").Trim()}
 }
-$hint='Create one with: python -m venv .venv ; .venv/Scripts/pip install numpy pillow fonttools  (or run sh plugin/skills/lemo-opuscar/scripts/setup.sh deps at the library root)'
-$PyInfo=$null;$Tried=@();$MissingInfo=$null
-foreach($cand in (Find-PythonCandidates)){
- $info=Test-Python $cand -NeedModules:(-not $Preflight)
- if(-not $info){$Tried+=$cand;continue}
- if($info.Missing){if(-not $MissingInfo){$MissingInfo=$info};$Tried+=$cand;continue}
- $PyInfo=$info;break
+function Resolve-Python([string]$Explicit,[string[]]$Auto){
+ if($Explicit){
+  $info=Get-PythonInfo $Explicit
+  if(-not $info){throw "Python '$Explicit' is not runnable. $hint"}
+  if($info.Missing){throw "Python '$($info.Exe)' is missing modules: $($info.Missing). $hint"}
+  return $info.Exe
+ }
+ $firstRunnable=$null
+ foreach($cand in $Auto){
+  $info=Get-PythonInfo $cand
+  if(-not $info){continue}
+  if(-not $firstRunnable){$firstRunnable=$info}
+  if(-not $info.Missing){return $info.Exe}
+ }
+ if($Preflight -and $firstRunnable){return $firstRunnable.Exe}   # let preflight.py report the missing modules
+ throw "No usable Python found. Tried: $($Auto -join '; '). Required: an interpreter with numpy/PIL/fontTools. $hint"
 }
-if(-not $PyInfo){$PyInfo=$MissingInfo}
-if(-not $PyInfo){
- throw "No usable Python found. Tried: $($Tried -join '; '). Required: an interpreter with numpy/PIL/fontTools. $hint"
+$AutoCandidates=@()
+foreach($root in @($Film,$Library)){
+ foreach($rel in @('.venv/Scripts/python.exe','.venv/bin/python','.venv/bin/python3')){
+  $p=Join-Path $root $rel
+  if(Test-Path -LiteralPath $p){$AutoCandidates+=$p}
+ }
 }
-$PyExe=$PyInfo.Exe
-if($PyInfo.Missing){
- throw "Python '$PyExe' is missing modules: $($PyInfo.Missing). $hint"
+foreach($cmd in @('python','python3','py')){
+ $hit=Get-Command $cmd -ErrorAction SilentlyContinue
+ if($hit){$AutoCandidates+=$hit.Source}
 }
-# Captions/tests need the same interpreter; -CaptionPython remains for override.
-if(-not $CaptionPython){$CaptionPython=$PyExe}elseif(-not(Test-Path -LiteralPath $CaptionPython)){$CaptionPython=$PyExe}
+$AutoCandidates=@($AutoCandidates | Select-Object -Unique)
+$ExplicitPython=if($Python){$Python}elseif($env:LEMO_PYTHON){$env:LEMO_PYTHON}else{$null}
+$PyExe=Resolve-Python $ExplicitPython $AutoCandidates
+# -CaptionPython is validated the same way when given explicitly.
+if($CaptionPython){
+ $capInfo=Get-PythonInfo $CaptionPython
+ if(-not $capInfo){throw "CaptionPython '$CaptionPython' is not runnable. $hint"}
+ if($capInfo.Missing){throw "CaptionPython '$($capInfo.Exe)' is missing modules: $($capInfo.Missing). $hint"}
+}else{
+ $CaptionPython=$PyExe
+}
 Write-Output "python: $PyExe"
 
 function Check-Step([string]$Message){if($LASTEXITCODE -ne 0){throw $Message}}
 Push-Location $Library
 try{
  if(-not(Test-Path -LiteralPath (Join-Path $Library 'core/render/video.mjs'))){throw 'Library renderer not found'}
+ # -SkipRegeneration rebuilds must use the exact approved v5 audio: preflight.py
+ # turns the canonical soundtrack/mix hash check into a hard failure in that mode.
+ $PreflightArgs=@()
+ if($SkipRegeneration){$PreflightArgs+='--require-approved-audio'}
  if($Preflight){
-  & $PyExe (Join-Path $Film 'preflight.py');Check-Step 'Preflight failed'
+  & $PyExe (Join-Path $Film 'preflight.py') @PreflightArgs;Check-Step 'Preflight failed'
   return
  }
  if(-not $SkipPreflight){
-  & $PyExe (Join-Path $Film 'preflight.py');Check-Step 'Preflight failed - fix the FAIL lines above (preflight.py --json for details)'
+  & $PyExe (Join-Path $Film 'preflight.py') @PreflightArgs;Check-Step 'Preflight failed - fix the FAIL lines above (preflight.py --json for details)'
  }
  if(-not $SkipRegeneration){
   $vmiss=& $PyExe -c "import importlib.util;print(','.join(m for m in ('edge_tts','imageio_ffmpeg') if importlib.util.find_spec(m) is None))"
