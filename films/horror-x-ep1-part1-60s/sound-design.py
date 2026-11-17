@@ -20,9 +20,11 @@ Inputs (optional — runs with defaults if missing):
   - music-bed.wav        — composed score bed; when present it replaces
                            procedural continuous layers 1-5 (fallback kept)
 
-Output:
-  - soundtrack.wav       — 60s stereo 48kHz 16-bit PCM
-  - SOUND-QA.md          — cue table + speech-gap checks
+Output (alternate music-bed variant — never the canonical build inputs):
+  - audio-variants/music-bed/soundtrack.wav — 60s stereo 48kHz 16-bit PCM
+  - audio-variants/music-bed/SOUND-QA.md    — cue table + speech-gap checks
+  The canonical soundtrack.wav / mixed-soundtrack.wav are the approved v5
+  baseline and are NOT written by this script.
 """
 
 import json
@@ -54,8 +56,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TIMELINE_PATH = os.path.join(HERE, "voice-timeline.json")
 SPEECH_PATH = os.path.join(HERE, "speech.wav")
 MUSIC_BED_PATH = os.path.join(HERE, "music-bed.wav")
-OUT_WAV = os.path.join(HERE, "soundtrack.wav")
-QA_PATH = os.path.join(HERE, "SOUND-QA.md")
+OUT_WAV = os.path.join(HERE, "audio-variants", "music-bed", "soundtrack.wav")
+QA_PATH = os.path.join(HERE, "audio-variants", "music-bed", "SOUND-QA.md")
 
 # Target RMS for music-bed.wav. The removed procedural layers 1-5 produced a
 # pre-normalization soundtrack RMS of ~-26 dBFS (measured: post-norm RMS
@@ -858,7 +860,7 @@ def write_qa(scenes, has_timeline, has_speech, cue_log, raw_peak, gain, bed_info
     lines.append("```sh")
     lines.append('D:/workspace/ai-video/.venv/Scripts/python.exe sound-design.py')
     lines.append("```\n")
-    lines.append("The script automatically picks up new inputs and regenerates soundtrack.wav.\n")
+    lines.append("The script automatically picks up new inputs and regenerates the variant stem at audio-variants/music-bed/soundtrack.wav (canonical soundtrack.wav is untouched).\n")
 
     with open(QA_PATH, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))

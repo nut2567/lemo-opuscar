@@ -25,12 +25,21 @@ def read_audio(path):
     if abs(len(a)/SR-60)>.001:raise ValueError(f'{path.name} must be60s,got{len(a)/SR}')
     return a
 if __name__=='__main__':
-    voice=read_audio(ROOT/'speech.wav')
+    # Optional args: [voice.wav] [score.wav] [out.wav] [check.json]
+    # Defaults are the canonical approved v5 inputs/outputs; the music-bed
+    # variant recipe passes audio-variants/music-bed/ paths explicitly.
+    import sys
+    voice_path=Path(sys.argv[1]) if len(sys.argv)>1 else ROOT/'speech.wav'
+    score_path=Path(sys.argv[2]) if len(sys.argv)>2 else ROOT/'soundtrack.wav'
+    out_path=Path(sys.argv[3]) if len(sys.argv)>3 else ROOT/'mixed-soundtrack.wav'
+    check_path=Path(sys.argv[4]) if len(sys.argv)>4 else ROOT/'qa/audio-mix-check.json'
+    voice=read_audio(voice_path)
     # sound-design.py uses speech only to duck its bed; its output is a stem.
-    score=read_audio(ROOT/'soundtrack.wav')
+    score=read_audio(score_path)
     mixed,report=mix_arrays(voice,score)
-    with wave.open(str(ROOT/'mixed-soundtrack.wav'),'wb') as f:
+    with wave.open(str(out_path),'wb') as f:
         f.setnchannels(2);f.setsampwidth(2);f.setframerate(SR)
         f.writeframes((np.clip(mixed,-1,1)*32767).astype('<i2').tobytes())
-    (ROOT/'qa/audio-mix-check.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
-    print('Mixed actual dry narration and ducked score/SFX; voice18dB above bed RMS')
+    check_path.parent.mkdir(parents=True,exist_ok=True)
+    check_path.write_text(json.dumps(report,indent=2),encoding='utf-8')
+    print(f'Mixed actual dry narration and ducked score/SFX -> {out_path}; voice18dB above bed RMS')
