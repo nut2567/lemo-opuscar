@@ -1,6 +1,6 @@
 # Reproducible Character Proof
 
-Branch: `feature/reproducible-character-proof`
+Available on `main`; implementation branch: `feature/reproducible-character-proof`.
 
 Standalone code-only proof of the isolated original Nun + dimensional cloth construction. It is not the full laundry film, and it is not a byte-copy of the earlier browser screenshot.
 
@@ -45,6 +45,6 @@ The checked-in `expected/manifest.json`, `expected/character-proof.svg` and `exp
 
 The canonical rasterizer is the WASM resvg engine, not the earlier browser Canvas screenshot path. Antialiasing can differ slightly at edges, so do not expect this PNG to be byte-identical to the previous browser PNG; use this folder's golden SHA values instead.
 
-Cross-OS reproducibility is planned to be guarded by future Linux/Windows/macOS CI. This README does not claim that those runs have already happened.
+Windows is the supported deployment target. GitHub Actions runs the pinned verification on `windows-latest`; local Windows verification and an isolated clean-folder installation also pass. For the same pinned inputs, the checked-in SVG/PNG hashes are the acceptance check on another Windows machine.
 
 No AI or image generation, provider calls, downloads, browser, system fonts, source photos or existing PNGs are runtime inputs. Every visible asset is generated from code in this folder.
