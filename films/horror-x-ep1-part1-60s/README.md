@@ -30,13 +30,23 @@ Frame-aligned verification: picture-v4 vs picture-v3.mp4 at identical decoded fr
 
 The original run (`horror-x-ep1-part1-60s.mp4`, `out/picture-v3.mp4`) is complete and preserved byte-identically; its stale in-progress status fields are archived under `historical_v3_production` in PRODUCTION-STATE.json. This was a fresh 12-scene narrative adaptation; prototype remains intact. Part2/3 are not being produced.
 
-## Build (after all queued scene/voice/caption work lands)
+## Build
+
+Accepted v5 rebuild (reuses the committed canonical audio; no voice/score regeneration):
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Version v5 -SkipRegeneration
 ```
 
-Run from this folder, or pass its absolute path. Dependencies: lemo-opuscar core packages and Chromium (installed), ffmpeg, D:/workspace/ai-video/.venv/Scripts/python.exe with edge_tts/numpy, and the library's .venv/Scripts/python.exe with fontTools for actual Kanit caption metrics. No global installs, paid generation or narration time-stretching.
+`-Preflight` runs `preflight.py` only (imports, sources, fonts, canonical-audio hashes, core modules, node/ffmpeg) and exits without rendering; `build.ps1` runs it automatically unless `-SkipPreflight` is passed. Rendered MP4s are local artifacts and are not tracked in Git (`.gitignore` keeps `/films/**/*.mp4` and `/films/**/out/` out of the index); the accepted `horror-x-ep1-part1-60s-v5.mp4` / `out/picture-v5.mp4` bytes stay on disk locally only — back them up yourself if needed.
+
+### Fresh-clone setup (another machine)
+
+1. Clone the library and install the core tier: `sh plugin/skills/lemo-opuscar/scripts/setup.sh deps` from the repo root — this creates `.venv` from `requirements.txt` (numpy, scipy, soundfile, soxr, pillow, fonttools) and runs `npm ci` (playwright-core, three). The film needs only numpy/PIL/fontTools from that venv.
+2. Install the headless browser once: `node node_modules/playwright-core/cli.js install chromium-headless-shell` (or set `PLAYWRIGHT_CHROME` to a chrome-headless-shell executable).
+3. ffmpeg and ffprobe on PATH (needed for mux, poster, voice conversion).
+4. Voice regeneration only (not needed for the accepted rebuild): `pip install -r requirements-voice.txt` inside `.venv` for edge-tts; it is an online free service.
+5. Build as above. `build.ps1` resolves Python itself (-Python or `$env:LEMO_PYTHON` to override; film `.venv`, library `.venv`, then PATH) and fails with the missing module names if none qualifies.
 
 The first voice generation is keyless/online and cached locally. Rebuilds reuse speech.wav; to deliberately revise voice, run generate-voice.py with its documented options before rebuilding. Actual timings come from voice-timeline.json, then finalize-timeline.py exports only the scene array to timeline.json and validates coverage/voice gaps.
 

@@ -84,6 +84,11 @@ styles/*/demo/stills/*
 
 # The user's own films (what the agent makes)
 /films/
+# Rendered video and picture intermediates are local artifacts, not source: they stay
+# untracked even though earlier ones were committed by mistake. Posters, WAV sources,
+# fonts and scripts under films/ remain tracked as usual.
+/films/**/*.mp4
+/films/**/out/
 
 
 # Production logs are internal: they stay local
