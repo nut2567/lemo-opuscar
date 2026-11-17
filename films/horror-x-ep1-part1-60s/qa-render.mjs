@@ -3,7 +3,8 @@
 // Captures the middle frame of every scene plus both sides of every cut (±1 frame
 // around each scene boundary taken from timeline.json), and verifies the page
 // contract: DUR 60, READY true, one root SVG, local Kanit loaded, no
-// NaN/undefined/Infinity attributes, caption bbox inside x90..930 y1450..1710, no
+// NaN/undefined/Infinity attributes, caption bbox inside the captions.js
+// CAPTION_X0/X1/Y0/Y1 bounds, no
 // pageerror, scene identity changing at every cut, and a deterministic rendered
 // image hash when the same t is rendered out of order. Owns and always releases
 // its browser and server.
@@ -12,7 +13,15 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { CAPTION_X0, CAPTION_X1, CAPTION_Y0, CAPTION_Y1 } from './captions.js';
+import { ARGS } from '../../core/render/browser.mjs';
 import { openDemo, closeServer } from '../../core/render/page.mjs';
+
+// Force CPU raster for this QA browser only: GPU-accelerated compositing rounds
+// antialiased edges by ±1 LSB depending on tile-cache state, which made identical
+// SVG renders produce different PNGs (scene08-mid: 126 px, max delta 1). Software
+// raster is deterministic; the video render keeps the default GPU path.
+ARGS.push('--disable-gpu-rasterization');
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const qaDir = path.join(dir, 'qa');
@@ -24,11 +33,17 @@ const FPS = 30;
 const FRAME = 1 / FPS;
 const DUR_EXPECTED = 60;
 const SCENE_COUNT = 12;
-// Task QA bound for the actual caption box (narrower than the layout contract).
-const CAPTION_BOUNDS = { left: 90, top: 1450, right: 930, bottom: 1710 };
+// Caption bounds are the captions.js exports (the same source main.js
+// window.TEXTS uses); they must cover the actual rendered glyph/bar extents.
+const CAPTION_BOUNDS = { left: CAPTION_X0, top: CAPTION_Y0, right: CAPTION_X1, bottom: CAPTION_Y1 };
+const CAPTION_BOUNDS_OK = [CAPTION_X0, CAPTION_X1, CAPTION_Y0, CAPTION_Y1].every(Number.isFinite) &&
+  CAPTION_X1 > CAPTION_X0 && CAPTION_Y1 > CAPTION_Y0;
 
 const issues = [];
 const issue = (m) => issues.push(m);
+if (!CAPTION_BOUNDS_OK) {
+  issue('captions.js must export finite CAPTION_X0/X1/Y0/Y1 covering the caption area');
+}
 const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
 
 const report = {
@@ -231,9 +246,9 @@ try {
           issue(`${key} t=${frame.t}: invalid attribute ${b.tag}/${b.name}="${b.value}"`);
         }
         if (!dom.sceneId) { frame.ok = false; issue(`${key} t=${frame.t}: root SVG has no data-scene identity`); }
-        if (dom.caption.present && !dom.caption.ok) {
+        if (dom.caption.present && CAPTION_BOUNDS_OK && !dom.caption.ok) {
           frame.ok = false;
-          issue(`${key} t=${frame.t}: caption bbox ${JSON.stringify(dom.caption.bbox)} outside x90..930 y1450..1710`);
+          issue(`${key} t=${frame.t}: caption bbox ${JSON.stringify(dom.caption.bbox)} outside caption bounds ${JSON.stringify(CAPTION_BOUNDS)}`);
         }
       } catch (e) {
         frame.ok = false;

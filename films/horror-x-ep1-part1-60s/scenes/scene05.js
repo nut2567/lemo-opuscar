@@ -99,7 +99,7 @@ function defs() {
       <stop stop-color="#DDAF91"/><stop offset=".4" stop-color="#B18270"/><stop offset="1" stop-color="#6B4737"/>
     </linearGradient>
     <radialGradient id="s05-bokeh" cx=".5" cy=".46" r=".55">
-      <stop stop-color="#12202d" stop-opacity=".62"/><stop offset=".52" stop-color="#0c1826" stop-opacity=".42"/>
+      <stop stop-color="#2B4A66" stop-opacity=".6"/><stop offset=".52" stop-color="#3D6282" stop-opacity=".42"/>
       <stop offset=".84" stop-color="#8FB2D4" stop-opacity=".14"/><stop offset="1" stop-color="#8FB2D4" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="s05-shadow" cx=".5" cy=".5" r=".5">
@@ -109,6 +109,10 @@ function defs() {
     <radialGradient id="s05-glow" cx=".5" cy=".5" r=".5">
       <stop stop-color="#E2B08C" stop-opacity=".5"/><stop offset=".5" stop-color="#B18270" stop-opacity=".2"/>
       <stop offset="1" stop-color="#B18270" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s05-warmGlow" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#E8B36A" stop-opacity=".42"/><stop offset=".55" stop-color="#C98F4E" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#C98F4E" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="s05-vig" cx=".5" cy=".46" r=".72">
       <stop stop-color="#07121e" stop-opacity="0"/><stop offset=".62" stop-color="#07121e" stop-opacity=".1"/>
@@ -125,33 +129,48 @@ function defs() {
 function bokehLayer(u) {
   const specs = [
     {x: 176, y: 232, r: 214, ph: 0.3, sp: 9},
-    {x: 938, y: 300, r: 252, ph: 1.7, sp: -7},
-    {x: 430, y: 632, r: 150, ph: 2.9, sp: 12},
-    {x: 20, y: 760, r: 184, ph: 4.1, sp: -10},
-    {x: 1024, y: 900, r: 168, ph: 5.3, sp: 8},
-    {x: 748, y: 540, r: 118, ph: 0.9, sp: -14},
-    {x: 282, y: 1094, r: 150, ph: 3.6, sp: 11},
+    {x: 938, y: 300, r: 252, ph: 1.7, sp: -7, ac: '#E07A5F'},
+    {x: 430, y: 632, r: 150, ph: 2.9, sp: 12, ac: '#7FB8A4'},
+    {x: 20, y: 760, r: 184, ph: 4.1, sp: -10, ac: '#9C8FC7'},
+    {x: 1024, y: 900, r: 168, ph: 5.3, sp: 8, ac: '#E9C46A'},
+    {x: 748, y: 540, r: 118, ph: 0.9, sp: -14, ac: '#6FA8A0'},
+    {x: 282, y: 1094, r: 150, ph: 3.6, sp: 11, ac: '#E8A08C'},
     {x: 900, y: 1180, r: 128, ph: 2.2, sp: -9},
   ];
   let s = '';
   for (const b of specs) {
     const rr = b.r * (1 + 0.018 * Math.sin(u * 0.7 + b.ph));
     const ang = u * b.sp + b.ph * 42;
+    const ring = b.ac || '#A9CCE3';
+    const hi = b.ac || '#EAF4FF';
     s += `<g transform="translate(${num(b.x)} ${num(b.y)})">
       <circle r="${num(rr)}" fill="url(#s05-bokeh)"/>
-      <circle r="${num(rr * 0.985)}" fill="none" stroke="#8FB2D4" stroke-width="${num(2 + rr * 0.006)}" opacity=".13"/>
-      <circle r="${num(rr * 0.68)}" fill="none" stroke="#bfe4f2" stroke-width="1" opacity=".07"/>
+      <circle r="${num(rr * 0.985)}" fill="none" stroke="${ring}" stroke-width="${num(2 + rr * 0.006)}" opacity=".13"/>
+      <circle r="${num(rr * 0.68)}" fill="none" stroke="${hi}" stroke-width="1" opacity=".07"/>
       <g transform="rotate(${num(ang)})" opacity=".55">
         <path d="M${num(-rr * 0.46)} ${num(-rr * 0.2)} Q0 ${num(-rr * 0.52)} ${num(rr * 0.42)} ${num(-rr * 0.1)}" fill="none" stroke="#EAF4FF" stroke-width="${num(3 + rr * 0.01)}" opacity=".16" stroke-linecap="round"/>
-        <path d="M${num(-rr * 0.3)} ${num(rr * 0.3)} Q${num(rr * 0.1)} ${num(rr * 0.04)} ${num(rr * 0.4)} ${num(rr * 0.34)}" fill="none" stroke="#cfe0e8" stroke-width="${num(2 + rr * 0.008)}" opacity=".12" stroke-linecap="round"/>
-        <ellipse cx="${num(rr * 0.06)}" cy="${num(-rr * 0.34)}" rx="${num(rr * 0.2)}" ry="${num(rr * 0.09)}" fill="#EAF4FF" opacity=".12"/>
-        <ellipse cx="${num(-rr * 0.34)}" cy="${num(rr * 0.12)}" rx="${num(rr * 0.13)}" ry="${num(rr * 0.22)}" fill="#dff1f8" opacity=".08"/>
+        <path d="M${num(-rr * 0.3)} ${num(rr * 0.3)} Q${num(rr * 0.1)} ${num(rr * 0.04)} ${num(rr * 0.4)} ${num(rr * 0.34)}" fill="none" stroke="${hi}" stroke-width="${num(2 + rr * 0.008)}" opacity=".12" stroke-linecap="round"/>
+        <ellipse cx="${num(rr * 0.06)}" cy="${num(-rr * 0.34)}" rx="${num(rr * 0.2)}" ry="${num(rr * 0.09)}" fill="${hi}" opacity=".12"/>
+        <ellipse cx="${num(-rr * 0.34)}" cy="${num(rr * 0.12)}" rx="${num(rr * 0.13)}" ry="${num(rr * 0.22)}" fill="#F0EDE2" opacity=".1"/>
       </g>
       <circle cx="${num(rr * 0.32)}" cy="${num(-rr * 0.28)}" r="${num(rr * 0.045)}" fill="#EAF4FF" opacity=".2"/>
-      <circle cx="${num(-rr * 0.22)}" cy="${num(rr * 0.3)}" r="${num(rr * 0.03)}" fill="#8FB2D4" opacity=".18"/>
+      <circle cx="${num(-rr * 0.22)}" cy="${num(rr * 0.3)}" r="${num(rr * 0.03)}" fill="${ring}" opacity=".18"/>
     </g>`;
   }
   return s;
+}
+
+/* Faint colored tile hints behind the drum glass (retro laundromat wall). */
+function tileHints() {
+  return `<g>
+    <rect x="60" y="150" width="340" height="10" fill="#7FB8A4" opacity=".1"/>
+    <rect x="60" y="150" width="10" height="220" fill="#7FB8A4" opacity=".1"/>
+    <rect x="880" y="120" width="200" height="130" fill="#E07A5F" opacity=".07"/>
+    <rect x="40" y="960" width="220" height="150" fill="#9C8FC7" opacity=".06"/>
+    <rect x="720" y="60" width="240" height="80" fill="#E9C46A" opacity=".06"/>
+    <rect x="140" y="430" width="170" height="120" fill="#6FA8A0" opacity=".06"/>
+    <rect x="930" y="700" width="140" height="180" fill="#E8A08C" opacity=".05"/>
+  </g>`;
 }
 
 /* Nun seen as a pale reflection inside the nearest out-of-focus drum glass. */
@@ -159,8 +178,8 @@ function reflection(t) {
   return `<g clip-path="url(#s05-reflClip)" opacity=".22">
       ${nun(t, {pose: 'count', x: 176, y: 214, scale: 0.44, facing: -1})}
     </g>
-    <circle cx="176" cy="232" r="150" fill="#0a1724" opacity=".3"/>
-    <circle cx="176" cy="232" r="150" fill="none" stroke="#8FB2D4" stroke-width="3" opacity=".15"/>`;
+    <circle cx="176" cy="232" r="150" fill="#12293D" opacity=".3"/>
+    <circle cx="176" cy="232" r="150" fill="none" stroke="#A9CCE3" stroke-width="3" opacity=".18"/>`;
 }
 
 /* ------------------------------------------------------ floating dust */
@@ -232,6 +251,8 @@ function handRig(u, ox, oy, spread) {
     <path d="M18 -640 Q 48 -470 34 -298" fill="none" stroke="url(#s05-skin)" stroke-width="152" stroke-linecap="round"/>
     <path d="M-34 -596 Q -10 -470 -20 -330" fill="none" stroke="#C9AC8E" stroke-width="18" opacity=".35" stroke-linecap="round"/>
     <path d="M56 -606 Q 76 -480 66 -330" fill="none" stroke="#8FB2D4" stroke-width="6" opacity=".22" stroke-linecap="round"/>
+    <path d="M61 -600 Q 81 -476 71 -334" fill="none" stroke="#E8B36A" stroke-width="3" opacity=".38" stroke-linecap="round"/>
+    <path d="M118 -232 Q 160 -142 130 -64" fill="none" stroke="#F2C894" stroke-width="2.5" opacity=".32" stroke-linecap="round"/>
     <path d="M-38 -392 Q 16 -376 62 -392 M-40 -352 Q 14 -334 60 -352" fill="none" stroke="#B08D6E" stroke-width="2.4" opacity=".3" stroke-linecap="round"/>
     <ellipse cx="0" cy="-186" rx="132" ry="118" fill="url(#s05-skin)" stroke="#B08D6E" stroke-width="2"/>
     <ellipse cx="30" cy="-154" rx="84" ry="78" fill="#E4CDB2" opacity=".32"/>
@@ -393,7 +414,9 @@ export function renderScene05(u, t, d = 5) {
   };
 
   const back = `<g opacity=".5">${fx(tt, 'interior')}</g>
+    ${tileHints()}
     ${bokehLayer(uu)}
+    <ellipse cx="600" cy="860" rx="620" ry="460" fill="url(#s05-warmGlow)" opacity=".5"/>
     ${reflection(tt)}
     <g opacity=".85">${dust(uu, tt)}</g>`;
 

@@ -176,7 +176,7 @@
       "file": "qa/frames/start.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "e1e27621487184663d93adfc97b4783e6a4a0b98ac0e2ac29639130e7f207c32",
+      "imageHash": "3eeb40de0c39df6ab12e6c3c0f6c2abf8065a98828902cede46ca1f40ba0ef3c",
       "svgCount": 1,
       "sceneId": "01",
       "badAttributes": [],
@@ -187,7 +187,7 @@
         "ok": true
       },
       "ok": true,
-      "domHash": "b779b8aeff80a1a607a4b59bc031ad4ecb195c6057e8ac22ed8c362bbd185581"
+      "domHash": "9b1f708d43ded65bd6b3ba82d67a9c92ad05f5b4f464efab861c310066253c52"
     },
     {
       "key": "last-frame",
@@ -195,7 +195,7 @@
       "file": "qa/frames/last-frame.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "306b24eea7177ea3a00e764d29f5fd80478ad2c7130ead27ae10d2f317c843ea",
+      "imageHash": "127382e358e8626bfff480ba514c9699b67925ecac9c9935ebb4dec099e0a4b7",
       "svgCount": 1,
       "sceneId": "12",
       "badAttributes": [],
@@ -206,7 +206,7 @@
         "ok": true
       },
       "ok": true,
-      "domHash": "4ca3281c7e9dd2d50e3e592aa7f8d75aacd0d713ca5fef5eeba55fbbebcbbbb0"
+      "domHash": "43460063029d204bb63aa4febd10d609d215cebb7c6c1ebf720a4dba9e0ea38f"
     },
     {
       "key": "scene01-mid",
@@ -214,23 +214,23 @@
       "file": "qa/frames/scene01-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "0f4500c593d161ea62412019ce028d369acdf9dc3c746c6f3c91d3cef61cecf1",
+      "imageHash": "cd36940b4db0eeeb73f05f63aa9dccf421a7b2b585d5274fab3408923f0de10f",
       "svgCount": 1,
       "sceneId": "01",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้า ที่เปิดตลอดยี่สิบสี่ชั่วโมง",
+        "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้าแห่งนี้ ที่เปิดตลอดยี่สิบสี่ชั่วโมง",
         "bbox": {
-          "x": 178.2,
-          "y": 1514,
-          "right": 841.8,
-          "bottom": 1639
+          "x": 248.3,
+          "y": 1730.5,
+          "right": 771.9,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "60ecd7909aca9f9f072031eadb77b2df74e0dbb40f2b1ca9f257dcb2cc818f34",
+      "domHash": "d226e15a8f13b6649a3300b5bedf6c4d2ee4d714ff998cd0652d210ab0f03427",
       "expectedSceneId": "01"
     },
     {
@@ -239,7 +239,7 @@
       "file": "qa/frames/scene02-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "8a4159d88124237dba41d5b6157c32472de949b63fdbe75838cc297719c76870",
+      "imageHash": "e70430e72e31303745ab396c953a8dd92d2de7534f1930d58a1f00a72669d6f0",
       "svgCount": 1,
       "sceneId": "02",
       "badAttributes": [],
@@ -247,15 +247,15 @@
         "present": true,
         "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
         "bbox": {
-          "x": 180.7,
-          "y": 1514,
-          "right": 839.3,
-          "bottom": 1639
+          "x": 273.6,
+          "y": 1730.5,
+          "right": 746.4,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "87ae07dc72e8137c4528e608961d03ceb4d85dbfd8185f90df869dc7c220a119",
+      "domHash": "b4e4a56d01b3506f4b7a6f992cdb6ca351bdf97c20b1e4ce21316e2fee0c1f46",
       "expectedSceneId": "02"
     },
     {
@@ -264,23 +264,23 @@
       "file": "qa/frames/scene03-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "535fcc481ecdcf1a4bf48c18cc83fa34b7d4f3aa5cf815d80795524589caa7aa",
+      "imageHash": "aecf9999af7d432ec2777a33d34b31b1897d12354ede95df2d91aabceccef0c4",
       "svgCount": 1,
       "sceneId": "03",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "หน้าที่วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
+        "text": "หน้าที่ของฉันก็วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
         "bbox": {
-          "x": 218.3,
-          "y": 1514,
-          "right": 801.7,
-          "bottom": 1639
+          "x": 251.2,
+          "y": 1730.5,
+          "right": 768.9,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "dee0be94b957409228d7044737b7a4965b7dc746fd9a4cf4295b4e2b1e138b21",
+      "domHash": "1818d0a0f8e29c669b0ce698505992f221e243096b23b13593df40c8b036cc7f",
       "expectedSceneId": "03"
     },
     {
@@ -289,23 +289,23 @@
       "file": "qa/frames/scene04-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "0a451600bd44f4f1934e62b1162dd860644a94355e0ef3bd58e07fac61f82ff9",
+      "imageHash": "d1d8fee7e6fa6b198b8dd58f3a637dd7ee433202374b3d0068518ef60ac50f69",
       "svgCount": 1,
       "sceneId": "04",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "พอดึกลง ร้านแทบไม่มีคน เหลือเสียงเครื่องซักผ้าหมุนอยู่ข้างตัว",
+        "text": "พอดึกลง ร้านแทบไม่มีคนเหลืออยู่ เหลือแต่เสียงเครื่องซักผ้าหมุนอยู่ข้างตัวฉัน",
         "bbox": {
-          "x": 186.3,
-          "y": 1514,
-          "right": 833.7,
-          "bottom": 1639
+          "x": 216.6,
+          "y": 1730.5,
+          "right": 803.4,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "1b15dcaac8cbc31cf8ab1c145b89b329f78f43f6d50ae02c821eb71ca88a761d",
+      "domHash": "a1cd2d00144497de2701177cc391cfb1be4d12411aeb527788712224479a5e5e",
       "expectedSceneId": "04"
     },
     {
@@ -314,7 +314,7 @@
       "file": "qa/frames/scene05-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "38951bf8485b5fc2a9162a46a163fcb295a3d43b8d98bfebeeb749174aa78b12",
+      "imageHash": "dbbe8a7887a101d26851ccefcdbe448631175f077bfba41ae5f1ac8ff6ac7b7c",
       "svgCount": 1,
       "sceneId": "05",
       "badAttributes": [],
@@ -322,15 +322,15 @@
         "present": true,
         "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
         "bbox": {
-          "x": 144.3,
-          "y": 1514,
-          "right": 875.7,
-          "bottom": 1639
+          "x": 256.1,
+          "y": 1730.5,
+          "right": 763.9,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "23229009f3456c6604abe71ea5ed2e1d3e273e80af09fc1c0d01e643ef9f37a6",
+      "domHash": "e43ced5b886dcd7618678c961855b4ce67d99c4d12656b2296ace78d5cd1e9a0",
       "expectedSceneId": "05"
     },
     {
@@ -339,7 +339,7 @@
       "file": "qa/frames/scene06-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "dd33b30744e51bda7196b31fc91a7f8d1277a464512f81bed1940fb40ff7af0a",
+      "imageHash": "f4e5a498b45bbd5f8be918163e0a5c23ed1c2bb0e2fec72b8cbc56d0294faf3a",
       "svgCount": 1,
       "sceneId": "06",
       "badAttributes": [],
@@ -347,15 +347,15 @@
         "present": true,
         "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม",
         "bbox": {
-          "x": 233.1,
-          "y": 1514,
-          "right": 786.9,
-          "bottom": 1639
+          "x": 277,
+          "y": 1730.5,
+          "right": 743,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "985fb57a0b4f208701b8dde3286a4d1d1ae64c78122f1b06039a39c3d30fd0f8",
+      "domHash": "401059d92e791ae0f91478ba7fea2781d45fa3270656a76c5d52c3ccf09b4b8f",
       "expectedSceneId": "06"
     },
     {
@@ -364,23 +364,23 @@
       "file": "qa/frames/scene07-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "13df1d45e3b97d810158220d64b522e51583865fb4637f091022de4348fde4da",
+      "imageHash": "0651ddf4db117dbb0803744884c70ed71d727a5b214799dd7a96473591de1ee2",
       "svgCount": 1,
       "sceneId": "07",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ฉันไม่เคยเห็นหน้าเขาเลย เงยขึ้นมาเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
+        "text": "ฉันไม่เคยเห็นหน้าเขา เงยขึ้นเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
         "bbox": {
-          "x": 161.8,
-          "y": 1514,
-          "right": 858.2,
-          "bottom": 1639
+          "x": 259.6,
+          "y": 1730.5,
+          "right": 760.6,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "f3e9b85c8df1f6f7d8e315641269dfd44f50c6b5cd5bc0ed1d2bf0f061539349",
+      "domHash": "8dd8f1cb85d84b7b52412d19e5b65dc5b8c570fbc54520dd5476b94c1531a63e",
       "expectedSceneId": "07"
     },
     {
@@ -389,23 +389,23 @@
       "file": "qa/frames/scene08-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
+      "imageHash": "b253662235ad305e1a953b446c418536395f147beca2da8752d563d495f297d5",
       "svgCount": 1,
       "sceneId": "08",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับหยอดเหรียญลงเครื่องเอง",
+        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับคอยหยอดเหรียญลงในเครื่องเอง",
         "bbox": {
-          "x": 211.1,
-          "y": 1514,
-          "right": 808.9,
-          "bottom": 1639
+          "x": 223.1,
+          "y": 1730.5,
+          "right": 797.1,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "da3f7861f96ea2222ca5552eff353f0711986920d3bb489df6548f258a903e65",
+      "domHash": "2f0d42581dc6861a186201dbf360a86c0198f2c41a7df89d7d3b9555164da53e",
       "expectedSceneId": "08"
     },
     {
@@ -414,23 +414,23 @@
       "file": "qa/frames/scene09-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "8692e3a8ae3213c06e2da0e72ed3199bc3bdc3f69487402f5dc46af2b83ccc83",
+      "imageHash": "19027fc16d13a7df584201741b4579a814f1f521e9545f05c3268ff6885026f8",
       "svgCount": 1,
       "sceneId": "09",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ผ้าขาวหมุนวนอยู่หลังฝากระจก ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
+        "text": "ผ้าสีขาวหมุนวนอยู่หลังฝากระจกใส ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
         "bbox": {
-          "x": 109.2,
-          "y": 1514,
-          "right": 910.8,
-          "bottom": 1639
+          "x": 241,
+          "y": 1730.5,
+          "right": 779.1,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "6f4bf3b4bf385084695b063958f72146449d650bb086572171826af54019fca8",
+      "domHash": "46a6f414caf78989b5bbf26a499c9b1653aa5fe3f5089c989665a7699459507a",
       "expectedSceneId": "09"
     },
     {
@@ -439,23 +439,23 @@
       "file": "qa/frames/scene10-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "26160a25cc582b4eecd2c602833d116bc2bd48c0bc4e9631e39ca7f0976980b3",
+      "imageHash": "129a351ad4257f28183980f900c3d2c0c662589ad5d20c9e25509370ac8ecd3d",
       "svgCount": 1,
       "sceneId": "10",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินสักครั้ง",
+        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินเลยสักครั้ง",
         "bbox": {
-          "x": 221.1,
-          "y": 1514,
-          "right": 797.9,
-          "bottom": 1639
+          "x": 250.1,
+          "y": 1730.5,
+          "right": 770.1,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "b34b568b5372f29697ed9a821a62fc00781dd7e94d3245849cc534fbf10e3887",
+      "domHash": "d65a8d3e832e91c2889973351f089635739ed6dc872b62a38f7f485f7d11638e",
       "expectedSceneId": "10"
     },
     {
@@ -464,7 +464,7 @@
       "file": "qa/frames/scene11-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "6fe02864d2a5b118c4c95f07552c7a40c1ae0d067c9cd5cf57e94207830a2895",
+      "imageHash": "122daa27c5e66e92cbb81d2edc982c9f499592f141f1f06fb54af3cfa0cbf515",
       "svgCount": 1,
       "sceneId": "11",
       "badAttributes": [],
@@ -472,15 +472,15 @@
         "present": true,
         "text": "คืนแรกฉันคิดว่าเขาแค่ไม่อยากคุย แต่คืนที่สอง และคืนที่สาม ก็ยังเหมือนเดิม",
         "bbox": {
-          "x": 112.2,
-          "y": 1514,
-          "right": 907.8,
-          "bottom": 1639
+          "x": 226.8,
+          "y": 1730.5,
+          "right": 793.3,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "6eafd32b494c7ad88dedc8a459f4d88e4163dcccf57250c3865363c17358d6ba",
+      "domHash": "b00e8058ddf47843211473a9b665a576da9b753943a392cc13e707ad9c623aa5",
       "expectedSceneId": "11"
     },
     {
@@ -489,7 +489,7 @@
       "file": "qa/frames/scene12-mid.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+      "imageHash": "0be25182bea1a726268bf1cad403957d042f487b473991460ef685294f39fe4a",
       "svgCount": 1,
       "sceneId": "12",
       "badAttributes": [],
@@ -497,15 +497,15 @@
         "present": true,
         "text": "คืนนั้นฉันจึงหยุดเก็บเหรียญ แล้วเฝ้ามองประตูหลัง เพื่อดูว่าเขามาจากไหน",
         "bbox": {
-          "x": 123.9,
-          "y": 1514,
-          "right": 896.1,
-          "bottom": 1639
+          "x": 232.6,
+          "y": 1730.5,
+          "right": 787.4,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "111e68498cc9d48218556a203f3a1b446f9f371d2cbdbc814616dbc380e8b0ab",
+      "domHash": "5e91c0012aa84d13c73141310be641391b3e598a31eb4f151192ad48768fed31",
       "expectedSceneId": "12"
     },
     {
@@ -514,23 +514,23 @@
       "file": "qa/frames/cut02-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "1a58debeb4833ae54fd496e177ee57b9840fa5a77f6c19253d9e65d22fa5cbcd",
+      "imageHash": "01140a6214f0fa94b79f0479c109b26296d3323a5234fa1db43d23fb8b167b90",
       "svgCount": 1,
       "sceneId": "01",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
+        "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้าแห่งนี้ ที่เปิดตลอดยี่สิบสี่ชั่วโมง",
         "bbox": {
-          "x": 180.7,
-          "y": 1514,
-          "right": 839.3,
-          "bottom": 1639
+          "x": 248.3,
+          "y": 1730.5,
+          "right": 771.9,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "6a903c8f324a5bbe5be922133457044ebaf5e5647423b0c1c43eb24565300162"
+      "domHash": "9a75429a7892aa64ee1145717cc3aa49248a0a4b87c575fe603447081f5cffd9"
     },
     {
       "key": "cut02-after",
@@ -538,23 +538,18 @@
       "file": "qa/frames/cut02-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "de509b356ac4b71e9088673d2a1ada62b75ca8c5aad7c476fae6a956c8fcc107",
+      "imageHash": "f452743abaf2156f55a794745198b4a6da4e44d2d284767086ad865a8b314be4",
       "svgCount": 1,
       "sceneId": "02",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
-        "bbox": {
-          "x": 180.7,
-          "y": 1514,
-          "right": 839.3,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "ed3815aac7f03bcff29034e4575b5dfb7222d70c8aae83eab3b2db1775173e3b"
+      "domHash": "db19334c04ee5b41871b0c7d356b9606840cdb59e92c0f217fea8c5b442bd75d"
     },
     {
       "key": "cut03-before",
@@ -562,23 +557,23 @@
       "file": "qa/frames/cut03-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "b53dbb0c92494c3e7ef2a7dba3f1229b2ef4d29a146f1d87952e5154e9615434",
+      "imageHash": "1c7dee68c463beb893d9eeb9ee1d1ccdef68518308d43f577fc9a57d68d26f1c",
       "svgCount": 1,
       "sceneId": "02",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "หน้าที่วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
+        "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า",
         "bbox": {
-          "x": 218.3,
-          "y": 1514,
-          "right": 801.7,
-          "bottom": 1639
+          "x": 273.6,
+          "y": 1730.5,
+          "right": 746.4,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "54623a26b8ead882b78604c4af4038607a6d8bb2689a00107c14bec2dee77008"
+      "domHash": "1b7b8e9d0412446745f7607c00b802500f569733e0373e7d3da87e2709109051"
     },
     {
       "key": "cut03-after",
@@ -586,23 +581,18 @@
       "file": "qa/frames/cut03-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "0f9642d61faca2db7731669e578059235f1edbd77bfb19bbe7e78e55fb0de64d",
+      "imageHash": "7123db3b1627fd096285dcb7923aac1402ee9d3a366317d9c53938738bc67275",
       "svgCount": 1,
       "sceneId": "03",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "หน้าที่วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
-        "bbox": {
-          "x": 218.3,
-          "y": 1514,
-          "right": 801.7,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "db589ca824ff8819d4f54553eeda83a5f401aa69c705af3b423d7741b3ee4194"
+      "domHash": "37f849e279e0ce5ff1311b2197e3a71d75699beb3cdb771236adfa5616facbb0"
     },
     {
       "key": "cut04-before",
@@ -610,23 +600,23 @@
       "file": "qa/frames/cut04-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "e2cc62cf64332cca2a47b9a1413f007d84abd212ae1f381f1914a4b0fc4618f1",
+      "imageHash": "913bbb33e0141c6c78bbe4e51aabf35466bcedad74ef0d623d8f903aca27fb9c",
       "svgCount": 1,
       "sceneId": "03",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "พอดึกลง ร้านแทบไม่มีคน เหลือเสียงเครื่องซักผ้าหมุนอยู่ข้างตัว",
+        "text": "หน้าที่ของฉันก็วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ",
         "bbox": {
-          "x": 186.3,
-          "y": 1514,
-          "right": 833.7,
-          "bottom": 1639
+          "x": 251.2,
+          "y": 1730.5,
+          "right": 768.9,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "8dcc1275dc72d59e9c2879d91184521a479420dcf984c5c18fda6feb3924d543"
+      "domHash": "d81f21ce6efc9d83a707dba3002879e8def728a504e0d2d74fb7e91cfe21beab"
     },
     {
       "key": "cut04-after",
@@ -634,23 +624,18 @@
       "file": "qa/frames/cut04-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "a513aab6b35a79a9b03d8d45082d5360b880bf4dc7f70972a38d02d162909011",
+      "imageHash": "a5243edd6d876304d1808a6baf3dfd1c9672edbf03ea730f563d4f2b7218d9dd",
       "svgCount": 1,
       "sceneId": "04",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "พอดึกลง ร้านแทบไม่มีคน เหลือเสียงเครื่องซักผ้าหมุนอยู่ข้างตัว",
-        "bbox": {
-          "x": 186.3,
-          "y": 1514,
-          "right": 833.7,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "44206c6fa0a9ee5f5be1a8aea4a2b3c2a056b1d327537481dfeccdc05a21b700"
+      "domHash": "2612d2d2b3b57d9e65de0e3c527036a19c45ea1b20413ff960dd39dcf22ed61b"
     },
     {
       "key": "cut05-before",
@@ -658,23 +643,23 @@
       "file": "qa/frames/cut05-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "d125cd0fcda6b96100a2a791b2765ef4450f9c252c538d003d5b7bacda01763a",
+      "imageHash": "a6588ca3d8886ce11e0772d713bf1f2b6f9dbec805817b86473dafa7e94ff2f2",
       "svgCount": 1,
       "sceneId": "04",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
+        "text": "พอดึกลง ร้านแทบไม่มีคนเหลืออยู่ เหลือแต่เสียงเครื่องซักผ้าหมุนอยู่ข้างตัวฉัน",
         "bbox": {
-          "x": 144.3,
-          "y": 1514,
-          "right": 875.7,
-          "bottom": 1639
+          "x": 216.6,
+          "y": 1730.5,
+          "right": 803.4,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "8d9da1c082d9a0f6a3f5a8a9d4ee47d395b6854f4060736e375e7e6919136bb9"
+      "domHash": "1c56aacb14b792af86203eef2293f2643c44d91f0ce88f90e6a37ddadde092df"
     },
     {
       "key": "cut05-after",
@@ -682,23 +667,18 @@
       "file": "qa/frames/cut05-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "f617d6c66d7b3fad3cfd7c9aa7b7b99a129234cfbb1fd72087e53b69b1de9941",
+      "imageHash": "68419114544115c20f44a1322adff85a24b97133da70b7a0707933b8b0f7170b",
       "svgCount": 1,
       "sceneId": "05",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
-        "bbox": {
-          "x": 144.3,
-          "y": 1514,
-          "right": 875.7,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "9d40b460f51347ce64f099a1d659a3faa159b429ecc235b2b43bc458a3f8b390"
+      "domHash": "cba7153f426cf3c71c3701e4f3cf960b141bddca2f02d47900dbe7e94050b01b"
     },
     {
       "key": "cut06-before",
@@ -706,7 +686,7 @@
       "file": "qa/frames/cut06-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "e58421c4ab7524db70105af7db931048b95f387b1a85382c30112295a4665dbe",
+      "imageHash": "8bf8fde95682f48b3349554a92aac514356761b9c7adff5660cf295472c4525e",
       "svgCount": 1,
       "sceneId": "05",
       "badAttributes": [],
@@ -714,15 +694,15 @@
         "present": true,
         "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
         "bbox": {
-          "x": 144.3,
-          "y": 1514,
-          "right": 875.7,
-          "bottom": 1639
+          "x": 256.1,
+          "y": 1730.5,
+          "right": 763.9,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "734c0cd1505b0a6f9013213d0d3684ab01efc2c2cdd892c3ba716c157999ce43"
+      "domHash": "8c45e851bfc1f110d906948505b6814c8dcabff54bd2b75cb1c01dd9908fdde1"
     },
     {
       "key": "cut06-after",
@@ -730,23 +710,18 @@
       "file": "qa/frames/cut06-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "e9116d08ae6c54b52184551fc43730ae01ce1dc4e2c225ef3964fca0174627dc",
+      "imageHash": "81bb45cc621caad92206ac2867850df94e3353b27e64836fe6d9f4d091b7a162",
       "svgCount": 1,
       "sceneId": "06",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า",
-        "bbox": {
-          "x": 144.3,
-          "y": 1514,
-          "right": 875.7,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "5bb9d386de180d83342adc4bfaca973a4050e83e3dc07cec2335eddc0b8f8511"
+      "domHash": "1828534e150e4d302f24094a4b27d02f6b66cba1c1e2456c5f5a85b4c6fa2707"
     },
     {
       "key": "cut07-before",
@@ -754,7 +729,7 @@
       "file": "qa/frames/cut07-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "dd6fc2af169c3ebfad875ca20c697733d5ebc0e568996f464da0ee8f08f9683d",
+      "imageHash": "4aebe7fb08c837c10e465c25405aad9f97b65d09df608db7b591f407961a3b25",
       "svgCount": 1,
       "sceneId": "06",
       "badAttributes": [],
@@ -762,15 +737,15 @@
         "present": true,
         "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม",
         "bbox": {
-          "x": 233.1,
-          "y": 1514,
-          "right": 786.9,
-          "bottom": 1639
+          "x": 277,
+          "y": 1730.5,
+          "right": 743,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "5f3ed670603b9932f6a4809d21ef3d1f94c403138554f5bbac89bfcf0c60b195"
+      "domHash": "2fecef10ce0554d9fa1af051e576d79f19e9e4e67fa87a314aae87a60a62dc75"
     },
     {
       "key": "cut07-after",
@@ -778,23 +753,18 @@
       "file": "qa/frames/cut07-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "8962cbe915d2ac8dd2ec9796e3406e1e5f3ee4878daa84fe57b9a349ca5370fd",
+      "imageHash": "79130ba4677defeaae53cb12a3662fbbbb9d37ae11b0ea44da8fbbccff5e98cb",
       "svgCount": 1,
       "sceneId": "07",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม",
-        "bbox": {
-          "x": 233.1,
-          "y": 1514,
-          "right": 786.9,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "e333a5009389dc1620a37a46dac50f7cbf7a74015e67f4adac70ab0bb0576fdc"
+      "domHash": "619147f05b7604e20dbb68201f64e74a255976f1fb0e48e71b8b8bcb3e247315"
     },
     {
       "key": "cut08-before",
@@ -802,23 +772,23 @@
       "file": "qa/frames/cut08-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "8fda04b77530f52bb3571793e7d2876d246df6b43f964e44895d5dbcc5c57ce5",
+      "imageHash": "252541e6f82adf4f541cb451f880d6885aacc36a4d28aed374e883c90e28c418",
       "svgCount": 1,
       "sceneId": "07",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ฉันไม่เคยเห็นหน้าเขาเลย เงยขึ้นมาเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
+        "text": "ฉันไม่เคยเห็นหน้าเขา เงยขึ้นเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
         "bbox": {
-          "x": 161.8,
-          "y": 1514,
-          "right": 858.2,
-          "bottom": 1639
+          "x": 259.6,
+          "y": 1730.5,
+          "right": 760.6,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "7d36f6654ea6393def45720bd9a82be9322f39f237cea9dfa7b3c23a182f82ce"
+      "domHash": "6d7a69013abd715f36a994f9dafa882bc91643f6e364b97bc0c8f869e513a517"
     },
     {
       "key": "cut08-after",
@@ -826,23 +796,18 @@
       "file": "qa/frames/cut08-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "b55f130a73ff77751118076801d2333646e10303ae274fd652e771690c35495e",
+      "imageHash": "a79a4ec6badcafee21548e0ae5049f63b81c4beb68095a3fb03c6c6aa2ae8a78",
       "svgCount": 1,
       "sceneId": "08",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "ฉันไม่เคยเห็นหน้าเขาเลย เงยขึ้นมาเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง",
-        "bbox": {
-          "x": 161.8,
-          "y": 1514,
-          "right": 858.2,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "d28576810d61f7f38c8d7b72585548c31287d327e44a0709565b9adaf7861028"
+      "domHash": "5dcb2e6a7c93fbd057ff969dd3e72e84d3728b30e1280302f061ed33b72e4da6"
     },
     {
       "key": "cut09-before",
@@ -850,23 +815,23 @@
       "file": "qa/frames/cut09-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "6fca983922f351eaee35a16a869e06950947568429c0a1c3c367e96348259a6e",
+      "imageHash": "e3e4175f1c9995a103506d5fef3261f4a179cd15535c22223eed25b57be1c1b2",
       "svgCount": 1,
       "sceneId": "08",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับหยอดเหรียญลงเครื่องเอง",
+        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับคอยหยอดเหรียญลงในเครื่องเอง",
         "bbox": {
-          "x": 211.1,
-          "y": 1514,
-          "right": 808.9,
-          "bottom": 1639
+          "x": 223.1,
+          "y": 1730.5,
+          "right": 797.1,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "c5646f99c4bf954aa83312f8423b288a35e65cfc3e903d755a5b4535b63137ec"
+      "domHash": "55271e5f5ec999323b3c6dd752900d0115307f44e7c7f73b93a2992aa99ed607"
     },
     {
       "key": "cut09-after",
@@ -874,23 +839,18 @@
       "file": "qa/frames/cut09-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "7a2eedd7d3b341d25d0de661de0a30e60271ae02f45096fa0e096f200f163e23",
+      "imageHash": "6c3c264909493d6da2fe3fa132476758ce52f350f76e86ff2378f4e5b8bf1640",
       "svgCount": 1,
       "sceneId": "09",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับหยอดเหรียญลงเครื่องเอง",
-        "bbox": {
-          "x": 211.1,
-          "y": 1514,
-          "right": 808.9,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "7848424837e3773820b72ec97bf4cde9110afccf2fc5f99cae4f98f233732f69"
+      "domHash": "5b6477358e26d6ff0d70b0b079c1b22170cf8642eae7787ac95516856c97f985"
     },
     {
       "key": "cut10-before",
@@ -898,23 +858,23 @@
       "file": "qa/frames/cut10-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "6841847c9ddcd11417149e94854467e09a8f3196b980244b47f8d7407ac15887",
+      "imageHash": "44d28a49131d32393bd250cc4c96c6d7fe0a9cdaaac3d1cf34e5d914ef96274f",
       "svgCount": 1,
       "sceneId": "09",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ผ้าขาวหมุนวนอยู่หลังฝากระจก ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
+        "text": "ผ้าสีขาวหมุนวนอยู่หลังฝากระจกใส ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
         "bbox": {
-          "x": 109.2,
-          "y": 1514,
-          "right": 910.8,
-          "bottom": 1639
+          "x": 241,
+          "y": 1730.5,
+          "right": 779.1,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "5300f8aed5e92536c87298f2adfd02bfd3d142e64bbefc1a4c52e3b44506b000"
+      "domHash": "5edace784f088f569392aaa5da4ba02df13173247f663cb0131d095fc5c3eba0"
     },
     {
       "key": "cut10-after",
@@ -922,23 +882,18 @@
       "file": "qa/frames/cut10-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "31d3eef2b4729e122649cb46fad4b4997cd79fef23d239e0a5f58064266f0956",
+      "imageHash": "c98b9babe189610ea09b139a13b62137d4d40e89b85ff9b8c096802f4b74c5ed",
       "svgCount": 1,
       "sceneId": "10",
       "badAttributes": [],
       "caption": {
-        "present": true,
-        "text": "ผ้าขาวหมุนวนอยู่หลังฝากระจก ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง",
-        "bbox": {
-          "x": 109.2,
-          "y": 1514,
-          "right": 910.8,
-          "bottom": 1639
-        },
+        "present": false,
+        "text": "",
+        "bbox": null,
         "ok": true
       },
       "ok": true,
-      "domHash": "770d03ff0a8554991fc4b29e6cd734176963d921227c0d933e1f0dcc0b793f4d"
+      "domHash": "0b707965146c449ca4eded9540c2d809a128d8ad37316217e2b1a9685e6ed296"
     },
     {
       "key": "cut11-before",
@@ -946,23 +901,23 @@
       "file": "qa/frames/cut11-before.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "022cd32a6ffdbe9333d6918bad50154c0d1c98507400b4a0419cb0be0ac91059",
+      "imageHash": "d4d884eadfb8d76d3f2d9a031a065783b798ed194fb6ca2e15e402e0f0e9f0cd",
       "svgCount": 1,
       "sceneId": "10",
       "badAttributes": [],
       "caption": {
         "present": true,
-        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินสักครั้ง",
+        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินเลยสักครั้ง",
         "bbox": {
-          "x": 221.1,
-          "y": 1514,
-          "right": 797.9,
-          "bottom": 1639
+          "x": 250.1,
+          "y": 1730.5,
+          "right": 770.1,
+          "bottom": 1759.5
         },
         "ok": true
       },
       "ok": true,
-      "domHash": "58d626af2aef74e51a80b2c75e4ac39c60094ec66a0c2016a7099cb3117aba5b"
+      "domHash": "1873692417b8c0bc966b2905648089f407298fa3b5ae12ee6c6cea70b24ecb16"
     },
     {
       "key": "cut11-after",
@@ -970,31 +925,7 @@
       "file": "qa/frames/cut11-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "2b303d336984a851cf3542e3ef5d4859dbd343d1543189491719e00b08b1e3c1",
-      "svgCount": 1,
-      "sceneId": "11",
-      "badAttributes": [],
-      "caption": {
-        "present": true,
-        "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินสักครั้ง",
-        "bbox": {
-          "x": 221.1,
-          "y": 1514,
-          "right": 797.9,
-          "bottom": 1639
-        },
-        "ok": true
-      },
-      "ok": true,
-      "domHash": "5ef8389a982a13c2c5edee716b7ece040bc6a15dc5979a52b978c97504a125ae"
-    },
-    {
-      "key": "cut12-before",
-      "t": 54.964867,
-      "file": "qa/frames/cut12-before.png",
-      "rendered": true,
-      "screenshot": true,
-      "imageHash": "6d1b626a41d76f352f317c9791fd7d59bbb1a38eca64eaf8e0c54ba3183ee36e",
+      "imageHash": "ef9bec5c81af8c5df9c1f82927ac3cfc810acd1b08e9abc7ff9d243eb18ee952",
       "svgCount": 1,
       "sceneId": "11",
       "badAttributes": [],
@@ -1005,7 +936,31 @@
         "ok": true
       },
       "ok": true,
-      "domHash": "44f0b8ecbc0cc56d12d0daa2f31367a3eaea72036ac718ef89ff386e39f1d30d"
+      "domHash": "5942a13fc13008bbd3a8540c5b5c90622694a3787d43a32ec01b6d2d99cbc35b"
+    },
+    {
+      "key": "cut12-before",
+      "t": 54.964867,
+      "file": "qa/frames/cut12-before.png",
+      "rendered": true,
+      "screenshot": true,
+      "imageHash": "2f38f63da107195941824f11b01d3c84c3fcad1388a3d36298607f8f9b5787f9",
+      "svgCount": 1,
+      "sceneId": "11",
+      "badAttributes": [],
+      "caption": {
+        "present": true,
+        "text": "คืนแรกฉันคิดว่าเขาแค่ไม่อยากคุย แต่คืนที่สอง และคืนที่สาม ก็ยังเหมือนเดิม",
+        "bbox": {
+          "x": 226.8,
+          "y": 1730.5,
+          "right": 793.3,
+          "bottom": 1759.5
+        },
+        "ok": true
+      },
+      "ok": true,
+      "domHash": "03f5135388841a18514f6790f97d26466ec701de92025297f19f0e4152f9e18b"
     },
     {
       "key": "cut12-after",
@@ -1013,7 +968,7 @@
       "file": "qa/frames/cut12-after.png",
       "rendered": true,
       "screenshot": true,
-      "imageHash": "f79c898c4bfeed3b8c7603f8276af488d0aafac7214c9151cc0d97b1b03c3e6b",
+      "imageHash": "679dadae195aba246040325d3fa27df777310cccd74824a173a1be80a0c58643",
       "svgCount": 1,
       "sceneId": "12",
       "badAttributes": [],
@@ -1024,7 +979,7 @@
         "ok": true
       },
       "ok": true,
-      "domHash": "ad8a3b6812657f755f9e9beb68a01ead2720d973fd7c801e9f906d11060b1a88"
+      "domHash": "aa784279a4d52d1cc52c31dd7fd96e71f0ecf838e1b3a0cecd5f93b3cd71f354"
     }
   ],
   "cuts": [
@@ -1166,35 +1121,19 @@
     "mismatches": [],
     "rasterRounding": [
       {
-        "t": 57.4991,
-        "scene": "scene12-mid",
+        "t": 46.71545,
+        "scene": "scene10-mid",
         "changed_pixels": 4,
         "max_channel_delta": 1,
         "bbox": [
-          523,
-          869,
-          593,
-          984
+          175,
+          1371,
+          176,
+          1715
         ],
         "accepted": true,
-        "baseline": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
-        "reordered": "70441d6415d0babe2a13a5be240c83753c7351a3dc3a6c7ed040ef82dc3fea27",
-        "identicalSvg": true
-      },
-      {
-        "t": 36.3018,
-        "scene": "scene08-mid",
-        "changed_pixels": 2,
-        "max_channel_delta": 1,
-        "bbox": [
-          765,
-          1306,
-          767,
-          1309
-        ],
-        "accepted": true,
-        "baseline": "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
-        "reordered": "ca69c4ba1d2e942bca03cc743de410e633054b59f40aa164169ae9753a74ccba",
+        "baseline": "129a351ad4257f28183980f900c3d2c0c662589ad5d20c9e25509370ac8ecd3d",
+        "reordered": "14cec45a9c5d75fd6e6a000d548996e7ac314d66049885f76323e18bd9e45a9b",
         "identicalSvg": true
       }
     ],

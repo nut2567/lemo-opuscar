@@ -1,125 +1,303 @@
-﻿{
-    "phase":  "production",
-    "part":  1,
-    "duration":  60,
-    "parts2and3":  "not authorized to produce",
-    "prototype_approved":  true,
-    "pool_ceiling":  13,
-    "devin_slots":  5,
-    "source_modified":  false,
-    "expanded_pool_user_requested":  [
-                                         "antigravity",
-                                         "opencode",
-                                         "kiro",
-                                         "kilo",
-                                         "grok"
-                                     ],
-    "run_id":  "run_32d499536938",
-    "video_render_complete":  false,
-    "latest_checks":  {
-                          "timeline_validation_tests":  "6 passed; two ID-validation regressions observed failing before fix",
-                          "contract_tests":  "18/18 pass after runtime-angle and actor-lift fixes",
-                          "caption_voice_alignment":  "24/24 alignment checks pass after measured voice text/timing regeneration",
-                          "interim_browser_qa":  {
-                                                     "status":  "ok",
-                                                     "frames":  36,
-                                                     "cuts":  11,
-                                                     "determinism":  {
-                                                                         "checked":  12,
-                                                                         "mismatches":  [
-
-                                                                                        ],
-                                                                         "rasterRounding":  [
-                                                                                                {
-                                                                                                    "t":  57.4991,
-                                                                                                    "scene":  "scene12-mid",
-                                                                                                    "changed_pixels":  4,
-                                                                                                    "max_channel_delta":  1,
-                                                                                                    "bbox":  [
-                                                                                                                 523,
-                                                                                                                 869,
-                                                                                                                 593,
-                                                                                                                 984
-                                                                                                             ],
-                                                                                                    "accepted":  true,
-                                                                                                    "baseline":  "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
-                                                                                                    "reordered":  "70441d6415d0babe2a13a5be240c83753c7351a3dc3a6c7ed040ef82dc3fea27",
-                                                                                                    "identicalSvg":  true
-                                                                                                },
-                                                                                                {
-                                                                                                    "t":  36.3018,
-                                                                                                    "scene":  "scene08-mid",
-                                                                                                    "changed_pixels":  2,
-                                                                                                    "max_channel_delta":  1,
-                                                                                                    "bbox":  [
-                                                                                                                 765,
-                                                                                                                 1306,
-                                                                                                                 767,
-                                                                                                                 1309
-                                                                                                             ],
-                                                                                                    "accepted":  true,
-                                                                                                    "baseline":  "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
-                                                                                                    "reordered":  "ca69c4ba1d2e942bca03cc743de410e633054b59f40aa164169ae9753a74ccba",
-                                                                                                    "identicalSvg":  true
-                                                                                                }
-                                                                                            ],
-                                                                         "tolerance":  {
-                                                                                           "identicalSvgRequired":  true,
-                                                                                           "maxChangedPixels":  10,
-                                                                                           "maxChannelDelta":  1
-                                                                                       }
-                                                                     },
-                                                     "pageErrors":  [
-
-                                                                    ],
-                                                     "note":  "Browser structure/pixel policy only; actual caption wording/timing and final video still pending"
-                                                 },
-                          "source_preservation":  "5/5 source SHA256 match",
-                          "combined_node_tests":  "28/28PASS (contract,timeline,actorwalk,scene02runtime/occlusion)",
-                          "scene04_framing":  "Lead visually reviewed qa/scene04-fix t=0,2.5,4.8 and accepted framing and motion; full integrated browser QA pending scene12/caption fixes",
-                          "closeout_audits":  "7/7 small audits settled: scene04 runtime, render/mux settings and credits passed; SFX timing gaps in 02/03/05/08 and scene11 cloth/date issues queued for fixes.",
-                          "opencode_caption_scene12":  "Both OpenCode workers exited without assistant output; file mtimes unchanged; stop confirmed. Same Tasks now run by Devin. Progress checkpoints sent before stop.",
-                          "scene11_opacity_story":  "Worker QA passed opacity and story-fact checks; deterministic finite SVG",
-                          "narration_energy":  "Read-only audit passed: speech in all 12 intervals; no unplanned silence over 0.35s",
-                          "final_video":  "Not produced: render interrupted at user-requested 5-minute cutoff before mux; no final MP4"
-                      },
-    "integration_notes":  [
-                              "Kiro continuity audit: no blocking errors",
-                              "AGY effects and scene04 delivered",
-                              "Kilo native timeout: released; same scene07 Task retried on explicit zero-cost OpenCode",
-                              "Direct Gemini failed npm-launcher target; Grok direct retry timed out; KiroCrew and Copilot embedded text reviews usable",
-                              "Lead corrected false-positive direct exit0 outcomes with cancelled/read-blocked payloads",
-                              "Lead fixed ordered scene-ID validation and aligned caption safe-area metadata; exact1800 frame verification uses decoded frame count",
-                              "Read-only Devin/Grok/Antigravity closeout audits delivered; audio synchronization and scene11 opacity/story detail follow-ups dispatched to Devin. OpenCode checkpoint requests sent for active caption and scene12 tasks; no replies received yet.",
-                              "OpenCode caption and scene12 workers exited without worker_done; Orca transcript showed no assistant result, targeted output mtimes unchanged, guarded stop closed both exact terminals, and same Tasks were retried on Devin. Progress checkpoint messages had no replies."
-                          ],
-    "latest_visual_checks":  [
-                                 "Lead accepted02 runtime/counter clip",
-                                 "Lead accepted06 opaque cloth",
-                                 "Lead accepted08 continuous hem at0,2.5,4.8",
-                                 "Lead accepted09 macro/opaque load/grounding/late absence",
-                                 "Lead accepted11 counter occlusion:5frames+423hitpoints",
-                                 "Lead accepted04 framing at0,2.5,4.8 and scene04 runtime smoke PASS; scene11 cloth-opacity/story-fact fix pending"
-                             ],
-    "audio_integration":  "Existing 60s stereo mix remains. Read-only audits found SFX timing mismatches in scenes02/03/05/08; repair was interrupted before a completion report.",
-    "estimated_progress_percent":  88,
-    "progress_basis":  "Core production assets, 12 scenes, narration, captions and scene fixes are present. The final 60s render was user-timeboxed and interrupted at about 70%; no final MP4 exists. Audio timing repair did not return before closeout; integrated browser QA and mux remain unfinished.",
-    "voice_service_state":  "Free Niwat narration delivered and lead verified exact60s stereo48k,57.23s speech,12 continuous scenes",
-    "voice_preference_question":  "User approved whole-Part free alternative and Niwat now delivered",
-    "opencode_slots":  2,
-    "requested_extra_agents":  {
-                                   "grok":  1,
-                                   "antigravity":  1
-                               },
-    "extra_agent_status":  {
-                               "grok":  "scene03 coin timing audit completed; later three visible contacts lack cues",
-                               "antigravity":  "credits attribution check passed"
-                           },
-    "active_pool_snapshot":  {
-                                 "devin":  5,
-                                 "opencode":  0,
-                                 "grok":  0,
-                                 "antigravity":  0,
-                                 "note":  "Five Devin workers active; Grok/Antigravity small tasks settled. Both OpenCode terminals exited and were guarded-stopped; original Tasks retried on Devin."
-                             }
+{
+    "phase": "v5-delivered-accepted",
+    "part": 1,
+    "duration": 60,
+    "parts2and3": "not authorized to produce",
+    "prototype_approved": true,
+    "pool_ceiling": 13,
+    "devin_slots": 5,
+    "source_modified": true,
+    "expanded_pool_user_requested": [
+        "antigravity",
+        "opencode",
+        "kiro",
+        "kilo",
+        "grok"
+    ],
+    "run_id": "run_4df62ac21b3f",
+    "video_render_complete": true,
+    "latest_checks": {
+        "timeline_validation_tests": "6 passed; two ID-validation regressions observed failing before fix",
+        "contract_tests": "18/18 pass after runtime-angle and actor-lift fixes",
+        "caption_voice_alignment": "24/24 alignment checks pass after measured voice text/timing regeneration",
+        "interim_browser_qa": {
+            "status": "ok",
+            "frames": 36,
+            "cuts": 11,
+            "determinism": {
+                "checked": 12,
+                "mismatches": [],
+                "rasterRounding": [
+                    {
+                        "t": 57.4991,
+                        "scene": "scene12-mid",
+                        "changed_pixels": 4,
+                        "max_channel_delta": 1,
+                        "bbox": [
+                            523,
+                            869,
+                            593,
+                            984
+                        ],
+                        "accepted": true,
+                        "baseline": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+                        "reordered": "70441d6415d0babe2a13a5be240c83753c7351a3dc3a6c7ed040ef82dc3fea27",
+                        "identicalSvg": true
+                    },
+                    {
+                        "t": 36.3018,
+                        "scene": "scene08-mid",
+                        "changed_pixels": 2,
+                        "max_channel_delta": 1,
+                        "bbox": [
+                            765,
+                            1306,
+                            767,
+                            1309
+                        ],
+                        "accepted": true,
+                        "baseline": "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
+                        "reordered": "ca69c4ba1d2e942bca03cc743de410e633054b59f40aa164169ae9753a74ccba",
+                        "identicalSvg": true
+                    }
+                ],
+                "tolerance": {
+                    "identicalSvgRequired": true,
+                    "maxChangedPixels": 10,
+                    "maxChannelDelta": 1
+                }
+            },
+            "pageErrors": [],
+            "note": "Browser structure/pixel policy only; actual caption wording/timing and final video still pending"
+        },
+        "source_preservation": "5/5 source SHA256 match",
+        "combined_node_tests": "28/28PASS (contract,timeline,actorwalk,scene02runtime/occlusion)",
+        "scene04_framing": "Lead visually reviewed qa/scene04-fix t=0,2.5,4.8 and accepted framing and motion; full integrated browser QA pending scene12/caption fixes",
+        "closeout_audits": "7/7 small audits settled: scene04 runtime, render/mux settings and credits passed; SFX timing gaps in 02/03/05/08 and scene11 cloth/date issues queued for fixes.",
+        "opencode_caption_scene12": "Both OpenCode workers exited without assistant output; file mtimes unchanged; stop confirmed. Same Tasks now run by Devin. Progress checkpoints sent before stop.",
+        "scene11_opacity_story": "Worker QA passed opacity and story-fact checks; deterministic finite SVG",
+        "narration_energy": "Read-only audit passed: speech in all 12 intervals; no unplanned silence over 0.35s",
+        "final_video": {
+            "status": "produced-accepted",
+            "path": "horror-x-ep1-part1-60s-v5.mp4",
+            "sha256": "7466fc9fefe33d95106267a7329a576264509235b22d3e386869cc7d2f802ac6",
+            "spec": "60.0s 1080x1920 30fps 1800 frames, h264 + AAC 48000Hz stereo",
+            "picture": "out/picture-v5.mp4",
+            "poster": "poster-v5.jpg",
+            "verify": "build.ps1 -Version v5 -SkipRegeneration all suites pass + mux verify; independent encoded acceptance PASS (opencode-light-depth/FINDINGS-encoded-final.md bounded 11-frame decoded sampling; opencode-captions-media/FINAL-REPORT.md full decode + 23 immutable hashes + audio corr 0.999855)",
+            "note": "v3/v4/final originals preserved byte-identically (hashes in revision-v5-20261117/baseline/manifest.json)"
+        },
+        "_scope_note": "Entries other than final_video are historical v3/v4-run records kept for provenance; current v5 build/QA/acceptance evidence lives in revision_v5.verification and revision_v5.acceptance."
+    },
+    "integration_notes": [
+        "Kiro continuity audit: no blocking errors",
+        "AGY effects and scene04 delivered",
+        "Kilo native timeout: released; same scene07 Task retried on explicit zero-cost OpenCode",
+        "Direct Gemini failed npm-launcher target; Grok direct retry timed out; KiroCrew and Copilot embedded text reviews usable",
+        "Lead corrected false-positive direct exit0 outcomes with cancelled/read-blocked payloads",
+        "Lead fixed ordered scene-ID validation and aligned caption safe-area metadata; exact1800 frame verification uses decoded frame count",
+        "Read-only Devin/Grok/Antigravity closeout audits delivered; audio synchronization and scene11 opacity/story detail follow-ups dispatched to Devin. OpenCode checkpoint requests sent for active caption and scene12 tasks; no replies received yet.",
+        "OpenCode caption and scene12 workers exited without worker_done; Orca transcript showed no assistant result, targeted output mtimes unchanged, guarded stop closed both exact terminals, and same Tasks were retried on Devin. Progress checkpoint messages had no replies."
+    ],
+    "latest_visual_checks": [
+        "Lead accepted02 runtime/counter clip",
+        "Lead accepted06 opaque cloth",
+        "Lead accepted08 continuous hem at0,2.5,4.8",
+        "Lead accepted09 macro/opaque load/grounding/late absence",
+        "Lead accepted11 counter occlusion:5frames+423hitpoints",
+        "Lead accepted04 framing at0,2.5,4.8 and scene04 runtime smoke PASS; scene11 cloth-opacity/story-fact fix pending"
+    ],
+    "audio_integration": "v5 mux reused existing mixed-soundtrack.wav unchanged through the original loudnorm chain (same as v4); independent audio acceptance from v4 carries over since audio path is byte-identical.",
+    "estimated_progress_percent": 100,
+    "progress_basis": "v5 revision rendered, muxed and independently accepted: horror-x-ep1-part1-60s-v5.mp4 60.0s 1080x1920 30fps 1800 frames h264+AAC48k stereo, sha256 7466fc9fefe33d95106267a7329a576264509235b22d3e386869cc7d2f802ac6. Global grade removed; local room lighting, volumetric four-front washers and 19.2px one-row captions verified on decoded frames (bounded sampling) and full media decode.",
+    "voice_service_state": "Free Niwat narration delivered and lead verified exact60s stereo48k,57.23s speech,12 continuous scenes",
+    "voice_preference_question": "User approved whole-Part free alternative and Niwat now delivered",
+    "opencode_slots": 2,
+    "requested_extra_agents": {
+        "grok": 1,
+        "antigravity": 1
+    },
+    "extra_agent_status": {
+        "grok": "scene03 coin timing audit completed; later three visible contacts lack cues",
+        "antigravity": "credits attribution check passed"
+    },
+    "active_pool_snapshot": {
+        "devin": 5,
+        "opencode": 0,
+        "grok": 0,
+        "antigravity": 0,
+        "note": "Five Devin workers active; Grok/Antigravity small tasks settled. Both OpenCode terminals exited and were guarded-stopped; original Tasks retried on Devin."
+    },
+    "revision_v4": {
+        "run_id": "run_fda77d55f96f",
+        "evidence": ".agent-runs/revision-v4-20261117/",
+        "visual_baseline": "pinned warm-retro commit 646ae6f; frame-index-aligned check confirms picture-v3.mp4 matches it (per-pixel luma median 0.391-0.397 = 0.40 grade on all unchanged scenes; diffs only at authorized scene02/scene10 edits)",
+        "deliverables": {
+            "final": "horror-x-ep1-part1-60s-v4.mp4",
+            "final_sha256": "1040c6a56cd131344ebe4f88cff4e675162202b0922f5b7951b20204bebfbfa5",
+            "picture": "out/picture-v4.mp4",
+            "poster": "poster-v4.jpg"
+        },
+        "spec": "60s 1080x1920 30fps 1800 frames; captions 9.6px (0.30x v3 32px) 12 cues identical text/lines/timing, bar bottom 1760.64 bounds 90/930/1725/1763; single 0.60-opacity black grade before captions (0.40 brightness); scene02 slabs+door cover removed; scene10 warm-retro palette rigid door cloth-only disappearance; audio = existing mixed-soundtrack.wav via unchanged loudnorm mux chain",
+        "verification": {
+            "validate_v4": "ok 189 checks 0 failures 0 warnings (--mode v4 --expect-audio)",
+            "browser_qa": "ok (CPU-raster determinism fix in qa-render.mjs)",
+            "node_tests": "53/53 pass",
+            "python_caption_audio_suites": "pass",
+            "immutable_originals": "final/v3-picture/3 WAVs sha256 reverified unchanged"
+        },
+        "open_items": [],
+        "status": "rendered+muxed; independent audio acceptance PASS; independent visual acceptance pending",
+        "visual_acceptance": "pending (OpenCode visual validator dispatched by coordinator)"
+    },
+    "revision_v5": {
+        "run_id": "run_4df62ac21b3f",
+        "evidence": ".agent-runs/revision-v5-20261117/",
+        "baseline": "baseline/ snapshot of live v4 source (160 files) + manifest; v4 mp4 sha256 verified against pinned 1040c6a5…fbfa5",
+        "deliverables": {
+            "final": "horror-x-ep1-part1-60s-v5.mp4",
+            "final_sha256": "7466fc9fefe33d95106267a7329a576264509235b22d3e386869cc7d2f802ac6",
+            "final_bytes": 59391373,
+            "picture": "out/picture-v5.mp4",
+            "picture_sha256": "08013418e53720ea397eaf02cf8804082cf96ac20d24f98a3e9885ceb4774f06",
+            "poster": "poster-v5.jpg"
+        },
+        "spec": "60s 1080x1920 30fps 1800 frames; global 0.60 black grade REMOVED from main.js (normal exposure); local room lighting only via assets/room-lighting.js ROOM_LIGHTING tokens (scene04/scene10); volumetric washers assets/washer-volume.js + getInteriorWasherLayout() with four readable fronts in scene04, grounded scale/contact shadows, scene10 rigid door + cloth-only disappearance kept; captions 12 cues one 19.2px row each, identical words/timings, bounds 90/930/1724/1764 bar center ~1744; audio = existing mixed-soundtrack.wav via unchanged loudnorm mux chain",
+        "verification": {
+            "build": "build.ps1 -Version v5 -SkipRegeneration: caption measured-text PASS, audio schedule 4/4 + mix 3/3 + pixel-noise 5/5 OK, node tests 53/53 in-build (61/61 incl. extra suites standalone), qa-render.mjs ok, render 1800 frames, mux verify 60s/1800/1080x1920@30 normalized -18LUFS",
+            "decode": "ffmpeg full decode null clean; ffprobe h264 1080x1920 30fps 1800 frames + AAC 48000Hz stereo",
+            "immutable_originals": "final/v3-picture-v3/v4-picture-v4/poster-v4/3 WAVs sha256 reverified unchanged vs baseline manifest",
+            "encoded_review_frames": ".agent-runs/revision-v5-20261117/devin-integrator/v5-frames/ (scene02/04 start-mid-end, scene10 mid, widest caption)"
+        },
+        "open_items": [],
+        "status": "rendered+muxed FILE-READY; independent encoded acceptance PASS",
+        "visual_acceptance": "accepted — bounded sampling, not all-frame review",
+        "acceptance": {
+            "light_depth_geometry": "opencode-light-depth/FINDINGS-encoded-final.md (Devin task_12e1ee9d5607): 11 timestamp-labelled decoded frames — scene04 four fronts visible throughout, scene02 three fronts, scene10 no door/washer overlap, normal exposure vs accepted draft within codec tolerance (~0.5% luma), captions single 19.2px row inside bounds",
+            "media_audio_captions": "opencode-captions-media/FINAL-REPORT.md + media-validation-final.json (Devin task_9a3a6851a3cf): full video+audio decode clean, 1800 frames/60.0s h264+AAC48k stereo, 23 immutable hashes match baseline, audio correlation 0.999855 with same accepted gain, no new voice gaps, caption sources unchanged since draft PASS",
+            "coordinator_review": "manual review of encoded scene04 and widest-caption stills; reports inspected before acceptance",
+            "limits": "visual conformance verified on bounded timestamp-labelled frame samples (scenes 01/02/04/10 + captions), not exhaustive all-frame human review; audio content contract covered by media worker, OCR of burned captions not run"
+        }
+    },
+    "historical_v3_production": {
+        "phase": "production",
+        "part": 1,
+        "duration": 60,
+        "parts2and3": "not authorized to produce",
+        "prototype_approved": true,
+        "pool_ceiling": 13,
+        "devin_slots": 5,
+        "source_modified": false,
+        "expanded_pool_user_requested": [
+            "antigravity",
+            "opencode",
+            "kiro",
+            "kilo",
+            "grok"
+        ],
+        "run_id": "run_32d499536938",
+        "video_render_complete": false,
+        "latest_checks": {
+            "timeline_validation_tests": "6 passed; two ID-validation regressions observed failing before fix",
+            "contract_tests": "18/18 pass after runtime-angle and actor-lift fixes",
+            "caption_voice_alignment": "24/24 alignment checks pass after measured voice text/timing regeneration",
+            "interim_browser_qa": {
+                "status": "ok",
+                "frames": 36,
+                "cuts": 11,
+                "determinism": {
+                    "checked": 12,
+                    "mismatches": [],
+                    "rasterRounding": [
+                        {
+                            "t": 57.4991,
+                            "scene": "scene12-mid",
+                            "changed_pixels": 4,
+                            "max_channel_delta": 1,
+                            "bbox": [
+                                523,
+                                869,
+                                593,
+                                984
+                            ],
+                            "accepted": true,
+                            "baseline": "32db34e8ffcae6eb1dcda4954768a5e98656b6815d5a19c26f6d6a9229b0cf2f",
+                            "reordered": "70441d6415d0babe2a13a5be240c83753c7351a3dc3a6c7ed040ef82dc3fea27",
+                            "identicalSvg": true
+                        },
+                        {
+                            "t": 36.3018,
+                            "scene": "scene08-mid",
+                            "changed_pixels": 2,
+                            "max_channel_delta": 1,
+                            "bbox": [
+                                765,
+                                1306,
+                                767,
+                                1309
+                            ],
+                            "accepted": true,
+                            "baseline": "af1a32972edf85f19569998a7522bc4018198aa673b49d7b098035f89a721f4f",
+                            "reordered": "ca69c4ba1d2e942bca03cc743de410e633054b59f40aa164169ae9753a74ccba",
+                            "identicalSvg": true
+                        }
+                    ],
+                    "tolerance": {
+                        "identicalSvgRequired": true,
+                        "maxChangedPixels": 10,
+                        "maxChannelDelta": 1
+                    }
+                },
+                "pageErrors": [],
+                "note": "Browser structure/pixel policy only; actual caption wording/timing and final video still pending"
+            },
+            "source_preservation": "5/5 source SHA256 match",
+            "combined_node_tests": "28/28PASS (contract,timeline,actorwalk,scene02runtime/occlusion)",
+            "scene04_framing": "Lead visually reviewed qa/scene04-fix t=0,2.5,4.8 and accepted framing and motion; full integrated browser QA pending scene12/caption fixes",
+            "closeout_audits": "7/7 small audits settled: scene04 runtime, render/mux settings and credits passed; SFX timing gaps in 02/03/05/08 and scene11 cloth/date issues queued for fixes.",
+            "opencode_caption_scene12": "Both OpenCode workers exited without assistant output; file mtimes unchanged; stop confirmed. Same Tasks now run by Devin. Progress checkpoints sent before stop.",
+            "scene11_opacity_story": "Worker QA passed opacity and story-fact checks; deterministic finite SVG",
+            "narration_energy": "Read-only audit passed: speech in all 12 intervals; no unplanned silence over 0.35s",
+            "final_video": "Not produced: render interrupted at user-requested 5-minute cutoff before mux; no final MP4"
+        },
+        "integration_notes": [
+            "Kiro continuity audit: no blocking errors",
+            "AGY effects and scene04 delivered",
+            "Kilo native timeout: released; same scene07 Task retried on explicit zero-cost OpenCode",
+            "Direct Gemini failed npm-launcher target; Grok direct retry timed out; KiroCrew and Copilot embedded text reviews usable",
+            "Lead corrected false-positive direct exit0 outcomes with cancelled/read-blocked payloads",
+            "Lead fixed ordered scene-ID validation and aligned caption safe-area metadata; exact1800 frame verification uses decoded frame count",
+            "Read-only Devin/Grok/Antigravity closeout audits delivered; audio synchronization and scene11 opacity/story detail follow-ups dispatched to Devin. OpenCode checkpoint requests sent for active caption and scene12 tasks; no replies received yet.",
+            "OpenCode caption and scene12 workers exited without worker_done; Orca transcript showed no assistant result, targeted output mtimes unchanged, guarded stop closed both exact terminals, and same Tasks were retried on Devin. Progress checkpoint messages had no replies."
+        ],
+        "latest_visual_checks": [
+            "Lead accepted02 runtime/counter clip",
+            "Lead accepted06 opaque cloth",
+            "Lead accepted08 continuous hem at0,2.5,4.8",
+            "Lead accepted09 macro/opaque load/grounding/late absence",
+            "Lead accepted11 counter occlusion:5frames+423hitpoints",
+            "Lead accepted04 framing at0,2.5,4.8 and scene04 runtime smoke PASS; scene11 cloth-opacity/story-fact fix pending"
+        ],
+        "audio_integration": "Existing 60s stereo mix remains. Read-only audits found SFX timing mismatches in scenes02/03/05/08; repair was interrupted before a completion report.",
+        "estimated_progress_percent": 88,
+        "progress_basis": "Core production assets, 12 scenes, narration, captions and scene fixes are present. The final 60s render was user-timeboxed and interrupted at about 70%; no final MP4 exists. Audio timing repair did not return before closeout; integrated browser QA and mux remain unfinished.",
+        "voice_service_state": "Free Niwat narration delivered and lead verified exact60s stereo48k,57.23s speech,12 continuous scenes",
+        "voice_preference_question": "User approved whole-Part free alternative and Niwat now delivered",
+        "opencode_slots": 2,
+        "requested_extra_agents": {
+            "grok": 1,
+            "antigravity": 1
+        },
+        "extra_agent_status": {
+            "grok": "scene03 coin timing audit completed; later three visible contacts lack cues",
+            "antigravity": "credits attribution check passed"
+        },
+        "active_pool_snapshot": {
+            "devin": 5,
+            "opencode": 0,
+            "grok": 0,
+            "antigravity": 0,
+            "note": "Five Devin workers active; Grok/Antigravity small tasks settled. Both OpenCode terminals exited and were guarded-stopped; original Tasks retried on Devin."
+        }
+    }
 }

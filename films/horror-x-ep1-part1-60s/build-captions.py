@@ -1,47 +1,44 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-build-captions.py - caption generator for horror-x-ep1-part1-60s
+build-captions.py - caption generator for horror-x-ep1-part1-60s (v5)
 
 Reads:
   script.json            (12 Thai narration lines; canonical, READ-ONLY here)
-  voice-timeline.json    (per-scene speechStart/speechEnd; produced by the
-                          voice worker concurrently - OPTIONAL at this stage)
-  fonts/Kanit-Regular.ttf (for real glyph-advance width measurement)
+  voice-timeline.json    (per-scene speechStart/speechEnd + measured text)
+  fonts/Kanit-Regular.ttf (real glyph-advance width measurement, REQUIRED)
 
 Emits (the only files this worker writes):
   captions.js                  ES module exporting renderCaptions(t) + captionAt(t)
-  horror-x-ep1-part1-60s.srt    final subtitles, consistent with the burn-in
+  horror-x-ep1-part1-60s.srt    final subtitles, one text line per cue
 
-When voice-timeline.json is absent the script falls back to a deterministic
-even 5 s/scene timing so a captions.js + SRT still exist; re-run the script
-after the voice lands and it picks up the real measured timings. There is no
-wait-loop: the script runs once and exits.
-
-Caption rules (from the task brief):
-  - 12 spoken Thai lines, split into shorter consecutive cues WHERE NEEDED
-    (a line that overflows two display lines splits into at most 2 cues);
-    each cue is at most 2 visual lines.
-  - Splits happen only at the spaces/punctuation already in the text, so no
-    Thai word is ever broken (Thai has no intra-word spaces).
-  - Timings within a line are proportional to phrase weight (non-space char
-    count), measured against the scene's speech interval.
-  - Kanit, 40-46 px (44 px default; 42/40 only if a single long phrase forces
-    it), offwhite #EAF4FF on a translucent navy bar.
-  - Caption area x90..930, y1480..1690 (bar drawn inside; never above y1480).
+v5 rules (override the v4 two-line 9.6 px layout):
+  - EVERY visible subtitle is ONE row at exactly 19.2 px (2x the v4 9.6 px).
+  - One cue = one display line. A spoken line that would overflow the
+    x90..930 zone at 19.2 px is split into shorter SEQUENTIAL one-row cues
+    at existing space/phrase boundaries (Thai has no intra-word spaces, so
+    phrase boundaries are the natural word boundaries). No font shrinking,
+    no squeezing, no cropping, no dropped words, no new narration.
+  - Timings inside a scene stay proportional to non-space character weight
+    across [speechStart, speechEnd], exactly as v4.
+  - Widths are measured with real Kanit glyph advances via fontTools. If
+    fontTools or the font file is unavailable the build FAILS - there is no
+    silent heuristic fallback.
+  - Bar: single rounded rect sized for 19.2 px, height = Kanit win-metric
+    box + padding, vertically centered at y=1744, bottom <= 1824.
+    Width hugs the measured text (PAD_X each side), clamped to the zone.
   - captionAt(t): half-open [start,end); null for t>=60 or no cue.
   - renderCaptions(t): inner SVG string (contents of <g id="captions">).
-  - XML-escaped for SVG; Thai widths handled by real font metrics (or a
-    conservative heuristic if fontTools/the font file is missing) so no
-    rendered line overflows x90..930.
+  - XML-escaped for SVG.
 
-Usage:  python build-captions.py        (fontTools optional; recommended)
+Usage:  python build-captions.py        (fontTools REQUIRED)
 Run from anywhere; it resolves paths relative to this file.
 """
 import json
 import os
 import sys
 import unicodedata
+from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -55,34 +52,71 @@ OUT_SRT = os.path.join(HERE, "horror-x-ep1-part1-60s.srt")
 DURATION = 60.0
 N_SCENES = 12
 
-# ---- caption geometry (pixels) ----
-CAP_X0, CAP_X1 = 90, 930            # horizontal caption zone
-CAP_Y0, CAP_Y1 = 1480, 1690        # vertical caption zone
+# ---- caption geometry (pixels, 1080x1920 canvas) ----
+CAP_X0, CAP_X1 = 90, 930            # horizontal caption zone (unchanged)
 CAP_W = CAP_X1 - CAP_X0            # 840
 TEXT_CX = (CAP_X0 + CAP_X1) // 2   # 510  (text-anchor middle)
 
-# font geometry
-SIZE_DEFAULT = 44
-SIZE_MIN = 40
-# two display lines
-BAR2_Y, BAR2_H = 1510, 160          # y 1510..1670  (inside 1480..1690)
-BASE2_Y, LINE_GAP = 1562, 60       # baselines 1562 / 1622
-# one display line
-BAR1_Y, BAR1_H = 1562, 66          # y 1562..1628
-BASE1_Y = 1604
+FONT_PX = Decimal("19.2")          # exactly 2x the v4 9.6 px burn-in
+BAR_CENTER_Y = Decimal(1744)       # keep the v4 lower placement
+PAD_X = Decimal(16)                # bar side padding around measured text
+PAD_Y = Decimal(4)                 # bar top/bottom padding around win box
+BAR_RX = Decimal(8)
+BAR_STROKE = Decimal("0.8")
+SAFE_BOTTOM = Decimal(1824)        # 96 px margin on the 1920 canvas
 
-# ---- Thai width measurement -------------------------------------------------
-# Primary path: real glyph advance widths read from Kanit-Regular.ttf with
-# fontTools. The browser lays out Thai text with these same advances (GPOS mark
-# positioning stacks combining marks without changing the pen advance), so the
-# measured width matches the burn-in. Fallback: a conservative per-character
-# model so plain python (no fontTools) still produces a safe fit.
-_ADV = None        # {codepoint: advance_in_em} once loaded, or False
+# Widest allowed single-line text: bar (text + 2*PAD_X) must stay <= CAP_W
+# with a small rounding/kerning safety margin.
+MAX_TEXT_PX = CAP_W - 2 * PAD_X - Decimal(8)   # 800 px at 19.2 px
+
+
+def _fmt(value):
+    """Shortest plain decimal, exact for the hundredths this layout uses."""
+    text = format(Decimal(value), "f")
+    if "." in text:
+        text = text.rstrip("0").rstrip(".")
+    return text or "0"
+
+
+def font_win_em():
+    """Kanit usWinAscent/Descent over UPM. These include Thai mark stacks."""
+    from fontTools.ttLib import TTFont
+    tt = TTFont(KANIT_TTF, lazy=True, ignoreDecompileErrors=True)
+    upm = Decimal(int(tt["head"].unitsPerEm))
+    os2 = tt["OS/2"]
+    return (Decimal(int(os2.usWinAscent)) / upm,
+            Decimal(int(os2.usWinDescent)) / upm)
+
+
+WIN_ASCENT_EM, WIN_DESCENT_EM = font_win_em()
+WIN_H_PX = (WIN_ASCENT_EM + WIN_DESCENT_EM) * FONT_PX      # ~30.336
+BAR_H = WIN_H_PX + 2 * PAD_Y                               # ~38.336
+BAR_Y = BAR_CENTER_Y - BAR_H / Decimal(2)                  # ~1724.832
+BAR_BOTTOM = BAR_Y + BAR_H                                 # ~1763.168
+BASE_Y = BAR_Y + PAD_Y + WIN_ASCENT_EM * FONT_PX           # ~1751.488
+
+
+def _caption_bounds():
+    """Integer bounds covering the bar stroke and the win-metric text box."""
+    half = BAR_STROKE / Decimal(2)
+    tops = [BAR_Y - half, BASE_Y - WIN_ASCENT_EM * FONT_PX]
+    bots = [BAR_BOTTOM + half, BASE_Y + WIN_DESCENT_EM * FONT_PX]
+    y0 = int(min(tops).to_integral_value(rounding=ROUND_FLOOR))
+    y1 = int(max(bots).to_integral_value(rounding=ROUND_CEILING))
+    return y0, y1, min(tops), max(bots)
+
+
+CAP_Y0, CAP_Y1, CAP_Y0_EXACT, CAP_Y1_EXACT = _caption_bounds()
+
+
+# ---- Thai width measurement (fontTools REQUIRED, no heuristic fallback) -----
+_ADV = None        # {codepoint: advance_in_em}
 _ADV_LOADED = False
+_FONT_ERROR = None
 
 
 def _ensure_adv():
-    global _ADV, _ADV_LOADED
+    global _ADV, _ADV_LOADED, _FONT_ERROR
     if _ADV_LOADED:
         return
     _ADV_LOADED = True
@@ -102,101 +136,86 @@ def _ensure_adv():
             f"(unitsPerEm={int(upm)}, {len(adv)} glyphs)\n")
     except Exception as e:
         _ADV = False
+        _FONT_ERROR = e
         sys.stderr.write(
-            f"NOTE: fontTools/font unavailable ({e}); using heuristic Thai widths\n")
+            f"ERROR: fontTools/Kanit measurement unavailable ({e}); "
+            f"v5 captions require real glyph metrics - no heuristic fallback\n")
 
 
 def char_w(ch):
     _ensure_adv()
-    if _ADV:
-        w = _ADV.get(ord(ch))
-        if w is not None:
-            return w
-        # glyph not in font: fall through to a conservative class estimate
-    if ch == " ":
-        return 0.28
-    if unicodedata.combining(ch) != 0:
-        return 0.10
-    cp = ord(ch)
-    if 0x0E01 <= cp <= 0x0E7F:
-        return 0.62
-    return 0.55
+    if not _ADV:
+        raise RuntimeError(f"Kanit advance metrics unavailable: {_FONT_ERROR}")
+    w = _ADV.get(ord(ch))
+    if w is None:
+        # glyph missing from the font: conservative em estimate, never silent
+        # phrase changes - only width bookkeeping for the fit check.
+        if ch == " ":
+            return 0.30
+        if unicodedata.combining(ch) != 0:
+            return 0.10
+        return 0.60
+    return w
 
 
 def text_w(s):
-    """Width of s in em at the chosen font size (advances sum)."""
+    """Width of s in em at the caption size (advances sum)."""
     return sum(char_w(c) for c in s)
 
 
-# wrap target (em): a small safety margin inside the 840 px zone at 44 px
-# (840/44 = 19.091 em hard limit). 18.7 em ~ 822.8 px (~17 px margin).
-MAX_LINE_EM = 18.7
+def text_px(s):
+    return Decimal(str(text_w(s))) * FONT_PX
 
 
-def wrap_lines(phrases, max_em):
-    """Greedy word-wrap at phrase (space) boundaries. Never breaks a phrase,
-    so no Thai word is ever split."""
-    lines = []
+def pack_rows(phrases, max_px):
+    """Greedily pack space-separated phrases into single display rows whose
+    measured 19.2 px width stays <= max_px. Never breaks a phrase, so no Thai
+    word is ever split. A single over-wide phrase is an emergency fallback:
+    it is split between codepoints, never inside a combining-mark cluster."""
+    rows = []
     cur = []
+
+    def flush():
+        nonlocal cur
+        if cur:
+            rows.append(" ".join(cur))
+            cur = []
+
     for p in phrases:
+        if text_px(p) > max_px:
+            flush()
+            rows.extend(_split_wide_phrase(p, max_px))
+            continue
         trial = cur + [p]
-        if cur and text_w(" ".join(trial)) > max_em:
-            lines.append(" ".join(cur))
+        if cur and text_px(" ".join(trial)) > max_px:
+            flush()
             cur = [p]
         else:
             cur = trial
+    flush()
+    return rows
+
+
+def _split_wide_phrase(phrase, max_px):
+    """Emergency only: split one over-wide phrase at codepoint boundaries,
+    backing off so a base character and its combining marks stay together."""
+    rows = []
+    cur = ""
+    for ch in phrase:
+        if unicodedata.combining(ch) != 0 and not cur:
+            cur = ch  # stray mark: keep with what follows
+            continue
+        if cur and text_px(cur + ch) > max_px:
+            rows.append(cur)
+            cur = "" if unicodedata.combining(ch) != 0 else ch
+            if unicodedata.combining(ch) != 0:
+                # mark without a base: attach to previous row end instead
+                rows[-1] += ch
+        else:
+            cur += ch
     if cur:
-        lines.append(" ".join(cur))
-    return lines
-
-
-def split_into_cues(text):
-    """Return a list of cue blocks (each a list of display lines) for one
-    spoken line. 1 cue if it fits in <= 2 lines, else 2 cues (each <= 2 lines).
-    Splits only at existing spaces."""
-    phrases = text.split(" ")
-    if any(p == "" for p in phrases):
-        phrases = [p for p in phrases if p != ""]
-    lines = wrap_lines(phrases, MAX_LINE_EM)
-    if len(lines) <= 2:
-        return [lines]
-    # need 2 cues: choose a phrase split where both halves fit in 2 lines,
-    # balanced by total width.
-    best = None
-    for k in range(1, len(phrases)):
-        l1 = wrap_lines(phrases[:k], MAX_LINE_EM)
-        l2 = wrap_lines(phrases[k:], MAX_LINE_EM)
-        if len(l1) <= 2 and len(l2) <= 2:
-            w1 = text_w(" ".join(phrases[:k]))
-            w2 = text_w(" ".join(phrases[k:]))
-            score = abs(w1 - w2)
-            if best is None or score < best[0]:
-                best = (score, [l1, l2])
-    if best is None:
-        # extremely long line: split by char-weight midpoint as a fallback
-        cum = 0.0
-        target = text_w(text) / 2.0
-        k = 1
-        for i, p in enumerate(phrases):
-            cum += text_w(p) + 0.28
-            if cum >= target:
-                k = i + 1
-                break
-        k = max(1, min(len(phrases) - 1, k))
-        best = (0.0, [wrap_lines(phrases[:k], MAX_LINE_EM),
-                      wrap_lines(phrases[k:], MAX_LINE_EM)])
-    return best[1]
-
-
-def choose_size(cue_lines):
-    """Pick the largest font size in {44,42,40} such that every line in the
-    cue stays within the 840 px hard pixel budget. Default 44; step down only
-    if a single long phrase forces it."""
-    widest = max(text_w(ln) for ln in cue_lines) if cue_lines else 0.0
-    for size in (44, 42, 40):
-        if widest * size <= CAP_W:
-            return size
-    return SIZE_MIN
+        rows.append(cur)
+    return [r for r in rows if r]
 
 
 def fmt_ts(s):
@@ -236,12 +255,24 @@ def _safe(s, n=46):
     return s[:n].encode("unicode_escape").decode("ascii")
 
 
+def _bar_for(text):
+    """Centered bar rect hugging the measured text, clamped to the zone."""
+    w = text_px(text) + 2 * PAD_X
+    w = min(w, Decimal(CAP_W))
+    x = Decimal(TEXT_CX) - w / Decimal(2)
+    return x, w
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
+
+    if not os.path.exists(KANIT_TTF):
+        sys.stderr.write(f"ERROR: Kanit font missing at {KANIT_TTF}\n")
+        sys.exit(1)
 
     with open(SCRIPT_JSON, encoding="utf-8") as f:
         script = json.load(f)
@@ -278,33 +309,40 @@ def main():
         measured = v.get("text") if isinstance(v, dict) else None
         text = measured if isinstance(measured, str) and measured.strip() else entry["text"]
         chosen_texts.append(text)
-        meas_text = " ".join(text.split()) if "  " in text else text
+        meas_text = " ".join(text.split())
 
-        cue_blocks = split_into_cues(meas_text)
+        phrases = [p for p in meas_text.split(" ") if p]
+        rows = pack_rows(phrases, MAX_TEXT_PX)
+        if not rows:
+            sys.stderr.write(f"ERROR: scene {sid} produced no caption rows\n")
+            sys.exit(1)
 
-        # proportional timing by non-space character weight
-        weights = [sum(1 for ch in " ".join(blk) if not ch.isspace()) for blk in cue_blocks]
+        # proportional timing by non-space character weight across rows
+        weights = [sum(1 for ch in row if not ch.isspace()) for row in rows]
         total_w = sum(weights) or 1
         dur = sp_end - sp_start
         t = sp_start
-        for bi, blk in enumerate(cue_blocks):
+        for bi, row in enumerate(rows):
             share = weights[bi] / total_w
             c_start = t
-            c_end = sp_end if bi == len(cue_blocks) - 1 else t + dur * share
+            c_end = sp_end if bi == len(rows) - 1 else t + dur * share
             c_end = min(c_end, sp_end)
             if c_end <= c_start:
                 c_end = c_start + dur * share
             c_end = min(c_end, DURATION)
+            bar_x, bar_w = _bar_for(row)
             cues.append({
-                "text": " ".join(blk),
-                "lines": blk,
+                "text": row,
+                "lines": [row],
                 "start": round(c_start, 4),
                 "end": round(c_end, 4),
-                "size": choose_size(blk),
+                "size": float(FONT_PX),
+                "barX": float(bar_x),
+                "barW": float(bar_w),
             })
             t = c_end
 
-    # ---- validation: monotonic, within [0,60), reconstruction ----
+    # ---- validation: monotonic, within [0,60), reconstruction, fit --------
     prev_end = 0.0
     for c in cues:
         if c["start"] < prev_end - 1e-6:
@@ -314,24 +352,51 @@ def main():
         if c["end"] > DURATION + 1e-6:
             sys.stderr.write(f"WARNING: cue end {c['end']} exceeds {DURATION}\n")
         prev_end = c["end"]
+        if len(c["lines"]) != 1 or c["lines"][0] != c["text"]:
+            sys.stderr.write(f"ERROR: cue at {c['start']} is not a single line\n")
+            sys.exit(1)
+        px = text_px(c["text"])
+        if px > MAX_TEXT_PX:
+            sys.stderr.write(f"ERROR: cue at {c['start']} overflows: {px}px > {MAX_TEXT_PX}px\n")
+            sys.exit(1)
+        if not (Decimal(CAP_X0) <= Decimal(str(c["barX"])) and
+                Decimal(str(c["barX"])) + Decimal(str(c["barW"])) <= Decimal(CAP_X1)):
+            sys.stderr.write(f"ERROR: bar outside x zone at {c['start']}\n")
+            sys.exit(1)
 
     def norm(s):
         return " ".join(s.split())
 
     if norm(" ".join(c["text"] for c in cues)) != norm(" ".join(chosen_texts)):
-        sys.stderr.write("WARNING: cue text does not reconstruct the chosen source text\n")
+        sys.stderr.write("ERROR: cue text does not reconstruct the chosen source text\n")
+        sys.exit(1)
+
+    if Decimal(CAP_Y1) > SAFE_BOTTOM or BAR_BOTTOM > SAFE_BOTTOM:
+        sys.stderr.write(
+            f"ERROR: caption bottom {CAP_Y1} exceeds safe edge {SAFE_BOTTOM}\n")
+        sys.exit(1)
 
     emit_js(cues, vt_source)
     emit_srt(cues)
 
     print(f"captions built from: {vt_source}")
-    print(f"cues: {len(cues)}  (lines split into multiple cues where needed)")
+    print(
+        f"geometry v5 one-row font={_fmt(FONT_PX)}px "
+        f"bar y={_fmt(BAR_Y)} h={_fmt(BAR_H)} bottom={_fmt(BAR_BOTTOM)} "
+        f"center={_fmt(BAR_CENTER_Y)} base={_fmt(BASE_Y)} padX={_fmt(PAD_X)} "
+        f"padY={_fmt(PAD_Y)} rx={_fmt(BAR_RX)} stroke={_fmt(BAR_STROKE)}")
+    print(
+        f"CAPTION_X0={CAP_X0} CAPTION_X1={CAP_X1} "
+        f"CAPTION_Y0={CAP_Y0} CAPTION_Y1={CAP_Y1} "
+        f"exact={_fmt(CAP_Y0_EXACT)}..{_fmt(CAP_Y1_EXACT)} "
+        f"winEm={_fmt(WIN_ASCENT_EM)}/{_fmt(WIN_DESCENT_EM)} "
+        f"maxTextPx={_fmt(MAX_TEXT_PX)}")
+    print(f"cues: {len(cues)}  (one 19.2px row each; splits only on measured overflow)")
     for c in cues:
-        nlines = len(c["lines"])
-        w = max(text_w(ln) for ln in c["lines"])
-        px = w * c["size"]
-        print(f"  [{c['start']:6.3f}->{c['end']:6.3f}] {nlines}L w={w:5.2f}em "
-              f"({px:5.1f}px@{c['size']})  {_safe(c['text'])}")
+        px = text_px(c["text"])
+        print(f"  [{c['start']:6.3f}->{c['end']:6.3f}] 1L w={text_w(c['text']):5.2f}em "
+              f"({px:5.1f}px) bar={c['barX']:.1f}..{c['barX'] + c['barW']:.1f}  "
+              f"{_safe(c['text'])}")
 
 
 JS_TEMPLATE = r'''// Auto-generated by build-captions.py - do not edit by hand.
@@ -340,15 +405,21 @@ JS_TEMPLATE = r'''// Auto-generated by build-captions.py - do not edit by hand.
 // Pure: renderCaptions(t)/captionAt(t) are functions of t only - no DOM,
 // fetch, state or randomness. Cue data is a constant baked in below.
 //
-// Geometry: caption zone x90..930, y1480..1690.
-// Each cue is at most 2 display lines of Kanit 40-44px, offwhite #EAF4FF on a
-// translucent navy bar. captionAt uses a half-open [start,end) interval and
-// returns null for t>=60 or no active cue.
+// Geometry v5: zone x__CAP_X0__..__CAP_X1__, y__CAP_Y0__..__CAP_Y1__.
+// Every cue is ONE row at exactly __FONT_PX__ px (2x the v4 9.6 px).
+// Bar: y__BAR_Y__ h__BAR_H__ (bottom __BAR_BOTTOM__, center __BAR_CENTER_Y__),
+// baseline __BASE_Y__, rx __BAR_RX__, stroke __BAR_STROKE__. Each cue bakes
+// its own barX/barW hugging the measured text (PAD_X=__PAD_X__ per side,
+// clamped to the zone). Text stays centered at __TEXT_CX__.
+// CAPTION_Y0/Y1 cover the bar stroke plus Kanit usWin ascent/descent at
+// __FONT_PX__ px (exact outer y__CAP_Y0_EXACT__..__CAP_Y1_EXACT__).
+// captionAt uses a half-open [start,end) interval and returns null for
+// t>=60 or no active cue.
 
-export const CAPTION_X0 = 90;
-export const CAPTION_X1 = 930;
-export const CAPTION_Y0 = 1480;
-export const CAPTION_Y1 = 1690;
+export const CAPTION_X0 = __CAP_X0__;
+export const CAPTION_X1 = __CAP_X1__;
+export const CAPTION_Y0 = __CAP_Y0__;
+export const CAPTION_Y1 = __CAP_Y1__;
 export const CAPTION_DURATION = 60.0;
 
 const CUES = __CUES__;
@@ -375,17 +446,11 @@ export function captionAt(t) {
 export function renderCaptions(t) {
   const c = captionAt(t);
   if (!c) return '';
-  const sz = c.size || 44;
-  const n = c.lines.length;
-  const two = n >= 2;
-  const barY = two ? 1510 : 1562;
-  const barH = two ? 160 : 66;
-  const baseY = two ? 1562 : 1604;
-  const gap = 60;
-  let s = `<rect x="90" y="${barY}" width="840" height="${barH}" rx="18" fill="#142333" fill-opacity="0.82" stroke="#33485f" stroke-opacity="0.5" stroke-width="1"/>`;
-  for (let i = 0; i < n; i++) {
-    s += `<text x="510" y="${baseY + i * gap}" text-anchor="middle" font-family="Kanit, sans-serif" font-size="${sz}" fill="#EAF4FF">${esc(c.lines[i])}</text>`;
-  }
+  const sz = c.size || __FONT_PX__;
+  const bx = c.barX != null ? c.barX : __TEXT_CX__ - __PAD_X__;
+  const bw = c.barW != null ? c.barW : __CAP_W__;
+  let s = `<rect x="${bx}" y="__BAR_Y__" width="${bw}" height="__BAR_H__" rx="__BAR_RX__" fill="#142333" fill-opacity="0.55" stroke="#33485f" stroke-opacity="0.35" stroke-width="__BAR_STROKE__"/>`;
+  s += `<text x="__TEXT_CX__" y="__BASE_Y__" text-anchor="middle" font-family="Kanit, sans-serif" font-size="${sz}" fill="#EAF4FF">${esc(c.text)}</text>`;
   return s;
 }
 '''
@@ -397,7 +462,34 @@ def emit_js(cues, vt_source):
         src_label = "fallback even 5s/scene timing (voice-timeline.json absent - re-run build-captions.py after voice lands)"
     else:
         src_label = os.path.basename(vt_source) + " (measured speech)"
-    js = JS_TEMPLATE.replace("__CUES__", data).replace("__SOURCE__", src_label)
+    tokens = {
+        "__SOURCE__": src_label,
+        "__CUES__": data,
+        "__CAP_X0__": str(CAP_X0),
+        "__CAP_X1__": str(CAP_X1),
+        "__CAP_Y0__": str(CAP_Y0),
+        "__CAP_Y1__": str(CAP_Y1),
+        "__CAP_Y0_EXACT__": _fmt(CAP_Y0_EXACT),
+        "__CAP_Y1_EXACT__": _fmt(CAP_Y1_EXACT),
+        "__FONT_PX__": _fmt(FONT_PX),
+        "__BAR_Y__": _fmt(BAR_Y),
+        "__BAR_H__": _fmt(BAR_H),
+        "__BAR_BOTTOM__": _fmt(BAR_BOTTOM),
+        "__BAR_CENTER_Y__": _fmt(BAR_CENTER_Y),
+        "__BASE_Y__": _fmt(BASE_Y),
+        "__PAD_X__": _fmt(PAD_X),
+        "__PAD_Y__": _fmt(PAD_Y),
+        "__BAR_RX__": _fmt(BAR_RX),
+        "__BAR_STROKE__": _fmt(BAR_STROKE),
+        "__TEXT_CX__": str(TEXT_CX),
+        "__CAP_W__": str(CAP_W),
+    }
+    js = JS_TEMPLATE
+    for key, value in tokens.items():
+        js = js.replace(key, value)
+    if "__" in js:
+        sys.stderr.write("ERROR: unreplaced caption template token\n")
+        sys.exit(1)
     with open(OUT_JS, "w", encoding="utf-8") as f:
         f.write(js)
     print(f"wrote {OUT_JS} ({len(cues)} cues)")
@@ -406,7 +498,8 @@ def emit_js(cues, vt_source):
 def emit_srt(cues):
     out = []
     for k, c in enumerate(cues):
-        text = "\n".join(c["lines"])
+        # one text line per cue (v5 single-row captions)
+        text = c["text"]
         out.append(f"{k + 1}\n{fmt_ts(c['start'])} --> {fmt_ts(c['end'])}\n{text}\n")
     with open(OUT_SRT, "w", encoding="utf-8") as f:
         f.write("\n".join(out).rstrip("\n") + "\n")
@@ -415,3 +508,7 @@ def emit_srt(cues):
 
 if __name__ == "__main__":
     main()
+else:
+    # module import (tests): metrics still load lazily via char_w(); a
+    # missing font surfaces as RuntimeError on first measurement, not silent.
+    pass

@@ -80,8 +80,6 @@ export function renderScene02(u,t,d=5){
   const mid=
     // open doorway: dark interior beyond the rear door + warm spill
     `<g>
-      ${rect(566,398,168,758,'#040B14','rx="8" stroke="#8FB2D4" stroke-width="2" opacity=".9"')}
-      ${line('M574 410V1140','#B18270',3,.5)}
       ${path('M575 1160 L725 1160 L900 1440 L450 1440 Z','url(#s02-spill)',`opacity="${flick}"`)}
       ${openSign(t)}
     </g>`+
@@ -97,15 +95,9 @@ export function renderScene02(u,t,d=5){
     tray(trayX,trayY,ns*.95,swayA);
 
   // foreground door-jamb / wall edges for strong differential parallax
-  const front=
-    `<g>
-      ${path('M-60 260 L150 320 L150 1620 L-60 1680 Z','#070F1A','opacity=".94"')}
-      ${line('M150 320 L150 1620','#536680',3,.35)}
-      ${path('M430 300 L492 340 L492 1560 L430 1600 Z','#0A1522','opacity=".9"')}
-      ${line('M492 340 L492 1560','#8FB2D4',2,.22)}
-      ${path('M1010 330 L1140 300 L1140 1700 L1010 1660 Z','#070F1A','opacity=".94"')}
-      ${line('M1010 330 L1010 1660','#536680',3,.3)}
-    </g>`;
+  // v4: the three annotated foreground black slabs are removed; the real
+  // warm-retro wall/floor from interior() now reads straight through.
+  const front='';
 
   const cam={cx:660,cy:985,z0:1,z1:1.05,dx:-140,dy:-14};
 

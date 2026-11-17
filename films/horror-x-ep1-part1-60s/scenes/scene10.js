@@ -3,11 +3,11 @@
 // the wet floor and is drawn into the dark gap beside the ajar door, sliding
 // away until nothing remains. NO customer is shown and NO footsteps occur —
 // only the cloth drags and vanishes. Foreground laundry sways and overhead pipe
-// shadows drift across wall/floor. A faint green seam glows under the door.
+// shadows drift across wall/floor. A faint cold seam glows at the door gap.
 //
 // Camera: slow low dolly FORWARD (push-in) with differential parallax via view().
 // Independent motion: cloth undulation + retraction, laundry sway, drifting pipe
-// shadows, green-seam pulse, fluorescent flicker.
+// shadows, seam pulse, fluorescent flicker.
 //
 // Export: renderScene10(u, t, d=5) -> SVG inner string (no root <svg>, no captions).
 //   u = local seconds 0..d, t = global time, d = scene duration (default 5).
@@ -15,6 +15,8 @@
 
 import { view, clamp, ease, rect, line } from '../scene-kit.js';
 import { fx } from '../effects.js';
+import { washer as inWasher } from '../assets/washer-volume.js';
+import { ROOM_LIGHTING } from '../assets/room-lighting.js';
 
 const n = (v, d = 2) => { const r = Number(v.toFixed(d)); return Object.is(r, -0) ? 0 : r; };
 
@@ -22,7 +24,7 @@ const n = (v, d = 2) => { const r = Number(v.toFixed(d)); return Object.is(r, -0
 // Floor spine of the trailing cloth (artboard coords, low-camera perspective).
 // Runs from the near foreground up to the dark doorway base, meandering.
 // ---------------------------------------------------------------------------
-const NEAR = { x: 186, y: 1402 };
+const NEAR = { x: 400, y: 1402 };
 const FAR  = { x: 624, y: 1176 };
 const SEG_DX = FAR.x - NEAR.x;
 const SEG_DY = FAR.y - NEAR.y;
@@ -126,14 +128,14 @@ function hangingTowel(t, x, top, w, h, phase, amp, fillId) {
   for (const f of [0.24, 0.48, 0.72]) {
     const tx = x + w * f;
     const bx = bl + (br - bl) * f;
-    folds += `<path d="M${n(tx)} ${n(top + 3)} Q${n((tx + bx) / 2 + sway2 * 0.4)} ${n((top + bot) / 2)} ${n(bx)} ${n(bot - 3)}" fill="none" stroke="#8c9fa8" stroke-width="1.4" opacity=".3"/>`;
+    folds += `<path d="M${n(tx)} ${n(top + 3)} Q${n((tx + bx) / 2 + sway2 * 0.4)} ${n((top + bot) / 2)} ${n(bx)} ${n(bot - 3)}" fill="none" stroke="#9a8f80" stroke-width="1.4" opacity=".3"/>`;
   }
   return `<g>
     <path d="${d}" fill="url(#${fillId})" stroke="#7e9ba8" stroke-width="1.5" opacity=".96"/>
-    <path d="M${n(x + 3)} ${n(top + 2)} L${n(x + w - 3)} ${n(top + 2)}" stroke="#eef3ef" stroke-width="2.6" opacity=".5"/>
+    <path d="M${n(x + 3)} ${n(top + 2)} L${n(x + w - 3)} ${n(top + 2)}" stroke="#f4ecdd" stroke-width="2.6" opacity=".5"/>
     ${folds}
-    <circle cx="${n(x + 14)}" cy="${n(top - 5)}" r="3" fill="#8fb2d4" opacity=".7"/>
-    <circle cx="${n(x + w - 14)}" cy="${n(top - 5)}" r="3" fill="#8fb2d4" opacity=".7"/>
+    <circle cx="${n(x + 14)}" cy="${n(top - 5)}" r="3" fill="#b18270" opacity=".7"/>
+    <circle cx="${n(x + w - 14)}" cy="${n(top - 5)}" r="3" fill="#b18270" opacity=".7"/>
   </g>`;
 }
 
@@ -156,27 +158,58 @@ function overheadPipes() {
   </g>`;
 }
 
-// Rear wall + dark doorway (geometry and palette from assets/interior.js).
+// Rear wall + ajar rear door. The doorway is dressed as real architecture —
+// head beam, jamb posts, a door leaf with panels/push-bar/kick plate and a
+// floor threshold — so it reads as a DOOR, not a black hole. A faint cold
+// seam glows at the gap's base where the cloth is drawn in.
 function rearDoorway(t, seamGlow) {
   return `<g>
     ${rect(300, 300, 482, 878, '#0d1a28', 'stroke="#5f7c8d" stroke-width="4"')}
     ${rect(320, 320, 442, 838, 'url(#s10-void)')}
-    ${rect(744, 320, 18, 838, '#22374b', 'stroke="#15283a" stroke-width="2"')}
-    ${line('M320 330 V1150 M762 330 V1150', '#6d8798', 1, .22)}
 
-    <path d="M336 336 L512 362 L534 1152 L364 1174 Z" fill="url(#s10-door)" stroke="#22384c" stroke-width="3"/>
-    <path d="M352 372 L492 394 L508 780 L372 800 Z" fill="url(#s10-doorPanel)" stroke="#15283a" stroke-width="2.5" opacity=".92"/>
-    <path d="M366 796 L506 782 L514 1128 L380 1146 Z" fill="url(#s10-doorPanel)" stroke="#15283a" stroke-width="2.5" opacity=".92"/>
-    <path d="M402 402 L470 412 L478 470 L410 460 Z" fill="#29425a" opacity=".38"/>
-    <path d="M398 838 L486 828 L492 920 L404 932 Z" fill="#29425a" opacity=".33"/>
-    ${rect(492, 900, 14, 40, '#b18270', 'stroke="#6f4d3f" stroke-width="2"')}
-    ${rect(480, 936, 40, 13, '#8fb2d4', 'stroke="#22384c" stroke-width="2"')}
-    ${line('M344 350 L520 374', '#8fb2d4', 2, .18)}
+    <!-- head beam / lintel over the opening -->
+    ${rect(284, 280, 514, 46, '#22374b', 'stroke="#5f7c8d" stroke-width="3"')}
+    ${line('M296 324 H784', '#0a1420', 4, .55)}
+    ${line('M298 283 H782', '#8fb2d4', 1.5, .2)}
 
-    ${rect(320, 1150, 442, 24, '#31465a', 'stroke="#5f7c8d" stroke-width="2"')}
-    <ellipse cx="585" cy="1166" rx="150" ry="26" fill="url(#s10-green)" opacity="${n(0.18 * seamGlow)}"/>
-    ${line('M352 1158 H748', '#4e9e84', 2.2, n(0.42 * seamGlow))}
-    ${line('M352 1156 H748', '#9fe6c9', 1, n(0.22 * seamGlow))}
+    <!-- jamb posts flanking the recess -->
+    ${rect(304, 326, 30, 826, '#16283a', 'stroke="#4a6175" stroke-width="2"')}
+    ${rect(746, 326, 30, 826, '#16283a', 'stroke="#4a6175" stroke-width="2"')}
+    ${line('M336 340 V1140', '#6d8798', 1.5, .28)}
+    ${line('M744 340 V1140', '#6d8798', 1.5, .28)}
+
+    <!-- dim spill of shop light inside the recess, fading downward -->
+    <polygon points="352,352 730,352 700,780 380,780" fill="url(#s10-spill)" opacity=".55"/>
+
+    <!-- rigid door leaf: straight-edged rectangle, interior.js 3-panel design.
+         Ajar toward the dark gap on the right (x~545-745 stays void). -->
+    ${rect(538, 352, 12, 792, '#101a28', 'opacity=".8"')}
+    ${rect(352, 348, 186, 800, 'url(#s10-door)', 'stroke="#22384c" stroke-width="3"')}
+    ${rect(372, 384, 148, 250, 'url(#s10-doorPanel)', 'stroke="#15283a" stroke-width="2.5" opacity=".92"')}
+    ${rect(384, 398, 124, 224, '#33506B', 'opacity=".45"')}
+    ${rect(372, 748, 148, 166, 'url(#s10-doorPanel)', 'stroke="#15283a" stroke-width="2.5" opacity=".92"')}
+    ${rect(384, 762, 124, 140, '#33506B', 'opacity=".45"')}
+    ${rect(372, 980, 148, 118, 'url(#s10-doorPanel)', 'stroke="#15283a" stroke-width="2.5" opacity=".92"')}
+    ${rect(384, 994, 124, 92, '#33506B', 'opacity=".45"')}
+    ${rect(372, 1120, 148, 22, '#22384C', 'stroke="#6E8CA0" stroke-width="2"')}
+    <!-- lever handle + pull plate on the right stile -->
+    ${rect(496, 880, 16, 44, '#b18270', 'stroke="#6f4d3f" stroke-width="2"')}
+    ${rect(482, 928, 44, 14, '#8fb2d4', 'stroke="#22384c" stroke-width="2"')}
+    <!-- hinge barrels on the left stile -->
+    <circle cx="362" cy="430" r="5" fill="#8fb2d4"/><circle cx="362" cy="720" r="5" fill="#8fb2d4"/>
+    <circle cx="362" cy="1010" r="5" fill="#8fb2d4"/>
+    ${line('M356 366 L528 366', '#8fb2d4', 1.5, .18)}
+
+    <!-- floor threshold: metal strip meeting the floor -->
+    ${rect(318, 1144, 446, 34, '#31465a', 'stroke="#5f7c8d" stroke-width="2"')}
+    ${line('M322 1147 H760', '#8fb2d4', 1.4, .35)}
+    ${line('M322 1174 H760', '#0a1420', 2.5, .5)}
+    <ellipse cx="600" cy="1176" rx="210" ry="20" fill="url(#s10-shadow)" opacity=".55"/>
+
+    <!-- faint COLD seam at the gap base: dark + cold light, not green energy -->
+    <ellipse cx="612" cy="1152" rx="120" ry="18" fill="url(#s10-seam)" opacity="${n(0.5 * seamGlow)}"/>
+    ${line('M566 1144 H716', '#7fa8c4', 2, n(0.3 * seamGlow))}
+    ${line('M566 1142 H716', '#a9c6d8', 1, n(0.16 * seamGlow))}
   </g>`;
 }
 
@@ -186,16 +219,24 @@ function floorGrid() {
   const vpX = 560, vpY = 1120;
   for (let i = -6; i <= 6; i++) {
     const x = vpX + i * 150;
-    g += line(`M${n(vpX + i * 92)} ${vpY} L${n(x)} 1920`, '#6f8fa0', 1, 0.12);
+    g += line(`M${n(vpX + i * 92)} ${vpY} L${n(x)} 1920`, '#8C8774', 1, 0.15);
   }
   for (let j = 0; j < 7; j++) {
     const yy = 1178 + Math.pow(j / 6, 1.8) * 740;
     const spread = (yy - 1178) / 740;
     const inset = 60 * (1 - spread);
-    g += line(`M${n(inset)} ${n(yy)} H${n(1080 - inset)}`, '#6f8fa0', 1, j === 0 ? 0.24 : 0.13);
+    g += line(`M${n(inset)} ${n(yy)} H${n(1080 - inset)}`, '#8C8774', 1, j === 0 ? 0.28 : 0.18);
   }
   return g;
 }
+
+// Washer row: same-model machines grounded on the floor, left of the door,
+// receding toward it (mirrors the assets/interior.js row layout).
+const WASHERS = [
+  { i: 1, x: -57, bottom: 1640, s: 1.50, on: true,  phase: 0,  accent: '#6FA8A0', depth: 174, side: 'right', drumPhase: 'spin' },
+  { i: 2, x: -90, bottom: 1330, s: 1.40, on: true,  phase: 90, accent: '#E07A5F', depth: 174, side: 'right', drumPhase: 'tumble' },
+  { i: 3, x: -57, bottom: 1195, s: 1.28, on: false, phase: 0,  accent: '#E9C46A', depth: 174, side: 'right' },
+];
 
 export function renderScene10(u, t, d = 5) {
   u = Number.isFinite(+u) ? Math.max(0, +u) : 0;
@@ -203,6 +244,7 @@ export function renderScene10(u, t, d = 5) {
   d = Number.isFinite(+d) && +d > 0 ? +d : 5;
   const p = clamp(u / d);
   const e = ease(p);
+  const amb = ROOM_LIGHTING.ambientScale, tubeOp = ROOM_LIGHTING.tubeOpacity, warmOp = ROOM_LIGHTING.warmPoolOpacity;
 
   // --- camera: slow low dolly forward toward the aisle/doorway ---
   const camCfg = {
@@ -233,24 +275,32 @@ export function renderScene10(u, t, d = 5) {
 
   // wall tile grid (from the source wall)
   let tiles = '';
-  for (let yy = 348; yy < 1170; yy += 62) tiles += line(`M40 ${yy}H1040`, '#5d7484', 1, 0.07);
-  for (let xx = 60; xx < 1040; xx += 90) tiles += line(`M${xx} 300V1178`, '#5d7484', 1, 0.06);
+  for (let yy = 348; yy < 1170; yy += 62) tiles += line(`M40 ${yy}H1040`, '#7BA6BE', 1, n(0.07 * amb));
+  for (let xx = 60; xx < 1040; xx += 90) tiles += line(`M${xx} 300V1178`, '#7FB8A4', 1, n(0.06 * amb));
   back += tiles;
 
   // lower tiled band / wainscot
-  back += rect(0, 900, 1080, 278, '#1b2d3e', 'opacity=".42"');
-  back += line('M0 900 H1080', '#6d8798', 2, 0.32);
+  back += rect(0, 900, 1080, 278, '#3E5A75', `opacity="${n(0.45 * amb)}"`);
+  back += line('M0 900 H1080', '#7FA0B4', 2, n(0.35 * amb));
 
   // ceiling fluorescent bar + cone
   back += rect(300, 236, 480, 14, '#101a28');
-  back += rect(318, 240, 444, 7, '#eaf4ff', `opacity="${n(0.82 * tube)}"`);
-  back += `<polygon points="330,258 720,258 856,1178 214,1178" fill="url(#s10-lamp)" opacity="${n(0.2 * tube)}"/>`;
+  back += rect(318, 240, 444, 7, '#eaf4ff', `opacity="${n(0.82 * tube * tubeOp)}"`);
+  back += `<polygon points="330,258 720,258 856,1178 214,1178" fill="url(#s10-lamp)" opacity="${n(0.2 * tube * tubeOp)}"/>`;
 
   // side pilasters framing the aisle
-  back += rect(0, 300, 62, 890, '#0e1b29', 'opacity=".9"');
-  back += rect(1018, 300, 62, 890, '#0e1b29', 'opacity=".9"');
+  back += rect(0, 300, 62, 890, '#22364C', 'opacity=".9"');
+  back += rect(1018, 300, 62, 890, '#1E3247', 'opacity=".9"');
   back += line('M62 300 V1178', '#33465a', 2, .4);
   back += line('M1018 300 V1178', '#33465a', 2, .4);
+
+  // warm amber practical tubes on the pilasters + their wall glow
+  back += rect(16, 690, 30, 8, '#2a1c12');
+  back += rect(20, 698, 22, 96, '#f2c894', `opacity="${n(0.34 * tube * warmOp)}"`);
+  back += rect(1034, 690, 30, 8, '#2a1c12');
+  back += rect(1038, 698, 22, 96, '#f2c894', `opacity="${n(0.3 * tube * warmOp)}"`);
+  back += `<ellipse cx="92" cy="762" rx="140" ry="190" fill="url(#s10-warm)" opacity="${n(0.55 * tube * warmOp)}"/>`;
+  back += `<ellipse cx="988" cy="762" rx="140" ry="190" fill="url(#s10-warm)" opacity="${n(0.48 * tube * warmOp)}"/>`;
 
   // wall clutter: fuse box, drain, mop (source palette, low contrast)
   back += rect(112, 560, 74, 96, '#172a3a', 'stroke="#536680" stroke-width="2"');
@@ -266,8 +316,15 @@ export function renderScene10(u, t, d = 5) {
   // floor
   back += `<polygon points="0,1178 1080,1178 1080,1920 0,1920" fill="url(#s10-floor)"/>`;
   back += floorGrid();
+  back += `<ellipse cx="540" cy="1194" rx="590" ry="54" fill="url(#s10-shadow)" opacity=".3"/>`;
   // door base shadow
   back += `<ellipse cx="560" cy="1188" rx="250" ry="34" fill="url(#s10-shadow)" opacity=".6"/>`;
+  // faint warm spill bleeding over the threshold — the shop 'leaking' warmth;
+  // the doorway itself stays dark (drawn over by the void/abyss later)
+  back += `<ellipse cx="560" cy="1164" rx="150" ry="11" fill="#e8b36a" opacity="${n(0.12 * warmOp)}"/>`;
+  back += `<ellipse cx="560" cy="1178" rx="190" ry="15" fill="#e8b36a" opacity="${n(0.08 * warmOp)}"/>`;
+  // faint cold spill of seam-light onto the floor from the door gap
+  back += `<polygon points="540,1178 740,1178 800,1280 480,1280" fill="url(#s10-spill)" opacity="${n(0.4 * seamGlow)}"/>`;
   // floor drain near the threshold
   back += `<ellipse cx="470" cy="1280" rx="34" ry="12" fill="#0a1420" stroke="#536680" stroke-width="2" opacity=".7"/>`;
   back += line('M455 1280 H485 M470 1274 V1286', '#3a4e63', 2, .6);
@@ -288,6 +345,16 @@ export function renderScene10(u, t, d = 5) {
     <path d="M${n(150 + driftC)} 430 L${n(30 + driftC)} 600" stroke="#050c14" stroke-width="7" opacity=".09"/>
   </g>`;
 
+  // canonical front-load washers (assets/washer-volume.js washer()), receding
+  // left of the door; floor contact shadows ground each machine
+  for (const w of WASHERS.slice().reverse()) {
+    mid += `<ellipse cx="${n(w.x + (120 + w.depth * 0.29) * w.s)}" cy="${n(w.bottom + 10 * w.s)}" rx="${n((105 + w.depth * 0.29) * w.s)}" ry="${n(15 * w.s)}" fill="url(#s10-shadow)" opacity=".22"/>`;
+    mid += inWasher(w, t);
+  }
+
+  // warm amber pool on the mid-ground floor, right of the cloth's path
+  mid += `<ellipse cx="800" cy="1340" rx="200" ry="60" fill="url(#s10-warm)" opacity="${n(0.6 * tube * warmOp)}"/>`;
+
   // the trailing cloth (subject) — drawn before the abyss swallows its far end
   mid += `<g opacity="${clothOp}">
     ${clothShadow(u, a)}
@@ -301,7 +368,7 @@ export function renderScene10(u, t, d = 5) {
   mid += line(`M${n(612 + Math.sin(t * 0.9) * 3)} 1178 Q640 1160 ${n(668 + Math.sin(t * 0.7) * 2)} 1148`, '#c3ced0', 1.6, n(0.22 * (1 - e)));
 
   // cold spill of light on the near floor so the cloth reads
-  mid += `<ellipse cx="400" cy="1360" rx="230" ry="80" fill="url(#s10-lamp)" opacity="${n(0.1 * tube)}"/>`;
+  mid += `<ellipse cx="400" cy="1360" rx="230" ry="80" fill="url(#s10-lamp)" opacity="${n(0.1 * tube * tubeOp)}"/>`;
 
   // ----------------------------------------------------------------- FRONT
   let front = '';
@@ -328,38 +395,54 @@ export function renderScene10(u, t, d = 5) {
   // --------------------------------------------------------------- compile
   const defs = `<defs>
     <linearGradient id="s10-wall" x2="0" y2="1">
-      <stop stop-color="#31485d"/><stop offset=".5" stop-color="#223850"/><stop offset="1" stop-color="#15293a"/>
+      <stop stop-color="${ROOM_LIGHTING.wallStops[0]}"/><stop offset=".48" stop-color="${ROOM_LIGHTING.wallStops[1]}"/><stop offset="1" stop-color="${ROOM_LIGHTING.wallStops[2]}"/>
     </linearGradient>
-    <linearGradient id="s10-floor" x2=".2" y2="1">
-      <stop stop-color="#335062"/><stop offset=".72" stop-color="#4d6b7a"/><stop offset="1" stop-color="#1f3543"/>
+    <linearGradient id="s10-floor" x2=".25" y2="1">
+      <stop stop-color="${ROOM_LIGHTING.floorStops[0]}"/><stop offset=".55" stop-color="${ROOM_LIGHTING.floorStops[1]}"/><stop offset="1" stop-color="${ROOM_LIGHTING.floorStops[2]}"/>
     </linearGradient>
     <linearGradient id="s10-door" x2="1" y2="0">
-      <stop stop-color="#46596b"/><stop offset=".5" stop-color="#31465a"/><stop offset="1" stop-color="#1d3042"/>
+      <stop stop-color="#54748C"/><stop offset=".5" stop-color="#3D5C74"/><stop offset="1" stop-color="#2A4258"/>
     </linearGradient>
     <linearGradient id="s10-doorPanel" x2="0" y2="1">
-      <stop stop-color="#3a4e63"/><stop offset="1" stop-color="#22374b"/>
+      <stop stop-color="#4A647A"/><stop offset="1" stop-color="#324A5E"/>
+    </linearGradient>
+    <linearGradient id="in-metal" x2="1" y2=".15">
+      <stop stop-color="#7794a5"/><stop offset=".45" stop-color="#506f83"/><stop offset="1" stop-color="#2a465b"/>
+    </linearGradient>
+    <linearGradient id="in-panel" x2="0" y2="1">
+      <stop stop-color="#3b5870"/><stop offset=".55" stop-color="#25384e"/><stop offset="1" stop-color="#172a3a"/>
+    </linearGradient>
+    <linearGradient id="in-drum" x2=".8" y2="1">
+      <stop stop-color="#759cab"/><stop offset=".38" stop-color="#132b3c"/><stop offset="1" stop-color="#456d82"/>
     </linearGradient>
     <linearGradient id="s10-void" x2="0" y2="1">
-      <stop stop-color="#1a2634"/><stop offset=".55" stop-color="#0a1119"/><stop offset="1" stop-color="#03070c"/>
+      <stop stop-color="#22374b"/><stop offset=".4" stop-color="#101a28"/><stop offset="1" stop-color="#03070c"/>
+    </linearGradient>
+    <linearGradient id="s10-spill" x2="0" y2="1">
+      <stop stop-color="#8fb2d4" stop-opacity=".2"/><stop offset="1" stop-color="#8fb2d4" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="s10-cloth" x2=".22" y2="1">
       <stop stop-color="#eee8dc"/><stop offset=".5" stop-color="#c3ced0"/><stop offset="1" stop-color="#9fb0b6"/>
     </linearGradient>
     <linearGradient id="s10-towel" x2=".1" y2="1">
-      <stop stop-color="#d7dee0"/><stop offset=".5" stop-color="#c3ced0"/><stop offset="1" stop-color="#8c9fa8"/>
+      <stop stop-color="#b9d6ca"/><stop offset=".5" stop-color="#7fb8a4"/><stop offset="1" stop-color="#557f70"/>
     </linearGradient>
     <linearGradient id="s10-sheet" x2=".1" y2="1">
-      <stop stop-color="#e6e2d6"/><stop offset=".55" stop-color="#c9d2cf"/><stop offset="1" stop-color="#a9a393"/>
+      <stop stop-color="#efe4cd"/><stop offset=".55" stop-color="#d9c9a8"/><stop offset="1" stop-color="#a8906f"/>
     </linearGradient>
     <linearGradient id="s10-rag" x2=".1" y2="1">
-      <stop stop-color="#cbd7d6"/><stop offset="1" stop-color="#8c9fa8"/>
+      <stop stop-color="#ecc0b4"/><stop offset="1" stop-color="#a9715f"/>
     </linearGradient>
     <linearGradient id="s10-lamp" x2="0" y2="1">
       <stop stop-color="#eaf4ff" stop-opacity=".34"/><stop offset="1" stop-color="#8fb2d4" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="s10-green" cx=".5" cy=".5" r=".5">
-      <stop stop-color="#4e9e84" stop-opacity=".5"/><stop offset=".55" stop-color="#3fae86" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#3fae86" stop-opacity="0"/>
+    <radialGradient id="s10-warm" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#f2c894" stop-opacity=".4"/><stop offset=".55" stop-color="#c98f4e" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#c98f4e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s10-seam" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#7fa8c4" stop-opacity=".38"/><stop offset=".55" stop-color="#5d7f96" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#5d7f96" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="s10-abyss" cx=".5" cy=".5" r=".5">
       <stop stop-color="#03070c" stop-opacity=".95"/><stop offset=".6" stop-color="#03070c" stop-opacity=".6"/>

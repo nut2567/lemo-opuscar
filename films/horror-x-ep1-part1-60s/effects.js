@@ -3,6 +3,8 @@
 // All motion t-driven, deterministic (seeded), no DOM/fetch/random.
 // Defs prefixed fx-. Never covers key action or captions.
 
+import { ROOM_LIGHTING as RL } from './assets/room-lighting.js';
+
 const n = (v, d = 2) => { const r = Number(v.toFixed(d)); return Object.is(r, -0) ? 0 : r; };
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const TAU = Math.PI * 2;
@@ -33,11 +35,24 @@ function fxDefs(kind) {
     <stop offset=".6" stop-color="#536680" stop-opacity=".05"/>
     <stop offset="1" stop-color="#142333" stop-opacity="0"/>
   </radialGradient>`;
+  // warm practical light pool radial
+  d += `<radialGradient id="fx-poolwarm">
+    <stop offset="0" stop-color="#F2C894" stop-opacity=".13"/>
+    <stop offset=".6" stop-color="#E8B36A" stop-opacity=".05"/>
+    <stop offset="1" stop-color="#142333" stop-opacity="0"/>
+  </radialGradient>`;
   // warm accent pool
   d += `<radialGradient id="fx-warm">
     <stop offset="0" stop-color="#B18270" stop-opacity=".06"/>
     <stop offset="1" stop-color="#142333" stop-opacity="0"/>
   </radialGradient>`;
+  // warm haze ribbon gradient
+  d += `<linearGradient id="fx-haze-warm" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#E8B36A" stop-opacity="0"/>
+    <stop offset=".4" stop-color="#F2C894" stop-opacity=".05"/>
+    <stop offset=".7" stop-color="#E8B36A" stop-opacity=".06"/>
+    <stop offset="1" stop-color="#F2C894" stop-opacity="0"/>
+  </linearGradient>`;
   if (kind === 'exterior') {
     // branch/cable shadow mask
     d += `<linearGradient id="fx-shadow" x1="0" y1="0" x2="0" y2="1">
@@ -56,7 +71,7 @@ function fxDefs(kind) {
 }
 
 // ---------- dust motes (seeded, t-driven) ----------
-function dustMotes(t, count, yMin, yMax) {
+function dustMotes(t, count, yMin, yMax, warm = false) {
   const rng = mulberry32(7919); // fixed seed
   let svg = '';
   for (let i = 0; i < count; i++) {
@@ -77,41 +92,42 @@ function dustMotes(t, count, yMin, yMax) {
 
     // skip motes in the caption area (y > 1440) or dead center action zone
     if (y > 1440) continue;
-    const fill = brightness > 0.7 ? '#EAF4FF' : '#8FB2D4';
+    let fill = brightness > 0.7 ? '#EAF4FF' : '#8FB2D4';
+    if (warm && brightness > 0.18 && brightness < 0.34) fill = '#F2D8A8';
     svg += `<circle cx="${x}" cy="${y}" r="${n(size, 1)}" fill="${fill}" opacity="${op}"/>`;
   }
   return svg;
 }
 
 // ---------- drifting haze ribbon ----------
-function hazeRibbon(t, yCenter, amplitude, width) {
+function hazeRibbon(t, yCenter, amplitude, width, grad = 'fx-haze', dim = 1) {
   // sinuous horizontal ribbon that drifts slowly
   const drift = Math.sin(t * 0.15) * 60;
   const yOff = Math.sin(t * 0.23) * amplitude;
   const y = n(yCenter + yOff);
   const h = n(width);
-  const op = n(0.04 + 0.035 * Math.sin(t * 0.19));
-  return `<rect x="${n(-40 + drift)}" y="${n(y - h / 2)}" width="1160" height="${h}" fill="url(#fx-haze)" opacity="${op}" rx="40"/>`;
+  const op = n((0.04 + 0.035 * Math.sin(t * 0.19)) * dim);
+  return `<rect x="${n(-40 + drift)}" y="${n(y - h / 2)}" width="1160" height="${h}" fill="url(#${grad})" opacity="${op}" rx="40"/>`;
 }
 
 // ---------- cool light pools ----------
 function lightPools(t) {
   let svg = '';
-  // pool 1: left floor area (below washers, above captions)
+  // pool 1: left floor area (below washers, above captions) — cool ambient spill
   const p1x = n(240 + Math.sin(t * 0.13) * 15);
   const p1y = n(1300 + Math.sin(t * 0.17) * 10);
-  const p1op = n(0.55 + 0.15 * Math.sin(t * 0.21));
-  svg += `<ellipse cx="${p1x}" cy="${p1y}" rx="200" ry="80" fill="url(#fx-pool)" opacity="${p1op}"/>`;
+  const p1op = n((0.55 + 0.15 * Math.sin(t * 0.21)) * RL.ambientScale * 0.85);
+  svg += `<ellipse cx="${p1x}" cy="${p1y}" rx="170" ry="68" fill="url(#fx-pool)" opacity="${p1op}"/>`;
 
-  // pool 2: right counter glow
+  // pool 2: right counter glow (warm practical light)
   const p2x = n(830 + Math.sin(t * 0.11 + 1.2) * 12);
   const p2y = n(1340 + Math.sin(t * 0.14 + 0.5) * 8);
-  const p2op = n(0.45 + 0.12 * Math.sin(t * 0.18 + 0.8));
-  svg += `<ellipse cx="${p2x}" cy="${p2y}" rx="180" ry="70" fill="url(#fx-pool)" opacity="${p2op}"/>`;
+  const p2op = n((0.45 + 0.12 * Math.sin(t * 0.18 + 0.8)) * RL.warmPoolOpacity);
+  svg += `<ellipse cx="${p2x}" cy="${p2y}" rx="153" ry="60" fill="url(#fx-poolwarm)" opacity="${p2op}"/>`;
 
   // warm accent near counter
-  const p3op = n(0.3 + 0.1 * Math.sin(t * 0.25 + 2.0));
-  svg += `<ellipse cx="900" cy="1200" rx="120" ry="45" fill="url(#fx-warm)" opacity="${p3op}"/>`;
+  const p3op = n((0.3 + 0.1 * Math.sin(t * 0.25 + 2.0)) * RL.warmPoolOpacity);
+  svg += `<ellipse cx="900" cy="1200" rx="102" ry="38" fill="url(#fx-warm)" opacity="${p3op}"/>`;
 
   return svg;
 }
@@ -192,9 +208,9 @@ function wallCaustics(t) {
 
     const x = n(cx + Math.sin(t * speed + phase) * 20);
     const y = n(cy + Math.sin(t * speed * 0.8 + phase + 1) * 12);
-    const op = n(0.03 + 0.02 * Math.sin(t * speed * 1.4 + phase));
+    const op = n((0.03 + 0.02 * Math.sin(t * speed * 1.4 + phase)) * RL.ambientScale);
 
-    svg += `<ellipse cx="${x}" cy="${y}" rx="${n(rx)}" ry="${n(ry)}" fill="#8FB2D4" opacity="${op}"/>`;
+    svg += `<ellipse cx="${x}" cy="${y}" rx="${n(rx)}" ry="${n(ry)}" fill="${i === 2 ? '#E8B36A' : '#8FB2D4'}" opacity="${op}"/>`;
   }
   return svg;
 }
@@ -212,8 +228,8 @@ function floorShimmer(t) {
     const speed = 0.05 + rng() * 0.07;
 
     const x = n(baseX + Math.sin(t * speed + phase) * 15);
-    const op = n(0.025 + 0.015 * Math.sin(t * speed * 1.2 + phase));
-    svg += `<rect x="${x}" y="${n(y)}" width="${n(w)}" height="4" rx="2" fill="#EAF4FF" opacity="${op}"/>`;
+    const op = n((0.025 + 0.015 * Math.sin(t * speed * 1.2 + phase)) * RL.ambientScale);
+    svg += `<rect x="${x}" y="${n(y)}" width="${n(w)}" height="4" rx="2" fill="${i === 1 ? '#F2D8A8' : '#EAF4FF'}" opacity="${op}"/>`;
   }
   return svg;
 }
@@ -252,10 +268,10 @@ export function fx(t, kind = 'interior') {
     svg += `<g id="fx-pools">${lightPools(t)}</g>`;
     // floor shimmer
     svg += `<g id="fx-shimmer">${floorShimmer(t)}</g>`;
-    // haze ribbon mid-height
-    svg += `<g id="fx-haze-layer">${hazeRibbon(t, 900, 50, 70)}</g>`;
-    // dust motes (more, smaller for interior)
-    svg += `<g id="fx-dust">${dustMotes(t, 30, 280, 1400)}</g>`;
+    // haze ribbons mid-height (one cool, one faint warm) — ambient spill dimmed
+    svg += `<g id="fx-haze-layer">${hazeRibbon(t, 900, 50, 70, 'fx-haze', RL.ambientScale)}${hazeRibbon(t, 620, 40, 55, 'fx-haze-warm', RL.ambientScale)}</g>`;
+    // dust motes (more, smaller for interior; a few warm-tinted)
+    svg += `<g id="fx-dust">${dustMotes(t, 30, 280, 1400, true)}</g>`;
     // neon dip
     svg += neonDip(t);
   }

@@ -1,0 +1,353 @@
+{
+  "run": "run_4df62ac21b3f",
+  "task_id": "task_9a3a6851a3cf",
+  "dispatch_id": "ctx_fed8ccff1223",
+  "worker": "devin (opencode-captions-media takeover)",
+  "revision": "revision-v5-20261117",
+  "commands": [
+    {
+      "label": "caption_dom_probe",
+      "argv": [
+        "node",
+        "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\revision-v5-20261117\\opencode-captions-media\\caption_dom_probe.mjs",
+        "--film",
+        "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s",
+        "--lib",
+        "D:\\workspace\\lemo-opuscar",
+        "--out",
+        "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\revision-v5-20261117\\opencode-captions-media\\caption-dom.json",
+        "--frames-dir",
+        "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\revision-v5-20261117\\opencode-captions-media\\caption-frames",
+        "--capture",
+        "selected",
+        "--step",
+        "0.001"
+      ],
+      "exit": 0,
+      "stdout_tail": "wrote D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\revision-v5-20261117\\opencode-captions-media\\caption-dom.json cues=12 probeOk=true\n",
+      "stderr_tail": ""
+    }
+  ],
+  "checks": {
+    "caption_inputs": {
+      "ok": true,
+      "files": [
+        "captions.js",
+        "horror-x-ep1-part1-60s.srt",
+        "voice-timeline.json",
+        "script.json",
+        "timeline.json",
+        "fonts/Kanit-Regular.ttf"
+      ]
+    },
+    "unchanged_caption_inputs": {
+      "ok": true,
+      "files": {
+        "voice-timeline.json": {
+          "expected": "86c561c29b454e749c28116caf820edaa215c86905a9a2b605144bb0cb933653",
+          "actual": "86c561c29b454e749c28116caf820edaa215c86905a9a2b605144bb0cb933653",
+          "ok": true,
+          "bytes": 27738
+        },
+        "script.json": {
+          "expected": "d2990b222bfe9f0066429ba852776459ba6c82055e4ad93893c591fa7ff5804c",
+          "actual": "d2990b222bfe9f0066429ba852776459ba6c82055e4ad93893c591fa7ff5804c",
+          "ok": true,
+          "bytes": 5795
+        },
+        "timeline.json": {
+          "expected": "516cfd13bd105d1420aac369638134f492af48757e74b1f79a84e02324a7025f",
+          "actual": "516cfd13bd105d1420aac369638134f492af48757e74b1f79a84e02324a7025f",
+          "ok": true,
+          "bytes": 25145
+        },
+        "fonts/Kanit-Regular.ttf": {
+          "expected": "27170c049660b2f962d3ed28441fd20f4c743503ca031fec9c2b4542d6c52736",
+          "actual": "27170c049660b2f962d3ed28441fd20f4c743503ca031fec9c2b4542d6c52736",
+          "ok": true,
+          "bytes": 173148
+        }
+      },
+      "reason": null
+    },
+    "srt_parse": {
+      "ok": true,
+      "cue_count": 12,
+      "issues": [],
+      "reason": null
+    },
+    "voice_timeline_structure": {
+      "ok": true,
+      "scenes": 12,
+      "issues": [],
+      "reason": null
+    },
+    "caption_dom_probe": {
+      "ok": true,
+      "exit": 0,
+      "cue_count": 12,
+      "reason": null
+    },
+    "caption_geometry": {
+      "ok": true,
+      "cue_count": 12,
+      "exports": {
+        "CAPTION_X0": 90,
+        "CAPTION_X1": 930,
+        "CAPTION_Y0": 1724,
+        "CAPTION_Y1": 1764
+      },
+      "issues": []
+    },
+    "js_srt_match": {
+      "ok": true,
+      "js_cues": 12,
+      "srt_cues": 12,
+      "issues": []
+    },
+    "srt_voice_coverage": {
+      "ok": true,
+      "scenes": [
+        {
+          "id": "01",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 0.3,
+          "speech_end": 5.79,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "02",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 5.9918,
+          "speech_end": 10.6518,
+          "coverage_ratio": 0.999957,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "03",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 10.8536,
+          "speech_end": 15.1836,
+          "coverage_ratio": 0.999908,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "04",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 15.3855,
+          "speech_end": 20.4155,
+          "coverage_ratio": 0.999901,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "05",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 20.6173,
+          "speech_end": 24.6673,
+          "coverage_ratio": 0.999926,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "06",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 24.8691,
+          "speech_end": 29.5391,
+          "coverage_ratio": 0.999979,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "07",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 29.7409,
+          "speech_end": 33.8509,
+          "coverage_ratio": 0.999976,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "08",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 34.0527,
+          "speech_end": 38.7527,
+          "coverage_ratio": 0.999936,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "09",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 38.9545,
+          "speech_end": 43.8645,
+          "coverage_ratio": 0.999898,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "10",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 44.0664,
+          "speech_end": 49.5664,
+          "coverage_ratio": 0.999927,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "11",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 49.7682,
+          "speech_end": 54.9982,
+          "coverage_ratio": 0.999962,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "12",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 55.2,
+          "speech_end": 59.75,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        }
+      ],
+      "issues": []
+    },
+    "js_voice_coverage": {
+      "ok": true,
+      "scenes": [
+        {
+          "id": "01",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 0.3,
+          "speech_end": 5.79,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "02",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 5.9918,
+          "speech_end": 10.6518,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "03",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 10.8536,
+          "speech_end": 15.1836,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "04",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 15.3855,
+          "speech_end": 20.4155,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "05",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 20.6173,
+          "speech_end": 24.6673,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "06",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 24.8691,
+          "speech_end": 29.5391,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "07",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 29.7409,
+          "speech_end": 33.8509,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "08",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 34.0527,
+          "speech_end": 38.7527,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "09",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 38.9545,
+          "speech_end": 43.8645,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "10",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 44.0664,
+          "speech_end": 49.5664,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "11",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 49.7682,
+          "speech_end": 54.9982,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        },
+        {
+          "id": "12",
+          "cue_count": 1,
+          "text_match": true,
+          "speech_start": 55.2,
+          "speech_end": 59.75,
+          "coverage_ratio": 1.0,
+          "uncovered_gaps": []
+        }
+      ],
+      "issues": []
+    },
+    "font_metrics": {
+      "ok": true,
+      "available": true,
+      "max_advance_px": 586.867,
+      "over_840": [],
+      "missing_glyphs": []
+    }
+  },
+  "issues": [],
+  "notes": [],
+  "status": "passed",
+  "blocked": false,
+  "film": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s",
+  "evidence": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\revision-v5-20261117\\opencode-captions-media",
+  "mode": "captions",
+  "final": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\horror-x-ep1-part1-60s-v5.mp4",
+  "file_ready": "D:\\workspace\\lemo-opuscar\\films\\horror-x-ep1-part1-60s\\.agent-runs\\revision-v5-20261117\\FILE-READY.json"
+}

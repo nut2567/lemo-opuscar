@@ -1,0 +1,61 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'D:\workspace\lemo-opuscar\films\horror-x-ep1-part1-60s\out\picture-v5.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf63.1.102
+  Duration: 00:01:00.00, start: 0.000000, bitrate: 7713 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1080x1920 [SAR 1:1 DAR 9:16], 7710 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      encoder         : Lavc63.1.102 libx264
+    Side data:
+      ICC Profile: (456 bytes)
+[aist#1:0/pcm_s16le @ 0000023eeed7c880] Guessed Channel Layout: stereo
+Input #1, wav, from 'D:\workspace\lemo-opuscar\films\horror-x-ep1-part1-60s\mixed-soundtrack.wav':
+  Duration: 00:01:00.00, bitrate: 1536 kb/s
+  Stream #1:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #1:0 -> #0:1 (pcm_s16le (native) -> aac (native))
+Press [q] to stop, [?] for help
+Output #0, mp4, to 'D:\workspace\lemo-opuscar\films\horror-x-ep1-part1-60s\horror-x-ep1-part1-60s-v5.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf63.1.102
+  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1080x1920 [SAR 1:1 DAR 9:16], q=2-31, 7710 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      encoder         : Lavc63.1.102 libx264
+    Side data:
+      ICC Profile: (456 bytes)
+  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s
+    Metadata:
+      encoder         : Lavc63.1.102 aac
+frame=  178 fps=0.0 q=-1.0 size=    7168KiB time=00:00:05.86 bitrate=10009.2kbits/s speed=11.4x elapsed=0:00:00.51    
+frame=  343 fps=335 q=-1.0 size=   12032KiB time=00:00:11.36 bitrate=8671.5kbits/s speed=11.1x elapsed=0:00:01.02    
+frame=  572 fps=369 q=-1.0 size=   18432KiB time=00:00:19.00 bitrate=7947.1kbits/s speed=12.3x elapsed=0:00:01.54    
+frame=  738 fps=359 q=-1.0 size=   23808KiB time=00:00:24.53 bitrate=7949.8kbits/s speed=11.9x elapsed=0:00:02.05    
+frame=  837 fps=326 q=-1.0 size=   26624KiB time=00:00:27.83 bitrate=7836.1kbits/s speed=10.9x elapsed=0:00:02.56    
+frame= 1008 fps=327 q=-1.0 size=   32768KiB time=00:00:33.53 bitrate=8005.0kbits/s speed=10.9x elapsed=0:00:03.08    
+frame= 1380 fps=382 q=-1.0 size=   43776KiB time=00:00:45.93 bitrate=7807.3kbits/s speed=12.7x elapsed=0:00:03.60    
+frame= 1717 fps=416 q=-1.0 size=   55040KiB time=00:00:57.16 bitrate=7887.3kbits/s speed=13.9x elapsed=0:00:04.12    
+[Parsed_loudnorm_0 @ 0000023ef0881040] 
+{
+	"input_i" : "-19.31",
+	"input_tp" : "-3.78",
+	"input_lra" : "2.60",
+	"input_thresh" : "-29.46",
+	"output_i" : "-17.98",
+	"output_tp" : "-2.45",
+	"output_lra" : "2.60",
+	"output_thresh" : "-28.13",
+	"normalization_type" : "linear",
+	"target_offset" : "-0.02"
+}
+[mp4 @ 0000023eeed87c40] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 0000023eeed04900] video:56475KiB audio:1458KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.114633%
+frame= 1800 fps=413 q=-1.0 Lsize=   57999KiB time=00:01:00.00 bitrate=7918.8kbits/s speed=13.8x elapsed=0:00:04.35    
+[aac @ 0000023eeedca600] Qavg: 742.623
