@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "time": 3.7,
+  "width": 1600,
+  "height": 1000,
+  "engine": "@resvg/resvg-wasm@2.6.2",
+  "nodeMajor": 24,
+  "actorSha256": "8f8387df52fdfe73418430d77bb4925ff9775f7d035a5493fe6687f213d355a4",
+  "svgSha256": "ac2a3a6fda6e4c46fbd8a7198d1aa2641368cfd1a705b4eab2a622aa35305988",
+  "pngSha256": "0867da4f031f63760d8fe323de6428e96e4925e4276ec03b29d2a320336d8249",
+  "sourceHashes": {
+    "assets/original-actor.js": "8f8387df52fdfe73418430d77bb4925ff9775f7d035a5493fe6687f213d355a4",
+    "cloth.mjs": "2221b0d81e41d73702da81ddd316186c93ef95e185fe3118c4857e1f8cde33e5",
+    "scene.mjs": "c76cd5aad3f5d610c0f586a001f6574ec09fda777b8d50db66259aef89fbcad9",
+    "scripts/render-lib.mjs": "06ad4e10f5473df55b8a60a3549e67f62132f49f97b5b74921153cd4d37f7507",
+    "scripts/render.mjs": "ebdfbb2d14670f62047c77e41f7c1cc6ff64e5059c899797424a66ca827e951d",
+    "scripts/verify.mjs": "5461508645206b1d1db44c82fd177e6c33174bc6495dbd1b6883e7b019b625ad",
+    "package.json": "1a01e97f13515e8c4a8681bc5e70d20bb686a07dbd7c8625a9fe2c9fef741217",
+    "package-lock.json": "61b991283415c81584e1ebcc1b2c2a291707e5e3e5d12e43350b68b09afb1543"
+  }
+}

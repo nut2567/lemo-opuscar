@@ -1,0 +1,36 @@
+name: Reproducible character proof
+
+on:
+  push:
+    branches: [main, feature/reproducible-character-proof]
+    paths:
+      - 'examples/reproducible-character-proof/**'
+      - '.github/workflows/character-proof-reproducibility.yml'
+  pull_request:
+    paths:
+      - 'examples/reproducible-character-proof/**'
+      - '.github/workflows/character-proof-reproducibility.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: examples/reproducible-character-proof
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: examples/reproducible-character-proof/.node-version
+          cache: npm
+          cache-dependency-path: examples/reproducible-character-proof/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run verify

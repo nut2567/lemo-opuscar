@@ -1,0 +1,4 @@
+* text eol=lf
+assets/original-actor.js -text whitespace=cr-at-eol
+*.png -text
+*.wasm -text

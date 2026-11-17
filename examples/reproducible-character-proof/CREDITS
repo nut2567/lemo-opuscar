@@ -1,0 +1,16 @@
+# Credits / Source notes
+
+## Provenance
+
+- `assets/original-actor.js`: byte-identical copy of the original Nun actor rig from `films/horror-x-ep1-part1-60s/actor.js` in the user's project repository. SHA-256: `8f8387df52fdfe73418430d77bb4925ff9775f7d035a5493fe6687f213d355a4`. The source repository and its notices are unchanged, and the copied file keeps its original header comments.
+- `cloth.mjs`: SVG port of the cloth-covered figure construction in `films/horror-x-snowy-neon-code/characters.mjs` (`clothPath`, `buildClothSprite`, `drawCloth`). It preserves the silhouette path, gradient palette, fold planes, shading, rim strokes and timing while adapting the Canvas sprite to deterministic SVG markup. The isolated proof keeps the later lateral exit disabled (`exit=false`).
+- `scene.mjs` and `scripts/`: original code written for this standalone proof.
+
+## Third-party software
+
+- `@resvg/resvg-wasm` 2.6.2: pinned npm dependency installed by `npm ci`. The installed package metadata and `package-lock.json` declare licence `MPL-2.0`; the package README identifies MPLv2.0 and copyright (c) 2021-present, yisibl(一丝). No package files are vendored in this folder.
+- No fonts, images, audio, footage, provider outputs or other third-party runtime assets are used.
+
+## Repository policy
+
+This folder is part of the existing project repository. Copied source remains under the repository's existing policy and notices; this file records provenance only and does not grant rights.

@@ -1,0 +1,4 @@
+*.mjs text eol=lf
+*.html text eol=lf
+*.py text eol=lf
+assets/original-actor.js -text whitespace=cr-at-eol
