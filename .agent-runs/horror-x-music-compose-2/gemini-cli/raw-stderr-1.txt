@@ -1,0 +1,22 @@
+Ripgrep is not available. Falling back to GrepTool.
+Skill conflict detected: "work-evidence" from "C:\Users\gooka\.agents\skills\work-evidence\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\work-evidence\SKILL.md".
+Skill conflict detected: "provider-key-routing" from "C:\Users\gooka\.agents\skills\provider-key-routing\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\provider-key-routing\SKILL.md".
+Skill conflict detected: "orchestration" from "C:\Users\gooka\.agents\skills\orchestration\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orchestration\SKILL.md".
+Skill conflict detected: "orca-worker-pool" from "C:\Users\gooka\.agents\skills\orca-worker-pool\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orca-worker-pool\SKILL.md".
+Skill conflict detected: "orca-computer-use" from "C:\Users\gooka\.agents\skills\orca-computer-use\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orca-computer-use\SKILL.md".
+Skill conflict detected: "orca-cli" from "C:\Users\gooka\.agents\skills\orca-cli\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orca-cli\SKILL.md".
+Error executing tool glob: Search path does not exist C:\Users\gooka\.gemini\tmp\gemini-cli-28\efae7152-f1e7-4ba8-b5aa-b45b0532197f\plans
+Error when talking to Gemini API Full report available at: C:\Users\gooka\AppData\Local\Temp\gemini-client-error-Turn.run-sendMessageStream-2026-11-16T16-04-56-388Z.json Error: Incomplete JSON segment at the end
+    at ApiClient.processStreamResponse_1 (file:///C:/Users/gooka/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-NGQU3QTQ.js:267727:21)
+    at processStreamResponse_1.next (<anonymous>)
+    at resume (file:///C:/Users/gooka/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-NGQU3QTQ.js:262666:17)
+    at fulfill (file:///C:/Users/gooka/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-NGQU3QTQ.js:262675:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+{
+  "session_id": "efae7152-f1e7-4ba8-b5aa-b45b0532197f",
+  "error": {
+    "type": "Error",
+    "message": "Incomplete JSON segment at the end",
+    "code": 1
+  }
+}

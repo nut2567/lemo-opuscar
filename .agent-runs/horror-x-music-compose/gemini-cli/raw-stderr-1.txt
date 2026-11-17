@@ -1,0 +1,11 @@
+Ripgrep is not available. Falling back to GrepTool.
+Skill conflict detected: "work-evidence" from "C:\Users\gooka\.agents\skills\work-evidence\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\work-evidence\SKILL.md".
+Skill conflict detected: "provider-key-routing" from "C:\Users\gooka\.agents\skills\provider-key-routing\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\provider-key-routing\SKILL.md".
+Skill conflict detected: "orchestration" from "C:\Users\gooka\.agents\skills\orchestration\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orchestration\SKILL.md".
+Skill conflict detected: "orca-worker-pool" from "C:\Users\gooka\.agents\skills\orca-worker-pool\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orca-worker-pool\SKILL.md".
+Skill conflict detected: "orca-computer-use" from "C:\Users\gooka\.agents\skills\orca-computer-use\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orca-computer-use\SKILL.md".
+Skill conflict detected: "orca-cli" from "C:\Users\gooka\.agents\skills\orca-cli\SKILL.md" is overriding the same skill from "C:\Users\gooka\.gemini\skills\orca-cli\SKILL.md".
+Attempt 1 failed: RATE_LIMIT_EXCEEDED
+Suggested retry after 60s.. Retrying after 67045ms...
+Attempt 2 failed: RATE_LIMIT_EXCEEDED
+Suggested retry after 60s.. Retrying after 62795ms...

@@ -10,7 +10,9 @@
 สังเคราะห์ด้วย Microsoft Edge TTS — เสียง th-TH-NiwatNeural
 
 ## ดนตรีและเอฟเฟกต์เสียง / Music & SFX
-สังเคราะห์ในเครื่องผ่าน sound-design.py
+เบดดนตรี: คะแนนดั้งเดิม — โน้ต 38 เหตุการณ์ใน `music-score.json` เรนเดอร์เป็น `music-bed.wav` ด้วย `music-bed.py` + `core/audio/sampler.py` (ประพันธ์โดย Devin worker จาก `MUSIC-BRIEF.md` หลังเส้นทาง gemini-cli ล้มเหลวทุกครั้ง; ไม่มีผลลัพธ์จาก Gemini)
+SFX: สังเคราะห์ดั้งเดิมในเครื่องผ่าน `sound-design.py`
+ตัวอย่างเสียง: "VS Chamber Orchestra: Community Edition" โดย Versilian Studios / Sam Gossner — CC0 1.0
 
 ## ฟอนต์ / Font
 **Kanit Regular** — © 2020 The Kanit Project Authors (Cadson Demak)

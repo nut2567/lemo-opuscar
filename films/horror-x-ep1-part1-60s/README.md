@@ -42,6 +42,10 @@ The first voice generation is keyless/online and cached locally. Rebuilds reuse 
 
 sound-design.py is a retained AGY draft that generates an original ducked score/SFX stem called soundtrack.wav. It does not itself mix dry narration. mix-audio.py explicitly combines that stem and speech.wav into mixed-soundtrack.wav, keeping narration dominant; mux-final.py uses this actual mix and two-pass loudness normalization. The generator's missing-input fallbacks are not allowed by the build pipeline: voice/timeline validation runs first.
 
+When music-bed.wav is present, sound-design.py uses it as the continuous score bed in place of its procedural drone layers; the SFX remain procedural. The bed is an original ambient score — 38 note events in music-score.json rendered by music-bed.py via core/audio/sampler.py (VS Chamber Orchestra samples, CC0). Regenerate the bed with `.venv/Scripts/python.exe music-bed.py` from this folder, then rebuild.
+
+Merge note (2026-11-17): origin/main's music-bed score work (sound-design.py, soundtrack.wav, mixed-soundtrack.wav, CREDITS, SOUND-QA.md, VARIANT-STYLES.md) was integrated after v5 acceptance. The delivered `horror-x-ep1-part1-60s-v5.mp4` retains its accepted mix; the repo's current soundtrack/mixed-soundtrack WAVs are the music-bed versions from origin/main.
+
 Main/scene-kit/timeline are coordinator-owned. Actor/effects/scenes/captions have exclusive worker files. TASK-QUEUE.json,PRODUCTION-STATE.json and the profile ledger/evidence describe actual work, including failures/reassignments. Separate build/source checks are reported in reviews/LEAD-DECISIONS.md and final QA when available.
 
 Previous final MP4s are preserved with timestamped -prev- names. Production stops after Part1 delivery for user review; no acceptance of Part2/3 is inferred.

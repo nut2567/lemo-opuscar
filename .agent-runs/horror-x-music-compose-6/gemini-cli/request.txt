@@ -1,0 +1,5 @@
+Compose a 60-second ambient horror score as JSON ONLY (no prose, no markdown). Reply with a single JSON array of note events: [t_seconds, "instrument", "pitch", duration_seconds, velocity, pan]. t in 0-60, 25-40 events total, ambient only (no drums/percussion/rhythm), low drones/pads plus sparse high texture, velocities 0.15-0.6, durations 2-8s, D minor or C minor, unresolved at 60s.
+
+Story: calm Thai voiceover, night-shift worker alone in a laundromat; a faceless customer with a white cloth returns nightly, vanishes without footsteps. Arc: quiet lonely routine (0-24s) -> subtle wrongness (24-44s) -> dread, darkest and most suspended at 55-60s, no cadence.
+
+Use ONLY these instrument names: contrabass, cellos, violas, violins, violin, bassoon, clarinet, oboe, flute, horn, trombone, tuba, upright, organ_soft, organ. Pitches like "D3" or midi numbers (C4=60). Prefer contrabass/cellos/bassoon drones low, sparse upright/violin/flute high notes, gentle dissonance, wide pans. Output the JSON array and nothing else.
