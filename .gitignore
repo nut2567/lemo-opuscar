@@ -138,3 +138,6 @@ styles/*/demo/stills/*_v1*
 
 # isometric-picture-book: the character list its font subset step writes
 styles/isometric-picture-book/demo/tools/chars.txt
+
+# Windows null-device redirect artifacts (created by bash `> nul` / `2> nul`)
+nul
