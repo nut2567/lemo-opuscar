@@ -2,12 +2,37 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
-import {openDemo,closeServer} from '../../core/render/page.mjs';
+import {openDemo,closeServer,server,ROOT} from '../../core/render/page.mjs';
+import {pageURL} from '../../core/render/serve.mjs';
+import {DEFAULT_MODEL,CHARACTER_MODELS,getCharacterModel,renderCharacter} from '../../models/registry.mjs';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const qa=path.join(here,'qa');fs.mkdirSync(qa,{recursive:true});
 const report={format:'1080x1920',duration:7.5,source:'Canvas2D procedural modules',frames:[],checks:{},errors:[]};
 let browser;
 try{
+ // Registry contract (pure module, safe in Node): canonical sources are
+ // byte-identical copies, ids are unique, the default is 'cel', 'noon' is
+ // selectable, renders are deterministic/distinct/uid-namespaced, and an
+ // unknown id is rejected.
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ const canonical=[
+  ['../../models/cel/cel-body.js','../horror-x-snowy-neon-cel-woman/assets/cel-body.js'],
+  ['../../models/cel/cel-face.js','../horror-x-snowy-neon-cel-woman/assets/cel-face.js'],
+  ['../../models/cel/cel-hair.js','../horror-x-snowy-neon-cel-woman/assets/cel-hair.js'],
+  ['../../models/cel/cel-eyes.js','../horror-x-snowy-neon-cel-woman/assets/cel-eyes.js'],
+  ['../../models/cel/cel-woman.js','../horror-x-snowy-neon-cel-woman/assets/cel-woman.js'],
+  ['../../models/noon/original-actor.js','assets/original-actor.js'],
+ ];
+ report.checks.registryCanonicalSources=canonical.every(([a,b])=>sha(path.join(here,a))===sha(path.join(here,b)));
+ const ids=Object.keys(CHARACTER_MODELS);
+ report.checks.registryIdsUnique=new Set(ids).size===ids.length&&ids.includes('cel')&&ids.includes('noon');
+ report.checks.registryDefaultModel=DEFAULT_MODEL==='cel'&&getCharacterModel().id==='cel'&&getCharacterModel('cel').id==='cel'&&getCharacterModel('noon').id==='noon';
+ report.checks.registryRejectsUnknown=(()=>{try{getCharacterModel('bogus');return false;}catch(e){return e instanceof RangeError;}})();
+ report.checks.registryDeterministic=renderCharacter(3.7)===(renderCharacter(3.7));
+ report.checks.registryModelsDistinct=renderCharacter(3.7,{model:'cel'})!==renderCharacter(3.7,{model:'noon'});
+ const idsOf=s=>[...s.matchAll(/id="([^"]+)"/g)].map(m=>m[1]);
+ const markA=renderCharacter(3.7,{uid:'qa-a'}),markB=renderCharacter(3.7,{uid:'qa-b'});
+ report.checks.registryUidNamespaces=idsOf(markA).every(i=>!idsOf(markB).includes(i))&&markA!==markB;
  const opened=await openDemo(here,{w:1080,h:1920,warnings:true});browser=opened.browser;const page=opened.page;
  page.on('pageerror',e=>report.errors.push(e.message));
  const hashFrame=async t=>{
@@ -35,6 +60,30 @@ try{
  report.checks.noRemoteResources=report.resources.every(x=>new URL(x.url).hostname==='127.0.0.1');
  report.checks.noImageElements=await page.evaluate(()=>document.images.length===0);
  report.checks.duration=await page.evaluate(()=>window.DUR===7.5);
+ // Default character model is the registry 'cel'; FRAME_META reports it per frame.
+ report.checks.characterModelDefault=await page.evaluate(()=>window.CHARACTER_MODEL==='cel'&&window.FRAME_META.characterModel==='cel');
+ // Invalid ?model= must fail loudly at module load with a helpful error.
+ {
+  const {port}=await server();
+  const bad=await browser.newPage();
+  const badErrs=[];bad.on('pageerror',e=>badErrs.push(e.message));
+  await bad.goto(`${pageURL(ROOT,port,here)}?model=bogus`).catch(()=>{});
+  await bad.waitForTimeout(400);
+  report.checks.invalidModelRejected=badErrs.some(m=>/unknown \?model/.test(m));
+  await bad.close();
+ }
+ // Alternate model: ?model=noon is an explicit opt-in and renders distinct markup.
+ {
+  const alt=await openDemo(here,{w:1080,h:1920,warnings:true,q:'model=noon'});
+  try{
+   const altPage=alt.page;
+   await altPage.evaluate(()=>window.render(3.7));
+   report.checks.alternateModelSelection=await altPage.evaluate(()=>window.CHARACTER_MODEL==='noon'&&window.FRAME_META.characterModel==='noon');
+   const celMark=await page.evaluate(()=>{window.render(3.7);return document.getElementById('nunCam').innerHTML;});
+   const noonMark=await altPage.evaluate(()=>document.getElementById('nunCam').innerHTML);
+   report.checks.alternateModelDistinct=celMark!==noonMark;
+  }finally{await alt.browser.close();}
+ }
  report.checks.notBlank=report.frames.every(x=>x.nearBlackFraction<.99&&x.litFraction>.001);
  report.checks.motionPresent=report.frames[1].sha256!==report.frames[0].sha256;
  report.checks.noPageErrors=report.errors.length===0;

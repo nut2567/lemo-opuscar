@@ -1,0 +1,42 @@
+{
+  "model": "noon",
+  "modelName": "โมเดลนุ่น",
+  "modelNameEn": "Noon Nun",
+  "time": 3.7,
+  "uid": "preview",
+  "viewBox": "-220 -170 480 925",
+  "files": {
+    "model-noon.png": {
+      "width": 840,
+      "height": 1620,
+      "colorType": 6,
+      "sha256": "64592fc1bdb7b04184c8755b610c1b901863946722c0f9e7599203f3a23aa0ae"
+    },
+    "model-noon-neutral.png": {
+      "width": 840,
+      "height": 1620,
+      "colorType": 2,
+      "sha256": "90b18cd5d3c84065caddeb508cbd74ef307dda69fdec046c3ef51d93bfa70e56"
+    },
+    "model-noon-face.png": {
+      "width": 840,
+      "height": 840,
+      "colorType": 6,
+      "sha256": "cd03d9d922ea3d8d83fbc3a595e883b6829d924560ff02191dd5624bcc4bbde4"
+    }
+  },
+  "deterministic": true,
+  "duplicateIds": [],
+  "errors": [],
+  "resources": [
+    "http://127.0.0.1:62019/models/registry.mjs",
+    "http://127.0.0.1:62019/models/cel/cel-woman.js",
+    "http://127.0.0.1:62019/models/noon/original-actor.js",
+    "http://127.0.0.1:62019/models/cel/cel-body.js",
+    "http://127.0.0.1:62019/models/cel/cel-face.js",
+    "http://127.0.0.1:62019/models/cel/cel-eyes.js",
+    "http://127.0.0.1:62019/models/cel/cel-hair.js"
+  ],
+  "source": "models/registry.mjs renderCharacter person-only preview",
+  "passed": true
+}

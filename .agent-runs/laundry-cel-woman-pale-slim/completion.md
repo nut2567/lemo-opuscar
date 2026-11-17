@@ -1,0 +1,5 @@
+# Pale skin / slim face isolated proof
+
+All five worker tasks returned usable drafts/reviews and settled. Face worker changed ivory palette, cheek/jaw contour, ear/neck/shadows/rims. Body worker matched arms/hands palette. Preview worker created standalone HTML and renderer. Geometry and preservation reviewers provided read-only evidence. Lead inspected source, rendered and visually checked transparent master, neutral preview and face closeup. Render report passed 840x1620 RGBA master, 840x840 closeup, deterministic replay, no duplicate ids/errors and only local character modules. Final normalized source hash audit confirms only assets/cel-face.js and assets/cel-body.js changed among existing files; scene modules untouched. Earlier composed laundry frame is historical and was not rerendered for this person-only request.
+
+Outputs in films/horror-x-snowy-neon-cel-woman/out/: character-pale-slim.png, character-pale-slim-neutral.png, character-pale-slim-face.png, character-pale-slim.svg. User requested visual example, not a new movie. No background server/browser left running by renderer. No AI image generation, paid calls, audio or scene work.

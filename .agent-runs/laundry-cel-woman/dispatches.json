@@ -1,0 +1,37 @@
+[
+  {
+    "task": "01-character",
+    "dispatch": "ctx_93849a99b6d2",
+    "ledger_output": "20261117-221643-be619c\n",
+    "error": "",
+    "exit": 0
+  },
+  {
+    "task": "02-style",
+    "dispatch": "ctx_e91df5e155ad",
+    "ledger_output": "20261117-221643-7987d3\n",
+    "error": "",
+    "exit": 0
+  },
+  {
+    "task": "03-placement",
+    "dispatch": "ctx_fd11ff272ce1",
+    "ledger_output": "20261117-221643-dce4dd\n",
+    "error": "",
+    "exit": 0
+  },
+  {
+    "task": "04-render",
+    "dispatch": "ctx_7939a29ef62d",
+    "ledger_output": "20261117-221644-a5cc75\n",
+    "error": "",
+    "exit": 0
+  },
+  {
+    "task": "05-preservation",
+    "dispatch": "ctx_86df95c12d11",
+    "ledger_output": "20261117-221644-023a5a\n",
+    "error": "",
+    "exit": 0
+  }
+]

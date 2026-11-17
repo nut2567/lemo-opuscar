@@ -1,0 +1,1 @@
+Visual QA follow-up, same route and ownership. Fix iris sublayers escaping ellipse; exclusive cel-eyes.js; add nested ellipse clip, preserve almond sclera and namespaced ids. Verify syntax and deterministic output; report10-eyes-qa-report.md.

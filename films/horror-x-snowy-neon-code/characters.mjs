@@ -1,17 +1,18 @@
 // characters.mjs — cloth-covered customer for the snowy neon laundromat
-// proof, plus the adapter that places the ORIGINAL Nun rig. All motion is a
-// pure function of t: no stored state, no Math.random, deterministic per
-// frame. The cloth is drawn on the Canvas world; the Nun is inline SVG
-// markup from assets/original-actor.js (byte-identical copy of the
-// horror-x-ep1-part1-60s rig) drawn by an SVG overlay in main.mjs that
-// shares the same camera transform — no raster pipeline, no second rig.
+// proof, plus the adapter that places the registry character. All motion is
+// a pure function of t: no stored state, no Math.random, deterministic per
+// frame. The cloth is drawn on the Canvas world; the character is inline
+// SVG markup from models/registry.mjs (default model 'cel', the approved
+// pale/slim cel woman; 'noon' keeps the previous Nun rig for reuse) drawn
+// by an SVG overlay in main.mjs that shares the same camera transform —
+// no raster pipeline, no second rig.
 //
 // Layout (INTERFACE.md): rear opening x470..595 y775..1185; counter
 // x630..740 y1110..1335; Nun head center (690,925) at scale 0.5 so the
 // count-pose tray (local y352) lands on the counter top y1110; cloth
 // covered head ~y877, hem ~y1170, slips behind the right jamb by t7.2.
 
-import { nun } from './assets/original-actor.js';
+import { renderCharacter, DEFAULT_MODEL } from '../../models/registry.mjs';
 
 const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
 const sstep = k => { k = clamp(k, 0, 1); return k * k * (3 - 2 * k); };
@@ -167,18 +168,27 @@ export function drawCloth(ctx, t, opts = {}) {
   ctx.restore();
 }
 
-// ------------------------------------------------------------- Nun (SVG)
-// The Nun is the ORIGINAL rig copied unchanged to assets/original-actor.js
-// (SHA256-identical to horror-x-ep1-part1-60s/actor.js). nun() returns a
-// pure SVG inner fragment anchored at the head center; this adapter only
-// fixes world placement: head center (690,925) — the same face center the
-// previous Canvas version used — at scale 0.5, which puts the count-pose
-// tray (local y352) at world ~y1101 and the soles far below the counter
-// (clipped at y1110 by the SVG overlay in main.mjs). Head width ~57 world
-// px. Original palette and geometry are kept verbatim; no rim lighting is
-// added so the identity stays exact for this first proof.
-export function originalNunMarkup(t) {
-  return nun(t, { pose: 'count', x: 690, y: 925, scale: 0.5, uid: 'snowy' });
+// ----------------------------------------------------------- character (SVG)
+// Registry-driven character markup. The default model is the registry's
+// DEFAULT_MODEL ('cel', the approved pale/slim cel woman); main.mjs selects
+// the model from ?model= and forwards it through options.model. World
+// placement is fixed here: head center (690,925) at scale 0.5, which puts
+// the count-pose tray (local y352) at world ~y1101 and the soles far below
+// the counter (clipped at y1110 by the SVG overlay in main.mjs). The uid
+// namespaces gradient/clip ids so the direct figure and its wet-ground
+// reflection ('snowy-r') never collide.
+export function characterMarkup(t, options = {}) {
+  return renderCharacter(t, {
+    model: DEFAULT_MODEL, x: 690, y: 925, scale: 0.5, pose: 'count', uid: 'snowy',
+    ...options,
+  });
+}
+
+// Deprecated name kept for older callers (character-proof pages, variants):
+// despite the name it renders the registry DEFAULT model — currently 'cel',
+// not the Nun rig. Use characterMarkup() with an explicit model instead.
+export function originalNunMarkup(t, uid = 'snowy') {
+  return characterMarkup(t, { uid });
 }
 
 // ------------------------------------------------------------------ entry
@@ -201,6 +211,7 @@ export function drawCharacters(ctx, t, shot) {
     ctx.fillRect(465, 770, 140, 420);
     ctx.restore();
   }
-  // The Nun herself is NOT drawn here: main.mjs stamps originalNunMarkup()
-  // into the SVG overlay so Canvas and SVG share one camera matrix.
+  // The character herself is NOT drawn here: main.mjs stamps
+  // characterMarkup() into the SVG overlay so Canvas and SVG share one
+  // camera matrix.
 }

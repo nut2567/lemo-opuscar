@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="250 180 300 600" width="600" height="1200"><rect width="300" height="600" fill="#16202e"/><g transform="translate(400 400) scale(0.5 0.5)"><g data-cel-woman="proof-hair-back"><path d="M0 -108 C36 -110 60 -102 71 -82 C84 -56 90 -18 91 30 C92 90 90 150 83 198
+C79 224 69 238 58.7 233 C53 230 52 216 54 200 C57 182 55 172 50 162
+C42 154 32 156 26 164 C16 176 8 181 0 182 C-8 181 -16 176 -26 164
+C-32 156 -42 154 -50 162 C-55 172 -57 182 -54 200 C-52 216 -53 230 -58.7 233
+C-69 238 -79 224 -83 198 C-90 150 -92 90 -91 30 C-90 -18 -84 -56 -71 -82
+C-60 -102 -36 -110 0 -108 Z" fill="#24365C"/><path d="M44 158 L56 172 L52 196 L40 186 Z" fill="#0E1730"/>
+<path d="M40 186 L52 196 L48 218 L36 208 Z" fill="#0E1730"/>
+<path d="M-44 158 L-56 172 L-52 196 L-40 186 Z" fill="#0E1730"/>
+<path d="M-40 186 L-52 196 L-48 218 L-36 208 Z" fill="#0E1730"/><path d="M64 -30 C78 40 80 110 70 190" fill="none" stroke="#584B86" stroke-width="1.6" opacity=".6"/>
+<path d="M48 -6 C60 60 60 130 52 192" fill="none" stroke="#584B86" stroke-width="1.3" opacity=".45"/>
+<path d="M-64 -30 C-78 40 -80 110 -70 190" fill="none" stroke="#584B86" stroke-width="1.6" opacity=".6"/>
+<path d="M-48 -6 C-60 60 -60 130 -52 192" fill="none" stroke="#584B86" stroke-width="1.3" opacity=".45"/><path d="M-71 -82 C-84 -56 -90 -18 -91 30 C-92 90 -90 150 -83 198 C-79 224 -69 238 -58.7 233"
+ fill="none" stroke="#7FE7F5" stroke-width="2" opacity=".4"/>
+<path d="M71 -82 C84 -56 90 -18 91 30 C92 90 90 150 83 198 C79 224 69 238 58.7 233"
+ fill="none" stroke="#FF9FCB" stroke-width="2" opacity=".4"/></g><g id="cel-woman-proof-face" transform="translate(0 0.4)">
+<g id="cel-woman-proof-ears">
+<path d="M -67 6 C -74 8 -75 25 -68 32 C -61 36 -55 31 -56 18 C -57 10 -60 4 -67 6 Z" fill="#e7b184" stroke="#6e452b" stroke-width="1.5"/>
+<path d="M -62 14 C -66 16 -67 25 -63 29" fill="none" stroke="#6e452b" stroke-width="1" opacity="0.5"/>
+<path d="M 57 8 C 63 10 64 24 58 30 C 52 34 47 30 48 19 C 49 11 52 6 57 8 Z" fill="#e7b184" stroke="#6e452b" stroke-width="1.5"/>
+<path d="M 54 15 C 57 17 58 25 55 28" fill="none" stroke="#6e452b" stroke-width="1" opacity="0.5"/>
+</g>
+<g id="cel-woman-proof-neck">
+<path d="M -23 74 L 29 74 C 33 92 35 112 35 132 L -29 132 C -33 112 -31 92 -23 74 Z" fill="#e7b184" stroke="#6e452b" stroke-width="1.5"/>
+<path d="M 8 78 C 18 96 20 114 19 132 L 35 132 C 35 112 33 92 29 74 Z" fill="#cf9468"/>
+<path d="M -29 118 L 35 118 L 35 132 L -29 132 Z" fill="#cf9468" opacity="0.55"/>
+</g>
+<clipPath id="cel-woman-proof-face-clip"><path d="M -30 -80 C -48 -85 -60 -79 -64 -61 C -67 -39 -68 -9 -65 15 C -63 33 -58 50 -48 62 C -39 74 -24 83 0 87 C 15 90 31 85 43 73 C 53 63 59 48 61 31 C 62 13 60 -6 56 -25 C 52 -45 44 -63 31 -74 C 15 -83 -9 -83 -30 -80 Z"/></clipPath>
+<path d="M -30 -80 C -48 -85 -60 -79 -64 -61 C -67 -39 -68 -9 -65 15 C -63 33 -58 50 -48 62 C -39 74 -24 83 0 87 C 15 90 31 85 43 73 C 53 63 59 48 61 31 C 62 13 60 -6 56 -25 C 52 -45 44 -63 31 -74 C 15 -83 -9 -83 -30 -80 Z" fill="#e7b184" stroke="#6e452b" stroke-width="1.8" stroke-linejoin="round"/>
+<g clip-path="url(#cel-woman-proof-face-clip)">
+<path d="M 14 -30 C 34 -38 50 -30 58 -8 C 62 12 60 36 50 54 C 40 68 26 72 16 64 C 30 50 36 28 32 6 C 28 -14 20 -26 14 -30 Z" fill="#cf9468"/>
+<path d="M 24 62 C 38 60 48 52 52 42 C 46 56 34 64 22 66 Z" fill="#b97f52" opacity="0.8"/>
+<path d="M -50 34 C -44 22 -30 18 -18 24 C -30 30 -42 34 -50 34 Z" fill="#f4cda6" opacity="0.85"/>
+<path d="M -46 48 C -40 60 -28 68 -14 70 C -30 64 -42 56 -46 48 Z" fill="#f4cda6" opacity="0.5"/>
+<path d="M -38 -52 C -24 -60 -8 -62 6 -58 C -8 -50 -26 -46 -38 -52 Z" fill="#f4cda6" opacity="0.4"/>
+<path d="M -18 74 C -8 82 12 84 26 76 C 30 84 24 92 10 94 C -6 96 -20 88 -18 74 Z" fill="#b97f52" opacity="0.85"/>
+<path d="M -34 8 C -36 -8 -30 -24 -18 -34 C -34 -22 -42 -4 -40 14 Z" fill="#cf9468" opacity="0.35"/>
+</g>
+<g id="cel-woman-proof-features">
+<path d="M 6 30 C 10 36 11 42 9 47 C 6 49 3 47 3 43 C 3 38 4 33 6 30 Z" fill="#cf9468"/>
+<circle cx="8.5" cy="47.5" r="1.3" fill="#6e452b" opacity="0.7"/>
+<path d="M 13 -4 C 14 10 13 24 11 33" fill="none" stroke="#6e452b" stroke-width="1" opacity="0.35"/>
+<path d="M -9 57 Q 6 61.5 21 56" fill="none" stroke="#6e452b" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M -5 63.5 Q 6 66 17 62.5" fill="none" stroke="#6e452b" stroke-width="1" opacity="0.45"/>
+<ellipse cx="-37" cy="45" rx="8" ry="3.4" fill="#d97f6a" opacity="0.28"/>
+<ellipse cx="33" cy="43" rx="6" ry="2.8" fill="#d97f6a" opacity="0.22"/>
+<path d="M 2 84 C 6 87 12 87 16 84" fill="none" stroke="#f4cda6" stroke-width="1.2" opacity="0.6"/>
+</g>
+<g id="cel-woman-proof-face-rims" fill="none" stroke-linecap="round">
+<path d="M -64 -60 C -67 -39 -68 -9 -65 15 C -63 33 -58 50 -48 62" stroke="#54e0ff" stroke-width="1.6" opacity="0.35"/>
+<path d="M 61 31 C 62 13 60 -6 56 -25 C 52 -45 44 -63 31 -74" stroke="#ff6fb1" stroke-width="1.6" opacity="0.35"/>
+<path d="M -65 15 C -63 33 -58 50 -48 62 C -39 74 -24 83 0 87" stroke="#54e0ff" stroke-width="1.2" opacity="0.22"/>
+<path d="M 43 73 C 53 63 59 48 61 31" stroke="#ff6fb1" stroke-width="1.2" opacity="0.22"/>
+</g>
+</g><g id="cel-woman-proof-body">
+<g id="cel-woman-proof-torso">
+<path d="M -32 116 C -62 120 -86 131 -95 145 C -99 155 -100 170 -98 184 C -96 194 -89 199 -81 200 C -77 232 -73 262 -70 294 C -72 385 -74 505 -79 632 L -79 648 L 79 648 L 79 632 C 74 505 72 385 70 294 C 73 262 77 232 81 200 C 89 199 96 194 98 184 C 100 170 99 155 95 145 C 86 131 62 120 32 116 C 14 111 -14 111 -32 116 Z" fill="#232c4e" stroke="#80614f" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 96 150 C 99 160 100 172 98 183 L 86 193 C 82 226 78 256 75 288 C 76 382 78 502 82 626 L 88 638 C 81 505 80 385 79 290 C 83 258 87 228 91 196 C 93 187 95 168 95 156 Z" fill="#161d33"/>
+<path d="M -95 143 C -99 153 -100 167 -98 181 L -91 186 C -94 170 -94 155 -90 146 Z" fill="#31406b" opacity="0.7"/>
+</g>
+<g id="cel-woman-proof-collar">
+<ellipse cx="0" cy="122" rx="15" ry="9" fill="#10162a"/>
+<path d="M -40 102 C -33 95 -21 93 -11 96 L -9 120 C -17 129 -31 131 -39 125 C -45 117 -45 109 -40 102 Z" fill="#1a2340" stroke="#80614f" stroke-width="1.4"/>
+<path d="M 40 102 C 33 95 21 93 11 96 L 9 120 C 17 129 31 131 39 125 C 45 117 45 109 40 102 Z" fill="#1a2340" stroke="#80614f" stroke-width="1.4"/>
+</g>
+<g id="cel-woman-proof-apron">
+<path d="M -53 292 L 53 292 L 90 646 L -90 646 Z" fill="#efe2c4" stroke="#80614f" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 53 292 L 90 640 L 77 646 L 41 300 Z" fill="#d8c6a0"/>
+<path d="M -47 163 C -41 149 -20 145 0 145 C 20 145 41 149 47 163 L 53 297 C 30 303 -30 303 -53 297 Z" fill="#efe2c4" stroke="#80614f" stroke-width="1.6"/>
+<path d="M 28 148 C 38 148 45 156 47 164 L 53 295 L 42 297 C 40 240 38 195 36 152 Z" fill="#d8c6a0"/>
+<path d="M -37 114 L -25 114 L -31 162 L -43 158 Z" fill="#efe2c4" stroke="#80614f" stroke-width="1.3"/>
+<path d="M 37 114 L 25 114 L 31 162 L 43 158 Z" fill="#efe2c4" stroke="#80614f" stroke-width="1.3"/>
+<path d="M -57 286 L 57 286 L 57 308 L -57 308 Z" fill="#d8c6a0" stroke="#80614f" stroke-width="1.2"/>
+<path d="M 56 290 L 78 284 L 74 296 L 84 304 L 58 310 Z" fill="#d8c6a0" stroke="#80614f" stroke-width="1.2"/>
+<circle cx="58" cy="297" r="4.5" fill="#d8c6a0" stroke="#80614f" stroke-width="1.2"/>
+</g>
+<g id="cel-woman-proof-arms">
+<path id="cel-woman-proof-forearm-l" d="M -90 202 C -94 245 -90 285 -80 318 L -63 320 C -61 282 -60 242 -59 206 C -68 200 -80 198 -90 202 Z" fill="#efdcc4" stroke="#80614f" stroke-width="1.6"/>
+<path d="M -90 206 C -93 246 -90 286 -81 316 L -77 316 C -85 286 -88 246 -86 208 Z" fill="#fff1df" opacity="0.5"/>
+<path d="M -69 248 L -62 248 C -61 275 -61 298 -63 318 L -72 318 C -70 292 -70 268 -71 250 Z" fill="#d9bea2"/>
+<path id="cel-woman-proof-forearm-r" d="M 90 202 C 94 245 90 285 80 318 L 63 320 C 61 282 60 242 59 206 C 68 200 80 198 90 202 Z" fill="#efdcc4" stroke="#80614f" stroke-width="1.6"/>
+<path d="M 90 206 C 93 246 90 286 81 316 L 77 316 C 85 286 88 246 86 208 Z" fill="#fff1df" opacity="0.5"/>
+<path d="M 69 248 L 62 248 C 61 275 61 298 63 318 L 72 318 C 70 292 70 268 71 250 Z" fill="#d9bea2"/>
+<path id="cel-woman-proof-sleeve-l" d="M -97 148 C -100 170 -99 200 -95 225 C -92 242 -88 250 -82 252 L -70 236 C -72 215 -74 195 -78 180 C -82 165 -88 155 -97 148 Z" fill="#232c4e" stroke="#80614f" stroke-width="1.6"/>
+<path d="M -96 152 C -98 172 -97 196 -93 214 C -90 230 -86 240 -81 244 L -74 234 C -78 216 -80 196 -82 176 C -86 164 -90 156 -96 152 Z" fill="#161d33"/>
+<path id="cel-woman-proof-sleeve-r" d="M 97 148 C 100 170 99 200 95 225 C 92 242 88 250 82 252 L 70 236 C 72 215 74 195 78 180 C 82 165 88 155 97 148 Z" fill="#232c4e" stroke="#80614f" stroke-width="1.6"/>
+<path d="M 96 152 C 98 172 97 196 93 214 C 90 230 86 240 81 244 L 74 234 C 78 216 80 196 82 176 C 86 164 90 156 96 152 Z" fill="#161d33"/>
+</g>
+<g id="cel-woman-proof-tray">
+<path d="M -65 348 L 65 348 L 65 355 C 65 362 60 364 53 364 L -53 364 C -60 364 -65 362 -65 355 Z" fill="#4c5674" stroke="#80614f" stroke-width="1.5"/>
+<path d="M -62 350 L 62 350 L 62 355 C 62 359 59 361 54 361 L -54 361 C -59 361 -62 359 -62 355 Z" fill="#66718f"/>
+<g id="cel-woman-proof-coins"><circle cx="-36" cy="353" r="4.2" fill="#e9cd7f" stroke="#7a5a26" stroke-width="1"/><ellipse cx="-37.3" cy="351.5" rx="1.7" ry="1" fill="#f6e2a4"/><circle cx="-18" cy="353" r="4.2" fill="#e9cd7f" stroke="#7a5a26" stroke-width="1"/><ellipse cx="-19.3" cy="351.5" rx="1.7" ry="1" fill="#f6e2a4"/><circle cx="0" cy="352" r="4.2" fill="#e9cd7f" stroke="#7a5a26" stroke-width="1"/><ellipse cx="-1.3" cy="350.5" rx="1.7" ry="1" fill="#f6e2a4"/><circle cx="18" cy="353" r="4.2" fill="#e9cd7f" stroke="#7a5a26" stroke-width="1"/><ellipse cx="16.7" cy="351.5" rx="1.7" ry="1" fill="#f6e2a4"/><circle cx="36" cy="353" r="4.2" fill="#e9cd7f" stroke="#7a5a26" stroke-width="1"/><ellipse cx="34.7" cy="351.5" rx="1.7" ry="1" fill="#f6e2a4"/></g>
+<path d="M -65 355 L 65 355 C 65 362 60 364 53 364 L -53 364 C -60 364 -65 362 -65 355 Z" fill="#39415c"/>
+</g>
+<g id="cel-woman-proof-hands" transform="translate(0 0.88)">
+<g id="cel-woman-proof-hand-l" fill="#efdcc4" stroke="#80614f" stroke-width="1.5">
+<path d="M -74 304 C -76 296 -70 291 -62 291 L -40 291 C -31 291 -26 296 -27 304 L -28 320 C -34 327 -46 330 -56 327 C -66 324 -73 316 -74 308 Z"/>
+<path d="M -56 296 L -30 300 C -32 312 -42 322 -56 322 C -64 318 -69 310 -68 302 Z" fill="#d9bea2" stroke="none"/>
+<rect x="-59" y="314" width="8" height="34" rx="4" transform="rotate(7 -55 318)"/>
+<rect x="-48" y="312" width="8" height="38" rx="4" transform="rotate(1 -44 316)"/>
+<rect x="-37" y="314" width="8" height="34" rx="4" transform="rotate(-7 -33 318)"/>
+<rect x="-73" y="302" width="8" height="24" rx="4" transform="rotate(34 -69 306)"/>
+</g>
+<g id="cel-woman-proof-hand-r" fill="#efdcc4" stroke="#80614f" stroke-width="1.5">
+<path d="M 74 304 C 76 296 70 291 62 291 L 40 291 C 31 291 26 296 27 304 L 28 320 C 34 327 46 330 56 327 C 66 324 73 316 74 308 Z"/>
+<path d="M 56 296 L 30 300 C 32 312 42 322 56 322 C 64 318 69 310 68 302 Z" fill="#d9bea2" stroke="none"/>
+<rect x="51" y="314" width="8" height="34" rx="4" transform="rotate(-7 55 318)"/>
+<rect x="40" y="312" width="8" height="38" rx="4" transform="rotate(-1 44 316)"/>
+<rect x="28" y="312" width="8" height="40" rx="4" transform="rotate(30 32 316)"/>
+<rect x="65" y="302" width="8" height="24" rx="4" transform="rotate(-34 69 306)"/>
+</g>
+</g>
+<g id="cel-woman-proof-rims" fill="none" stroke-linecap="round">
+<path d="M -97 152 C -100 166 -100 178 -97 190" stroke="#54e0ff" stroke-width="1.5" opacity="0.75"/>
+<path d="M -90 208 C -94 250 -90 292 -81 318" stroke="#54e0ff" stroke-width="1.4" opacity="0.7"/>
+<path d="M -60 120 C -78 124 -90 134 -95 146" stroke="#54e0ff" stroke-width="1.4" opacity="0.7"/>
+<path d="M -53 298 C -56 330 -58 350 -60 368" stroke="#54e0ff" stroke-width="1.3" opacity="0.65"/>
+<path d="M 97 152 C 100 166 100 178 97 190" stroke="#ff6fb1" stroke-width="1.5" opacity="0.75"/>
+<path d="M 90 208 C 94 250 90 292 81 318" stroke="#ff6fb1" stroke-width="1.4" opacity="0.7"/>
+<path d="M 60 120 C 78 124 90 134 95 146" stroke="#ff6fb1" stroke-width="1.4" opacity="0.7"/>
+<path d="M 53 298 C 56 330 58 350 60 368" stroke="#ff6fb1" stroke-width="1.3" opacity="0.65"/>
+</g>
+</g><g id="cel-woman-proof-eyeL"><clipPath id="cel-woman-proof-eyeL-almond"><path d="M -10,14.4 Q -28,-2.2 -46,13.4 Q -28,17.2 -10,14.4 Z"/></clipPath><g clip-path="url(#cel-woman-proof-eyeL-almond)"><path d="M -10,14.4 Q -28,-2.2 -46,13.4 Q -28,17.2 -10,14.4 Z" fill="#f6efe2"/><rect x="-64" y="-2.7" width="72" height="7.7" fill="#d9b48f" opacity="0.45"/><clipPath id="cel-woman-proof-eyeL-iris"><ellipse cx="-29.1" cy="12.4" rx="8.6" ry="9.4"/></clipPath><g clip-path="url(#cel-woman-proof-eyeL-iris)"><ellipse cx="-29.1" cy="12.4" rx="8.6" ry="9.4" fill="#96622f"/><rect x="-38.7" y="2.1" width="19.3" height="4.7" fill="#4a2c17"/><rect x="-38.7" y="7.7" width="19.3" height="2.1" fill="#6b4225"/><ellipse cx="-29.1" cy="13.9" rx="7.1" ry="4.7" fill="#96622f"/><ellipse cx="-29.1" cy="13.1" rx="3.5" ry="4.3" fill="#1a0e06"/><ellipse cx="-29.1" cy="19.2" rx="7.3" ry="3.6" fill="#e2a866"/><ellipse cx="-26.7" cy="9.6" rx="2.9" ry="1.9" fill="#fff6e8" opacity="0.95" transform="rotate(14 -26.7 9.6)"/><circle cx="-32.5" cy="15.6" r="0.9" fill="#fff6e8"/></g></g><path d="M -9.4,12.7 -13.5,9.5 -17.5,7 -21.6,5.1 -25.8,3.9 -30.1,3.4 -34.5,3.7 -39,4.7 -43.5,6.6 -48.2,9.1 -48.7,11.3 -45.6,12.5 -41.6,9.7 -37.7,7.7 -33.8,6.4 -30,5.8 -26.1,6 -22.2,6.9 -18.3,8.5 -14.4,10.8 -10.5,13.9 Z" fill="#33200f"/><path d="M -32.3,5.4 L -34.9,3.1" stroke="#33200f" stroke-width="1.4" stroke-linecap="round"/><path d="M -39.5,7.7 L -42.6,6.4" stroke="#33200f" stroke-width="1.3" stroke-linecap="round"/><path d="M -12.7,14.3 Q -28,17.2 -42.4,13.6" fill="none" stroke="#7a5644" stroke-width="1.1" stroke-linecap="round" opacity="0.85"/><path d="M -19,-0.7 Q -29.8,-3.8 -41.5,-2.2" fill="none" stroke="#7a5644" stroke-width="0.9" opacity="0.55"/><path d="M -10.9,-10.5 Q -28.9,-14.6 -49.2,-11.8" fill="none" stroke="#2f3a5c" stroke-width="2.5" stroke-linecap="round"/><path d="M -12.4,-9.5 Q -28.9,-13 -47.7,-11" fill="none" stroke="#2f3a5c" stroke-width="1" opacity="0.5"/></g><g id="cel-woman-proof-eyeR"><clipPath id="cel-woman-proof-eyeR-almond"><path d="M 10,11.9 Q 25,-2.9 40,11 Q 25,14.4 10,11.9 Z"/></clipPath><g clip-path="url(#cel-woman-proof-eyeR-almond)"><path d="M 10,11.9 Q 25,-2.9 40,11 Q 25,14.4 10,11.9 Z" fill="#f6efe2"/><rect x="-5" y="-3.7" width="60" height="7.1" fill="#d9b48f" opacity="0.45"/><clipPath id="cel-woman-proof-eyeR-iris"><ellipse cx="25.9" cy="10.3" rx="7.2" ry="8.3"/></clipPath><g clip-path="url(#cel-woman-proof-eyeR-iris)"><ellipse cx="25.9" cy="10.3" rx="7.2" ry="8.3" fill="#96622f"/><rect x="17.7" y="1.1" width="16.4" height="4.1" fill="#4a2c17"/><rect x="17.7" y="6.2" width="16.4" height="1.8" fill="#6b4225"/><ellipse cx="25.9" cy="11.6" rx="5.9" ry="4.1" fill="#96622f"/><ellipse cx="25.9" cy="11" rx="2.9" ry="3.8" fill="#1a0e06"/><ellipse cx="25.9" cy="16.2" rx="6.1" ry="3.1" fill="#e2a866"/><ellipse cx="23.9" cy="7.8" rx="2.4" ry="1.7" fill="#fff6e8" opacity="0.95" transform="rotate(-14 23.9 7.8)"/><circle cx="28.8" cy="13.1" r="0.9" fill="#fff6e8"/></g></g><path d="M 9.4,10.2 12.8,7.4 16.2,5.1 19.6,3.4 23.1,2.3 26.8,1.9 30.5,2.1 34.3,3 38.3,4.5 42.2,6.8 42.6,9 39.6,10 36.3,7.6 33,5.9 29.8,4.7 26.6,4.3 23.4,4.4 20.2,5.2 17,6.6 13.7,8.7 10.5,11.4 Z" fill="#33200f"/><path d="M 28.6,3.8 L 31.2,1.6" stroke="#33200f" stroke-width="1.4" stroke-linecap="round"/><path d="M 34.6,5.8 L 37.8,4.5" stroke="#33200f" stroke-width="1.3" stroke-linecap="round"/><path d="M 12.3,11.8 Q 25,14.4 37,11.2" fill="none" stroke="#7a5644" stroke-width="1.1" stroke-linecap="round" opacity="0.85"/><path d="M 17.5,-1.6 Q 26.5,-4.3 36.3,-2.9" fill="none" stroke="#7a5644" stroke-width="0.9" opacity="0.55"/><path d="M 10.8,-10.5 Q 25.8,-14.6 42.7,-11.8" fill="none" stroke="#2f3a5c" stroke-width="2.5" stroke-linecap="round"/><path d="M 12.3,-9.5 Q 25.8,-13 41.2,-11" fill="none" stroke="#2f3a5c" stroke-width="1" opacity="0.5"/></g><g data-cel-woman="proof-hair-front"><path d="M-70 -62 C-73 -84 -50 -102 -24 -107 C-8 -110 8 -110 24 -107 C50 -102 73 -84 70 -62
+C60 -50 46 -43 28 -41 C8 -39 -8 -39 -28 -41 C-46 -43 -60 -50 -70 -62 Z" fill="#24365C"/><path d="M-66 -47 Q-76 -34 -60 -15 Q-56 -30 -50 -44 Z" fill="#24365C"/>
+<path d="M-44 -44 Q-26 -22 22 -6 Q8 -22 -14 -41 Z" fill="#24365C"/>
+<path d="M-10 -41 Q-16 -30 -2 -20 Q-6 -28 6 -40 Z" fill="#24365C"/>
+<path d="M12 -40 Q16 -30 30 -24 Q26 -30 34 -41 Z" fill="#24365C"/>
+<path d="M44 -46 Q52 -36 56 -28 Q50 -34 62 -44 Z" fill="#24365C"/>
+<path d="M6 -70 C10 -58 8 -48 4 -42" fill="none" stroke="#584B86" stroke-width="1.3" opacity=".5"/><path d="M-57 -18 C-61 -2 -59 10 -53 20 L-48 18 C-53 6 -54 -10 -50 -16 Z" fill="#1A2745"/>
+<path d="M57 -18 C61 -2 59 10 53 20 L48 18 C53 6 54 -10 50 -16 Z" fill="#1A2745"/><path d="M-64 -58 C-76 -20 -78 40 -74 92 C-72 142 -68 182 -61.6 208.4
+C-58 216 -52 214 -52 202 C-56 168 -58 118 -57 78 C-57 38 -54 0 -52 -30 C-50 -48 -56 -58 -64 -58 Z" fill="#24365C"/>
+<path d="M-58 -34 C-66 10 -67 70 -63 130 C-61 165 -57 184 -53.5 194.5
+L-48 190 C-53 150 -56 80 -54 20 C-53 -6 -54 -24 -58 -34 Z" fill="#1A2745"/>
+<path d="M64 -58 C76 -20 78 40 74 92 C72 142 68 182 61.6 207.6
+C58 216 52 214 52 202 C56 168 58 118 57 78 C57 38 54 0 52 -30 C50 -48 56 -58 64 -58 Z" fill="#24365C"/>
+<path d="M58 -34 C66 10 67 70 63 130 C61 165 57 184 53.5 197.5
+L48 190 C53 150 56 80 54 20 C53 -6 54 -24 58 -34 Z" fill="#1A2745"/><path d="M-66 -96 C-74 -78 -74 -60 -68 -50 L-54 -46 C-60 -62 -58 -80 -48 -94 Z" fill="#0E1730"/>
+<path d="M66 -96 C74 -78 74 -60 68 -50 L54 -46 C60 -62 58 -80 48 -94 Z" fill="#0E1730"/><path d="M-60 -30 C-68 20 -70 80 -64 160" fill="none" stroke="#584B86" stroke-width="1.5" opacity=".55"/>
+<path d="M60 -30 C68 20 70 80 64 160" fill="none" stroke="#584B86" stroke-width="1.5" opacity=".55"/>
+<path d="M-30 -38 C-20 -28 2 -18 14 -11" fill="none" stroke="#584B86" stroke-width="1.3" opacity=".5"/>
+<path d="M-58 -36 C-50 -24 -40 -16 -33 -12" fill="none" stroke="#584B86" stroke-width="1.2" opacity=".45"/><path d="M-52.3 -25.5 L-49.4 -31.4 L-45.1 -36.9 L-39.7 -41.8 L-33.1 -46 L-25.6 -49.4 L-17.5 -52 L-8.9 -53.5 L0 -54 L8.9 -53.5 L17.5 -52 L25.6 -49.4 L33.1 -46 L39.7 -41.8 L45.1 -36.9 L49.4 -31.4 L52.3 -25.5 L52.2 -24.5 L48.7 -26.4 L44.9 -35 L38.8 -33.9 L32.9 -43.4 L24.9 -39.4 L17.3 -48.8 L8.6 -42.2 L0 -50.7 L-8.6 -42.2 L-17.3 -48.8 L-24.9 -39.4 L-32.9 -43.4 L-38.8 -33.9 L-44.9 -35 L-48.7 -26.4 L-52.2 -24.5Z" fill="#63718F" opacity=".75"/><path d="M-70 -62 C-73 -84 -50 -102 -24 -107 M-66 -47 C-76 -34 -73 -24 -64 -15"
+ fill="none" stroke="#7FE7F5" stroke-width="2" opacity=".45"/>
+<path d="M70 -62 C73 -84 50 -102 24 -107 M66 -47 C76 -34 73 -24 64 -15"
+ fill="none" stroke="#FF9FCB" stroke-width="2" opacity=".45"/>
+<path d="M-74 -92 C-78 -60 -76 0 -74 60 C-72 120 -68 170 -62 208.4"
+ fill="none" stroke="#7FE7F5" stroke-width="2" opacity=".35"/>
+<path d="M74 -92 C78 -60 76 0 74 60 C72 120 68 170 62 207.6"
+ fill="none" stroke="#FF9FCB" stroke-width="2" opacity=".35"/></g></g></svg>

@@ -1,0 +1,216 @@
+[
+  {
+    "folder": "films/horror-x-snowy-neon-code",
+    "files": [
+      {
+        "path": "films/horror-x-snowy-neon-code/.gitattributes",
+        "bytes": 110
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/audio-proof.py",
+        "bytes": 1983
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/build.mjs",
+        "bytes": 2273
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/build.sh",
+        "bytes": 91
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/character-proof.html",
+        "bytes": 1519
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/character-proof.mjs",
+        "bytes": 1783
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/characters.mjs",
+        "bytes": 10185
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/CREDITS",
+        "bytes": 2150
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/DELIVERY.md",
+        "bytes": 1173
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/environment.mjs",
+        "bytes": 32241
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/index.html",
+        "bytes": 563
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/INTERFACE.md",
+        "bytes": 6402
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/main.mjs",
+        "bytes": 8777
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/neon.mjs",
+        "bytes": 9221
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/qa.mjs",
+        "bytes": 3383
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/README.md",
+        "bytes": 3127
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/TREATMENT.md",
+        "bytes": 4696
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/washers.mjs",
+        "bytes": 15173
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/weather.mjs",
+        "bytes": 10327
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/assets/original-actor.js",
+        "bytes": 16281
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/assets/fonts/Kanit-Regular.ttf",
+        "bytes": 173148
+      },
+      {
+        "path": "films/horror-x-snowy-neon-code/assets/fonts/OFL.txt",
+        "bytes": 4476
+      }
+    ]
+  },
+  {
+    "folder": "films/horror-x-snowy-neon-cel-woman",
+    "files": [
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/.gitattributes",
+        "bytes": 110
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/audio-proof.py",
+        "bytes": 1983
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/build.mjs",
+        "bytes": 2273
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/build.sh",
+        "bytes": 91
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/character-preview.html",
+        "bytes": 1564
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/character-proof.html",
+        "bytes": 1519
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/character-proof.mjs",
+        "bytes": 1783
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/characters.mjs",
+        "bytes": 9862
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/CREDITS",
+        "bytes": 2142
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/DELIVERY.md",
+        "bytes": 2441
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/environment.mjs",
+        "bytes": 32241
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/index.html",
+        "bytes": 563
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/INTERFACE.md",
+        "bytes": 6402
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/main.mjs",
+        "bytes": 7886
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/neon.mjs",
+        "bytes": 7953
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/qa.mjs",
+        "bytes": 3378
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/README.md",
+        "bytes": 1627
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/render-character-preview.mjs",
+        "bytes": 5368
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/render-frame.mjs",
+        "bytes": 2187
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/TREATMENT-CEL-WOMAN.md",
+        "bytes": 1040
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/TREATMENT.md",
+        "bytes": 4696
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/washers.mjs",
+        "bytes": 15173
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/weather.mjs",
+        "bytes": 10327
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/assets/cel-body.js",
+        "bytes": 7407
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/assets/cel-eyes.js",
+        "bytes": 7789
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/assets/cel-face.js",
+        "bytes": 5829
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/assets/cel-hair.js",
+        "bytes": 8871
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/assets/cel-woman.js",
+        "bytes": 2685
+      },
+      {
+        "path": "films/horror-x-snowy-neon-cel-woman/assets/original-actor.js",
+        "bytes": 16281
+      }
+    ]
+  }
+]

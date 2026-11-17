@@ -1,0 +1,42 @@
+{
+  "model": "cel",
+  "modelName": "เซล",
+  "modelNameEn": "Cel Woman",
+  "time": 3.7,
+  "uid": "preview",
+  "viewBox": "-140 -130 280 540",
+  "files": {
+    "model-cel.png": {
+      "width": 840,
+      "height": 1620,
+      "colorType": 6,
+      "sha256": "da631e23f9812308c32208c1243f77f533f9eaa9d2a32712709dbab57d1a0529"
+    },
+    "model-cel-neutral.png": {
+      "width": 840,
+      "height": 1620,
+      "colorType": 2,
+      "sha256": "a8cd76914f089b17e0358ef114bb91b21dce1dfd1fd154830d5a2295567b99ff"
+    },
+    "model-cel-face.png": {
+      "width": 840,
+      "height": 840,
+      "colorType": 6,
+      "sha256": "747c26c9d7171290bc26145ff6943764436a16aec29434a16ef18ade666b8804"
+    }
+  },
+  "deterministic": true,
+  "duplicateIds": [],
+  "errors": [],
+  "resources": [
+    "http://127.0.0.1:57381/models/registry.mjs",
+    "http://127.0.0.1:57381/models/cel/cel-woman.js",
+    "http://127.0.0.1:57381/models/noon/original-actor.js",
+    "http://127.0.0.1:57381/models/cel/cel-body.js",
+    "http://127.0.0.1:57381/models/cel/cel-face.js",
+    "http://127.0.0.1:57381/models/cel/cel-hair.js",
+    "http://127.0.0.1:57381/models/cel/cel-eyes.js"
+  ],
+  "source": "models/registry.mjs renderCharacter person-only preview",
+  "passed": true
+}

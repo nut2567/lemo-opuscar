@@ -1,0 +1,1 @@
+Visual QA follow-up, same route and ownership. Fix flat helmet cap into rounded dome, asymmetric side-part fringe and softer strand ink; exclusive cel-hair.js; preserve bounds/API. Verify syntax and deterministic output; report11-hair-qa-report.md.

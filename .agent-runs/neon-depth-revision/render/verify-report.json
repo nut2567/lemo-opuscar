@@ -1,0 +1,152 @@
+{
+  "png": {
+    "w": 1080,
+    "h": 1920,
+    "ch": 3
+  },
+  "checks": {
+    "signTubes": true,
+    "allWashersReadable": true,
+    "clothBrightFigure": true,
+    "streetNotBlack": true,
+    "nunPresent": true,
+    "wideHasDepth": true
+  },
+  "regions": {
+    "sign": {
+      "screen": [
+        148,
+        88,
+        1063,
+        253
+      ],
+      "mean": 33.5,
+      "sd": 54.5,
+      "satFrac": 0.114,
+      "darkFrac": 0.792,
+      "tubePx": 13242
+    },
+    "w1-near": {
+      "screen": [
+        256,
+        1133
+      ],
+      "rx": 39,
+      "ry": 42,
+      "mean": 91.4,
+      "sd": 39.2,
+      "satFrac": 0,
+      "darkFrac": 0,
+      "accentPx": 1471,
+      "brightPx": 1197,
+      "ok": true
+    },
+    "w2": {
+      "screen": [
+        332,
+        1101
+      ],
+      "rx": 36,
+      "ry": 39,
+      "mean": 93.1,
+      "sd": 39.5,
+      "satFrac": 0.05,
+      "darkFrac": 0,
+      "accentPx": 241,
+      "brightPx": 945,
+      "ok": true
+    },
+    "w3": {
+      "screen": [
+        402,
+        1068
+      ],
+      "rx": 34,
+      "ry": 36,
+      "mean": 97.8,
+      "sd": 35.4,
+      "satFrac": 0,
+      "darkFrac": 0,
+      "accentPx": 753,
+      "brightPx": 869,
+      "ok": true
+    },
+    "w4-far": {
+      "screen": [
+        466,
+        1038
+      ],
+      "rx": 32,
+      "ry": 34,
+      "mean": 90.9,
+      "sd": 28.1,
+      "satFrac": 0.001,
+      "darkFrac": 0,
+      "accentPx": 247,
+      "brightPx": 336,
+      "ok": true
+    },
+    "cloth": {
+      "screen": [
+        535,
+        700,
+        657,
+        1065
+      ],
+      "brightFrac": 0.472,
+      "mean": 117,
+      "sd": 58.3,
+      "satFrac": 0,
+      "darkFrac": 0.018
+    },
+    "street": {
+      "mean": 31.2,
+      "sd": 12.9,
+      "satFrac": 0,
+      "darkFrac": 0.516
+    },
+    "nun": {
+      "screen": [
+        780,
+        854
+      ],
+      "mean": 76.1,
+      "sd": 51.2,
+      "satFrac": 0.002,
+      "darkFrac": 0.084
+    },
+    "wideRoof": {
+      "screen": [
+        [
+          -102,
+          187
+        ],
+        [
+          1051,
+          327
+        ]
+      ],
+      "mean": 34,
+      "sd": 12.7,
+      "satFrac": 0,
+      "darkFrac": 0.437
+    },
+    "wideLeft": {
+      "screen": [
+        [
+          -1,
+          277
+        ],
+        [
+          78,
+          1451
+        ]
+      ],
+      "mean": 33.3,
+      "sd": 10.3,
+      "satFrac": 0,
+      "darkFrac": 0.341
+    }
+  },
+  "passed": true
+}

@@ -1,0 +1,11 @@
+{
+  "changed_existing_source": [
+    "assets/cel-body.js",
+    "assets/cel-face.js"
+  ],
+  "expected": [
+    "assets/cel-face.js",
+    "assets/cel-body.js"
+  ],
+  "passed": true
+}

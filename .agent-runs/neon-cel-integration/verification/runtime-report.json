@@ -1,0 +1,198 @@
+{
+  "format": "1080x1920",
+  "duration": 7.5,
+  "source": "Canvas2D procedural modules",
+  "frames": [
+    {
+      "time": 0,
+      "sha256": "92ca635d0d2cb5fe384cb705f5c36640b470961725654f246ce02374356649ee",
+      "meanLuma": 42.18264181018516,
+      "nearBlackFraction": 0,
+      "litFraction": 0.08409722222222223
+    },
+    {
+      "time": 1.2,
+      "sha256": "d458d13cff05fc2d2c4d7a98dc24170778a10d5395f559d86ffb69129db5781f",
+      "meanLuma": 43.60311565432059,
+      "nearBlackFraction": 0,
+      "litFraction": 0.09628086419753086
+    },
+    {
+      "time": 2.49,
+      "sha256": "659549d6f71e8cbcffb58c3cf81a3672856a9e9426504e767ccddcb91b37b00d",
+      "meanLuma": 43.933068807099104,
+      "nearBlackFraction": 0,
+      "litFraction": 0.08704475308641975
+    },
+    {
+      "time": 2.5,
+      "sha256": "48cbc997dd855dd8c5df6f5f1c4ee137d694f0097d41d6d6b3fc9a45c964f20e",
+      "meanLuma": 47.39286447993911,
+      "nearBlackFraction": 0,
+      "litFraction": 0.10424382716049382
+    },
+    {
+      "time": 3.7,
+      "sha256": "f577b57bf36300148fefe92e2741b4d24d22324e30902750b36108055629ca30",
+      "meanLuma": 47.95620153549407,
+      "nearBlackFraction": 0,
+      "litFraction": 0.1028858024691358
+    },
+    {
+      "time": 4.99,
+      "sha256": "88594373e9f1103da15b310a43604f064f5f3cd76982f2343ba4e39887625aa4",
+      "meanLuma": 49.162829186727286,
+      "nearBlackFraction": 0,
+      "litFraction": 0.11517746913580247
+    },
+    {
+      "time": 5,
+      "sha256": "d4887b66c4b73aa6161566e004392047e3ae2de33f6bc9fd91933e0065d21d88",
+      "meanLuma": 50.89996436882634,
+      "nearBlackFraction": 0,
+      "litFraction": 0.12737654320987654
+    },
+    {
+      "time": 6.15,
+      "sha256": "2704d6948288d8754488abddaf5fad9c092f7f23f61dfb7041f4e58065456265",
+      "meanLuma": 48.669282626541914,
+      "nearBlackFraction": 0,
+      "litFraction": 0.08611111111111111
+    },
+    {
+      "time": 6.4,
+      "sha256": "7a1f5a9a911291d2b5fac58a510db3abf19c455ea1b4f7ec7c5aef46af0f2e24",
+      "meanLuma": 49.139071930553676,
+      "nearBlackFraction": 0,
+      "litFraction": 0.09292438271604939
+    },
+    {
+      "time": 6.7,
+      "sha256": "5e3a92d807d73cc66e69a06c2f08edcb24abd42d68aed899e485cec423c1b105",
+      "meanLuma": 50.13367548765403,
+      "nearBlackFraction": 0,
+      "litFraction": 0.11603395061728396
+    },
+    {
+      "time": 7,
+      "sha256": "bf10fcce0b6151b335f032a3e60c2375d42253126ddad83d0cedbee5f465ea94",
+      "meanLuma": 50.095897484566166,
+      "nearBlackFraction": 0,
+      "litFraction": 0.11513117283950618
+    },
+    {
+      "time": 7.4666667,
+      "sha256": "c680d486a3ee7d0893c41a5f262d53b9fccc027d81b874e264fc7d64ce5f0480",
+      "meanLuma": 49.22820551388738,
+      "nearBlackFraction": 0,
+      "litFraction": 0.09574074074074074
+    }
+  ],
+  "checks": {
+    "registryCanonicalSources": true,
+    "registryIdsUnique": true,
+    "registryDefaultModel": true,
+    "registryRejectsUnknown": true,
+    "registryDeterministic": true,
+    "registryModelsDistinct": true,
+    "registryUidNamespaces": true,
+    "randomAccessDeterministic": true,
+    "noRemoteResources": true,
+    "noImageElements": true,
+    "duration": true,
+    "characterModelDefault": true,
+    "invalidModelRejected": true,
+    "alternateModelSelection": true,
+    "alternateModelDistinct": true,
+    "notBlank": true,
+    "motionPresent": true,
+    "noPageErrors": true,
+    "noExternalRasterLoaders": true
+  },
+  "errors": [],
+  "resources": [
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/main.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/environment.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/neon.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/registry.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/characters.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/weather.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/washers.mjs",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/cel/cel-woman.js",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/noon/original-actor.js",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/cel/cel-body.js",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/cel/cel-face.js",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/cel/cel-eyes.js",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/models/cel/cel-hair.js",
+      "initiator": "script"
+    },
+    {
+      "url": "http://127.0.0.1:64287/films/horror-x-snowy-neon-code/assets/fonts/Kanit-Regular.ttf",
+      "initiator": "css"
+    }
+  ],
+  "sources": {
+    "main.mjs": {
+      "sha256": "054c95a3e33204fbd3093a5555eb7e58dcfce5f509e6f93b948f658c862f912f",
+      "externalRasterLoader": false
+    },
+    "environment.mjs": {
+      "sha256": "ba0f523224f905fe9447c4745e7dbd1b0487e3170120141802b18cf9e34e4ef0",
+      "externalRasterLoader": false
+    },
+    "neon.mjs": {
+      "sha256": "0f9bb85f90ffab2df3995a527c7210e88f7381bc571e157c979ceae2fa0db4b5",
+      "externalRasterLoader": false
+    },
+    "characters.mjs": {
+      "sha256": "e1b3b79dedfd2c51dd3307328cebe780194cc8b7dabbd1439640fa9076b6fe89",
+      "externalRasterLoader": false
+    },
+    "weather.mjs": {
+      "sha256": "57aea87611b6428bd39bdd72f47f5fe057ca8514a7ac53c3e823317be4caae30",
+      "externalRasterLoader": false
+    },
+    "assets/original-actor.js": {
+      "sha256": "ded2d9acd734bfc2242473c75a3bd0cedd44b66d9f12299006c3c9eb584a371d",
+      "externalRasterLoader": false
+    }
+  },
+  "passed": true
+}

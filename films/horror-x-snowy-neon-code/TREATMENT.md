@@ -10,7 +10,7 @@ User authorization: one highlight scene made with code, no generated imagery. De
 
 ## Logline and arc
 
-From the snowy pavement outside, the laundromat glows invitingly; inside, Nun looks away from her coins toward the faceless customer's white cloth at the rear opening. The cloth quietly slips behind the existing jamb. No new identity, face, customer footsteps, lock, CCTV, dawn, name or destination is revealed. Snow is a weather/style study requested by the supplied style, not a change to the canonical episode's location.
+From the snowy pavement outside, the laundromat glows invitingly; inside, the woman looks away from her coins toward the faceless customer's white cloth at the rear opening. The cloth quietly slips behind the existing jamb. No new identity, face, customer footsteps, lock, CCTV, dawn, name or destination is revealed. Snow is a weather/style study requested by the supplied style, not a change to the canonical episode's location.
 
 ## Style specification
 
@@ -24,13 +24,17 @@ Benchmark grammar is the supplied Sean Baker/Anora reference: learn night-light 
 |---|---|---|
 | 0–2.5 | Nearly frontal exterior wide, slow 3% push | Establish one real storefront, suspended tubes and snow; lower-quarter puddle reflections |
 | 2.5–5 | Lower/closer oblique storefront view, slow push | Read washer rims, glass depth and coin counter under contrasting warm/cool spill |
-| 5–7.5 | Closer view through glass toward Nun and the rear opening, slow push | Warm face and blank cloth remain readable; cloth recedes behind the existing door jamb |
+| 5–7.5 | Closer view through glass toward the woman and the rear opening, slow push | Warm face and blank cloth remain readable; cloth recedes behind the existing door jamb |
 
 The 2D camera uses reframing and a small affine obliquity; it does not claim a true 3D orbit. One location, no title cards, no subtitle/voice generation. Signage only where a shop would have it; no watermarks or library sign-off.
 
 ## Sound/cue map
 
 Visual proof has a quiet, original procedural soundtrack: low washer/transformer room tone, one restrained coin contact around 3.7 s, faint cloth rustle late in the last shot and a thin sustained tonal bed. No customer footsteps, dialogue, borrowed tune or paid voice. Room tone drops slightly before the final attention shift. Cuts at 2.5/5 s; the mild light dip at 6.25 s has no sudden loud hit. Target −18 LUFS and true peak ≤−1.5 dBTP for this comparison, matching main episode preference. Treat final measured output as evidence, not a promise.
+
+## Character model decision (user-approved)
+
+The on-screen woman is the pale/slim 80s-cel design — registry model `cel` (เซล) — adapted from the `horror-x-snowy-neon-cel-woman` variant; the user reviewed and approved it as the primary figure. The earlier Nun rig is preserved, not deleted, as registry model `noon` (โมเดลนุ่น) and remains selectable via `?model=noon`. This changes which rig draws the same character at the same mark; it is not a story, staging or style change.
 
 ## Review and delivery
 

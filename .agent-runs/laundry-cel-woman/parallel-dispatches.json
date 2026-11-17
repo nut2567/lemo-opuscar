@@ -1,0 +1,30 @@
+[
+  {
+    "spec": "06-face",
+    "receipt": "{\"ok\":true,\"result\":{\"dispatchId\":\"ctx_0366069c7ccb\",\"taskId\":\"task_572ab6f838e1\",\"runId\":\"run_4f6d22df1af3\",\"state\":\"ready\",\"agent\":\"devin\",\"mode\":\"terminal\",\"modeDetail\":\"Your default is a structured chat session, but this agent has no structured session; started a terminal agent worker instead.\",\"terminal\":\"term_61a3b432-de60-48ea-b9fc-71db96a553bb\",\"workspace\":\"c1534743-c475-465d-90eb-1d69dc909ed7::D:/peoject_wepapp/lemo-opuscar\",\"next\":\"Orca wakes you when workers report; end your turn when you're done.\"}}\n",
+    "error": "",
+    "exit": 0,
+    "ledger_id": "20261117-230433-147370"
+  },
+  {
+    "spec": "07-eyes",
+    "receipt": "{\"ok\":true,\"result\":{\"dispatchId\":\"ctx_d95c5e63caca\",\"taskId\":\"task_21d4b3aa91b1\",\"runId\":\"run_4f6d22df1af3\",\"state\":\"ready\",\"agent\":\"devin\",\"mode\":\"terminal\",\"modeDetail\":\"Your default is a structured chat session, but this agent has no structured session; started a terminal agent worker instead.\",\"terminal\":\"term_f4c38ea8-5480-4f00-800f-27b38577a20f\",\"workspace\":\"c1534743-c475-465d-90eb-1d69dc909ed7::D:/peoject_wepapp/lemo-opuscar\",\"next\":\"Orca wakes you when workers report; end your turn when you're done.\"}}\n",
+    "error": "",
+    "exit": 0,
+    "ledger_id": "20261117-230435-dceeb9"
+  },
+  {
+    "spec": "08-hair",
+    "receipt": "{\"ok\":true,\"result\":{\"dispatchId\":\"ctx_5d494cd3c5a2\",\"taskId\":\"task_984937e79512\",\"runId\":\"run_4f6d22df1af3\",\"state\":\"ready\",\"agent\":\"devin\",\"mode\":\"terminal\",\"modeDetail\":\"Your default is a structured chat session, but this agent has no structured session; started a terminal agent worker instead.\",\"terminal\":\"term_cef50542-74f8-450a-bb98-9a8aecb3a88b\",\"workspace\":\"c1534743-c475-465d-90eb-1d69dc909ed7::D:/peoject_wepapp/lemo-opuscar\",\"next\":\"Orca wakes you when workers report; end your turn when you're done.\"}}\n",
+    "error": "",
+    "exit": 0,
+    "ledger_id": "20261117-230437-5e5c68"
+  },
+  {
+    "spec": "09-body",
+    "receipt": "{\"ok\":true,\"result\":{\"dispatchId\":\"ctx_490738fcb0d5\",\"taskId\":\"task_cecdf5ada83b\",\"runId\":\"run_4f6d22df1af3\",\"state\":\"ready\",\"agent\":\"devin\",\"mode\":\"terminal\",\"modeDetail\":\"Your default is a structured chat session, but this agent has no structured session; started a terminal agent worker instead.\",\"terminal\":\"term_fda7df6b-0de9-4f2f-b3e7-53e219c40e71\",\"workspace\":\"c1534743-c475-465d-90eb-1d69dc909ed7::D:/peoject_wepapp/lemo-opuscar\",\"next\":\"Orca wakes you when workers report; end your turn when you're done.\"}}\n",
+    "error": "",
+    "exit": 0,
+    "ledger_id": "20261117-230440-e03b53"
+  }
+]

@@ -1,0 +1,13 @@
+import path from 'path';
+import { pathToFileURL } from 'url';
+const ROOT = 'D:/peoject_wepapp/lemo-opuscar';
+const DIR = path.join(ROOT, '.agent-runs', 'neon-depth-revision', 'washers');
+const OUT = path.join(DIR, 'washers-sample.png');
+const { openDemo, closeServer } = await import(pathToFileURL(path.join(ROOT, 'core', 'render', 'page.mjs')).href);
+const { browser, page } = await openDemo(DIR, { w: 1080, h: 1920, warnings: true });
+const meta = await page.evaluate(() => ({ ready: window.READY === true, s: window.sample() }));
+console.log('meta', JSON.stringify(meta));
+await page.screenshot({ path: OUT, type: 'png' });
+console.log('wrote', OUT);
+await browser.close();
+closeServer();

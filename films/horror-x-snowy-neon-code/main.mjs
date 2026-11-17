@@ -1,6 +1,7 @@
 import {drawEnvironment} from './environment.mjs';
-import {drawNeon} from './neon.mjs';
-import {drawCharacters,originalNunMarkup} from './characters.mjs';
+import {drawNeon,initNeon,signLines,fontStatus} from './neon.mjs';
+import {drawCharacters,characterMarkup} from './characters.mjs';
+import {getCharacterModel,CHARACTER_MODELS,DEFAULT_MODEL} from '../../models/registry.mjs';
 import {drawWeather,drawPost} from './weather.mjs';
 
 const W=1080,H=1920,GROUND=1440;
@@ -9,12 +10,57 @@ const world=document.createElement('canvas');world.width=W;world.height=H;
 const wc=world.getContext('2d',{alpha:false});
 const reflection=document.createElement('canvas');reflection.width=W;reflection.height=H-GROUND;
 const rc=reflection.getContext('2d');
-// Inline-SVG layer for the ORIGINAL Nun rig. It shares the Canvas camera:
+// Inline-SVG layer for the registry character rig. It shares the Canvas camera:
 // viewBox 1080x1920 + preserveAspectRatio="none" reproduces the canvas'
 // independent x/y fit, and nunCam applies the same translate+matrix the
-// ctx transform uses, so Nun and world stay pixel-aligned at any viewport.
+// ctx transform uses, so character and world stay pixel-aligned at any viewport.
 const nunCam=document.getElementById('nunCam');
+// Character model selection: the registry default ('cel', the approved
+// pale/slim cel woman) is primary; ?model=noon explicitly opts into the
+// previous Nun rig kept for reuse. Unknown ids fail loudly at load.
+const modelParam=new URLSearchParams(location.search).get('model');
+let characterModel=DEFAULT_MODEL;
+if(modelParam){
+ try{getCharacterModel(modelParam);}catch{
+  throw new Error(`unknown ?model="${modelParam}": expected one of ${Object.keys(CHARACTER_MODELS).join(', ')}`);
+ }
+ characterModel=modelParam;
+}
+window.CHARACTER_MODEL=characterModel;
 const cameraPresets=[{cx:540,cy:960,z:1,skew:0},{cx:465,cy:1090,z:1.16,skew:-.025},{cx:605,cy:1030,z:1.24,skew:.016}];
+// Wet-ground reflection of the character rig. The Canvas pass mirrors world rows
+// y300..1440 into street rows y1440..1920 (the rc transform in render()),
+// so the SVG copy uses the matching affine world->street map:
+//   streetX = worldX,  streetY = H - (worldY-300)*WET_K.
+// The actor source is clipped at counter world y1110, which maps to street
+// y>=1578.9 — only the visible upper body and sorting tray reflect, never
+// phantom legs below the counter line.
+const WET_K=(H-GROUND)/1140, WET_F=H+300*WET_K;
+const REFL_Y0=1560, REFL_Y1=1744, REFL_BH=16, REFL_OP=0.62;
+function nunLayer(t){
+ const mark=characterMarkup(t,{model:characterModel,uid:'snowy'});
+ // Second render under a distinct uid so the mirrored reflection's defs can
+ // never collide with the direct figure's — model-agnostic, no string patch.
+ const markR=characterMarkup(t,{model:characterModel,uid:'snowy-r'});
+ let clips=`<clipPath id="nunClip" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="${W}" height="1110"/></clipPath>`;
+ clips+=`<clipPath id="nunWet" clipPathUnits="userSpaceOnUse"><rect x="0" y="1579" width="${W}" height="${H-1579}"/></clipPath>`;
+ clips+=`<clipPath id="nunHidden" clipPathUnits="userSpaceOnUse"><rect x="2000" y="2000" width="10" height="10"/></clipPath>`;
+ clips+=`<filter id="nunReflBlur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.5"/></filter>`;
+ // Horizontal bands reproduce the Canvas ripple offsets (same formula as
+ // the 3px slices in render()) and carry the street's depth fade.
+ let bands='';
+ for(let y0=REFL_Y0;y0<REFL_Y1;y0+=REFL_BH){
+  clips+=`<clipPath id="nunBand${y0}" clipPathUnits="userSpaceOnUse"><rect x="0" y="${y0}" width="${W}" height="${REFL_BH}"/></clipPath>`;
+  const yc=y0+REFL_BH/2-GROUND;
+  const off=Math.sin(yc*.047+t*1.2)*(.8+yc*.009)+Math.sin(yc*.13-t)*1.5;
+  const fadeA=.14+.51*((y0+REFL_BH/2-GROUND)/(H-GROUND));
+  bands+=`<g clip-path="url(#nunBand${y0})" opacity="${(REFL_OP*(1-fadeA)).toFixed(3)}"><use href="#nunMir" transform="translate(${off.toFixed(2)} 0)"/></g>`;
+ }
+ return `<defs>${clips}</defs>`+
+  `<g clip-path="url(#nunClip)">${mark}</g>`+
+  `<g id="nunRefl" clip-path="url(#nunWet)" filter="url(#nunReflBlur)">${bands}</g>`+
+  `<g clip-path="url(#nunHidden)"><g id="nunMir" transform="matrix(1 0 0 ${(-WET_K).toFixed(6)} 0 ${WET_F.toFixed(6)})">${markR}</g></g>`;
+}
 window.DUR=7.5;
 window.TEXTS=()=>[];
 window.EV=[{t:2.5,type:'cut'},{t:3.7,type:'coin'},{t:5,type:'cut'},{t:6.25,type:'light-dim'},{t:6.7,type:'cloth'}];
@@ -24,6 +70,20 @@ window.render=function(t){
  wc.setTransform(1,0,0,1,0,0);wc.globalAlpha=1;wc.globalCompositeOperation='source-over';wc.filter='none';wc.shadowBlur=0;
  wc.fillStyle='#1e1838';wc.fillRect(0,0,W,H);
  drawEnvironment(wc,t,shot);drawNeon(wc,t,shot);drawCharacters(wc,t,shot);
+ // Contact/cast shade inside the glazed shop bay only: the nun and counter
+ // mass block the warm interior light, so the tile floor at the counter
+ // base and the back wall behind her fall off gently. Clipped to the shop
+ // window — never across the glass onto the street.
+ wc.save();wc.beginPath();wc.rect(130,540,610,820);wc.clip();
+ {
+  const fl=wc.createRadialGradient(620,1300,20,620,1300,230);
+  fl.addColorStop(0,'rgba(4,6,14,0.38)');fl.addColorStop(.55,'rgba(4,6,14,0.15)');fl.addColorStop(1,'rgba(4,6,14,0)');
+  wc.fillStyle=fl;wc.fillRect(400,1090,340,250);
+  const wl=wc.createRadialGradient(690,985,30,690,985,220);
+  wl.addColorStop(0,'rgba(4,6,14,0.26)');wl.addColorStop(1,'rgba(4,6,14,0)');
+  wc.fillStyle=wl;wc.fillRect(470,760,440,450);
+ }
+ wc.restore();
  // Mirror the actual drawn facade, then stretch it into wet pavement bands.
  wc.save();wc.beginPath();wc.rect(0,GROUND,W,H-GROUND);wc.clip();
  rc.setTransform(1,0,0,1,0,0);rc.clearRect(0,0,reflection.width,reflection.height);
@@ -56,14 +116,15 @@ window.render=function(t){
  ctx.save();ctx.scale(canvas.width/W,canvas.height/H);ctx.translate(W/2,H/2);
  ctx.transform(z,0,cam.skew,z,-cam.cx*z,-cam.cy*z);ctx.drawImage(world,0,0);ctx.restore();
  drawPost(ctx,t,canvas.width,canvas.height);
- // Original Nun as inline SVG under the identical camera matrix. The clip
+ // Registry character as inline SVG under the identical camera matrix. The clip
  // keeps everything below the counter top (world y1110) hidden so the
  // counter front and her legs/soles never overpaint the shop interior.
- nunCam.setAttribute('transform',`translate(${W/2} ${H/2}) matrix(${z} 0 ${cam.skew} ${cam.z} ${-cam.cx*z} ${-cam.cy*z})`);
- nunCam.innerHTML=`<defs><clipPath id="nunClip" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="${W}" height="1110"/></clipPath></defs><g clip-path="url(#nunClip)">${originalNunMarkup(t)}</g>`;
- window.FRAME_META={time:t,shot,source:'procedural Canvas2D',imageInputs:0};
+ // The y-scale uses the same animated z as the Canvas camera.
+ nunCam.setAttribute('transform',`translate(${W/2} ${H/2}) matrix(${z} 0 ${cam.skew} ${z} ${-cam.cx*z} ${-cam.cy*z})`);
+ nunCam.innerHTML=nunLayer(t);
+ window.FRAME_META={time:t,shot,source:'procedural Canvas2D',imageInputs:0,characterModel};
 };
-window.render(0);window.READY=true;
+await initNeon();window.SIGN_LINES=signLines();window.FONT_STATUS=fontStatus();window.render(0);window.READY=true;
 // Explicit opt-in playback; offline rendering always calls render(t) directly.
 if(new URLSearchParams(location.search).has('play')){
  const start=performance.now();function tick(){window.render(((performance.now()-start)/1000)%window.DUR);requestAnimationFrame(tick);}requestAnimationFrame(tick);

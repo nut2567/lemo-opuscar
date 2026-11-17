@@ -1,0 +1,37 @@
+{
+  "time": 3.7,
+  "uid": "portrait",
+  "viewBox": "-140 -130 280 540",
+  "files": {
+    "character-pale-slim.png": {
+      "width": 840,
+      "height": 1620,
+      "colorType": 6,
+      "sha256": "da631e23f9812308c32208c1243f77f533f9eaa9d2a32712709dbab57d1a0529"
+    },
+    "character-pale-slim-neutral.png": {
+      "width": 840,
+      "height": 1620,
+      "colorType": 2,
+      "sha256": "a8cd76914f089b17e0358ef114bb91b21dce1dfd1fd154830d5a2295567b99ff"
+    },
+    "character-pale-slim-face.png": {
+      "width": 840,
+      "height": 840,
+      "colorType": 6,
+      "sha256": "747c26c9d7171290bc26145ff6943764436a16aec29434a16ef18ade666b8804"
+    }
+  },
+  "deterministic": true,
+  "duplicateIds": [],
+  "errors": [],
+  "resources": [
+    "http://127.0.0.1:61180/assets/cel-woman.js",
+    "http://127.0.0.1:61180/assets/cel-body.js",
+    "http://127.0.0.1:61180/assets/cel-face.js",
+    "http://127.0.0.1:61180/assets/cel-eyes.js",
+    "http://127.0.0.1:61180/assets/cel-hair.js"
+  ],
+  "source": "celWomanMarkup person-only preview; corrections live in assets/cel-face.js + assets/cel-body.js",
+  "passed": true
+}

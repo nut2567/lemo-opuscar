@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "deterministic_t0": true,
+    "deterministic_t3.7": true,
+    "deterministic_t6.8": true,
+    "sameSize": true,
+    "reflectionPixelsInStreet": true,
+    "reflectionCompact": true,
+    "reflectionBrightens": true,
+    "noDuplicateSvgIds": true,
+    "reflectionStructure": true
+  },
+  "frames": {
+    "t37": {
+      "changedPixels": 6834,
+      "bbox": {
+        "minX": 728,
+        "maxX": 861,
+        "minY": 1535,
+        "maxY": 1639
+      },
+      "meanLumaOn": 75.13,
+      "meanLumaOff": 31.6,
+      "diffMap": "######      \n#####.      \n.#####+     \n #######    \n #####+#+   \n +#+###++   \n  #+#####.  \n .####. ##  \n +#. +####+ \n .#.####### \n  +########.\n   +#######.\n    .#####. \n      .     "
+    }
+  },
+  "errors": [],
+  "svgIdCount": 31,
+  "structure": {
+    "refl": true,
+    "mir": true,
+    "uses": 12,
+    "clips": 15
+  },
+  "passed": true
+}

@@ -1,0 +1,5 @@
+# The canonical model geometry is an exact snapshot of the approved rigs.
+# Preserve bytes on every platform so provenance hashes remain reproducible.
+cel/*.js -text whitespace=cr-at-eol
+noon/*.js -text whitespace=cr-at-eol
+*.mjs text eol=lf

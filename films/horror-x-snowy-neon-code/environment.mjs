@@ -1,3 +1,4 @@
+import {drawWashers} from './washers.mjs';
 // environment.mjs — procedural snowy-night laundromat storefront.
 // The static architecture is rasterized once into an offscreen canvas and
 // blitted each frame; only a faint deterministic interior-light breathing
@@ -57,52 +58,6 @@ function makeBrickTile() {
     g.fillStyle = rng() > 0.5 ? 'rgba(0,0,0,0.10)' : 'rgba(220,210,235,0.05)';
     g.fillRect(rng() * 256, rng() * 160, 1.4, 1.4);
   }
-  return c;
-}
-
-// Brushed stainless washer door: concentric rings + convex dark glass.
-function makeWasherSprite() {
-  const c = document.createElement('canvas');
-  c.width = 140; c.height = 170;
-  const g = c.getContext('2d');
-  // cabinet body
-  const bg = g.createLinearGradient(0, 0, 140, 0);
-  bg.addColorStop(0, '#4c525c'); bg.addColorStop(0.18, '#767d88');
-  bg.addColorStop(0.5, '#5d636e'); bg.addColorStop(1, '#3c4149');
-  g.fillStyle = bg;
-  rr(g, 8, 6, 124, 158, 10); g.fill();
-  g.strokeStyle = 'rgba(0,0,0,0.4)'; g.lineWidth = 2; g.stroke();
-  g.fillStyle = 'rgba(255,255,255,0.10)';
-  g.fillRect(16, 10, 108, 3);
-  // control strip
-  g.fillStyle = '#33373f'; g.fillRect(20, 16, 100, 12);
-  g.fillStyle = '#9aa2ad';
-  for (let i = 0; i < 4; i++) g.fillRect(26 + i * 24, 20, 12, 4);
-  // door bezel
-  g.beginPath(); g.arc(70, 102, 52, 0, Math.PI * 2);
-  const bez = g.createRadialGradient(58, 90, 30, 70, 102, 54);
-  bez.addColorStop(0, '#8d939d'); bez.addColorStop(0.7, '#5a606a'); bez.addColorStop(1, '#34383f');
-  g.fillStyle = bez; g.fill();
-  // brushed concentric rings
-  for (let i = 0; i < 5; i++) {
-    g.beginPath(); g.arc(70, 102, 44 - i * 7.5, 0, Math.PI * 2);
-    g.strokeStyle = i % 2 ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.14)';
-    g.lineWidth = 2.2; g.stroke();
-  }
-  // convex dark glass
-  g.beginPath(); g.arc(70, 102, 36, 0, Math.PI * 2);
-  const gl = g.createRadialGradient(60, 92, 4, 70, 102, 38);
-  gl.addColorStop(0, '#1b232c'); gl.addColorStop(0.65, '#0e141b'); gl.addColorStop(1, '#070a0e');
-  g.fillStyle = gl; g.fill();
-  // specular streaks on glass
-  g.strokeStyle = 'rgba(210,230,250,0.34)'; g.lineWidth = 4; g.lineCap = 'round';
-  g.beginPath(); g.arc(70, 102, 30, -2.4, -1.5); g.stroke();
-  g.strokeStyle = 'rgba(210,230,250,0.16)'; g.lineWidth = 7;
-  g.beginPath(); g.arc(70, 102, 27, -2.2, -1.7); g.stroke();
-  g.fillStyle = '#2c3138'; g.beginPath(); g.arc(70, 102, 7, 0, Math.PI * 2); g.fill();
-  // detergent drawer
-  g.fillStyle = '#3a3f47'; rr(g, 34, 138, 72, 18, 4); g.fill();
-  g.fillStyle = 'rgba(255,255,255,0.08)'; g.fillRect(38, 141, 64, 2);
   return c;
 }
 
@@ -206,10 +161,75 @@ function buildEnvironment() {
     g.fillStyle = eg; g.fillRect(Math.min(x0, x0 + dir * 26), FAC.y, 26, FAC.h);
   }
 
-  // Coping band and sign fascia.
-  g.fillStyle = '#1b1622'; g.fillRect(FAC.x - 6, 288, FAC.w + 12, 22);
-  g.fillStyle = 'rgba(255,255,255,0.06)'; g.fillRect(FAC.x - 6, 288, FAC.w + 12, 2);
-  g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(FAC.x - 6, 308, FAC.w + 12, 8);
+  // ---- LEFT exterior side return -----------------------------------------
+  // The building turns the corner at its left edge (front edge x70): a side
+  // wall sheared back/up by the same depth vector used by roof and reveals.
+  const sideG = g.createLinearGradient(70, 0, 4, 0);
+  sideG.addColorStop(0, '#2b3343'); sideG.addColorStop(0.55, '#1e2534'); sideG.addColorStop(1, '#121826');
+  g.fillStyle = sideG;
+  g.beginPath();
+  g.moveTo(70, 318); g.lineTo(70, CURB); g.lineTo(4, CURB - 40); g.lineTo(4, 278);
+  g.closePath(); g.fill();
+  // Horizontal siding seams and a small recessed side window on the return.
+  g.strokeStyle = 'rgba(0,0,0,0.22)'; g.lineWidth = 1.2;
+  for (const sy of [470, 640, 810, 980, 1150, 1320]) {
+    g.beginPath(); g.moveTo(6, sy - 38); g.lineTo(68, sy); g.stroke();
+  }
+  // Side window: edges parallel to the wall seams (dy/dx ≈ 0.61).
+  g.fillStyle = 'rgba(0,0,0,0.35)';
+  g.beginPath(); g.moveTo(10, 603); g.lineTo(64, 636); g.lineTo(64, 812); g.lineTo(10, 779); g.closePath(); g.fill();
+  g.fillStyle = '#0b1018';
+  g.beginPath(); g.moveTo(15, 611); g.lineTo(59, 638); g.lineTo(59, 801); g.lineTo(15, 774); g.closePath(); g.fill();
+  const spane = g.createLinearGradient(15, 0, 59, 0);
+  spane.addColorStop(0, 'rgba(79,220,255,0.10)'); spane.addColorStop(1, 'rgba(255,79,168,0.05)');
+  g.fillStyle = spane;
+  g.beginPath(); g.moveTo(21, 618); g.lineTo(53, 638); g.lineTo(53, 794); g.lineTo(21, 774); g.closePath(); g.fill();
+  g.strokeStyle = 'rgba(190,205,230,0.20)'; g.lineWidth = 1.4;
+  g.beginPath(); g.moveTo(21, 618); g.lineTo(53, 638); g.stroke();
+  // Contact shadow where the return meets the front facade, plus footing.
+  const sideAo = g.createLinearGradient(44, 0, 70, 0);
+  sideAo.addColorStop(0, 'rgba(0,0,0,0)'); sideAo.addColorStop(1, 'rgba(0,0,0,0.45)');
+  g.fillStyle = sideAo;
+  g.beginPath(); g.moveTo(44, 322); g.lineTo(70, 318); g.lineTo(70, CURB); g.lineTo(44, CURB - 4); g.closePath(); g.fill();
+  g.fillStyle = 'rgba(6,8,14,0.55)';
+  g.beginPath(); g.moveTo(8, CURB - 46); g.lineTo(70, CURB - 6); g.lineTo(70, CURB); g.lineTo(4, CURB - 40); g.closePath(); g.fill();
+
+  // Sloped roof plane: the left edge continues the side return's top edge
+  // as one straight hip line (same -66,-40 shear family).
+  const roof = g.createLinearGradient(0, 200, 0, 292);
+  roof.addColorStop(0, '#26304a'); roof.addColorStop(0.55, '#171e30'); roof.addColorStop(1, '#0d1220');
+  g.fillStyle = roof;
+  g.beginPath();
+  g.moveTo(-122, 202); g.lineTo(960, 202); g.lineTo(1026, 288); g.lineTo(20, 288);
+  g.closePath(); g.fill();
+  // Snow-dusted top arris and faint neon rim.
+  g.strokeStyle = 'rgba(205,220,245,0.20)'; g.lineWidth = 2.4;
+  g.beginPath(); g.moveTo(-122, 202); g.lineTo(960, 202); g.stroke();
+  g.strokeStyle = 'rgba(120,190,235,0.10)'; g.lineWidth = 5;
+  g.beginPath(); g.moveTo(-122, 207); g.lineTo(960, 207); g.stroke();
+
+  // Thick coping band; left end steps down to meet the side return.
+  g.fillStyle = '#1b1622';
+  g.beginPath();
+  g.moveTo(60, 286); g.lineTo(1020, 286); g.lineTo(1020, 312); g.lineTo(70, 318); g.lineTo(64, 312);
+  g.closePath(); g.fill();
+  g.fillStyle = 'rgba(255,255,255,0.06)'; g.fillRect(60, 286, 960, 2);
+  g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(60, 312, 960, 6);
+  // Soft eave shadow on the facade below the coping.
+  const eave = g.createLinearGradient(0, 316, 0, 372);
+  eave.addColorStop(0, 'rgba(5,6,12,0.34)'); eave.addColorStop(1, 'rgba(5,6,12,0)');
+  g.fillStyle = eave; g.fillRect(FAC.x, 316, FAC.w, 56);
+
+  // Sign backing casing: the face panel (x120..930 y340..500, neon
+  // alignment preserved) extruded up-left along the same oblique shear as
+  // the side return — the silhouette shows the top and left cheeks.
+  g.fillStyle = '#0b0812';
+  g.beginPath();
+  g.moveTo(106, 332); g.lineTo(916, 332); g.lineTo(930, 340);
+  g.lineTo(930, 500); g.lineTo(120, 500); g.lineTo(106, 492);
+  g.closePath(); g.fill();
+  g.fillStyle = 'rgba(255,255,255,0.05)';
+  g.beginPath(); g.moveTo(106, 332); g.lineTo(916, 332); g.lineTo(930, 340); g.lineTo(120, 340); g.closePath(); g.fill();
 
   // Sign backing panel (tubes are drawn by neon.mjs).
   g.fillStyle = '#171222'; g.fillRect(120, 340, 810, 160);
@@ -231,6 +251,13 @@ function buildEnvironment() {
   g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(96, 534, 888, 4);
   g.strokeStyle = 'rgba(0,0,0,0.3)'; g.lineWidth = 1;
   for (let x = 130; x < 960; x += 46) { g.beginPath(); g.moveTo(x, 506); g.lineTo(x, 532); g.stroke(); }
+  // Bottom return of the sign casing: sheared lip in front of the fascia.
+  g.fillStyle = '#0b0812';
+  g.beginPath();
+  g.moveTo(120, 500); g.lineTo(930, 500); g.lineTo(943, 508); g.lineTo(133, 508);
+  g.closePath(); g.fill();
+  g.fillStyle = 'rgba(255,255,255,0.07)'; g.fillRect(120, 500, 810, 1.5);
+  g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(120, 507, 823, 3);
 
   // Downspout at left edge.
   const ds = g.createLinearGradient(80, 0, 94, 0);
@@ -245,18 +272,69 @@ function buildEnvironment() {
   // ---- shop interior (clipped to glazing) -------------------------------
   g.save();
   g.beginPath(); g.rect(SHOP.x, SHOP.y, SHOP.w, SHOP.h); g.clip();
-  // Back wall: warm plaster, darker toward ceiling.
-  const bw = g.createLinearGradient(0, 556, 0, 1168);
-  bw.addColorStop(0, '#2c2019'); bw.addColorStop(0.4, '#43301f'); bw.addColorStop(1, '#33261b');
-  g.fillStyle = bw; g.fillRect(136, 548, 600, 620);
+  // Recessed room: the glazing sits deep — ceiling plane, left/right side
+  // walls and a narrower back wall, all meeting at a consistent back edge.
+  const ceil = g.createLinearGradient(0, 548, 0, 660);
+  ceil.addColorStop(0, '#170f0a'); ceil.addColorStop(1, '#2b1d12');
+  g.fillStyle = ceil;
+  g.beginPath(); g.moveTo(136, 548); g.lineTo(736, 548); g.lineTo(676, 648); g.lineTo(196, 648); g.closePath(); g.fill();
+  g.strokeStyle = 'rgba(0,0,0,0.28)'; g.lineWidth = 1.3;
+  for (const fx of [0.16, 0.36, 0.62, 0.84]) {
+    g.beginPath();
+    g.moveTo(136 + (736 - 136) * fx, 548);
+    g.lineTo(196 + (676 - 196) * fx, 648);
+    g.stroke();
+  }
+  // Simple ceiling fixture with a faint warm tube.
+  g.fillStyle = '#0f0b08'; rr(g, 372, 594, 136, 13, 6); g.fill();
+  g.fillStyle = 'rgba(255,214,150,0.32)'; rr(g, 381, 597, 118, 5, 3); g.fill();
+  const tube = g.createRadialGradient(440, 614, 4, 440, 614, 140);
+  tube.addColorStop(0, 'rgba(255,205,130,0.20)'); tube.addColorStop(1, 'rgba(255,205,130,0)');
+  g.fillStyle = tube; g.fillRect(290, 556, 320, 130);
+  // Left side wall: warm plaster receding toward the back-right.
+  const lw = g.createLinearGradient(136, 0, 200, 0);
+  lw.addColorStop(0, '#2a1e14'); lw.addColorStop(1, '#3a2a1c');
+  g.fillStyle = lw;
+  g.beginPath(); g.moveTo(136, 548); g.lineTo(196, 648); g.lineTo(196, 1160); g.lineTo(136, 1164); g.closePath(); g.fill();
+  g.strokeStyle = 'rgba(0,0,0,0.14)'; g.lineWidth = 1;
+  for (const wy of [700, 850, 1000, 1130]) {
+    const t = Math.min(1, (wy - 548) / 616);
+    g.beginPath();
+    g.moveTo(136, wy);
+    g.lineTo(196, 648 + t * 512);
+    g.stroke();
+  }
+  g.fillStyle = 'rgba(0,0,0,0.30)';
+  g.beginPath(); g.moveTo(136, 548); g.lineTo(196, 648); g.lineTo(196, 700); g.lineTo(136, 610); g.closePath(); g.fill();
+  // Right side wall: darker, half in counter shadow.
+  const rw = g.createLinearGradient(736, 0, 672, 0);
+  rw.addColorStop(0, '#1d150e'); rw.addColorStop(1, '#2c2014');
+  g.fillStyle = rw;
+  g.beginPath(); g.moveTo(736, 548); g.lineTo(676, 648); g.lineTo(676, 1160); g.lineTo(736, 1164); g.closePath(); g.fill();
+  g.strokeStyle = 'rgba(0,0,0,0.16)'; g.lineWidth = 1;
+  for (const wy of [720, 880, 1040, 1130]) {
+    const t = Math.min(1, (wy - 548) / 616);
+    g.beginPath();
+    g.moveTo(736, wy);
+    g.lineTo(676, 648 + t * 512);
+    g.stroke();
+  }
+  g.fillStyle = 'rgba(0,0,0,0.35)';
+  g.beginPath(); g.moveTo(736, 548); g.lineTo(676, 648); g.lineTo(676, 700); g.lineTo(736, 610); g.closePath(); g.fill();
+  // Back wall: warm plaster, narrower than the glazing, darker to ceiling.
+  const bw = g.createLinearGradient(0, 648, 0, 1168);
+  bw.addColorStop(0, '#33261b'); bw.addColorStop(0.45, '#453120'); bw.addColorStop(1, '#2e2318');
+  g.fillStyle = bw; g.fillRect(196, 648, 480, 516);
   g.strokeStyle = 'rgba(0,0,0,0.10)'; g.lineWidth = 1;
-  for (let x = 160; x < 730; x += 96) { g.beginPath(); g.moveTo(x, 560); g.lineTo(x, 1140); g.stroke(); }
-  g.fillStyle = 'rgba(0,0,0,0.28)'; g.fillRect(136, 548, 600, 26);
+  for (let x = 240; x < 672; x += 96) { g.beginPath(); g.moveTo(x, 660); g.lineTo(x, 1140); g.stroke(); }
+  g.fillStyle = 'rgba(0,0,0,0.30)'; g.fillRect(196, 648, 480, 24);
+  // Wall/wall and wall/ceiling contact shading.
+  g.fillStyle = 'rgba(0,0,0,0.22)'; g.fillRect(196, 648, 3, 516); g.fillRect(673, 648, 3, 516);
   // Shelf with folded towels, left of the rear opening.
   for (const [sy, cols] of [[660, ['#5d5648', '#4c5a58', '#634a44']], [742, ['#4c5a58', '#5d5648']]]) {
-    g.fillStyle = '#1f1712'; g.fillRect(150, sy + 26, 300, 8);
-    g.fillStyle = 'rgba(255,220,170,0.10)'; g.fillRect(150, sy + 26, 300, 2);
-    let tx = 158;
+    g.fillStyle = '#1f1712'; g.fillRect(206, sy + 26, 250, 8);
+    g.fillStyle = 'rgba(255,220,170,0.10)'; g.fillRect(206, sy + 26, 250, 2);
+    let tx = 214;
     for (const col of cols) {
       const tw = 62 + rng() * 18;
       g.fillStyle = col; rr(g, tx, sy, tw, 26, 5); g.fill();
@@ -265,20 +343,12 @@ function buildEnvironment() {
       tx += tw + 8;
     }
   }
-  // Rear doorway: dark void with casing and faint rim spill.
-  g.fillStyle = '#1c130d'; g.fillRect(462, 767, 141, 426);
-  const voidG = g.createLinearGradient(0, 775, 0, 1185);
-  voidG.addColorStop(0, '#0d0a13'); voidG.addColorStop(0.6, '#08060d'); voidG.addColorStop(1, '#040309');
-  g.fillStyle = voidG; g.fillRect(470, 775, 125, 410);
-  g.fillStyle = 'rgba(79,220,255,0.10)'; g.fillRect(588, 780, 7, 400);   // cool rim from glazing
-  g.fillStyle = 'rgba(255,190,120,0.08)'; g.fillRect(470, 775, 125, 10); // warm top spill
-  g.fillStyle = '#050309'; g.fillRect(470, 1168, 125, 17);               // threshold shadow
-  // Wainscot tile band above floor line.
-  g.fillStyle = '#252b31'; g.fillRect(140, 1090, 590, 74);
+  // Wainscot tile band on the back wall above the floor line.
+  g.fillStyle = '#252b31'; g.fillRect(196, 1090, 480, 74);
   g.strokeStyle = 'rgba(0,0,0,0.3)'; g.lineWidth = 1;
-  for (let x = 140; x <= 730; x += 24) { g.beginPath(); g.moveTo(x, 1090); g.lineTo(x, 1164); g.stroke(); }
-  for (let y = 1090; y <= 1164; y += 24) { g.beginPath(); g.moveTo(140, y); g.lineTo(730, y); g.stroke(); }
-  g.fillStyle = 'rgba(255,220,170,0.05)'; g.fillRect(140, 1090, 590, 3);
+  for (let x = 196; x <= 676; x += 24) { g.beginPath(); g.moveTo(x, 1090); g.lineTo(x, 1164); g.stroke(); }
+  for (let y = 1090; y <= 1164; y += 24) { g.beginPath(); g.moveTo(196, y); g.lineTo(676, y); g.stroke(); }
+  g.fillStyle = 'rgba(255,220,170,0.05)'; g.fillRect(196, 1090, 480, 3);
   // Dark side walls / floor base behind the tile trapezoid.
   const under = g.createLinearGradient(0, 1164, 0, 1356);
   under.addColorStop(0, '#2a1e15'); under.addColorStop(1, '#171009');
@@ -288,7 +358,7 @@ function buildEnvironment() {
   const rows = 9, colsN = 12;
   const edge = i => {
     const p = i / rows;
-    return { y: 1164 + Math.pow(p, 1.55) * 188, lx: 214 - p * 74, rx: 652 + p * 82 };
+    return { y: 1164 + Math.pow(p, 1.55) * 188, lx: 196 - p * 56, rx: 676 + p * 58 };
   };
   for (let i = 0; i < rows; i++) {
     const a = edge(i), b = edge(i + 1);
@@ -325,15 +395,20 @@ function buildEnvironment() {
   g.fillStyle = '#191310'; g.fillRect(140, 1152, 590, 14);
   g.fillStyle = 'rgba(255,220,170,0.07)'; g.fillRect(140, 1152, 590, 2);
 
-  // Row of five receding washer fronts, left side.
-  const washer = makeWasherSprite();
-  for (let i = 0; i < 5; i++) {
-    const w = 92 - i * 7, h = 226 - i * 13;
-    const x = 196 + i * 55 - w / 2, y = 1274 - h + i * 4;
-    g.fillStyle = 'rgba(0,0,0,0.35)';
-    g.beginPath(); g.ellipse(x + w / 2, 1276, w * 0.55, 7, 0, 0, Math.PI * 2); g.fill();
-    g.drawImage(washer, x, y, w, h);
-  }
+  // Rear doorway: dark void with casing and faint rim spill. Redrawn after
+  // the wall/floor/baseboard so the cloth slot (x471..594 y776..1184) stays
+  // an opaque dark aperture; still clear of the washer footprint (x150..465).
+  g.fillStyle = '#1c130d'; g.fillRect(462, 767, 141, 426);
+  const voidG = g.createLinearGradient(0, 775, 0, 1185);
+  voidG.addColorStop(0, '#0d0a13'); voidG.addColorStop(0.6, '#08060d'); voidG.addColorStop(1, '#040309');
+  g.fillStyle = voidG; g.fillRect(470, 775, 125, 410);
+  g.fillStyle = 'rgba(79,220,255,0.10)'; g.fillRect(588, 780, 7, 400);   // cool rim from glazing
+  g.fillStyle = 'rgba(255,190,120,0.08)'; g.fillRect(470, 775, 125, 10); // warm top spill
+  g.fillStyle = '#050309'; g.fillRect(470, 1168, 125, 17);               // threshold shadow
+
+  // Washer row (real machines ported in washers.mjs; footprint
+  // x150..465 y1010..1295) on the floor left of center.
+  drawWashers(g, 0, 0);
 
   // Counter right of center.
   g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(634, 1332, 102, 8);
@@ -375,6 +450,21 @@ function buildEnvironment() {
   const ent = g.createLinearGradient(0, ENTRY.y, 0, ENTRY.y + ENTRY.h);
   ent.addColorStop(0, '#241a12'); ent.addColorStop(0.55, '#1a130d'); ent.addColorStop(1, '#0c0806');
   g.fillStyle = ent; g.fillRect(ENTRY.x, ENTRY.y, ENTRY.w, ENTRY.h);
+  // Recessed hall: ceiling, side walls and floor all recede from the glazing.
+  g.fillStyle = '#0e0906';
+  g.beginPath(); g.moveTo(755, 540); g.lineTo(940, 540); g.lineTo(906, 642); g.lineTo(788, 642); g.closePath(); g.fill();
+  const el = g.createLinearGradient(755, 0, 796, 0);
+  el.addColorStop(0, '#1c130c'); el.addColorStop(1, '#0f0a07');
+  g.fillStyle = el;
+  g.beginPath(); g.moveTo(755, 540); g.lineTo(792, 634); g.lineTo(792, 1300); g.lineTo(755, 1380); g.closePath(); g.fill();
+  const er = g.createLinearGradient(940, 0, 904, 0);
+  er.addColorStop(0, '#0f0a07'); er.addColorStop(1, '#1c130c');
+  g.fillStyle = er;
+  g.beginPath(); g.moveTo(940, 540); g.lineTo(903, 634); g.lineTo(903, 1300); g.lineTo(940, 1380); g.closePath(); g.fill();
+  const ef = g.createLinearGradient(0, 1240, 0, 1360);
+  ef.addColorStop(0, '#241a10'); ef.addColorStop(1, '#100a06');
+  g.fillStyle = ef;
+  g.beginPath(); g.moveTo(755, 1360); g.lineTo(940, 1360); g.lineTo(906, 1252); g.lineTo(788, 1252); g.closePath(); g.fill();
   // Faint hall depth: receding jamb lines and dim warm spill from the shop.
   g.fillStyle = 'rgba(255,170,100,0.05)'; g.fillRect(ENTRY.x, ENTRY.y + ENTRY.h * 0.55, ENTRY.w, ENTRY.h * 0.45);
   g.strokeStyle = 'rgba(0,0,0,0.4)'; g.lineWidth = 3;
@@ -425,8 +515,48 @@ function buildEnvironment() {
     g.fillStyle = 'rgba(255,230,190,0.10)'; g.fillRect(x - 16, y + h + 2, w + 32, 2);
     g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(x - 16, y + h + 14, w + 32, 5);
   }
-  // Shop window: center mullion threads the gap between rear opening (ends
-  // x595) and counter (starts x630); glass sheen over interior.
+  // Deep opening reveals: head soffit, slanted jamb planes and a threshold
+  // plane, all sheared along the same oblique depth as the side return.
+  function revealG(x, y, w, h, d = 18) {
+    const hg = g.createLinearGradient(0, y - d - 8, 0, y);
+    hg.addColorStop(0, '#100b14'); hg.addColorStop(1, '#2a1d24');
+    g.fillStyle = hg;
+    g.beginPath();
+    g.moveTo(x - d * 0.8, y - d - 6); g.lineTo(x + w + d * 0.8, y - d - 6);
+    g.lineTo(x + w, y); g.lineTo(x, y); g.closePath(); g.fill();
+    const jl = g.createLinearGradient(x - d, 0, x, 0);
+    jl.addColorStop(0, '#191119'); jl.addColorStop(1, '#33222b');
+    g.fillStyle = jl;
+    g.beginPath();
+    g.moveTo(x - d, y - d * 0.5); g.lineTo(x, y); g.lineTo(x, y + h);
+    g.lineTo(x - d, y + h + d * 0.5); g.closePath(); g.fill();
+    const jr = g.createLinearGradient(x + w, 0, x + w + d, 0);
+    jr.addColorStop(0, '#33222b'); jr.addColorStop(1, '#191119');
+    g.fillStyle = jr;
+    g.beginPath();
+    g.moveTo(x + w, y); g.lineTo(x + w + d, y - d * 0.5); g.lineTo(x + w + d, y + h + d * 0.5);
+    g.lineTo(x + w, y + h); g.closePath(); g.fill();
+    const tg = g.createLinearGradient(0, y + h, 0, y + h + d + 24);
+    tg.addColorStop(0, '#2c1f26'); tg.addColorStop(1, '#120b10');
+    g.fillStyle = tg;
+    g.beginPath();
+    g.moveTo(x - d, y + h + 8); g.lineTo(x + w + d, y + h + 8);
+    g.lineTo(x + w + d * 1.6, y + h + d + 24); g.lineTo(x - d * 1.6, y + h + d + 24);
+    g.closePath(); g.fill();
+    // Contact shadow just inside each reveal edge.
+    g.fillStyle = 'rgba(0,0,0,0.35)';
+    g.fillRect(x - 3, y, 3, h); g.fillRect(x + w, y, 3, h);
+    g.fillStyle = 'rgba(255,220,190,0.07)';
+    g.fillRect(x, y, w, 2); g.fillRect(x, y + h - 2, w, 2);
+  }
+  // Shop window: deep reveals first, then center mullion threads the gap
+  // between rear opening (ends x595) and counter (starts x630).
+  revealG(SHOP.x, SHOP.y, SHOP.w, SHOP.h);
+  revealG(ENTRY.x, ENTRY.y, ENTRY.w, ENTRY.h);
+  // Slim shared pier left between the two deep reveals.
+  g.fillStyle = '#221722'; g.fillRect(743, 540, 10, 824);
+  g.fillStyle = 'rgba(255,220,190,0.06)'; g.fillRect(744, 540, 1.5, 824);
+  g.fillStyle = 'rgba(0,0,0,0.4)'; g.fillRect(751, 540, 2, 824);
   mullionG(606, SHOP.y, 12, SHOP.h);
   glassG(SHOP.x, SHOP.y, SHOP.w, SHOP.h);
   frameG(SHOP.x, SHOP.y, SHOP.w, SHOP.h);
@@ -435,6 +565,10 @@ function buildEnvironment() {
   mullionG(ENTRY.x, ENTRY.y + 400, ENTRY.w, 10);
   glassG(ENTRY.x, ENTRY.y, ENTRY.w, ENTRY.h);
   frameG(ENTRY.x, ENTRY.y, ENTRY.w, ENTRY.h);
+  // Narrow pier window on the right pier with its own reveal.
+  revealG(960, 616, 34, 260, 10);
+  glassG(963, 621, 28, 250);
+  frameG(963, 621, 28, 250);
 
   // Kickplate and wet curb base (reflections are composited by the lead).
   g.fillStyle = '#14101c'; g.fillRect(FAC.x, 1408, FAC.w, CURB - 1408);

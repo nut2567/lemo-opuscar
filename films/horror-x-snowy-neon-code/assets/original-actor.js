@@ -7,6 +7,8 @@
 //   feetY = y + 640*scale). facing=-1 mirrors horizontally via scale().
 //   All animation is a pure function of t; identical input -> identical markup.
 //   Defs are prefixed "actor-" (uid suffix allows multiple rigs per scene).
+//   Local revision: side hair wings narrowed (outer x +-118 -> +-84) and
+//   long droop shortened (y 270 -> 235); face/body/pose unchanged.
 
 const SKIN='#EFDCC4', SKIN_SH='#D9BEA2', INK='#141C28',
       HAIR1='#1B2740', HAIR2='#0B1220', HAIR_HI='#3A4A6E', HAIR_MID='#2E3D5E',
@@ -162,16 +164,16 @@ function head(P,U){
     <circle cx="1.4" cy="${N(0.8*es)}" r="${N(3.4*es)}" fill="#33291F"/><circle cx="2.3" cy="${N(-1.1*es)}" r="${N(1.1*es)}" fill="#EAF4FF"/>
     </g></g></g>`;
   return `<g transform="translate(0 ${N(P.nodY)}) rotate(${N(P.headRot)} 0 ${NECK_Y})">
-  <path d="M-54 -46 C-88 -38 -110 -4 -114 60 C-118 142 -110 220 -94 270 C-70 262 -54 244 -48 210 C-44 146 -46 62 -48 0 C-50 -24 -52 -38 -54 -46 Z" fill="url(#actor${U}-hair)"/>
-  <path d="M54 -46 C88 -38 110 -4 114 60 C118 142 110 220 94 270 C70 262 54 244 48 210 C44 146 46 62 48 0 C50 -24 52 -38 54 -46 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M-52 -44 C-72 -36 -82 -8 -84 38 C-86 112 -80 196 -68 235 C-58 228 -50 214 -46 192 C-42 132 -44 62 -46 8 C-48 -22 -50 -34 -52 -44 Z" fill="url(#actor${U}-hair)"/>
+  <path d="M52 -44 C72 -36 82 -8 84 38 C86 112 80 196 68 235 C58 228 50 214 46 192 C42 132 44 62 46 8 C48 -22 50 -34 52 -44 Z" fill="url(#actor${U}-hair)"/>
   <path d="M-30 44 C-38 116 -30 176 -16 212 L16 212 C30 176 38 116 30 44 C18 62 9 68 0 68 C-9 68 -18 62 -30 44 Z" fill="url(#actor${U}-hair)"/>
   <path d="M0 -84 C42 -84 68 -62 74 -30 C80 12 72 56 57 96 C51 112 45 118 39 116 L-39 116 C-45 118 -51 112 -57 96 C-72 56 -80 12 -74 -30 C-68 -62 -42 -84 0 -84 Z" fill="url(#actor${U}-hair)"/>
-  <path d="M-92 -16 C-104 60 -100 160 -88 246" fill="none" stroke="${HAIR2}" stroke-width="2.4" opacity=".55"/>
-  <path d="M-70 4 C-78 84 -76 164 -66 208" fill="none" stroke="${HAIR2}" stroke-width="2.2" opacity=".5"/>
-  <path d="M-104 44 C-112 120 -108 200 -98 254" fill="none" stroke="${HAIR_HI}" stroke-width="3" opacity=".5"/>
-  <path d="M92 -16 C104 60 100 160 88 246" fill="none" stroke="${HAIR2}" stroke-width="2.4" opacity=".55"/>
-  <path d="M70 4 C78 84 76 164 66 208" fill="none" stroke="${HAIR2}" stroke-width="2.2" opacity=".5"/>
-  <path d="M104 44 C112 120 108 200 98 254" fill="none" stroke="${HAIR_HI}" stroke-width="3" opacity=".5"/>
+  <path d="M-70 -14 C-78 50 -77 130 -69 190" fill="none" stroke="${HAIR2}" stroke-width="2.4" opacity=".55"/>
+  <path d="M-56 4 C-62 78 -60 140 -53 180" fill="none" stroke="${HAIR2}" stroke-width="2.2" opacity=".5"/>
+  <path d="M-76 40 C-82 100 -80 170 -71 215" fill="none" stroke="${HAIR_HI}" stroke-width="3" opacity=".5"/>
+  <path d="M70 -14 C78 50 77 130 69 190" fill="none" stroke="${HAIR2}" stroke-width="2.4" opacity=".55"/>
+  <path d="M56 4 C62 78 60 140 53 180" fill="none" stroke="${HAIR2}" stroke-width="2.2" opacity=".5"/>
+  <path d="M76 40 C82 100 80 170 71 215" fill="none" stroke="${HAIR_HI}" stroke-width="3" opacity=".5"/>
   <path d="M-34 -64 C-42 -34 -38 -4 -30 26" fill="none" stroke="${HAIR2}" stroke-width="2" opacity=".4"/>
   <path d="M34 -64 C42 -34 38 -4 30 26" fill="none" stroke="${HAIR2}" stroke-width="2" opacity=".4"/>
   <path d="M0 -76 C-4 -48 4 -18 0 12" fill="none" stroke="${HAIR_HI}" stroke-width="2.4" opacity=".35"/>

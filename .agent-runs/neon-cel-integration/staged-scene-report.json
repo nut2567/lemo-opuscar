@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "snapshot": "C:\\Users\\gooka\\AppData\\Local\\Temp\\lemo-staged-model-verify-p8ocuq4k",
+  "checks": [
+    {
+      "model": "cel",
+      "font": {
+        "ready": true,
+        "loaded": true
+      },
+      "duplicateIds": [],
+      "errors": [],
+      "missing": []
+    },
+    {
+      "model": "noon",
+      "font": {
+        "ready": true,
+        "loaded": true
+      },
+      "duplicateIds": [],
+      "errors": [],
+      "missing": []
+    },
+    {
+      "invalidModel": "constructor",
+      "rejected": true
+    },
+    {
+      "invalidModel": "toString",
+      "rejected": true
+    },
+    {
+      "invalidModel": "__proto__",
+      "rejected": true
+    }
+  ]
+}

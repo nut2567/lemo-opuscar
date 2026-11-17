@@ -1,0 +1,34 @@
+{
+  "time": 3.7,
+  "width": 1080,
+  "height": 1920,
+  "sha256": "12d8885276e0fc4c858ba41bb413721be75d84d63b70df4a2c0de42f5b97629c",
+  "deterministic": true,
+  "duplicateIds": [],
+  "characterModel": "cel",
+  "frameCharacterModel": "cel",
+  "thaiFont": {
+    "ready": true,
+    "loaded": true
+  },
+  "thaiSignLines": 4,
+  "errors": [],
+  "resources": [
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/main.mjs",
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/environment.mjs",
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/neon.mjs",
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/characters.mjs",
+    "http://127.0.0.1:50418/models/registry.mjs",
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/weather.mjs",
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/washers.mjs",
+    "http://127.0.0.1:50418/models/cel/cel-woman.js",
+    "http://127.0.0.1:50418/models/noon/original-actor.js",
+    "http://127.0.0.1:50418/models/cel/cel-body.js",
+    "http://127.0.0.1:50418/models/cel/cel-face.js",
+    "http://127.0.0.1:50418/models/cel/cel-eyes.js",
+    "http://127.0.0.1:50418/models/cel/cel-hair.js",
+    "http://127.0.0.1:50418/films/horror-x-snowy-neon-code/assets/fonts/Kanit-Regular.ttf"
+  ],
+  "source": "procedural Canvas2D scene + models/registry.mjs cel character SVG overlay",
+  "passed": true
+}
