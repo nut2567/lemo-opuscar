@@ -1,0 +1,53 @@
+{
+  "variant": "original",
+  "edition": "Original (dry Niwat edge-tts narration, films/horror-x-ep1-part1-60s)",
+  "duration_s": 60.0,
+  "format": {
+    "note": "Event manifest for task 35 (devin-work/audio). Same schema as jessica.events.json: 'events' are transient stems at film time t, 'gain_db' trims ON TOP of mix.py STEM_GAIN defaults; 'beds' are sustained attack-free layers. Types use mix.py vocabulary plus 'washer-spin'/'washer-tail' beds rendered by task 35's mixer. No footsteps anywhere. Times are film seconds on the finished picture timeline devin-work/picture/original.json.",
+    "stems": "narrative-cut/mix.py STEMS grammar (coin, coin-slot, cloth, washer)"
+  },
+  "voice": {
+    "path": "films/horror-x-ep1-part1-60s/speech.wav",
+    "provenance": "original episode dry narration (PCM s16le 48 kHz stereo, 60.000 s); SRT = films/horror-x-ep1-part1-60s/horror-x-ep1-part1-60s.srt verbatim",
+    "timeline": "devin-work/picture/original.json subtitles + per_cue word beats — do not retime",
+    "measured": "near-continuous speech inside the 12 SRT cues; inter-cue gaps only ~0.2-0.3 s at -75..-125 dBFS; cue RMS -19.7..-22.2 dBFS (evidence/32/measurements.json)"
+  },
+  "events": [
+    { "id": "coin-first", "type": "coin", "t": 13.00, "gain_db": -3.0, "role": "required",
+      "note": "cue 3 'เหรียญ' (13.0066-13.1806): first coin sound of the film on the duties insert (coin-hands shot 384-411). Must stay clearly below the 23.43 story tray impact (decision 20). -3 dB trim.",
+      "verify": "placed peak ~-18.9 dBFS" },
+    { "id": "washer-engage", "type": "washer", "t": 13.72, "gain_db": -2.0, "role": "required",
+      "note": "retimed from draft 13.3: machine engages as the work-drum shot starts (cut 13.70, frame 411) while she watches it. 1.8 s stem tails into the cue-4 bed fade-in. -2 dB keeps C3 speech (-21.8 RMS) ahead.",
+      "verify": "placed peak ~-11.2 dBFS" },
+    { "id": "coin-tray", "type": "coin", "t": 23.43, "gain_db": 0.0, "role": "required",
+      "note": "cue 5 'กระทบ' (23.4433-23.7633, frame 703): THE story-significant tray impact; verified in draft mix at 1920 Hz partial peak -4.2 dB. Default gain; the quiet-shop -> impact contrast depends on it.",
+      "verify": "placed peak ~-14.3 dBFS window; confirm no score pluck masks it (20.9 pluck omitted per jessica.mix/original.mix spec)" },
+    { "id": "coin-slot", "type": "coin-slot", "t": 37.50, "gain_db": 0.0, "role": "required",
+      "note": "cue 8 'เหรียญ' (37.5087-37.6827): coin occupies real slot rect same frame; washer on + display '--'->'12' (decision 25). Default gain.",
+      "verify": "placed peak ~-8.3 dBFS" },
+    { "id": "washer-motor", "type": "washer", "t": 38.95, "gain_db": 0.0, "role": "required",
+      "note": "cue 9 'ผ้าสีขาวหมุนวน' clause onset + sheet cut-in frame 1169. SINGLE onset (decision 26): extend the tail via the washer-tail bed below rather than a second strike. Default gain.",
+      "verify": "placed peak ~-7.5 dBFS" },
+    { "id": "cloth-exit", "type": "cloth", "t": 45.22, "gain_db": 0.0, "role": "required",
+      "note": "cue 10: hem slips behind right jamb frames ~1326-1355, doorway verifiably empty from frame 1365 (45.500). Whoosh at 45.22 punctuates the disappearance ~8 frames before last cloth pixel; ONLY foreground exit effect; NO footsteps (decision 27). Default gain.",
+      "verify": "placed peak ~-10.9 dBFS" },
+    { "id": "cloth-load", "type": "cloth", "t": 13.45, "gain_db": -6.0, "role": "optional",
+      "note": "OPTIONAL fabric rustle on the tail of 'ใส่ผ้า' reusing stem_cloth (evidence/20 action_timeline). Provenance flagged: same stem family as the visitor cloth event at 45.22 — if it reads as 'the customer is already here', omit. -6 dB.",
+      "verify": "placed peak ~-18.1 dBFS" }
+  ],
+  "beds": [
+    { "id": "washer-spin-cue4", "type": "washer-spin", "from_s": 15.30, "to_s": 20.60,
+      "gain_db": -6.0, "role": "required",
+      "note": "REQUIRED by coordinator decision 21 / evidence 21: audible LOW washer spin sustained under cue-4 speech (SRT 15.386-20.416) for 'เหลือแต่เสียงเครื่องซักผ้าหมุนอยู่ข้างตัวฉัน'. Implement as ONE continuous or densely crossfaded motor texture with NO repeated start clunks — do NOT schedule the three marks 15.70/17.90/19.90 as separate stem_washer hits. Reuse the stem_washer motor/hum component (98/196 Hz AM + <180 Hz rumble), attack removed, or equivalent procedural texture.",
+      "target": "RMS ~-30 dBFS, peak <= -15 dBFS; fade in 0.35 s at 15.30, fade out 0.5 s ending 20.60; measured windows: c4a voice RMS -20.37 (bed ~9.6 dB under), c4b voice RMS -24.56 (bed ~5.4 dB under) — check speech intelligibility in both per decision 21" },
+    { "id": "washer-tail-cue9", "type": "washer-tail", "from_s": 40.70, "to_s": 43.90,
+      "gain_db": -9.0, "role": "recommended",
+      "note": "The 1.8 s washer@38.95 stem ends ~40.75 but the sheet drum keeps spinning on screen through empty-washer (->44.05). Recommended attack-free low tail at the same texture as washer-spin-cue4 so the machine never sounds stopped while visibly turning (decision 26: extend tail, no second strike).",
+      "target": "RMS ~-33 dBFS, peak <= -18 dBFS, 0.4 s fades; sits under cue-9 clause B 'เจ้าของผ้า กลับไม่อยู่ข้างเครื่อง' (voice RMS ~-21.5)" }
+  ],
+  "rejected": [
+    { "type": "washer", "t": [15.70, 17.90, 19.90], "reason": "three repeated start clunks under speech — coordinator directs a sustained/crossfaded texture instead (decision 21, orchestration mail)" },
+    { "type": "washer", "t": 35.4, "reason": "no second strike anywhere; N/A to this cut but kept for parity with jessica rejected list" },
+    { "type": "footstep", "reason": "never — 'ไม่มีเสียงฝีเท้าให้ได้ยินเลยสักครั้ง' is explicit (cue 10)" }
+  ]
+}

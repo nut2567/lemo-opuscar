@@ -63,7 +63,7 @@ window.EV=[{t:2.5,type:'cut'},{t:3.7,type:'coin'},{t:5,type:'cut'},{t:6.25,type:
 // sampled {cx,cy,z,skew} — its z is final, no per-shot zoom ramp — and the
 // identical matrix is applied to Canvas and SVG. shotIndex overrides the
 // 2.5 s shot derivation for callers that already know the segment.
-export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex}={}){
+export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,showCloth=true}={}){
  const st=Math.max(0,Math.min(7.5-1/3000,Number(sourceSeconds)||0));
  const et=elapsedSeconds===undefined?st:Number(elapsedSeconds)||0;
  const shot=shotIndex===undefined?Math.min(2,Math.floor(st/2.5)):shotIndex;
@@ -76,7 +76,8 @@ export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex}
  }
  wc.setTransform(1,0,0,1,0,0);wc.globalAlpha=1;wc.globalCompositeOperation='source-over';wc.filter='none';wc.shadowBlur=0;
  wc.fillStyle='#1e1838';wc.fillRect(0,0,W,H);
- drawEnvironment(wc,et,shot);drawNeon(wc,st,shot);drawCharacters(wc,st,shot);
+ drawEnvironment(wc,et,shot);drawNeon(wc,st,shot);
+ if(showCloth) drawCharacters(wc,st,shot);
  // Contact/cast shade inside the glazed shop bay only: the nun and counter
  // mass block the warm interior light, so the tile floor at the counter
  // base and the back wall behind her fall off gently. Clipped to the shop

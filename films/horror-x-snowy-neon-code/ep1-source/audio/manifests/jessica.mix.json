@@ -1,0 +1,57 @@
+{
+  "variant": "jessica",
+  "purpose": "Mix specification for task 35 (devin-work/audio): timed Foley + sparse score for the Jessica edition, 60.000 s 60 fps picture, dry ElevenLabs narration.",
+  "inputs": {
+    "voice": "films/horror-x-snowy-neon-code/narrative-cut/out/jessica-v1/speech.wav (48 kHz; film-timed via voice-edit.json; gaps are digital silence)",
+    "events": "devin-work/sound/jessica.events.json",
+    "picture": "devin-work/picture/jessica.json (cue beats + shot windows)",
+    "stems": "procedural grammar of narrative-cut/mix.py (coin/coin-slot/cloth/washer) + first-minute/audio/bed.py room tone; local only, no providers",
+    "reference_mixer": "narrative-cut/mix.py (read-only reference: VOICE_PEAK 0.55, BED_GAIN 0.9, SCORE_MAX_PEAK 0.08, HEADROOM 0.60, CLAMP 0.65, 10 ms edge fades)"
+  },
+  "buses": {
+    "voice": { "peak_target": 0.55, "processing": "none (dry)", "note": "measured line RMS -23.0..-25.9 dBFS pre-normalise" },
+    "foley": { "gain_policy": "STEM_GAIN defaults x manifest gain_db; deterministic pan +/-0.35 ok; never compressed", "peak_ceiling_dbfs": -8.0 },
+    "bed": { "room_tone": "first-minute/audio/bed.py at BED_GAIN 0.9 (RMS ~-32.2 dBFS)", "washer_spin_tail": "optional bed from jessica.events.json beds[]; RMS ~-33 dBFS if used" },
+    "score": {
+      "pad": "render_score() pad (D-minor 146.8/220/293.7/349.2 Hz, 0.05 Hz breathing) at reduced level — sparse",
+      "plucks": [
+        { "t": 5.0, "gain_db": -3.0, "pan": 0.4, "why": "gap 4.4-6.1 between cue 1 tail and cue 2" },
+        { "t": 10.3, "gain_db": -3.0, "pan": -0.4, "why": "gap 9.71-11.73 before duties line" },
+        { "t": 31.5, "gain_db": -3.0, "pan": 0.4, "why": "gap 30.16-32.1 before coin-slot clause" },
+        { "t": 37.4, "gain_db": -3.0, "pan": -0.4, "why": "gap 37.11-39.96 after spin clause, before hem reveal" },
+        { "t": 46.6, "gain_db": -3.0, "pan": 0.4, "why": "gap 43.95-47.0 before second-night" },
+        { "t": 51.9, "gain_db": -3.0, "pan": -0.4, "why": "gap 49.7-52.57 before final decision" },
+        { "t": 58.0, "gain_db": -3.0, "pan": 0.4, "why": "post-speech tail 57.69-60 under watch shot" }
+      ],
+      "dropped_grid_plucks": "the hard-coded 5.0+5.3k grid hits 15.6/20.9/26.2/36.8/42.1/47.4/52.7 — all land inside narration or the washer/coin events; replaced by the explicit gap-aligned list above (sparse score priority)",
+      "level": "score bus RMS target -42..-45 dBFS; peak <= 0.08 (-21.9 dBFS); at least 12 dB below voice RMS in every speech window and 6 dB below every foley peak"
+    }
+  },
+  "master": {
+    "sum": "voice + foley + bed + score",
+    "edge_fades": "10 ms raised-cosine",
+    "peak_normalise": "<= 0.60 pre-clamp, hard clamp +/-0.65",
+    "output": "60.000 s stereo 48 kHz 16-bit PCM WAV"
+  },
+  "verification_targets": {
+    "full_mix": "RMS ~-25..-27 dBFS, peak <= -4.5 dBFS (draft ep1-recut/out/jessica/mix.wav measured -25.6/-5.1)",
+    "windows_dBFS_rms": {
+      "voice_lines": "-23..-26",
+      "coin@21.82±0.5": "foley tick clearly above bed+score floor (-32.6) but >=6 dB under voice",
+      "cloth@41.52±0.5": "whoosh present; no low-frequency step energy that could read as footsteps",
+      "score_in_speech": "score contribution <= voice RMS -15 dB in every narration line window"
+    },
+    "placement_checks": [
+      "coin@21.82 inside spoken 'กระทบ' 21.42-22.08 and overlay frames 646-660",
+      "coin-slot@32.75 == washer-on frame (display '--'->'12')",
+      "washer@33.53 single onset; no second strike before frame 1198",
+      "cloth@41.52 within 0.2 s of last cloth pixel (~frame 1240); onset not after doorway-empty frame 1241",
+      "optional coin@53.95 exactly at coinPlace contact; peak ~-22 dBFS, under VO",
+      "zero energy below 200 Hz correlated with rear-exit shot that could imply footsteps; none scheduled"
+    ]
+  },
+  "open_items_for_task_35": [
+    "if mix.py is reused unchanged it cannot apply per-event gain_db or the custom pluck list — implement the manifest in devin-work/audio (own folder) reusing its stem functions read-only",
+    "playback-check cloth@41.52 onset vs hem (decision 15) and optional coin@53.95 (decision 17) before final mux"
+  ]
+}

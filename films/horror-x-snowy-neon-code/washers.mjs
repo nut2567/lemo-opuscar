@@ -64,6 +64,7 @@ function finiteWasher(spec = {}) {
     drumPhase: ['spin', 'tumble', 'drift', 'idle'].includes(spec.drumPhase) ? spec.drumPhase : 'continuous',
     display: spec.display == null ? null : String(spec.display),
     suds: !!spec.suds,
+    whiteSheet: !!spec.whiteSheet,
     shadow: spec.shadow !== false,
     shadowOpacity: num(spec.shadowOpacity, 0.34, 0, 0.8),
   };
@@ -157,9 +158,20 @@ function frontFace(g, w, time, grads) {
       [88, 184, 17, 11, '#bfcfcd', 0.65],
       [70, 132, 14, 10, '#c7dbd4', 0.6],
     ];
-    for (const [cx, cy, rx, ry, col, op] of clothes) {
-      g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-      g.globalAlpha = 0.95 * op; g.fillStyle = col; g.fill();
+    if (w.whiteSheet) {
+      g.beginPath();
+      g.moveTo(62, 125); g.bezierCurveTo(71, 108, 90, 143, 116, 118);
+      g.bezierCurveTo(135, 146, 104, 159, 115, 175);
+      g.bezierCurveTo(94, 192, 66, 170, 53, 154);
+      g.quadraticCurveTo(62, 144, 62, 125); g.closePath();
+      g.fillStyle = '#e5e9e6'; g.fill();
+      g.beginPath(); g.moveTo(62, 125); g.bezierCurveTo(72, 157, 90, 149, 115, 175);
+      g.lineWidth = 4; g.strokeStyle = '#a1b5bd'; g.stroke();
+    } else {
+      for (const [cx, cy, rx, ry, col, op] of clothes) {
+        g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+        g.globalAlpha = 0.95 * op; g.fillStyle = col; g.fill();
+      }
     }
     g.globalAlpha = 0.95 * 0.35; g.lineWidth = 6; g.strokeStyle = '#8ea9b6';
     g.lineCap = 'round';

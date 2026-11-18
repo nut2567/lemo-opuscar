@@ -1,0 +1,61 @@
+{
+  "variant": "original",
+  "purpose": "Mix specification for task 35 (devin-work/audio): timed Foley + sparse score for the Original edition, 60.000 s picture, dry Niwat narration (edge-tts assembly, near-continuous speech inside the 12 SRT cues).",
+  "inputs": {
+    "voice": "films/horror-x-ep1-part1-60s/speech.wav (PCM s16le 48 kHz stereo, 60.000 s; SRT cues verbatim)",
+    "events": "devin-work/sound/original.events.json",
+    "picture": "devin-work/picture/original.json (action_timeline + per_cue word beats)",
+    "stems": "procedural grammar of narrative-cut/mix.py + first-minute/audio/bed.py room tone; local only, no providers",
+    "reference_mixer": "narrative-cut/mix.py (read-only reference constants as in jessica.mix.json)"
+  },
+  "buses": {
+    "voice": { "peak_target": 0.55, "processing": "none (dry)", "note": "measured cue RMS -19.7..-22.2 dBFS pre-normalise; inter-cue gaps only ~0.2-0.3 s" },
+    "foley": { "gain_policy": "STEM_GAIN defaults x manifest gain_db; deterministic pan +/-0.35 ok; never compressed", "peak_ceiling_dbfs": -8.0 },
+    "bed": {
+      "room_tone": "first-minute/audio/bed.py at BED_GAIN 0.9 (RMS ~-32.2 dBFS)",
+      "washer_spin_cue4": "REQUIRED sustained low washer texture 15.30-20.60 (see events manifest); RMS ~-30 dBFS, attack-free, crossfaded — replaces the rejected 15.70/17.90/19.90 clunk marks",
+      "washer_tail_cue9": "recommended attack-free tail 40.70-43.90 at RMS ~-33 dBFS so the visibly spinning drum never sounds stopped"
+    },
+    "score": {
+      "pad": "render_score() pad at reduced level — sparse; the pad may run continuously but 6+ dB under bed in speech gaps",
+      "plucks": [
+        { "t": 5.85, "gain_db": -4.0, "pan": 0.4, "why": "gap 5.79-5.992 — moves the draft 5.0 pluck out from under the cue-1 narration tail (decision 18)" },
+        { "t": 10.75, "gain_db": -4.0, "pan": -0.4, "why": "gap 10.652-10.854 before cue 3 duties" },
+        { "t": 24.77, "gain_db": -4.0, "pan": 0.4, "why": "gap 24.667-24.869 before visitor reveal" },
+        { "t": 33.95, "gain_db": -4.0, "pan": -0.4, "why": "gap 33.851-34.053 before coin-slot clause" },
+        { "t": 43.96, "gain_db": -4.0, "pan": 0.4, "why": "gap 43.864-44.066 before rear-exit clause" },
+        { "t": 55.10, "gain_db": -4.0, "pan": -0.4, "why": "gap 54.998-55.200 into the decision shot" }
+      ],
+      "dropped_grid_plucks": "draft grid 5.0+5.3k hits 15.6 (inside cue-4 washer bed + speech), 20.9 (inside cue 5 — omitted per decision 22 to protect the quiet-shop -> 23.43 impact contrast), 26.2 (inside 'ลูกค้าคนเดิม' — decision 18 watch item, dropped for sparsity), 31.5/36.8 (inside cues 7/8 speech), 42.1 (inside cue 9), 47.4 (inside cue 10 'ไม่มีเสียงฝีเท้า' — must stay clean), 52.7 (inside cue 11), 58.0 (inside cue 12 watched-door clause)",
+      "level": "score bus RMS target -43..-46 dBFS; peak <= 0.08 (-21.9 dBFS); >=15 dB below voice RMS in speech windows; pluck attacks must land inside the listed gaps (all verified >=-75 dBFS voice floor)"
+    }
+  },
+  "master": {
+    "sum": "voice + foley + bed + score",
+    "edge_fades": "10 ms raised-cosine",
+    "peak_normalise": "<= 0.60 pre-clamp, hard clamp +/-0.65",
+    "output": "60.000 s stereo 48 kHz 16-bit PCM WAV"
+  },
+  "verification_targets": {
+    "full_mix": "RMS ~-22..-24 dBFS, peak <= -4.5 dBFS (draft ep1-recut/out/original/mix.wav measured -22.6/-4.5)",
+    "windows_dBFS_rms": {
+      "cue4_speech_a_15.386-17.5755": "voice RMS ~-20.4; washer bed ~-30 → speech stays >=9 dB ahead; check intelligibility",
+      "cue4_speech_b_17.5755-20.416": "voice RMS ~-24.6; bed ~5.4 dB under — machine audible but not masking; this is the designed 'only the machine remains' clause",
+      "coin@23.43±0.4": "impact peak ~-14 dBFS, no score energy within +/-0.3 s",
+      "cloth@45.22±0.5": "whoosh present under C10 speech (voice RMS ~-21.5); no step-like low transients"
+    },
+    "placement_checks": [
+      "coin@13.00 on 'เหรียญ' 13.0066-13.1806, >=5 dB below coin@23.43 peak",
+      "washer@13.72 tails into washer-spin bed fade-in at 15.30 without an audible restart",
+      "washer-spin bed 15.30-20.60 is continuous/crossfaded — NO three clunks at 15.70/17.90/19.90",
+      "coin-slot@37.50 on 'เหรียญ' 37.5087-37.6827; washer@38.95 single onset on clause-A/cut boundary",
+      "washer-tail 40.70-43.90 attack-free; no second machine-start sound",
+      "cloth@45.22 ~8 frames before doorway-empty frame 1365 (45.500); no footsteps scheduled anywhere"
+    ]
+  },
+  "open_items_for_task_35": [
+    "if mix.py is reused unchanged it cannot apply per-event gain_db, sustained beds, or the custom pluck list — implement the manifest in devin-work/audio (own folder) reusing its stem functions read-only",
+    "speech-intelligibility check in the two cue-4 measured windows is a decision-21 requirement; if the bed masks clause B, drop bed RMS to -32 dBFS",
+    "optional cloth@13.45 provenance check at playback (could pre-echo the visitor)"
+  ]
+}

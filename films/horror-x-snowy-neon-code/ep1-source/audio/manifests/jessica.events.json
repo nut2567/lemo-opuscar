@@ -1,0 +1,52 @@
+{
+  "variant": "jessica",
+  "edition": "Jessica (ElevenLabs eleven_v4 take, narrative-cut/out/jessica-v1)",
+  "duration_s": 60.0,
+  "format": {
+    "note": "Event manifest for task 35 (devin-work/audio). 'events' are transient stems placed at film time t; 'gain_db' is trim ON TOP of mix.py STEM_GAIN defaults (coin 1.0, coin-slot 0.45, cloth 0.7, washer 0.8). 'beds' are sustained layers spanning [from_s,to_s]. Types use mix.py vocabulary; 'washer-spin'/'washer-tail' beds are rendered by task 35's own mixer (crossfade stem_washer motor texture, attack removed). No footsteps anywhere. All times are film seconds on the finished picture timeline devin-work/picture/jessica.json.",
+    "stems": "narrative-cut/mix.py STEMS grammar (coin, coin-slot, cloth, washer); deterministic crc32 pan/seeds may be reused"
+  },
+  "voice": {
+    "path": "films/horror-x-snowy-neon-code/narrative-cut/out/jessica-v1/speech.wav",
+    "provenance": "narrative-cut/out/jessica-v1/jessica.voice.json (eleven_v4, voice cgSgspJ2msm6clMCkdW9, th)",
+    "timeline": "devin-work/picture/jessica.json narration.voiceEdit — do not retime",
+    "measured": "dry; gaps are digital silence (-180 dBFS); line RMS -23.0..-25.9 dBFS (evidence/32/measurements.json)"
+  },
+  "events": [
+    { "id": "washer-cue4", "type": "washer", "t": 14.95, "gain_db": -1.0, "role": "required",
+      "note": "cue 4 'แล้วรอให้เครื่องซักเสร็จ' (SRT 14.84-16.6): single strike + 1.8 s motor hum; picture sfx.required. Trim -1 dB keeps narration (window RMS -26.2) clearly ahead.",
+      "verify": "placed peak ~-10.2 dBFS, window RMS ~-28 dBFS" },
+    { "id": "coin-tray", "type": "coin", "t": 21.82, "gain_db": 2.0, "role": "required",
+      "note": "cue 5 tray impact on spoken 'กระทบ' (~21.42-22.08); coin-on-tray overlay frames 646-660. Story-significant hit; window voice RMS only -29.7, so +2 dB keeps it an audible tick ~8 dB under voice.",
+      "verify": "placed peak ~-13.9 dBFS" },
+    { "id": "coin-slot", "type": "coin-slot", "t": 32.75, "gain_db": 0.0, "role": "required",
+      "note": "cue 8 'เขาหยอดเหรียญเอง': exact beat, coin fully in slot same frame as washer-on (display '--'->'12'). Default STEM_GAIN 0.45.",
+      "verify": "placed peak ~-9.9 dBFS" },
+    { "id": "washer-motor", "type": "washer", "t": 33.53, "gain_db": 0.0, "role": "required",
+      "note": "cue 9 'พอผ้าเริ่มหมุน': single motor onset for the spin clause; NO second strike (coordinator decision 14). Default gain.",
+      "verify": "placed peak ~-9.2 dBFS" },
+    { "id": "cloth-exit", "type": "cloth", "t": 41.52, "gain_db": 0.0, "role": "required",
+      "note": "cue 10 exit whoosh ~0.15 s after last cloth pixel (frame ~1240/1241); the ONLY foreground exit effect; NO footsteps ('ไม่มีเสียงฝีเท้า'). Compare audible onset vs disappearing hem at playback; ease earlier within scene if it lands late (decision 15). Default gain.",
+      "verify": "placed peak ~-12.2 dBFS" },
+    { "id": "cloth-cue6", "type": "cloth", "t": 25.0, "gain_db": -4.0, "role": "optional",
+      "note": "soft swell under 'มากับผ้าขาวผืนใหญ่' marking the customer's presence (evidence 11). -4 dB keeps it a texture, not an event.",
+      "verify": "placed peak ~-16 dBFS" },
+    { "id": "cloth-cue11", "type": "cloth", "t": 46.95, "gain_db": -4.0, "role": "optional",
+      "note": "soft swell under 'คืนที่สอง' marking each night's return (evidence 16). -4 dB.",
+      "verify": "placed peak ~-16 dBFS" },
+    { "id": "coin-last-place", "type": "coin", "t": 53.95, "gain_db": -6.0, "role": "optional",
+      "note": "cue 12 coinPlace tray contact (frames 1607-1631, contact 53.95 inside 'วางเหรียญ'). Coordinator decision 17: soft contact OPTIONAL at this exact beat; must be quieter than the 21.82 tray impact and must not clip narration. -6 dB trim.",
+      "verify": "placed peak ~-21.9 dBFS; if it reads as a second disappearance or masks VO, omit" }
+  ],
+  "beds": [
+    { "id": "washer-spin-tail", "type": "washer-spin", "from_s": 35.40, "to_s": 39.90,
+      "gain_db": -8.0, "role": "optional",
+      "note": "OPTIONAL low motor bed under empty-washer shot (35.62-39.93) while the sheet drum still visibly spins. NOT a second strike — continuous low texture only, attack-free. Keep >=8 dB under narration and under the 37.11-39.96 silence so the absence tail stays dry (evidence 14). Skip if playback shows the dry tail is the better scare.",
+      "target": "RMS ~-33 dBFS, peak <= -18 dBFS, 0.4 s fades both ends" }
+  ],
+  "rejected": [
+    { "type": "washer", "t": 16.9, "reason": "eats cue 5's designed room silence (evidence 09)" },
+    { "type": "washer", "t": 35.4, "reason": "second motor strike during cue 9 absence tail; dry tail is the scare (evidence 14) — the optional bed above is attack-free only" },
+    { "type": "footstep", "reason": "never — 'ไม่มีเสียงฝีเท้า' is explicit (cue 10)" }
+  ]
+}
