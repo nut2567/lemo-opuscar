@@ -1,0 +1,20 @@
+{
+  "version": "approved-review-v1",
+  "source_commit": "65513592634b713831c55b4afec5a6c07bc2bcc7",
+  "rendered_from": "immutable archive evidence/M28/deadline-render/coordinator-frozen (git archive of core/, models/, films/horror-x-snowy-neon-code/)",
+  "render": { "script": "first-minute/render-picture.mjs", "workers": 3, "frames": 1800, "render_seconds": 264 },
+  "mux": { "script": "first-minute/mux.mjs", "audio_input": "audio.wav (archived 60s WAV)" },
+  "validation": {
+    "video": { "codec": "h264", "width": 1080, "height": 1920, "fps": "30/1", "duration_s": 60.0, "frames": 1800 },
+    "audio": { "codec": "aac", "sample_rate": 48000, "channels": 2 },
+    "full_decode": "clean (ffmpeg -v error -f null -, exit 0)",
+    "loudness": "-18.01 LUFS integrated, -1.5 dBTP true peak"
+  },
+  "sha256": {
+    "review.mp4": "7db57858a5b11b09d21f7f92a5b250e1442cfa9185d5f5d1f9acf438788f1ea1",
+    "picture.mp4": "5c9d436d7877849eddacc0febf44f1126ab189e2aa8e45cdfd661059d4c33dda",
+    "poster.png": "db8e47d535abd31d4bec232386fc5aafde5955b147216fa6baffb18cb2c7c384",
+    "audio.wav": "60d125bdb3cc92291a03e96bb413016d5dec0cf8673799da48701c4455c194aa"
+  },
+  "known_issue": "Intermittent tiny PNG replay variation in frame rendering (authorized for this preview); exact-PNG replay reproducibility remains under investigation by the pixel-diagnosis track. This is a preview render, not a byte-exact production render."
+}
