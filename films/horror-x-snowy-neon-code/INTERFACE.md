@@ -4,7 +4,7 @@ Absolute project: `D:/workspace/lemo-opuscar/humpback/films/horror-x-snowy-neon-
 
 All drawing is original Canvas2D code, in virtual world coordinates 1080×1920. No image inputs, AI tools, providers, downloads, recursive delegation, commits, installs or main-film/library edits. Workers share the workspace but each owns ONE distinct file, exclusively. Do not edit another module or the coordinator wrapper. Exports must be synchronous and deterministic, independent of prior frame history. Helpers stay local to each module. No external imports. Use only standard browser APIs (audio worker: Python stdlib).
 
-Scene geometry: horizon/curb at y1440; wet street below y1440 (lead owns reflection/post integration). Front facade approximately x70..1010 y300..1440. Main neon sign board x120..930 y340..500. Interior shop display window x130..740 y540..1360, entrance glass x755..940 y540..1360. Within window: four receding v5 dimensional washer fronts (`washers.mjs`, side:'left' depth, footprint x~150..465 y~1079..1289); existing dark rear opening x470..595 y775..1185; counter x630..740 y1110..1335. Nun at x690, face center (690,925), body to y1290. Cloth customer center (535,990), head y880, hem y1190, disappearing behind existing right jamb by t7.2. No black creature, eyes, hands, feet or face holes. Whole shop should stay architecturally coherent, neither floating panels nor glowing cartoon line art.
+Scene geometry: horizon/curb at y1440; wet street below y1440 (lead owns reflection/post integration). Front facade approximately x70..1010 y300..1440. Main neon sign board x120..930 y340..500. Interior shop display window x130..740 y540..1360, entrance glass x755..940 y540..1360. Within window: four receding commercial washer cabinets (`washers.mjs`, side:'left' depth, footprint x~138..456, floor contact y1198..1327); existing dark rear opening x470..595 y775..1185; counter x630..740 y1110..1335. Nun at x690, face center (690,925), body to y1290. Cloth customer center (535,990), head y880, hem y1190, disappearing behind existing right jamb by t7.2. No black creature, eyes, hands, feet or face holes. Whole shop should stay architecturally coherent, neither floating panels nor glowing cartoon line art.
 
 Functions all receive CanvasRenderingContext2D `ctx`, global seconds `t`, and shot index `shot` (0..2). Lead applies the camera before calling and implements reflected scene compositing.
 
@@ -35,15 +35,15 @@ pale/slim cel woman), `{ model: 'noon' }` selects โมเดลนุ่น (t
 rig), and unknown ids throw `RangeError`. `main.mjs` reads `?model=` from the
 page query (default `cel`, validated before first render), records the
 selection in `window.CHARACTER_MODEL` / `FRAME_META.characterModel`, and
-renders the wet-street reflection by a second `characterMarkup` call with
-`uid:'snowy-r'` — no markup string patching. `originalNunMarkup(t)` remains
+applies room light to the SVG silhouette in world coordinates. The wet street
+reflects the facade and front glazing cached by `environment.mjs`, with the
+exterior neon from `neon.mjs`. `originalNunMarkup(t)` remains
 as a deprecated alias that renders the registry default (currently `cel`,
 not the Nun rig).
 
 Both models share the head-center anchor x690 y925, scale 0.5 and the uid
-namespacing convention, so every scene bound above (window, counter clip at
-y1110, camera matrix, reflection bands) applies unchanged — the Nun
-coordinate notes describe the same anchor the cel model uses.
+namespacing convention. Both stay clipped at counter world y1110 and share
+the Canvas camera. The Nun coordinate notes describe the same anchor the cel model uses.
 
 Reuse snippet for other scenes/tools:
 

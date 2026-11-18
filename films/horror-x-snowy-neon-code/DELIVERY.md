@@ -1,6 +1,6 @@
 # Snowy Neon Night: Cel integration
 
-Primary woman: cel (Thai name in models/registry.mjs), approved fair-ivory skin and slim cheek/jaw. Preserved prior model: noon, selectable using index.html?model=noon. Both reusable via models/registry.mjs. Previous variant film and original actor sources remain available.
+The primary model is `cel` (เซล), with approved fair-ivory skin and a slim cheek and jaw. Its film sources and treatment are in `models/cel/`. Select the previous `noon` model with `index.html?model=noon`. Both are reusable via `../../models/registry.mjs`.
 
 Completed checks: registry7/7 behavioral tests; canonical-source byte identity; main scene19 runtime checks; composed frame1080x1920 with four Thai signs and loaded Kanit; isolated Cel/Noon previews with transparency/determinism/unique ids; staged archive boots both models with no missing resources and rejects prototype names.
 

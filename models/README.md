@@ -9,12 +9,11 @@ input always produces identical markup.
 
 | id    | name (TH)   | name (EN)    | source                                                        |
 |-------|-------------|--------------|---------------------------------------------------------------|
-| `cel` | เซล        | Cel Woman    | `films/horror-x-snowy-neon-cel-woman/assets/cel-*.js` (approved pale/slim 80s-cel laundry woman) |
+| `cel` | เซล        | Cel Woman    | `films/horror-x-snowy-neon-code/models/cel/cel-*.js` (approved pale/slim 80s-cel laundry woman) |
 | `noon`| โมเดลนุ่น   | Noon Nun    | `films/horror-x-snowy-neon-code/assets/original-actor.js` (narrowed Nun rig) |
 
-`cel` is the default (`DEFAULT_MODEL`). `noon` is the previous model,
-kept for reuse — do not delete either model or the variant sources they
-were copied from.
+`cel` is the default (`DEFAULT_MODEL`). Both models remain available for reuse,
+with their approved source files stored in the owning film.
 
 ## API (`registry.mjs`)
 
@@ -41,12 +40,10 @@ renderCharacter(t, { model = 'cel', x, y, scale, facing, uid, pose })
 - `models.test.mjs` — `node --test models/models.test.mjs` verifies byte
   identity with the approved sources, default/selection behaviour,
   determinism, uid namespacing and error handling.
-- `cel/` — byte-for-byte copies of the five approved variant modules
+- `cel/` — byte-for-byte copies of the five approved film modules
   (`cel-woman.js` assembles `cel-body.js`, `cel-face.js`, `cel-eyes.js`,
   `cel-hair.js`; the assembler's relative imports keep working here).
 - `noon/original-actor.js` — byte-identical copy of the main film's
   `assets/original-actor.js` (exports `nun(t, opts)`).
 
-Do not edit the copied geometry in place — change the film's own variant
-sources and re-copy, so the registry stays a faithful snapshot of what was
-approved.
+Update the geometry in the owning film, then copy the approved files here.

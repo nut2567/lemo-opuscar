@@ -61,26 +61,44 @@ function buildClothSprite() {
   const c = document.createElement('canvas');
   c.width = 160; c.height = 320;
   const g = c.getContext('2d');
-  // Dim cool base: the figure stands in the dark rear void, lit only by
-  // spilled shop light. No warm key, no facial features anywhere.
+  // Cool ambient base for the dark rear void, lit only by spilled shop
+  // light. No warm key, no facial features anywhere; the top stays a
+  // touch lighter where spill reaches down and the hem falls away darker.
   const base = g.createLinearGradient(0, 0, 0, 300);
-  base.addColorStop(0, '#ccd4e2');
+  base.addColorStop(0, '#d0d9e8');
   base.addColorStop(0.5, '#b7c0d2');
-  base.addColorStop(1, '#8d97ac');
+  base.addColorStop(1, '#7f8aa0');
   clothPath(g); g.fillStyle = base; g.fill();
 
   g.save(); clothPath(g); g.clip();
+  // Warm spill from the counter's gooseneck lamp (world ~700,1044, just off
+  // the sprite's right edge at mid height): a muted pool warming the
+  // upper-right contour, crown and shoulders, falling off toward the void
+  // side and the hem. Translucent enough that the cloth stays cloth.
+  const lampWash = g.createRadialGradient(176, 132, 10, 176, 132, 195);
+  lampWash.addColorStop(0, 'rgba(255,198,122,0.30)');
+  lampWash.addColorStop(0.5, 'rgba(255,188,116,0.13)');
+  lampWash.addColorStop(1, 'rgba(255,188,116,0)');
+  g.fillStyle = lampWash; g.fillRect(0, 0, c.width, c.height);
+  // Cool fill and shadow from the rear void: a deep slate pool gathering
+  // at the lower left where no lamp reaches, keeping the hem grounded.
+  const voidShade = g.createLinearGradient(36, 110, 30, 315);
+  voidShade.addColorStop(0, 'rgba(50,64,100,0)');
+  voidShade.addColorStop(1, 'rgba(50,64,100,0.30)');
+  g.fillStyle = voidShade; g.fillRect(24, 100, 112, 215);
   // One broad pale central fold panel flanked by cooler slate side
   // planes, echoing the original Nun-era drape's folded-cloth values.
   // Boundaries curve with the crown/shoulder/body instead of running
-  // straight across the torso.
-  const panel = g.createLinearGradient(48, 0, 112, 0);
+  // straight across the torso; the panel leans slightly toward the lamp.
+  const panel = g.createLinearGradient(54, 0, 120, 0);
   panel.addColorStop(0, 'rgba(228,235,246,0)');
-  panel.addColorStop(0.5, 'rgba(228,235,246,0.38)');
+  panel.addColorStop(0.5, 'rgba(228,235,246,0.36)');
   panel.addColorStop(1, 'rgba(228,235,246,0)');
-  g.fillStyle = panel; g.fillRect(36, 0, 88, 310);
-  // Slate side planes: soft-edged cool shading hugging both contours.
-  for (const [fx, a] of [[30, 0.34], [130, 0.30]]) {
+  g.fillStyle = panel; g.fillRect(36, 0, 92, 310);
+  // Slate side planes: soft-edged cool shading hugging both contours. The
+  // void-side (left) plane stays deep; the lamp-side (right) plane is
+  // pulled back so the warm wash reads through.
+  for (const [fx, a] of [[30, 0.40], [130, 0.20]]) {
     const fg = g.createLinearGradient(fx - 16, 0, fx + 16, 0);
     fg.addColorStop(0, 'rgba(56,70,102,0)');
     fg.addColorStop(0.5, `rgba(56,70,102,${a})`);
@@ -88,9 +106,10 @@ function buildClothSprite() {
     g.fillStyle = fg; g.fillRect(fx - 16, 0, 32, 310);
   }
   // Soft shade under the covered head/shoulder mass, curved with the
-  // shoulder line rather than a horizontal band.
+  // shoulder line rather than a horizontal band; its lit crown catches a
+  // hint of the lamp's warmth.
   const shoulder = g.createRadialGradient(80, 60, 8, 80, 60, 90);
-  shoulder.addColorStop(0, 'rgba(255,255,255,0.14)');
+  shoulder.addColorStop(0, 'rgba(255,236,204,0.16)');
   shoulder.addColorStop(0.55, 'rgba(120,140,175,0.10)');
   shoulder.addColorStop(1, 'rgba(60,74,104,0)');
   g.fillStyle = shoulder; g.fillRect(30, 16, 100, 120);
@@ -116,15 +135,17 @@ function buildClothSprite() {
     g.beginPath(); g.moveTo(x0, y0);
     g.bezierCurveTo(c1x, c1y, c2x, c2y, x1, y1); g.stroke();
   }
-  // Contact shadow where the hem meets the floor of the rear void.
-  const hem = g.createLinearGradient(0, 262, 0, 312);
-  hem.addColorStop(0, 'rgba(40,48,70,0)');
-  hem.addColorStop(1, 'rgba(40,48,70,0.34)');
-  g.fillStyle = hem; g.fillRect(28, 258, 104, 62);
-  // Faint cool/warm spill rims from the shop light, kept subtle.
-  g.strokeStyle = 'rgba(79,220,255,0.16)'; g.lineWidth = 2.5; g.lineCap = 'round';
+  // Contact shadow where the hem meets the floor of the rear void,
+  // deepened so the drape reads as grounded rather than floating.
+  const hem = g.createLinearGradient(0, 250, 0, 312);
+  hem.addColorStop(0, 'rgba(34,42,64,0)');
+  hem.addColorStop(1, 'rgba(34,42,64,0.50)');
+  g.fillStyle = hem; g.fillRect(28, 246, 104, 66);
+  // Restrained cool/warm spill rims from the glazing and counter neon,
+  // kept faint so they read as spill, not emitted light.
+  g.strokeStyle = 'rgba(79,220,255,0.10)'; g.lineWidth = 2.5; g.lineCap = 'round';
   g.beginPath(); g.moveTo(54, 36); g.bezierCurveTo(46, 96, 45, 190, 40, 288); g.stroke();
-  g.strokeStyle = 'rgba(255,79,168,0.12)';
+  g.strokeStyle = 'rgba(255,79,168,0.08)';
   g.beginPath(); g.moveTo(106, 36); g.bezierCurveTo(114, 96, 115, 190, 120, 288); g.stroke();
   g.restore();
   return c;
@@ -175,8 +196,8 @@ export function drawCloth(ctx, t, opts = {}) {
 // placement is fixed here: head center (690,925) at scale 0.5, which puts
 // the count-pose tray (local y352) at world ~y1101 and the soles far below
 // the counter (clipped at y1110 by the SVG overlay in main.mjs). The uid
-// namespaces gradient/clip ids so the direct figure and its wet-ground
-// reflection ('snowy-r') never collide.
+// namespaces gradient/clip ids so repeated renders in one frame never
+// collide.
 export function characterMarkup(t, options = {}) {
   return renderCharacter(t, {
     model: DEFAULT_MODEL, x: 690, y: 925, scale: 0.5, pose: 'count', uid: 'snowy',

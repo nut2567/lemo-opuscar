@@ -11,11 +11,11 @@ const sha256 = p => createHash('sha256').update(readFileSync(p)).digest('hex');
 
 test('copied model assets are byte-identical to their approved sources', () => {
   const pairs = [
-    ['models/cel/cel-body.js', 'films/horror-x-snowy-neon-cel-woman/assets/cel-body.js'],
-    ['models/cel/cel-eyes.js', 'films/horror-x-snowy-neon-cel-woman/assets/cel-eyes.js'],
-    ['models/cel/cel-face.js', 'films/horror-x-snowy-neon-cel-woman/assets/cel-face.js'],
-    ['models/cel/cel-hair.js', 'films/horror-x-snowy-neon-cel-woman/assets/cel-hair.js'],
-    ['models/cel/cel-woman.js', 'films/horror-x-snowy-neon-cel-woman/assets/cel-woman.js'],
+    ['models/cel/cel-body.js', 'films/horror-x-snowy-neon-code/models/cel/cel-body.js'],
+    ['models/cel/cel-eyes.js', 'films/horror-x-snowy-neon-code/models/cel/cel-eyes.js'],
+    ['models/cel/cel-face.js', 'films/horror-x-snowy-neon-code/models/cel/cel-face.js'],
+    ['models/cel/cel-hair.js', 'films/horror-x-snowy-neon-code/models/cel/cel-hair.js'],
+    ['models/cel/cel-woman.js', 'films/horror-x-snowy-neon-code/models/cel/cel-woman.js'],
     ['models/noon/original-actor.js', 'films/horror-x-snowy-neon-code/assets/original-actor.js'],
   ];
   for (const [copy, source] of pairs) {

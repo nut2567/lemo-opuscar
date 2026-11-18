@@ -6,11 +6,10 @@ Pale/slim laundry woman drawn entirely in code, styled after 80s cel-anime
 techniques (City Lights 1987 reference). Approved by the user as the
 primary character for `films/horror-x-snowy-neon-code`.
 
-- Source: `films/horror-x-snowy-neon-cel-woman/assets/cel-{woman,body,face,eyes,hair}.js`
+- Source: `films/horror-x-snowy-neon-code/models/cel/cel-{woman,body,face,eyes,hair}.js`
 - Copied byte-for-byte into `models/cel/` on 2026-11-17; sha256 verified
   against those sources by `models.test.mjs`.
-- Variant film kept intact: `films/horror-x-snowy-neon-cel-woman/`
-  (see its `TREATMENT-CEL-WOMAN.md`, `CREDITS`).
+- Character study: `films/horror-x-snowy-neon-code/models/cel/TREATMENT.md`.
 
 ## noon — โมเดลนุ่น (Noon Nun)
 

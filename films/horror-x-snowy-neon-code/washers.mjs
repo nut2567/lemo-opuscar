@@ -8,13 +8,12 @@
 // glazing clip; deterministic and synchronous — safe to bake into the
 // cached environment via drawWashers(g, 0, 0).
 //
-// Row layout (near -> far, drawn far -> near): four fronts in a receding
-// diagonal inside footprint x~150..465, y~1079..1284, grounded on the
-// interior floor (back edge y1164). Front-left edges step 203 -> 392,
-// bottoms 1289 -> 1198, scales 0.52 -> 0.42, side:'left' (depth projects
-// up/left, away from the recede direction — the v5 interior convention).
-// Cabinet depth stays modest (174 local units = 0.60 m at
-// depthUnitsPerMeter 290); spacing keeps every drum clearly readable.
+// Row layout (near -> far, drawn far -> near): four enlarged commercial
+// fronts inside the left glazing, clear of the rear doorway (x470..595)
+// and counter (x624..740). side:'left' keeps the v5 depth convention
+// (up/left, away from the recede direction); per-unit depth is shortened
+// so the back units still respect the x130 glazing boundary while their
+// drum faces stay readable through the overlap.
 
 const n = (v, d = 2) => {
   const r = Number(v.toFixed(d));
@@ -36,17 +35,17 @@ const VX = DEPTH * PROJ_X, VY = DEPTH * PROJ_Y; // +100.92, -34.8 local units
 // the ~174x252 front region; fixed local-space gradients reproduce them.
 function gradMetal(g) {
   const gr = g.createLinearGradient(0, 0, FRONT_W, FRONT_W * 0.15);
-  gr.addColorStop(0, '#7794a5'); gr.addColorStop(0.45, '#506f83'); gr.addColorStop(1, '#2a465b');
+  gr.addColorStop(0, '#87a2b3'); gr.addColorStop(0.42, '#54768b'); gr.addColorStop(0.78, '#2e4a5e'); gr.addColorStop(1, '#24394c');
   return gr;
 }
 function gradPanel(g) {
   const gr = g.createLinearGradient(0, 0, 0, FRONT_H);
-  gr.addColorStop(0, '#3b5870'); gr.addColorStop(0.55, '#25384e'); gr.addColorStop(1, '#172a3a');
+  gr.addColorStop(0, '#46617a'); gr.addColorStop(0.52, '#2a4158'); gr.addColorStop(1, '#1a2c3d');
   return gr;
 }
 function gradDrum(g) {
   const gr = g.createLinearGradient(0, 0, FRONT_W * 0.8, FRONT_H);
-  gr.addColorStop(0, '#759cab'); gr.addColorStop(0.38, '#132b3c'); gr.addColorStop(1, '#456d82');
+  gr.addColorStop(0, '#7f9db0'); gr.addColorStop(0.36, '#152e40'); gr.addColorStop(1, '#4a7186');
   return gr;
 }
 
@@ -56,6 +55,7 @@ function finiteWasher(spec = {}) {
     x: num(spec.x, 0),
     bottom: num(spec.bottom, FRONT_H),
     s: num(spec.s, 1, 0.05, 8),
+    widthScale: num(spec.widthScale, 1, 0.4, 1.3),
     on: !!spec.on,
     phase: num(spec.phase, 0),
     accent: typeof spec.accent === 'string' ? spec.accent : '#8FB2D4',
@@ -94,6 +94,8 @@ function frontFace(g, w, time, grads) {
   g.closePath();
   g.fillStyle = metal; g.fill();
   g.lineWidth = 4; g.strokeStyle = '#0c1926'; g.stroke();
+  g.save();
+  g.clip();
 
   g.beginPath();
   g.moveTo(12, 24); g.lineTo(166, 11); g.lineTo(166, 229); g.lineTo(12, 242);
@@ -228,9 +230,18 @@ function frontFace(g, w, time, grads) {
   g.font = '12px Kanit, sans-serif';
   g.fillText(`0${w.i}`, 20, 94);
   g.globalAlpha = 1;
+  // Warm overhead light softens the upper cabinet and glass, with cooler
+  // floor bounce on the enamel near the toe kick.
+  const faceLight = g.createLinearGradient(156, 6, 34, 244);
+  faceLight.addColorStop(0, 'rgba(255,203,140,0.25)');
+  faceLight.addColorStop(0.55, 'rgba(248,197,134,0.10)');
+  faceLight.addColorStop(1, 'rgba(35,51,66,0.12)');
+  g.fillStyle = faceLight;
+  g.fillRect(0, 0, FRONT_W, FRONT_H);
+  g.restore();
 }
 
-// ---- v5 volumeFaces() port (side 'right' only for this row) --------------
+// ---- Cabinet depth planes -----------------------------------------------
 
 function volumeFaces(g, w, grads) {
   if (w.depth <= 0 || w.side === 'none') return;
@@ -257,6 +268,12 @@ function volumeFaces(g, w, grads) {
   g.fillStyle = grads.panel; g.fill();
   g.lineWidth = 3; g.strokeStyle = '#0c1926'; g.stroke();
   g.globalAlpha = 0.30; g.fillStyle = '#0c1926'; g.fill(); g.globalAlpha = 1;
+  // Restrained cool window spill on the left cheek, warming toward the floor.
+  const sideLight = g.createLinearGradient(sidePts[0][0], sidePts[0][1], sidePts[2][0], sidePts[2][1]);
+  sideLight.addColorStop(0, 'rgba(96,205,235,0.16)');
+  sideLight.addColorStop(0.55, 'rgba(255,205,135,0.07)');
+  sideLight.addColorStop(1, 'rgba(255,205,135,0.02)');
+  g.fillStyle = sideLight; g.fill();
 
   // Top plane: metal gradient + cool sheen (v5 2 fills).
   g.beginPath();
@@ -267,7 +284,8 @@ function volumeFaces(g, w, grads) {
   g.closePath();
   g.fillStyle = grads.metal; g.fill();
   g.lineWidth = 2.5; g.strokeStyle = '#0c1926'; g.stroke();
-  g.globalAlpha = 0.14; g.fillStyle = '#8FB2D4'; g.fill(); g.globalAlpha = 1;
+  g.globalAlpha = 0.14; g.fillStyle = '#8FB2D4'; g.fill();
+  g.globalAlpha = 0.10; g.fillStyle = '#ffd9a4'; g.fill(); g.globalAlpha = 1;
 
   // Depth edge highlights (v5 path).
   g.beginPath();
@@ -282,12 +300,21 @@ function contactShadow(g, w) {
   if (!w.shadow || w.depth <= 0) return;
   const dir = w.side === 'left' ? -1 : 1;
   const vx = dir * w.depth * PROJ_X;
-  const cx = w.x + (FRONT_W * 0.5 + vx * 0.5) * w.s;
+  const projectedScale = w.s * w.widthScale;
+  const cx = w.x + (FRONT_W * 0.5 + vx * 0.5) * projectedScale;
   const cy = w.bottom + 2.4 * w.s;
-  const rx = (FRONT_W * 0.52 + Math.abs(vx) * 0.5) * w.s;
-  const ry = 5.2 * w.s;
-  g.beginPath(); g.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-  g.globalAlpha = w.shadowOpacity; g.fillStyle = '#050d18'; g.fill(); g.globalAlpha = 1;
+  const rx = (FRONT_W * 0.52 + Math.abs(vx) * 0.5) * projectedScale;
+  const ry = 10.5 * w.s;
+  g.save();
+  g.translate(cx, cy); g.scale(rx, ry);
+  const shade = g.createRadialGradient(0, 0, 0, 0, 0, 1);
+  shade.addColorStop(0, 'rgba(6,11,18,0.94)');
+  shade.addColorStop(0.62, 'rgba(6,11,18,0.55)');
+  shade.addColorStop(1, 'rgba(6,11,18,0)');
+  g.globalAlpha = w.shadowOpacity;
+  g.fillStyle = shade;
+  g.fillRect(-1, -1, 2, 2);
+  g.restore();
 }
 
 // Single v5 washer() equivalent, drawn in world coords. Exported for
@@ -302,29 +329,21 @@ export function drawWasher(g, spec, time) {
   contactShadow(g, w);
   g.save();
   g.translate(w.x, y);
-  g.scale(w.s, w.s);
+  g.scale(w.s * w.widthScale, w.s);
   g.lineJoin = 'round';
   volumeFaces(g, w, grads);
   frontFace(g, w, t, grads);
   g.restore();
 }
 
-// Row layout (near -> far, drawn far -> near): FOUR fronts in a receding
-// diagonal inside footprint x~150..465, y~1079..1284, grounded on the
-// interior floor (back edge y1164). Front-left edges step 203 -> 392,
-// bottoms 1289 -> 1198, scales 0.52 -> 0.42. side:'left' projects depth
-// -0.58d,-0.20d (up and toward frame left) — the canonical v5 interior
-// choice — so cabinet depth recedes AWAY from the row direction and the
-// opaque right side panels can no longer cover the drums behind them
-// (the earlier side:'right' variant left only the nearest drum readable).
-// Front-left spacing keeps each door ~90% visible (polygon-coverage
-// verified); unit states/accent/drumPhase mirror v5's own four-machine
-// bank (getInteriorWasherLayout): 3 running, last idle.
+// Near to far, painted back to front. Foreshorten the fronts along the
+// oblique row, so the nearest commercial unit can be close to Cel's
+// visible height while the last unit stays left of the rear doorway.
 export const ROW = [
-  { i: 1, s: 0.52, x: 204.48, bottom: 1289, on: true,  phase: 0,   accent: '#6FA8A0', drumPhase: 'spin',   side: 'left' },
-  { i: 2, s: 0.48, x: 271.52, bottom: 1258, on: true,  phase: 180, accent: '#E9C46A', drumPhase: 'drift',  side: 'left' },
-  { i: 3, s: 0.45, x: 333.55, bottom: 1227, on: true,  phase: 45,  accent: '#9C8FC7', drumPhase: 'tumble', side: 'left' },
-  { i: 4, s: 0.42, x: 390.08, bottom: 1198, on: false, phase: 0,   accent: '#9CC5B5', drumPhase: 'idle',   side: 'left' },
+  { i: 1, s: 0.91, widthScale: 0.74, depth: 120, x: 185, bottom: 1327, on: true,  phase: 0,   accent: '#6FA8A0', drumPhase: 'spin',   side: 'left' },
+  { i: 2, s: 0.83, widthScale: 0.74, depth: 120, x: 250, bottom: 1283, on: true,  phase: 180, accent: '#E9C46A', drumPhase: 'drift',  side: 'left' },
+  { i: 3, s: 0.74, widthScale: 0.74, depth: 120, x: 312, bottom: 1240, on: true,  phase: 45,  accent: '#9C8FC7', drumPhase: 'tumble', side: 'left' },
+  { i: 4, s: 0.66, widthScale: 0.74, depth: 120, x: 371, bottom: 1198, on: false, phase: 0,   accent: '#9CC5B5', drumPhase: 'idle',   side: 'left' },
 ];
 
 // Draw the washer row into a Canvas2D context in world coordinates.

@@ -16,11 +16,11 @@ try{
  // unknown id is rejected.
  const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
  const canonical=[
-  ['../../models/cel/cel-body.js','../horror-x-snowy-neon-cel-woman/assets/cel-body.js'],
-  ['../../models/cel/cel-face.js','../horror-x-snowy-neon-cel-woman/assets/cel-face.js'],
-  ['../../models/cel/cel-hair.js','../horror-x-snowy-neon-cel-woman/assets/cel-hair.js'],
-  ['../../models/cel/cel-eyes.js','../horror-x-snowy-neon-cel-woman/assets/cel-eyes.js'],
-  ['../../models/cel/cel-woman.js','../horror-x-snowy-neon-cel-woman/assets/cel-woman.js'],
+  ['../../models/cel/cel-body.js','models/cel/cel-body.js'],
+  ['../../models/cel/cel-face.js','models/cel/cel-face.js'],
+  ['../../models/cel/cel-hair.js','models/cel/cel-hair.js'],
+  ['../../models/cel/cel-eyes.js','models/cel/cel-eyes.js'],
+  ['../../models/cel/cel-woman.js','models/cel/cel-woman.js'],
   ['../../models/noon/original-actor.js','assets/original-actor.js'],
  ];
  report.checks.registryCanonicalSources=canonical.every(([a,b])=>sha(path.join(here,a))===sha(path.join(here,b)));

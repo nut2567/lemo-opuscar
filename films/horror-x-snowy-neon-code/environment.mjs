@@ -269,6 +269,23 @@ function buildEnvironment() {
     g.fillStyle = 'rgba(255,255,255,0.06)'; g.fillRect(76, by, 22, 1.5);
   }
 
+  // Build the wet street's reflection source before adding anything behind
+  // the glass. Broad window light survives in the reflected facade.
+  const facade = document.createElement('canvas');
+  facade.width = W; facade.height = H;
+  const front = facade.getContext('2d');
+  front.drawImage(c, 0, 0);
+  for (const { x, y, w, h } of [SHOP, ENTRY]) {
+    const glass = front.createLinearGradient(0, y, 0, y + h);
+    glass.addColorStop(0, '#242834');
+    glass.addColorStop(0.48, '#39312d');
+    glass.addColorStop(1, '#1e202a');
+    front.fillStyle = glass;
+    front.fillRect(x, y, w, h);
+  }
+  drawGlazing(front);
+  drawKickplate(front);
+
   // ---- shop interior (clipped to glazing) -------------------------------
   g.save();
   g.beginPath(); g.rect(SHOP.x, SHOP.y, SHOP.w, SHOP.h); g.clip();
@@ -397,7 +414,7 @@ function buildEnvironment() {
 
   // Rear doorway: dark void with casing and faint rim spill. Redrawn after
   // the wall/floor/baseboard so the cloth slot (x471..594 y776..1184) stays
-  // an opaque dark aperture; still clear of the washer footprint (x150..465).
+  // an opaque dark aperture clear of the washer row.
   g.fillStyle = '#1c130d'; g.fillRect(462, 767, 141, 426);
   const voidG = g.createLinearGradient(0, 775, 0, 1185);
   voidG.addColorStop(0, '#0d0a13'); voidG.addColorStop(0.6, '#08060d'); voidG.addColorStop(1, '#040309');
@@ -406,8 +423,7 @@ function buildEnvironment() {
   g.fillStyle = 'rgba(255,190,120,0.08)'; g.fillRect(470, 775, 125, 10); // warm top spill
   g.fillStyle = '#050309'; g.fillRect(470, 1168, 125, 17);               // threshold shadow
 
-  // Washer row (real machines ported in washers.mjs; footprint
-  // x150..465 y1010..1295) on the floor left of center.
+  // Washer row on the floor between the left glazing and the rear opening.
   drawWashers(g, 0, 0);
 
   // Counter right of center.
@@ -476,7 +492,19 @@ function buildEnvironment() {
   g.fillStyle = 'rgba(255,230,190,0.15)'; g.fillRect(ENTRY.x + 96, ENTRY.y + 430, 70, 2);
   g.restore();
 
-  // ---- glazing, mullions, frames ----------------------------------------
+  drawGlazing(g);
+  drawKickplate(g);
+  const st1 = g.createLinearGradient(0, CURB, 0, H);
+  st1.addColorStop(0, '#10121d'); st1.addColorStop(0.25, '#0b0d16'); st1.addColorStop(1, '#05060c');
+  g.fillStyle = st1; g.fillRect(0, CURB, W, H - CURB);
+  g.fillStyle = 'rgba(140,160,205,0.05)'; g.fillRect(0, CURB, W, 30); // wet sheen band
+  const sheen = g.createRadialGradient(540, 1620, 40, 540, 1620, 620);
+  sheen.addColorStop(0, 'rgba(70,85,125,0.07)'); sheen.addColorStop(1, 'rgba(70,85,125,0)');
+  g.fillStyle = sheen; g.fillRect(0, CURB, W, H - CURB);
+  return { scene: c, facade };
+}
+
+function drawGlazing(g) {
   function glassG(x, y, w, h) {
     g.save();
     g.beginPath(); g.rect(x, y, w, h); g.clip();
@@ -569,26 +597,24 @@ function buildEnvironment() {
   revealG(960, 616, 34, 260, 10);
   glassG(963, 621, 28, 250);
   frameG(963, 621, 28, 250);
+}
 
-  // Kickplate and wet curb base (reflections are composited by the lead).
+function drawKickplate(g) {
   g.fillStyle = '#14101c'; g.fillRect(FAC.x, 1408, FAC.w, CURB - 1408);
   g.fillStyle = 'rgba(255,255,255,0.05)'; g.fillRect(FAC.x, 1408, FAC.w, 2);
   g.fillStyle = 'rgba(210,220,240,0.13)'; g.fillRect(0, CURB - 3, W, 2.5); // curb edge
-  const st1 = g.createLinearGradient(0, CURB, 0, H);
-  st1.addColorStop(0, '#10121d'); st1.addColorStop(0.25, '#0b0d16'); st1.addColorStop(1, '#05060c');
-  g.fillStyle = st1; g.fillRect(0, CURB, W, H - CURB);
-  g.fillStyle = 'rgba(140,160,205,0.05)'; g.fillRect(0, CURB, W, 30); // wet sheen band
-  const sheen = g.createRadialGradient(540, 1620, 40, 540, 1620, 620);
-  sheen.addColorStop(0, 'rgba(70,85,125,0.07)'); sheen.addColorStop(1, 'rgba(70,85,125,0)');
-  g.fillStyle = sheen; g.fillRect(0, CURB, W, H - CURB);
-  return c;
 }
 
-let envCanvas = null;
+let environment;
+
+export function drawFacadeForReflection(ctx) {
+  environment ??= buildEnvironment();
+  ctx.drawImage(environment.facade, 0, 0);
+}
 
 export function drawEnvironment(ctx, t, shot) {
-  if (!envCanvas) envCanvas = buildEnvironment();
-  ctx.drawImage(envCanvas, 0, 0);
+  environment ??= buildEnvironment();
+  ctx.drawImage(environment.scene, 0, 0);
   // Deterministic interior-light breathing; clipped to the two glazed bays.
   ctx.save();
   ctx.beginPath();

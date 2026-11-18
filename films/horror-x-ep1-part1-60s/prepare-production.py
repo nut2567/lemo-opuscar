@@ -1,13 +1,15 @@
 from pathlib import Path
-import json, shutil
+import json
 ROOT=Path(__file__).resolve().parent
-OLD=ROOT.parent/'horror-x-teaser-30s'
+required_assets = (
+    'assets/artwork.js', 'assets/exterior.js', 'assets/interior.js', 'assets/nun.js',
+    'fonts/Kanit-Regular.ttf', 'fonts/OFL.txt',
+)
+missing_assets = [name for name in required_assets if not (ROOT / name).is_file()]
+if missing_assets:
+    raise SystemExit(f'Missing production assets in {ROOT}: {", ".join(missing_assets)}')
 for sub in ['assets','fonts','scenes','briefs','reviews','tests','voice','qa','.agent-runs']:
     (ROOT/sub).mkdir(exist_ok=True)
-for name in ['artwork.js','exterior.js','interior.js','nun.js']:
-    shutil.copy2(OLD/name,ROOT/'assets'/name)
-for name in ['Kanit-Regular.ttf','OFL.txt']:
-    shutil.copy2(OLD/'fonts'/name,ROOT/'fonts'/name)
 lines=[
  'นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้า ที่เปิดตลอดยี่สิบสี่ชั่วโมง',
  'ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า',
@@ -56,7 +58,7 @@ task('audio-score','devin',['sound-design.py','soundtrack.wav','SOUND-QA.md'],''
 task('captions','devin',['captions.js','horror-x-ep1-part1-60s.srt','build-captions.py'],'''Create build-captions.py and pure captions.js renderCaptions(t)/captionAt(t). Inputs voice-timeline.json generated concurrently; when absent implement script to generate later, no waitloop. Split12 spoken Thai lines into shorter consecutive cues2perline where needed using natural spaces/punctuation and measured proportional phrase/word timings, no wrong words; max2lines40–46px Kanit offwhite onnavy. x90..930,y1480..1690, don't obscure action. Export renderCaptions(t) returnsinnerSVGstring; captionAt(t) object{text,lines,start,end} seconds ornull,halfopeninterval,no caption>=60. Script emits finalSRT consistentwithburnin. Handle combiningThai widths by conservative fit, escape XML. Do not edit canonicalscript/timeline. Your allowedfilesonly.''')
 task('browser-qa','opencode',['qa-render.mjs'],'''Write browser QA using ../../core/render/page.mjs openDemo(projectroot,{w:1080,h:1920,gl:false}). Mainpage DUR60,window.render(t),READYtrue. Capture all12 scene middleframes plus cut±1frame based timeline.json (arrayofscenes), verify one rootSVG, localKanitloaded, no NaN/undefined attributes, actual captionbbox x90..930,y1450..1710, no pageerror, scene identity changes everycut, deterministic outofordertime renderedimagehash at same t. Saveqa/browser-check.json+frames. Alwaysclosebrowser/serverinfinally. Missingdeps initiallyexpected; syntaxcheckonly then report ready. Do not edit mainmodules.''')
 for aid,role in [('gemini-cli','narration pacing/Thai language review'),('kilo-cli','source story invariant checklist'),('grok-cli','sound cue timing audit'),('kirocrew-cli','build reproducibility audit'),('copilot-cli','static code boundary/file isolation review')]:
-    task('panel-'+aid,aid,[f'reviews/{aid}.txt'],f'''READ-ONLY bounded review: {role}. Read only TREATMENT.md,script.json,WORKER-CONTRACT.md and relevant current source files in this project. Provide concise findings and exact actionable corrections; do not write/editfiles, execute builds, call providers or delegate. Missingproduction files are pending,not failures. Output report to stdout; lead saves review in your exclusive output. The configured route is already selected; no account questions. No secrets/env/authfiles. Prototype reference is ../horror-x-teaser-30s.''')
+    task('panel-'+aid,aid,[f'reviews/{aid}.txt'],f'''READ-ONLY bounded review: {role}. Read only TREATMENT.md,script.json,WORKER-CONTRACT.md and relevant current source files in this project. Provide concise findings and exact actionable corrections; do not write/editfiles, execute builds, call providers or delegate. Missingproduction files are pending,not failures. Output report to stdout; lead saves review in your exclusive output. The configured route is already selected; no account questions. No secrets/env/authfiles.''')
 (ROOT/'TASK-QUEUE.json').write_text(json.dumps(tasks,ensure_ascii=False,indent=2),encoding='utf-8')
 (ROOT/'PRODUCTION-STATE.json').write_text(json.dumps({'phase':'production','part':1,'duration':60,'parts2and3':'not authorized to produce','prototype_approved':True,'pool_ceiling':8,'devin_slots':5,'source_modified':False},indent=2),encoding='utf-8')
-print(f'Prepared{len(tasks)} bounded tasks,12 rewritten lines; old prototype preserved')
+print(f'Prepared {len(tasks)} bounded tasks and {len(lines)} narration lines with local episode assets.')

@@ -34,7 +34,7 @@ Visual proof has a quiet, original procedural soundtrack: low washer/transformer
 
 ## Character model decision (user-approved)
 
-The on-screen woman is the pale/slim 80s-cel design — registry model `cel` (เซล) — adapted from the `horror-x-snowy-neon-cel-woman` variant; the user reviewed and approved it as the primary figure. The earlier Nun rig is preserved, not deleted, as registry model `noon` (โมเดลนุ่น) and remains selectable via `?model=noon`. This changes which rig draws the same character at the same mark; it is not a story, staging or style change.
+The user-approved on-screen woman uses the pale/slim 80s-cel design, registry model `cel` (เซล). The model sources and character study are in `models/cel/`. The earlier rig, `noon` (โมเดลนุ่น), remains selectable via `?model=noon` and draws the character at the same mark.
 
 ## Review and delivery
 

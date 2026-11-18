@@ -1,0 +1,261 @@
+{
+  "film": "films/horror-x-snowy-neon-code",
+  "page": "first-minute/index.html",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationSeconds": 60,
+  "model": "cel",
+  "boundaries": [
+    0,
+    150,
+    300,
+    450,
+    630,
+    810,
+    990,
+    1170,
+    1380,
+    1590,
+    1800
+  ],
+  "cutOffsetsSeconds": [
+    0,
+    5,
+    10,
+    15,
+    21,
+    27,
+    33,
+    39,
+    46,
+    53,
+    60
+  ],
+  "shots": [
+    {
+      "id": "01",
+      "slug": "storefront",
+      "startFrame": 0,
+      "endFrame": 150,
+      "startSeconds": 0,
+      "endSeconds": 5,
+      "stillFrame": 0,
+      "stillSeconds": 0,
+      "file": "shot-01-storefront-f0000.png",
+      "sha256": "9d69e764eaa8917cb41dfbbcb3a97252e02492af494d80412b6a2d1c2100530e",
+      "bytes": 1766178,
+      "sourceSeconds": 0.75,
+      "sourceShot": 0,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 540,
+        "cy": 960,
+        "z": 1,
+        "skew": 0
+      }
+    },
+    {
+      "id": "02",
+      "slug": "thai-neon",
+      "startFrame": 150,
+      "endFrame": 300,
+      "startSeconds": 5,
+      "endSeconds": 10,
+      "stillFrame": 150,
+      "stillSeconds": 5,
+      "file": "shot-02-thai-neon-f0150.png",
+      "sha256": "ec8f0a10c430ec3a6ecec541005b8d6a392f1eeb4e7a91e0099bbf45856bea53",
+      "bytes": 1686668,
+      "sourceSeconds": 1.8,
+      "sourceShot": 0,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 522,
+        "cy": 730,
+        "z": 1.32,
+        "skew": 0.013
+      }
+    },
+    {
+      "id": "03",
+      "slug": "wet-reflection",
+      "startFrame": 300,
+      "endFrame": 450,
+      "startSeconds": 10,
+      "endSeconds": 15,
+      "stillFrame": 300,
+      "stillSeconds": 10,
+      "file": "shot-03-wet-reflection-f0300.png",
+      "sha256": "9e03aad294cdf9a94a90c1af1800a6d6f33486094ee4889608150a07bc802ded",
+      "bytes": 1519919,
+      "sourceSeconds": 2.05,
+      "sourceShot": 0,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 525,
+        "cy": 1432,
+        "z": 1.98,
+        "skew": -0.018
+      }
+    },
+    {
+      "id": "04",
+      "slug": "window",
+      "startFrame": 450,
+      "endFrame": 630,
+      "startSeconds": 15,
+      "endSeconds": 21,
+      "stillFrame": 450,
+      "stillSeconds": 15,
+      "file": "shot-04-window-f0450.png",
+      "sha256": "7cde273941ca00698b3aa399b51493a47350ea278d0038c753e0c4d9af866082",
+      "bytes": 1837754,
+      "sourceSeconds": 3.05,
+      "sourceShot": 1,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 465,
+        "cy": 1090,
+        "z": 1.1774,
+        "skew": -0.025
+      }
+    },
+    {
+      "id": "05",
+      "slug": "washer-row",
+      "startFrame": 630,
+      "endFrame": 810,
+      "startSeconds": 21,
+      "endSeconds": 27,
+      "stillFrame": 630,
+      "stillSeconds": 21,
+      "file": "shot-05-washer-row-f0630.png",
+      "sha256": "a8e5516b5166fa7c6276de907daaa78440dc1a98f22474ab122b6986c6f3d861",
+      "bytes": 1910684,
+      "sourceSeconds": 3.9,
+      "sourceShot": 1,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 326,
+        "cy": 1118,
+        "z": 2.36,
+        "skew": 0.009
+      }
+    },
+    {
+      "id": "06",
+      "slug": "cel-and-coins",
+      "startFrame": 810,
+      "endFrame": 990,
+      "startSeconds": 27,
+      "endSeconds": 33,
+      "stillFrame": 810,
+      "stillSeconds": 27,
+      "file": "shot-06-cel-and-coins-f0810.png",
+      "sha256": "9d6374f4e72a63565f904930fe4192f58d4414cb5627a284132e9980170ad910",
+      "bytes": 1675912,
+      "sourceSeconds": 3.35,
+      "sourceShot": 1,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 728,
+        "cy": 1006,
+        "z": 3.58,
+        "skew": 0
+      }
+    },
+    {
+      "id": "07",
+      "slug": "through-glass",
+      "startFrame": 990,
+      "endFrame": 1170,
+      "startSeconds": 33,
+      "endSeconds": 39,
+      "stillFrame": 990,
+      "stillSeconds": 33,
+      "file": "shot-07-through-glass-f0990.png",
+      "sha256": "9e222a54f38ed4cae4057e03b828c7734d2af2617157e3cacbfe6a208694789f",
+      "bytes": 1791276,
+      "sourceSeconds": 5.15,
+      "sourceShot": 2,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 605,
+        "cy": 1030,
+        "z": 1.2458,
+        "skew": 0.016
+      }
+    },
+    {
+      "id": "08",
+      "slug": "cloth-in-doorway",
+      "startFrame": 1170,
+      "endFrame": 1380,
+      "startSeconds": 39,
+      "endSeconds": 46,
+      "stillFrame": 1170,
+      "stillSeconds": 39,
+      "file": "shot-08-cloth-in-doorway-f1170.png",
+      "sha256": "34a8d49c0a82d29ebd55a15b66d7cc2279438271ee1de6b74b348b31075ae340",
+      "bytes": 2026806,
+      "sourceSeconds": 6.1,
+      "sourceShot": 2,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 567,
+        "cy": 995,
+        "z": 2.6,
+        "skew": -0.006
+      }
+    },
+    {
+      "id": "09",
+      "slug": "cloth-recedes",
+      "startFrame": 1380,
+      "endFrame": 1590,
+      "startSeconds": 46,
+      "endSeconds": 53,
+      "stillFrame": 1380,
+      "stillSeconds": 46,
+      "file": "shot-09-cloth-recedes-f1380.png",
+      "sha256": "f48ede2d708c363d04d622ab493b2c9626e61f4ce86b71567730eea74b7b233e",
+      "bytes": 2058502,
+      "sourceSeconds": 6.55,
+      "sourceShot": 2,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 470,
+        "cy": 983,
+        "z": 3.25,
+        "skew": 0.004
+      }
+    },
+    {
+      "id": "10",
+      "slug": "closing-wide",
+      "startFrame": 1590,
+      "endFrame": 1800,
+      "startSeconds": 53,
+      "endSeconds": 60,
+      "stillFrame": 1590,
+      "stillSeconds": 53,
+      "file": "shot-10-closing-wide-f1590.png",
+      "sha256": "8a04a50aa47169703d8b45de9c196d0e873ab315100364358486bc1a20abe407",
+      "bytes": 1755817,
+      "sourceSeconds": 7,
+      "sourceShot": 2,
+      "characterModel": "cel",
+      "camera": {
+        "cx": 540,
+        "cy": 1036,
+        "z": 1.105,
+        "skew": -0.012
+      }
+    }
+  ],
+  "contactSheet": {
+    "file": "contact-sheet.png",
+    "sha256": "bd40c80760bc147cf7bb611b321ea39ba1b9d5e83af8b868f340e6f34afa8234"
+  }
+}
