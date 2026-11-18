@@ -146,3 +146,7 @@ styles/isometric-picture-book/demo/tools/chars.txt
 
 # Windows null-device redirect artifacts (created by bash `> nul` / `2> nul`)
 nul
+
+# Local verification backups (large binaries; keep on disk, never commit)
+.agent-runs/**/backup/
+*.bundle

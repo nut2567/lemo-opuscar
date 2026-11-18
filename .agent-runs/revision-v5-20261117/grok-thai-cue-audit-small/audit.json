@@ -1,0 +1,84 @@
+{
+  "run": "run_4df62ac21b3f",
+  "film": "films/horror-x-ep1-part1-60s",
+  "kind": "source-text and one-row fit audit only",
+  "status": {
+    "script_json_lines": 12,
+    "voice_timeline_lines": 12,
+    "spoken_source": "voice-timeline.json text (word tokens reconstruct it on every line)",
+    "script_matches_spoken_ids": ["02", "05", "06", "11", "12"],
+    "script_differs_ids": ["01", "03", "04", "07", "08", "09", "10"],
+    "captions_js": "present, 12 cues, every size 9.6",
+    "v5_19_2_captions": "not landed",
+    "v5_word_comparison": "pending",
+    "old_9_6_aggregate_vs_voice": "exact match on all 12 cue texts; not a v5 deliverable"
+  },
+  "measure": {
+    "font": "films/horror-x-ep1-part1-60s/fonts/Kanit-Regular.ttf",
+    "fontTools": "4.68.0",
+    "unitsPerEm": 1000,
+    "method": "sum of hmtx advances / unitsPerEm * 19.2",
+    "missing_glyphs": [],
+    "size_px": 19.2,
+    "zone": "x90..930 = 840px",
+    "builder_text_budget_px": 800,
+    "builder_budget_note": "build-captions.py MAX_TEXT_PX = 840 - 32 pad - 8 safety. Not applied as a fail here; recorded because the generator uses it."
+  },
+  "longest_spoken_lines": [
+    {
+      "id": "04",
+      "px": 586.87,
+      "fits_840": true,
+      "fits_builder_800": true,
+      "text": "พอดึกลง ร้านแทบไม่มีคนเหลืออยู่ เหลือแต่เสียงเครื่องซักผ้าหมุนอยู่ข้างตัวฉัน"
+    },
+    {
+      "id": "08",
+      "px": 573.79,
+      "fits_840": true,
+      "fits_builder_800": true,
+      "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับคอยหยอดเหรียญลงในเครื่องเอง"
+    },
+    {
+      "id": "11",
+      "px": 566.50,
+      "fits_840": true,
+      "fits_builder_800": true,
+      "text": "คืนแรกฉันคิดว่าเขาแค่ไม่อยากคุย แต่คืนที่สอง และคืนที่สาม ก็ยังเหมือนเดิม"
+    }
+  ],
+  "longest_space_phrases": [
+    {"id": "01", "phrase": 1, "px": 334.04, "fits_840": true, "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้าแห่งนี้"},
+    {"id": "04", "phrase": 3, "px": 328.15, "fits_840": true, "text": "เหลือแต่เสียงเครื่องซักผ้าหมุนอยู่ข้างตัวฉัน"},
+    {"id": "05", "phrase": 1, "px": 319.18, "fits_840": true, "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ"}
+  ],
+  "lines": [
+    {"id": "01", "px": 523.41, "fits_840": true, "script_match": false, "words_match": true, "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้าแห่งนี้ ที่เปิดตลอดยี่สิบสี่ชั่วโมง"},
+    {"id": "02", "px": 472.72, "fits_840": true, "script_match": true, "words_match": true, "text": "ฉันชื่อนุ่น รับกะดึกที่นี่มาได้สองสัปดาห์ ตั้งแต่สี่ทุ่มถึงหกโมงเช้า"},
+    {"id": "03", "px": 517.59, "fits_840": true, "script_match": false, "words_match": true, "text": "หน้าที่ของฉันก็วนอยู่แค่นี้ เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่องจนซักเสร็จ"},
+    {"id": "04", "px": 586.87, "fits_840": true, "script_match": false, "words_match": true, "text": "พอดึกลง ร้านแทบไม่มีคนเหลืออยู่ เหลือแต่เสียงเครื่องซักผ้าหมุนอยู่ข้างตัวฉัน"},
+    {"id": "05", "px": 507.72, "fits_840": true, "script_match": true, "words_match": true, "text": "บางคืนเงียบจนฉันได้ยินเหรียญทุกเหรียญ ที่ตกกระทบถาดตรงหน้า"},
+    {"id": "06", "px": 465.91, "fits_840": true, "script_match": true, "words_match": true, "text": "แล้วทุกคืน ก็จะมีลูกค้าคนเดิม มาพร้อมผ้าสีขาวผืนใหญ่ผืนเดิม"},
+    {"id": "07", "px": 500.81, "fits_840": true, "script_match": false, "words_match": true, "text": "ฉันไม่เคยเห็นหน้าเขา เงยขึ้นเมื่อไร ก็เห็นเพียงชายผ้าผ่านประตูหลัง"},
+    {"id": "08", "px": 573.79, "fits_840": true, "script_match": false, "words_match": true, "text": "เขาไม่เคยทัก ไม่เคยรอถาดเหรียญ แต่กลับคอยหยอดเหรียญลงในเครื่องเอง"},
+    {"id": "09", "px": 537.95, "fits_840": true, "script_match": false, "words_match": true, "text": "ผ้าสีขาวหมุนวนอยู่หลังฝากระจกใส ส่วนเจ้าของผ้า กลับไม่อยู่ข้างเครื่อง"},
+    {"id": "10", "px": 519.82, "fits_840": true, "script_match": false, "words_match": true, "text": "ทุกครั้งเขาหายไปทางประตูหลัง โดยไม่มีเสียงฝีเท้าให้ได้ยินเลยสักครั้ง"},
+    {"id": "11", "px": 566.50, "fits_840": true, "script_match": true, "words_match": true, "text": "คืนแรกฉันคิดว่าเขาแค่ไม่อยากคุย แต่คืนที่สอง และคืนที่สาม ก็ยังเหมือนเดิม"},
+    {"id": "12", "px": 554.80, "fits_840": true, "script_match": true, "words_match": true, "text": "คืนนั้นฉันจึงหยุดเก็บเหรียญ แล้วเฝ้ามองประตูหลัง เพื่อดูว่าเขามาจากไหน"}
+  ],
+  "script_vs_spoken": [
+    {"id": "01", "voice_has_extra": "แห่งนี้"},
+    {"id": "03", "voice_has_extra": "ของฉันก็"},
+    {"id": "04", "voice_has_extra": "เหลืออยู่ / แต่ / ฉัน"},
+    {"id": "07", "script_has_extra": "เลย / มา"},
+    {"id": "08", "voice_has_extra": "คอย / ใน"},
+    {"id": "09", "voice_has_extra": "สี / ใส"},
+    {"id": "10", "voice_has_extra": "เลย"}
+  ],
+  "recommendations": [
+    "No split. Every spoken line and every existing space-separated phrase fits one row at 19.2px inside 840px (widest line 586.87px, widest phrase 334.04px). Same result against the generator's 800px text budget.",
+    "Caption voice-timeline.json text. script.json differs on ids 01, 03, 04, 07, 08, 09, 10. Do not reword the voice.",
+    "19.2px caption word check is pending until captions.js is regenerated. The current file is the 9.6px aggregate and already matches the 12 spoken lines."
+  ],
+  "evidence": "widths.json from measure.py using films/horror-x-ep1-part1-60s/fonts/Kanit-Regular.ttf"
+}
