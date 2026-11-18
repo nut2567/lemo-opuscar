@@ -1,0 +1,167 @@
+{
+  "film": "films/horror-x-snowy-neon-code",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "sourceDuration": 7.5,
+  "model": "cel",
+  "sourceModuleSha256": "054c95a3e33204fbd3093a5555eb7e58dcfce5f509e6f93b948f658c862f912f",
+  "nativeMatches": 3,
+  "frames": [
+    {
+      "slug": "storefront",
+      "start": 0,
+      "end": 5,
+      "frame": 36,
+      "camera": null,
+      "file": "01-storefront.png",
+      "sha256": "cbe678e035598125565c32398b0313c746c179e1aec27da56a298e0fc0799669",
+      "sourceSeconds": 1.2,
+      "sourceShot": 1,
+      "titleTh": "เปิดหน้าร้านกลางหิมะ"
+    },
+    {
+      "slug": "thai-neon",
+      "start": 5,
+      "end": 10,
+      "frame": 63,
+      "camera": {
+        "cx": 522,
+        "cy": 690,
+        "z": 1.32,
+        "skew": 0.013
+      },
+      "file": "02-thai-neon.png",
+      "sha256": "7d7665fa14d678c18c26fa09463b72113199e7a5aa7dd7c12e6aafa758e6685d",
+      "sourceSeconds": 2.1,
+      "sourceShot": 1,
+      "titleTh": "ป้ายนีออนร้านซักผ้า"
+    },
+    {
+      "slug": "wet-reflection",
+      "start": 10,
+      "end": 15,
+      "frame": 72,
+      "camera": {
+        "cx": 525,
+        "cy": 1450,
+        "z": 1.98,
+        "skew": -0.018
+      },
+      "file": "03-wet-reflection.png",
+      "sha256": "760c494fd351b9cf4c91b8f3d0d076745e1448dfcbf89a19166526424ad1e8c5",
+      "sourceSeconds": 2.4,
+      "sourceShot": 1,
+      "titleTh": "นีออนสะท้อนถนนเปียก"
+    },
+    {
+      "slug": "window",
+      "start": 15,
+      "end": 21,
+      "frame": 111,
+      "camera": null,
+      "file": "04-window.png",
+      "sha256": "ff166a03f09d71c050af15d59e95e3423d0703d8f513d48ada59253aff585e39",
+      "sourceSeconds": 3.7,
+      "sourceShot": 2,
+      "titleTh": "ขยับเข้าหากระจกหน้าร้าน"
+    },
+    {
+      "slug": "washer-row",
+      "start": 21,
+      "end": 27,
+      "frame": 126,
+      "camera": {
+        "cx": 326,
+        "cy": 1118,
+        "z": 2.36,
+        "skew": 0.009
+      },
+      "file": "05-washer-row.png",
+      "sha256": "3dd339581bd558caa53ab0c0fcef24de403183cdcadc97ef9f1e69bc54fe32c0",
+      "sourceSeconds": 4.2,
+      "sourceShot": 2,
+      "titleTh": "แถวเครื่องซักผ้าสี่เครื่อง"
+    },
+    {
+      "slug": "cel-and-coins",
+      "start": 27,
+      "end": 33,
+      "frame": 111,
+      "camera": {
+        "cx": 728,
+        "cy": 1006,
+        "z": 3.58,
+        "skew": 0
+      },
+      "file": "06-cel-and-coins.png",
+      "sha256": "45903449c74891388d251f62ec551f166db3b71b8a0da9f0c7b06d9c988c0c22",
+      "sourceSeconds": 3.7,
+      "sourceShot": 2,
+      "titleTh": "เซลกับถาดเหรียญ"
+    },
+    {
+      "slug": "through-glass",
+      "start": 33,
+      "end": 39,
+      "frame": 168,
+      "camera": null,
+      "file": "07-through-glass.png",
+      "sha256": "009df1d3257d7f98e63e5183ed6dad9017937f252d6b3754c5454ff196c4b2df",
+      "sourceSeconds": 5.6,
+      "sourceShot": 3,
+      "titleTh": "มองผ่านกระจกไปทางประตูหลัง"
+    },
+    {
+      "slug": "cloth-in-doorway",
+      "start": 39,
+      "end": 46,
+      "frame": 187,
+      "camera": {
+        "cx": 567,
+        "cy": 995,
+        "z": 2.6,
+        "skew": -0.006
+      },
+      "file": "08-cloth-in-doorway.png",
+      "sha256": "58bee30477fef23769aabea34f1d4722c391dd9f774511758aa7fb1f7b32d737",
+      "sourceSeconds": 6.233333333333333,
+      "sourceShot": 3,
+      "titleTh": "เซลกับลูกค้าคลุมผ้า"
+    },
+    {
+      "slug": "cloth-recedes",
+      "start": 46,
+      "end": 53,
+      "frame": 200,
+      "camera": {
+        "cx": 470,
+        "cy": 983,
+        "z": 3.25,
+        "skew": 0.004
+      },
+      "file": "09-cloth-recedes.png",
+      "sha256": "b8c3d8274eb590e8eea4d0dd19d70f5eeb712a0213ef1506753b57ed9e4f3ccb",
+      "sourceSeconds": 6.666666666666667,
+      "sourceShot": 3,
+      "titleTh": "ผ้าขาวไร้หน้าลับเข้าประตูหลัง"
+    },
+    {
+      "slug": "closing-wide",
+      "start": 53,
+      "end": 60,
+      "frame": 223,
+      "camera": {
+        "cx": 578,
+        "cy": 1040,
+        "z": 1.04,
+        "skew": -0.016
+      },
+      "file": "10-closing-wide.png",
+      "sha256": "05602c99722d141a996a5b1779302f773afdd0efbfd086785c500655e7bbf239",
+      "sourceSeconds": 7.433333333333334,
+      "sourceShot": 3,
+      "titleTh": "กลับมามองหน้าร้านหลังผ้าหายไป"
+    }
+  ]
+}
