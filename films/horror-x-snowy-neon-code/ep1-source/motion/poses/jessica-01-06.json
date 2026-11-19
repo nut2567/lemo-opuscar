@@ -152,6 +152,27 @@
           }
         },
         {
+          "t": 5.7,
+          "value": {
+            "pathId": null,
+            "s": null,
+            "anchorWorld": [
+              690,
+              925
+            ],
+            "pelvisWorld": [
+              690,
+              1107
+            ],
+            "groundY": 1280,
+            "headingDeg": 180,
+            "scale": 0.5,
+            "facing": -1,
+            "moving": false,
+            "zone": "counter"
+          }
+        },
+        {
           "t": 5.733,
           "value": {
             "pathId": null,
@@ -1032,6 +1053,20 @@
           }
         },
         {
+          "t": 5.7,
+          "value": {
+            "left": 0.5,
+            "right": 0.5,
+            "shiftWorld": [
+              0,
+              0
+            ],
+            "yawDeg": 0,
+            "gaitPhase": null,
+            "plant": "both"
+          }
+        },
+        {
           "t": 5.733,
           "value": {
             "left": 0.62,
@@ -1710,6 +1745,48 @@
         },
         {
           "t": 4.4,
+          "value": {
+            "pelvis": {
+              "dx": 0,
+              "dy": 0,
+              "rotDeg": 0
+            },
+            "feet": {
+              "left": {
+                "targetWorld": [
+                  676,
+                  1280
+                ],
+                "contactWorld": [
+                  676,
+                  1280
+                ],
+                "contactAnchor": null,
+                "planted": true,
+                "toeDeg": 0,
+                "clearance": 0,
+                "poleWorld": null
+              },
+              "right": {
+                "targetWorld": [
+                  704,
+                  1280
+                ],
+                "contactWorld": [
+                  704,
+                  1280
+                ],
+                "contactAnchor": null,
+                "planted": true,
+                "toeDeg": 0,
+                "clearance": 0,
+                "poleWorld": null
+              }
+            }
+          }
+        },
+        {
+          "t": 5.7,
           "value": {
             "pelvis": {
               "dx": 0,
@@ -3456,6 +3533,26 @@
           }
         },
         {
+          "t": 5.7,
+          "value": {
+            "torso": {
+              "dx": 0,
+              "dy": 0,
+              "rotDeg": 0
+            },
+            "head": {
+              "dx": 0,
+              "dy": 0,
+              "rotDeg": 0
+            },
+            "neck": {
+              "dx": 0,
+              "dy": 0,
+              "rotDeg": 0
+            }
+          }
+        },
+        {
           "t": 5.733,
           "value": {
             "torso": {
@@ -4353,6 +4450,43 @@
         },
         {
           "t": 4.4,
+          "value": {
+            "left": {
+              "targetWorld": [
+                664,
+                1096
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                716,
+                1090
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                704,
+                1101
+              ],
+              "pinch": 0,
+              "elbowPoleWorld": null,
+              "gripId": null
+            }
+          }
+        },
+        {
+          "t": 5.7,
           "value": {
             "left": {
               "targetWorld": [
@@ -5791,6 +5925,20 @@
           }
         },
         {
+          "t": 5.7,
+          "value": {
+            "targetWorld": [
+              690,
+              1101
+            ],
+            "targetAnchor": "tray",
+            "weight": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "lock": false
+          }
+        },
+        {
           "t": 5.733,
           "value": {
             "targetWorld": [
@@ -6421,6 +6569,32 @@
         },
         {
           "t": 4.4,
+          "value": {
+            "tray": {
+              "anchorWorld": [
+                690,
+                1101
+              ],
+              "local": null,
+              "planted": true,
+              "visible": true
+            },
+            "coin": {
+              "state": "none",
+              "owner": "none",
+              "id": null,
+              "targetWorld": null,
+              "contactWorld": null,
+              "settleWorld": null
+            },
+            "apron": {
+              "swayDeg": 0,
+              "lift": 0
+            }
+          }
+        },
+        {
+          "t": 5.7,
           "value": {
             "tray": {
               "anchorWorld": [
@@ -7462,7 +7636,7 @@
       ]
     },
     "contacts": {
-      "interp": "smooth",
+      "interp": "step",
       "keys": [
         {
           "t": 0.0,
@@ -7868,7 +8042,7 @@
       ]
     },
     "holds": {
-      "interp": "smooth",
+      "interp": "step",
       "keys": [
         {
           "t": 0.0,
@@ -8007,6 +8181,43 @@
             "gaze": {
               "locked": true,
               "sinceSeconds": 16.333
+            },
+            "root": {
+              "moving": false,
+              "sinceSeconds": null
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 20.867,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": true,
+                "sinceSeconds": 16.333
+              },
+              "right": {
+                "planted": true,
+                "sinceSeconds": 16.333
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
             },
             "root": {
               "moving": false,

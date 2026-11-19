@@ -1,0 +1,1206 @@
+﻿{
+    "version":  1,
+    "task":  "5.1",
+    "plan":  "docs/plans/snowy-neon-cel-motion.th.md",
+    "prepared":  "2026-11-19",
+    "note":  "QA gate definitions only; no formal gate execution yet. Pose files 2.1 and 2.2 have been delivered and are ready for coordinator source validation.",
+    "thresholds":  {
+                       "footPlantErrorMax":  2,
+                       "footPlantUnit":  "world px",
+                       "handCoinContactErrorMax":  4,
+                       "handCoinContactUnit":  "world px",
+                       "coinSettleRadius":  3,
+                       "coinSettleUnit":  "world px",
+                       "coinPlaceScreenSettleRadius":  30,
+                       "coinPlaceScreenSettleUnit":  "screen px",
+                       "narrationCorrelationMin":  0.69,
+                       "narrationOffsetMaxMs":  10,
+                       "loudnessMinLUFS":  -16,
+                       "loudnessMaxLUFS":  -13,
+                       "peakMaxDBTP":  -1,
+                       "captionSizeVw":  1.7778,
+                       "captionSizePx1080":  19.2,
+                       "captionSafeBandY":  [
+                                                1724,
+                                                1764
+                                            ],
+                       "mediaDuration":  60,
+                       "mediaWidth":  1080,
+                       "mediaHeight":  1920,
+                       "mediaFps":  30,
+                       "mediaFrames":  1800,
+                       "mediaVideoCodec":  "h264",
+                       "mediaAudioCodec":  "aac",
+                       "mediaAudioRate":  48000,
+                       "mediaAudioChannels":  2,
+                       "srtSha256":  "ab5c060b61498bfe8bc8b93d3d2e83d6a2031842e6741b7eb0b1823a97b7f716"
+                   },
+    "sceneInvariants":  {
+                            "worldSize":  [
+                                              1080,
+                                              1920
+                                          ],
+                            "counterClipY":  1110,
+                            "rearDoorBounds":  {
+                                                   "x":  [
+                                                             470,
+                                                             595
+                                                         ],
+                                                   "y":  [
+                                                             775,
+                                                             1185
+                                                         ]
+                                               },
+                            "characterAnchor":  [
+                                                    690,
+                                                    925
+                                                ],
+                            "characterScale":  0.5,
+                            "trayAnchor":  [
+                                               714,
+                                               1100
+                                           ],
+                            "coinPlaceHand":  [
+                                                  715,
+                                                  1083
+                                              ],
+                            "coinPlaceLift":  [
+                                                  713,
+                                                  1066
+                                              ],
+                            "coinPlaceTray":  [
+                                                  714,
+                                                  1100
+                                              ]
+                        },
+    "keyFrames":  {
+                      "customerReveal":  {
+                                             "frame":  746,
+                                             "seconds":  24.87,
+                                             "shot":  "customer"
+                                         },
+                      "facelessTransition":  {
+                                                 "frame":  856,
+                                                 "seconds":  28.53,
+                                                 "shot":  "faceless"
+                                             },
+                      "emptyWasher":  {
+                                          "frame":  1069,
+                                          "seconds":  35.63,
+                                          "shot":  "empty-washer"
+                                      },
+                      "doorwayEmpty":  {
+                                           "frame":  1241,
+                                           "seconds":  41.37,
+                                           "shot":  "rear-exit"
+                                       },
+                      "coinPlaceDepart":  {
+                                              "frame":  1607,
+                                              "seconds":  53.55,
+                                              "shot":  "decision"
+                                          },
+                      "coinPlaceContact":  {
+                                               "frame":  1619,
+                                               "seconds":  53.95,
+                                               "shot":  "decision"
+                                           },
+                      "coinPlaceSettle":  {
+                                              "frame":  1631,
+                                              "seconds":  54.35,
+                                              "shot":  "decision"
+                                          },
+                      "filmEnd":  {
+                                      "frame":  1799,
+                                      "seconds":  59.97,
+                                      "shot":  "watch"
+                                  }
+                  },
+    "sfxBeats":  {
+                     "required":  [
+                                      {
+                                          "t":  14.95,
+                                          "type":  "washer",
+                                          "cue":  4
+                                      },
+                                      {
+                                          "t":  21.82,
+                                          "type":  "coin",
+                                          "cue":  5
+                                      },
+                                      {
+                                          "t":  32.75,
+                                          "type":  "coin-slot",
+                                          "cue":  8
+                                      },
+                                      {
+                                          "t":  33.53,
+                                          "type":  "washer",
+                                          "cue":  9
+                                      },
+                                      {
+                                          "t":  41.52,
+                                          "type":  "cloth",
+                                          "cue":  10
+                                      }
+                                  ],
+                     "optional":  [
+                                      {
+                                          "t":  53.95,
+                                          "type":  "coin",
+                                          "cue":  12,
+                                          "note":  "coinPlace contact; quieter than 21.82 impact"
+                                      }
+                                  ]
+                 },
+    "gates":  [
+                  {
+                      "id":  "SRC-01",
+                      "phase":  "source",
+                      "objective":  "jessica.srt byte integrity",
+                      "evidence":  "ep1-source/captions/jessica.srt",
+                      "output":  "sha256sum",
+                      "pass":  "sha256 === thresholds.srtSha256",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-02",
+                      "phase":  "source",
+                      "objective":  "jessica.json timing/structure integrity",
+                      "evidence":  "ep1-source/picture/jessica.json",
+                      "output":  "json-parse + structure validation",
+                      "pass":  "16 cuts, contiguous 0-1799, format matches thresholds.media*",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-03",
+                      "phase":  "source",
+                      "objective":  "Lower-body rig export signature",
+                      "evidence":  "ep1-source/motion/rig/lower/lower-body.mjs",
+                      "output":  "static analysis / import",
+                      "pass":  "exports LOWER_BODY_VERSION===1 and evaluateLowerBody(frameContext, poseSample, scenePath)",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-04",
+                      "phase":  "source",
+                      "objective":  "Upper-body rig export signature",
+                      "evidence":  "ep1-source/motion/rig/upper/upper-body.mjs",
+                      "output":  "static analysis / import",
+                      "pass":  "exports UPPER_BODY_VERSION===1 and evaluateUpperBody(frameContext, poseSample, lowerBodyResult)",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-05",
+                      "phase":  "source",
+                      "objective":  "Lower-body rig purity and determinism",
+                      "evidence":  "ep1-source/motion/rig/lower/lower-body.mjs",
+                      "output":  "grep for DOM/random/state/IO patterns + repeated-call test",
+                      "pass":  "zero forbidden patterns; identical repeated output",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-06",
+                      "phase":  "source",
+                      "objective":  "Upper-body rig purity and determinism",
+                      "evidence":  "ep1-source/motion/rig/upper/upper-body.mjs",
+                      "output":  "grep for DOM/random/state/IO patterns + repeated-call test",
+                      "pass":  "zero forbidden patterns; identical repeated output",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-07",
+                      "phase":  "source",
+                      "objective":  "Lower-body fixture finite fields",
+                      "evidence":  "ep1-source/motion/rig/lower/fixtures.json",
+                      "output":  "recursive Number.isFinite check on all numeric leaves",
+                      "pass":  "every numeric leaf is finite (no NaN/Infinity)",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-08",
+                      "phase":  "source",
+                      "objective":  "Upper-body fixture finite fields",
+                      "evidence":  "ep1-source/motion/rig/upper/fixtures.json",
+                      "output":  "recursive Number.isFinite check on all numeric leaves",
+                      "pass":  "every numeric leaf is finite (no NaN/Infinity)",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-09",
+                      "phase":  "source",
+                      "objective":  "Lower-body file boundary",
+                      "evidence":  "ep1-source/motion/rig/lower/lower-body.mjs",
+                      "output":  "grep for cross-boundary imports",
+                      "pass":  "zero imports of upper-body, models/, characters, main, entry, environment, washers, neon, weather",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-10",
+                      "phase":  "source",
+                      "objective":  "Upper-body file boundary",
+                      "evidence":  "ep1-source/motion/rig/upper/upper-body.mjs",
+                      "output":  "grep for cross-boundary imports",
+                      "pass":  "zero imports of lower-body, models/, characters, main, entry, environment, washers, neon, weather",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-11",
+                      "phase":  "source",
+                      "objective":  "Rig compose compatibility (lower+upper pipeline)",
+                      "evidence":  "ep1-source/motion/rig/lower/lower-body.mjs + upper/upper-body.mjs",
+                      "output":  "smoke test: evaluateLowerBody -\u003e evaluateUpperBody pipeline with fixture inputs",
+                      "pass":  "pipeline executes; upper reads lowerBodyResult.root/pelvis; no circular import",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.1",
+                                           "1.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3"
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-12",
+                      "phase":  "source",
+                      "objective":  "Pose JSON schema validity",
+                      "evidence":  "ep1-source/motion/poses/jessica-01-06.json + jessica-07-12.json",
+                      "output":  "JSON.parse + CelMotionSpec schema validation",
+                      "pass":  "both parse; version:1; track names match PoseSample fields; all keys have numeric t",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.1",
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-13",
+                      "phase":  "source",
+                      "objective":  "Combined pose data resolves a defined state across every SRT cue window without timeline gaps",
+                      "evidence":  "Map continuous track keys to 12 cue windows; if a cue has no key inside its window, verify surrounding keys bracket the interval and notes explain held/interpolated state (cue 8 is renderer-owned and likely off-frame)",
+                      "output":  "confirm every cue window has in-window keys or a valid resolver span",
+                      "pass":  "every cue window covered by an in-window key or valid surrounding-key resolver span; all key times 0-60s; no undefined track interval",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.1",
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-14",
+                      "phase":  "source",
+                      "objective":  "Cue 6/7 boundary at frame 856 — shared key allowed when values match",
+                      "evidence":  "ep1-source/motion/poses/jessica-01-06.json (cue 6 end) + jessica-07-12.json (cue 7 start) + jessica-01-06.notes.md handoff contract",
+                      "output":  "check keys at t=28.533 for value-identical match per handoff contract",
+                      "pass":  "shared boundary key at t=28.533 allowed when both files carry identical values; no key in one file at a time strictly owned by the other; no conflicting values or missing boundary pose",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.1",
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-15",
+                      "phase":  "source",
+                      "objective":  "Pose data does not alter SRT/cut timings (lead-ins/holds may cross caption boundaries)",
+                      "evidence":  "ep1-source/motion/poses/*.json + jessica.srt (SRC-01) + jessica.json (SRC-02)",
+                      "output":  "verify SRT and picture-cut timings are source-owned and unchanged; all key t values within 0-60s; cue ownership correct",
+                      "pass":  "SRT/cut timings unchanged; pose keys within 0-60s; cues retain intended ownership; poses do not alter SRT or cut timings",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.1",
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-16",
+                      "phase":  "source",
+                      "objective":  "Pose anchor references valid",
+                      "evidence":  "ep1-source/motion/poses/*.json + scene/scene-layout.json",
+                      "output":  "collect all anchor id strings; look up in scene-layout.json",
+                      "pass":  "every referenced anchor exists in scene-layout.json",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.1",
+                                           "2.2",
+                                           "3.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-17",
+                      "phase":  "source",
+                      "objective":  "Scene layout geometry vs INTERFACE.md",
+                      "evidence":  "ep1-source/motion/scene/scene-layout.json + INTERFACE.md",
+                      "output":  "check counter y=1110, rear door x470-595/y775-1185, anchors present",
+                      "pass":  "counter clip y=1110; rear-door bounds match; required anchors (counter-front, tray, slot, rear-door, washer-row) present",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "3.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-18",
+                      "phase":  "source",
+                      "objective":  "Occlusion module purity",
+                      "evidence":  "ep1-source/motion/scene/occlusion.mjs",
+                      "output":  "grep for DOM/random/state/IO patterns",
+                      "pass":  "zero forbidden patterns",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "3.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-19",
+                      "phase":  "source",
+                      "objective":  "Lower-body fixture coverage of critical motion states",
+                      "evidence":  "ep1-source/motion/rig/lower/fixtures.json",
+                      "output":  "check case ids cover: neutral stand, cue 2 walk (frames ~183-291), cue 4 half-step, cue 11 two nights, cue 12 watch",
+                      "pass":  "at least one fixture per: walk stance, walk swing, stand, half-step back, listen hold, watch-door hold",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.1"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-20",
+                      "phase":  "source",
+                      "objective":  "Upper-body fixture coverage of critical contact/gaze states",
+                      "evidence":  "ep1-source/motion/rig/upper/fixtures.json",
+                      "output":  "check case ids cover: coin/tray cues 3/5/12, cloth 6-9, door 10-12, coinPlace 53.55/53.95/54.35",
+                      "pass":  "at least one fixture per: coin contact, tray contact, cloth reaction, gaze-to-door, coinPlace beat",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-21",
+                      "phase":  "source",
+                      "objective":  "Pose hand keys match coinPlace beats while coin travel remains renderer-owned",
+                      "evidence":  "jessica-07-12.json hand/props/contacts keys at 53.55, 53.95, 53.96 and 54.35; compare notes and entry.mjs COIN_PLACE",
+                      "output":  "hand coin contact at 53.55, tray contact at 53.95, hand withdrawn by 54.35; pose data contains no moving coin path",
+                      "pass":  "hand beat keys match 53.55/53.95/54.35; coin position fields are null; contacts.props.coin only targets the fixed tray point; renderer owns the coin path",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ],
+                      "fail":  "moving coin target path appears in pose data, required hand beat missing, or tray point differs from the source anchor"
+                  },
+                  {
+                      "id":  "SRC-22",
+                      "phase":  "source",
+                      "objective":  "Cue 8 — cel is not the coin inserter",
+                      "evidence":  "ep1-source/motion/poses/jessica-07-12.json",
+                      "output":  "check hand targets for cue 8 (frames 956-1003)",
+                      "pass":  "cel hand targets are neutral/watching, not at slot contact",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-23",
+                      "phase":  "source",
+                      "objective":  "Cue 11 two distinct night poses",
+                      "evidence":  "ep1-source/motion/poses/jessica-07-12.json",
+                      "output":  "compare keys for second-night (frames 1405-1456) vs third-night (frames 1457-1575)",
+                      "pass":  "at least two body fields differ meaningfully between the two shots",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "2.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-24",
+                      "phase":  "source",
+                      "objective":  "Caption decision settled at 19.2 px",
+                      "evidence":  ".agent-runs/snowy-neon-cel-motion-task4/reports/4.2-caption-decision.md",
+                      "output":  "read decision record",
+                      "pass":  "value is 1.7778 vw (19.2 px at 1080); override mechanism confirmed in entry.mjs:15-18",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "4.2"
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "SRC-25",
+                      "phase":  "source",
+                      "objective":  "Jessica WAV blocker status",
+                      "evidence":  "ep1-source/narrative-cut/out/jessica-v1/speech.wav or user-provided path",
+                      "output":  "file existence + duration check",
+                      "pass":  "WAV exists, 60.000s, 48 kHz, matches SRT alignment",
+                      "fail_is_blocker":  true,
+                      "blocks":  [
+                                     "FR-20",
+                                     "5.3"
+                                 ],
+                      "owner":  "coordinator/user",
+                      "dependencies":  [
+
+                                       ],
+                      "blockedBy":  [
+
+                                    ]
+                  },
+                  {
+                      "id":  "MT-01",
+                      "phase":  "motion-test",
+                      "objective":  "Foot plant — no sliding during stance (cue 2)",
+                      "evidence":  "test clip frames 183-291",
+                      "output":  "LowerBodyResult.feet.\u003cside\u003e.contactErrorWorld where planted===true",
+                      "pass":  "contactErrorWorld \u003c= 2.0 for all planted frames; sliding===false",
+                      "threshold":  {
+                                        "contactErrorMax":  2,
+                                        "unit":  "world px"
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-02",
+                      "phase":  "motion-test",
+                      "objective":  "Foot swing clears ground (cue 2)",
+                      "evidence":  "test clip frames 183-291 where planted===false",
+                      "output":  "LowerBodyResult.feet.\u003cside\u003e.clearance",
+                      "pass":  "clearance \u003e 0 for all swing frames",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-03",
+                      "phase":  "motion-test",
+                      "objective":  "Walk arrival and stop (cue 2)",
+                      "evidence":  "test clip frames 183-291",
+                      "output":  "visual + LowerBodyResult.root.moving transition",
+                      "pass":  "\u003e=2 gait cycles visible; root transitions to stationary; both feet planted at stop",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-04",
+                      "phase":  "motion-test",
+                      "objective":  "Hand-coin contact within tolerance (cue 3)",
+                      "evidence":  "test clip frames 352-442",
+                      "output":  "UpperBodyResult.contacts.hands/props.coin.errorWorld",
+                      "pass":  "errorWorld \u003c= 4.0 at all contact frames",
+                      "threshold":  {
+                                        "contactErrorMax":  4,
+                                        "unit":  "world px"
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "2.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "2.1",
+                                        "2.2",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-05",
+                      "phase":  "motion-test",
+                      "objective":  "Hand-cloth interaction visible (cue 3)",
+                      "evidence":  "test clip frames ~380-442",
+                      "output":  "visual + UpperBodyResult.hands targets",
+                      "pass":  "hand targets move toward washer area; visible arm motion toward drum",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "2.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "2.1",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-06",
+                      "phase":  "motion-test",
+                      "objective":  "Half-step back visible (cue 4)",
+                      "evidence":  "test clip frames 446-517",
+                      "output":  "visual + LowerBodyResult.root backward displacement",
+                      "pass":  "visible backward weight shift ~10-30 world px; then static hold",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "2.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "2.1",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-07",
+                      "phase":  "motion-test",
+                      "objective":  "Counter occlusion at y=1110",
+                      "evidence":  "test clip multiple frames where cel is behind counter",
+                      "output":  "visual + occlusion module output",
+                      "pass":  "character clipped at counter world y=1110; no body below counter line",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "3.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-08",
+                      "phase":  "motion-test",
+                      "objective":  "Cel face/hair identity matches approved model",
+                      "evidence":  "test clip vs models/cel/ reference",
+                      "output":  "visual comparison",
+                      "pass":  "face proportions, hair, skin/eye colors match approved cel model; no redrawn features",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-09",
+                      "phase":  "motion-test",
+                      "objective":  "Caption renders at 19.2 px with ?capvw=1.7778",
+                      "evidence":  "test clip render with capvw override",
+                      "output":  "computed font-size in browser",
+                      "pass":  "font-size 6.933 px at 390 px viewport (1.7778 vw) or 19.2 px at 1080 px",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "4.2",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "MT-10",
+                      "phase":  "motion-test",
+                      "objective":  "Gaze leads head rotation (cues 2-4)",
+                      "evidence":  "test clip UpperBodyResult.gaze.yawDeg vs head.yawDeg",
+                      "output":  "compare timing of gaze vs head direction changes",
+                      "pass":  "gaze shifts precede or coincide with head rotation",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "1.3",
+                                           "2.3",
+                                           "5.2"
+                                       ],
+                      "blockedBy":  [
+                                        "1.3",
+                                        "5.2"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-01",
+                      "phase":  "full-render",
+                      "objective":  "Media container spec",
+                      "evidence":  "final output MP4",
+                      "output":  "ffprobe -v error -show_streams -show_format -of json",
+                      "pass":  "60.000s, 1080x1920, h264, 30/1 fps, 1800 frames, aac 48kHz stereo",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-02",
+                      "phase":  "full-render",
+                      "objective":  "Output SRT byte-for-byte match",
+                      "evidence":  "output jessica.srt",
+                      "output":  "sha256sum",
+                      "pass":  "sha256 === thresholds.srtSha256",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-03",
+                      "phase":  "full-render",
+                      "objective":  "All 12 caption cues display correctly",
+                      "evidence":  "node ep1-source/verify-timeline.mjs jessica \u003coutdir\u003e",
+                      "output":  "timeline-qa.json",
+                      "pass":  "each cue text matches SRT during [start,end); null outside",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-04",
+                      "phase":  "full-render",
+                      "objective":  "Customer reveal at frame ~746",
+                      "evidence":  "extract frames 744-748 from final MP4",
+                      "output":  "visual inspection",
+                      "pass":  "cloth figure visible starting frame 746 (±1 frame)",
+                      "keyFrame":  746,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-05",
+                      "phase":  "full-render",
+                      "objective":  "Faceless shot transition at frame 856",
+                      "evidence":  "extract frames 854-858",
+                      "output":  "shot id check + glance ramp inspection",
+                      "pass":  "frame 855 is customer; frame 856 is faceless; glance ramp starts at progress ~0.23",
+                      "keyFrame":  856,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-06",
+                      "phase":  "full-render",
+                      "objective":  "Visitor absent from frame 1069",
+                      "evidence":  "extract frame 1069",
+                      "output":  "visual: no cloth figure in empty-washer shot",
+                      "pass":  "no cloth visible; cut.cloth is falsy for empty-washer",
+                      "keyFrame":  1069,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-07",
+                      "phase":  "full-render",
+                      "objective":  "Doorway empty from frame 1241",
+                      "evidence":  "extract frames 1240-1245",
+                      "output":  "visual + sourceSeconds \u003e 7.2 at rear-exit tail",
+                      "pass":  "no cloth visible from frame 1241; sourceSeconds \u003e 7.2",
+                      "keyFrame":  1241,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-08",
+                      "phase":  "full-render",
+                      "objective":  "coinPlace depart at 53.55s",
+                      "evidence":  "extract frames 1605-1609",
+                      "output":  "insert===\u0027coin-place\u0027; coin near hand anchor (715,1083)",
+                      "pass":  "coin visible in hand/lift zone at frame 1607",
+                      "keyFrame":  1607,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-09",
+                      "phase":  "full-render",
+                      "objective":  "coinPlace contact at 53.95s",
+                      "evidence":  "extract frame 1619",
+                      "output":  "coin screen y increased \u003e20 px from depart; near tray (714,1100)",
+                      "pass":  "coin screen position near tray contact point",
+                      "keyFrame":  1619,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-10",
+                      "phase":  "full-render",
+                      "objective":  "coinPlace settled at 54.35s",
+                      "evidence":  "extract frames 1630-1632",
+                      "output":  "coin stable within 30 screen px of contact position",
+                      "pass":  "coin position within coinPlaceScreenSettleRadius of contact",
+                      "keyFrame":  1631,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-11",
+                      "phase":  "full-render",
+                      "objective":  "Five existing tray coins preserved during cue 12",
+                      "evidence":  "SVG query at coinPlace contact frame",
+                      "output":  "document.querySelectorAll(\u0027#nunCam g[id$=\"-coins\"] circle\u0027).length",
+                      "pass":  "\u003e= 5 coin circles present",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-12",
+                      "phase":  "full-render",
+                      "objective":  "Watch-door hold at frame 1799",
+                      "evidence":  "extract frame 1799",
+                      "output":  "shot=watch; look=1; iris translate(-4.8 -2.2); caption=null",
+                      "pass":  "all four conditions met",
+                      "keyFrame":  1799,
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-13",
+                      "phase":  "full-render",
+                      "objective":  "Rear-jamb occlusion",
+                      "evidence":  "rear-exit shot frames ~1198-1241",
+                      "output":  "visual: cloth within doorway bounds x470-595/y775-1185",
+                      "pass":  "cloth does not extend beyond jamb bounds",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-14",
+                      "phase":  "full-render",
+                      "objective":  "Floor contact shadows under planted feet",
+                      "evidence":  "visual at cue 2 walk, cue 3 work, cue 12 stand",
+                      "output":  "shadow visible under planted feet; none under airborne feet",
+                      "pass":  "shadows present and correctly positioned",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "3.2",
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-15",
+                      "phase":  "full-render",
+                      "objective":  "Lighting zone continuity",
+                      "evidence":  "visual across shots with different cel positions",
+                      "output":  "cool glass / warm counter light temperature changes with position",
+                      "pass":  "visible light shift; no abrupt jumps",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "3.2",
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-16",
+                      "phase":  "full-render",
+                      "objective":  "No footstep audio",
+                      "evidence":  "full audio track listening review",
+                      "output":  "zero footstep-type transients",
+                      "pass":  "zero footstep sounds anywhere in 60s",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-17",
+                      "phase":  "full-render",
+                      "objective":  "No black frame runs",
+                      "evidence":  "ffmpeg blackdetect filter via verify-media.py",
+                      "output":  "ffmpeg -vf blackdetect=d=0.033:pix_th=0.05",
+                      "pass":  "zero black_start detections",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-18",
+                      "phase":  "full-render",
+                      "objective":  "Loudness and peak levels",
+                      "evidence":  "ffmpeg ebur128 via verify-media.py",
+                      "output":  "LUFS and dBTP values",
+                      "pass":  "-16 \u003c= LUFS \u003c= -13 and peak \u003c= -1 dBTP",
+                      "threshold":  {
+                                        "lufsMin":  -16,
+                                        "lufsMax":  -13,
+                                        "peakMax":  -1
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-19",
+                      "phase":  "full-render",
+                      "objective":  "SFX beat alignment",
+                      "evidence":  "audio waveform at 14.95, 21.82, 32.75, 33.53, 41.52 (optional 53.95)",
+                      "output":  "listen + waveform inspection",
+                      "pass":  "each required SFX audible within ±0.1s of spec time",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-20",
+                      "phase":  "full-render",
+                      "objective":  "Narration-to-picture alignment",
+                      "evidence":  "python verify-media.py \u003coutput.mp4\u003e \u003cdry.wav\u003e \u003ctimeline-qa.json\u003e",
+                      "output":  "per-cue correlation and offset",
+                      "pass":  "correlation \u003e= 0.69 and offset \u003c= ±10ms for every check point",
+                      "threshold":  {
+                                        "correlationMin":  0.69,
+                                        "offsetMaxMs":  10
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3",
+                                           "SRC-25"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3",
+                                        "SRC-25"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-21",
+                      "phase":  "full-render",
+                      "objective":  "Caption phone-scale check (cue 12)",
+                      "evidence":  "browser render at 390x693 viewport DPR 2 with ?capvw=1.7778",
+                      "output":  "one-line fit + tone mark legibility",
+                      "pass":  "cue 12 single line; computed 6.933 px; tone marks distinguishable at 2x DPR",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-22",
+                      "phase":  "full-render",
+                      "objective":  "Caption safe-band placement",
+                      "evidence":  "caption bounding box at 1080x1920 raster",
+                      "output":  "span bottom y value",
+                      "pass":  "1724 \u003c= caption bottom y \u003c= 1764",
+                      "threshold":  {
+                                        "yMin":  1724,
+                                        "yMax":  1764
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-23",
+                      "phase":  "full-render",
+                      "objective":  "Foot plant consistency (all 1800 frames)",
+                      "evidence":  "LowerBodyResult for all frames where planted===true",
+                      "output":  "contactErrorWorld values",
+                      "pass":  "contactErrorWorld \u003c= 2.0 everywhere; zero sliding events",
+                      "threshold":  {
+                                        "contactErrorMax":  2,
+                                        "unit":  "world px"
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-24",
+                      "phase":  "full-render",
+                      "objective":  "Hand/coin contact consistency (full film)",
+                      "evidence":  "UpperBodyResult for all active contact frames across cues 3/5/8/12",
+                      "output":  "errorWorld values",
+                      "pass":  "errorWorld \u003c= 4.0 at all active contact frames",
+                      "threshold":  {
+                                        "contactErrorMax":  4,
+                                        "unit":  "world px"
+                                    },
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  },
+                  {
+                      "id":  "FR-25",
+                      "phase":  "full-render",
+                      "objective":  "Determinism verification (repeated render)",
+                      "evidence":  "render frames 300, 1619, 1799 twice each",
+                      "output":  "pixel-by-pixel comparison",
+                      "pass":  "byte-identical output for each repeated render",
+                      "owner":  "coordinator",
+                      "dependencies":  [
+                                           "5.3"
+                                       ],
+                      "blockedBy":  [
+                                        "5.3"
+                                    ]
+                  }
+              ],
+    "blockers":  [
+                     {
+                         "id":  "BLOCKER-WAV",
+                         "description":  "Jessica aligned dry narration WAV 60.000s not in source package",
+                         "blocks":  [
+                                        "FR-20",
+                                        "5.3"
+                                    ],
+                         "status":  "open",
+                         "resolution":  "user must provide WAV path or file"
+                     },
+                     {
+                         "id":  "BLOCKER-RIG-INTEGRATION",
+                         "description":  "Task 1.3 rig integration gate not started",
+                         "blocks":  [
+                                        "SRC-11",
+                                        "MT-01",
+                                        "MT-02",
+                                        "MT-03",
+                                        "MT-04",
+                                        "MT-05",
+                                        "MT-06",
+                                        "MT-08",
+                                        "MT-10"
+                                    ],
+                         "status":  "open",
+                         "resolution":  "coordinator runs 1.3 after 1.1/1.2 settled"
+                     }
+                 ],
+    "motionTestWindow":  {
+                             "primary":  {
+                                             "startSeconds":  6,
+                                             "endSeconds":  18,
+                                             "frames":  [
+                                                            180,
+                                                            540
+                                                        ],
+                                             "covers":  "cue 2 walk/stop, cue 3 coin/cloth, cue 4 wait/drum"
+                                         },
+                             "spotCheck":  {
+                                               "startSeconds":  51.8,
+                                               "endSeconds":  59.8,
+                                               "frames":  [
+                                                              1554,
+                                                              1794
+                                                          ],
+                                               "covers":  "coinPlace/watch-door hold",
+                                               "note":  "optional; add if integration shows high risk in coinPlace/watch"
+                                           }
+                         },
+    "phaseSummary":  {
+                         "source":  {
+                                        "count":  25,
+                                        "verifiableNow":  23,
+                                        "waitingPoseDelivery":  0,
+                                        "waitingRigIntegration":  2
+                                    },
+                         "motionTest":  {
+                                            "count":  10,
+                                            "verifiableNow":  0,
+                                            "requiresTask":  "5.2"
+                                        },
+                         "fullRender":  {
+                                            "count":  25,
+                                            "verifiableNow":  0,
+                                            "requiresTask":  "5.3"
+                                        },
+                         "total":  60
+                     }
+}

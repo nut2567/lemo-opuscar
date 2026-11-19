@@ -1,4 +1,4 @@
-# แผนการเคลื่อนไหวเต็มตัวของเซล · Snowy Neon EP1 ฉบับ Jessica
+﻿# แผนการเคลื่อนไหวเต็มตัวของเซล · Snowy Neon EP1 ฉบับ Jessica
 
 **แผนสำหรับการผลิต — ยังไม่เริ่มผลิต** · ฉบับนี้จำกัดขอบเขตเหลือ **Jessica edition เดียว** และใช้ `films/horror-x-snowy-neon-code/ep1-source/` เป็นฐานงานหลัก ไม่ใช้ `ep1-recut/devin-work` หรือวัสดุของฉบับซับเดิม
 
@@ -421,27 +421,26 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 | 1.1 | ✅ | แก้ null semantics ของ `s`, `groundY`, `gaitPhase`, `sinceSeconds` และพิกัด nullable แล้ว; ตรวจ source และคัดลอกโมดูล/fixtures เข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.2 | ✅ | โมดูลช่วงบนและ fixtures 10 กรณีตรวจ schema แล้ว และคัดลอกเข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.3 | ❌ | ยังไม่เริ่ม; 1.1/1.2 ผ่านแล้ว จึงเริ่มรวม rig เข้ากับ renderer ได้ |
-| 2.1 | ✅ | pose JSON/notes cues 1–6 ตรวจ source-level แล้วและ commit `c041a02`; Claude ทำ independent read-only review ก่อน integration (`ctx_e9ed5f479164`) |
-| 2.2 | ⏳ | Devin กำลังทำ pose JSON/notes cues 7–12 (`ctx_8ed8f4c446a6`); semantic action map เป็นข้อมูลตั้งต้น |
-| 2.3 | ⏳ | รวม cue map เชิงความหมายแล้ว; การตรวจ pose schema, cue boundary และ transition จริงรอ 2.1–2.2 |
+| 2.1 | ✅ | cues 1–6 ผ่าน independent review; แก้ rootPath slide ช่วง store→nun, เปลี่ยน contacts/holds เป็น `step`, จัด gaze hold และคง handoff frame 856/SRT; ดู `2.1-review-fixes-report.md` |
+| 2.2 | ✅ | cues 7–12 ผ่านการตรวจ source-level; handoff frame 856 ตรงกับ 2.1 ทั้ง 9 tracks และตัด coin path ออกจาก pose data; ดู `2.2-review-fixes-report.md` |
+| 2.3 | ✅ | ตรวจ schema, cue coverage, handoff, coinPlace ownership และท่าจบจาก source; ตรวจภาพจริงต่อใน 5.2; ดู `2.3-pose-merge-acceptance.md` |
 | 3.1 | ✅ | `scene-layout.json` อยู่ใน source tree; รายงาน audit ของแพ็กเกจ scene ระบุ fixture checks |
 | 3.2 | ✅ | `occlusion.mjs` และ scene fixtures อยู่ใน source tree; รายงาน audit ระบุ fixture checks และ coordinator blockers |
 | 4.1 | ✅ | ตรวจหลักฐานขนาด 19.2 px เทียบ 22.4 px และบันทึกข้อแตกต่างแล้ว |
 | 4.2 | ⏳ | บันทึกคำตัดสินขนาดเล็ก 19.2 px (`capvw=1.7778`) แล้ว; การตั้งเป็นค่าใช้งานถาวรของ renderer รอ coordinator integration |
 | 4.3 | ✅ | ตรวจบน viewport มือถือ 390×693 ที่ DPR 2; cues 3/5/12 ผ่านการตรวจบรรทัดและตำแหน่ง |
-| 5.1 | ⏳ | Claude กำลังจัดทำ QA checklist และ machine-readable gate list (`ctx_245fb494f8b8`); ยังไม่มีการรัน checks |
+| 5.1 | ✅ | checklist QA 60 ข้อและ gate JSON 60 รายการครบ; แก้ SRC-14/15 แล้ว; ยังไม่ได้รัน QA checks |
 | 5.2 | ❌ | รอ rig, pose, scene, integration และ checklist พร้อม |
 | 5.3 | ❌ | รอ 5.2 และ Jessica aligned dry WAV 60 วินาที; WAV ยังเป็น blocker |
 
 ### งานที่พร้อมเริ่มได้ทันที
 
-- **2.1** เขียน pose JSON/notes แล้วและรอ Claude review; **2.2** กำลังทำ pose JSON/notes โดย Devin
-- **1.3** เริ่มได้ทันทีเพราะ 1.1 และ 1.2 ผ่านการตรวจรับแล้ว
-- **5.1** เริ่มทำ QA checklist แล้ว โดยแยกเกณฑ์ source-only, motion-test และ final-render
-- **1.3** เริ่มได้ทันทีเพราะ 1.1/1.2 ตรวจรับแล้ว; **2.3** ต้องรอ pose JSON ทั้งสองช่วงก่อนตรวจ transition จริง
-- **5.3** ยังเริ่มไม่ได้จนมี WAV ที่ตรงกับ SRT และ 5.2 ผ่าน
-
-หลักฐานสถานะ: `.agent-runs/snowy-neon-cel-motion-task1/evidence/source-provisioning-1-1-1-2.md`, รายงาน tasks 2.1/2.2 และ `.agent-runs/snowy-neon-cel-motion-2-3-merge-review/MERGED-CUE-MAP.md`, รายงาน 4.1–4.3 ใน `.agent-runs/snowy-neon-cel-motion-task4/reports/`, และ ledger/worker report ของ 3.1–3.2.
+- **1.3** เริ่มรวม rig ได้ เพราะงาน 1.1 และ 1.2 ผ่านการตรวจรับแล้ว
+- **2.3** source-level pose merge ผ่านแล้ว; ตรวจภาพจริงของเท้า framing และ gaze/glance ใน 5.2
+- **4.2** ตัดสินขนาดซับ 19.2 px แล้ว; ตั้งค่า renderer ถาวรระหว่าง integration
+- **5.2** รอ 1.3 และการรวม rig/pose/scene เข้ากับ production path
+- **5.3** รอ 5.2 ผ่านและ Jessica aligned dry WAV 60 วินาทีที่ตรงกับ SRT
+หลักฐานสถานะ: `.agent-runs/snowy-neon-cel-motion-task1/evidence/source-provisioning-1-1-1-2.md`, รายงานตรวจ/แก้ไข 2.1–2.3 ใน `.agent-runs/snowy-neon-cel-motion-task1/reports/`, merged cue map ที่ `.agent-runs/snowy-neon-cel-motion-2-3-merge-review/MERGED-CUE-MAP.md`, รายงาน 4.1–4.3 ใน `.agent-runs/snowy-neon-cel-motion-task4/reports/`, 5.1 checklist/gates และ ledger/worker report ของ 3.1–3.2.
 
 ### ข้อกำหนดเวลาสำหรับ render ล่าสุด
 

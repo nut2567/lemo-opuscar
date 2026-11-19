@@ -20,12 +20,17 @@ provisional.
 
 - `tracks` keys are the exact `PoseSample` field names (`rootPath`, `weight`,
   `lowerKeys`, `upperKeys`, `hands`, `gaze`, `props`, `contacts`, `holds`).
-  Track-level `interp:"smooth"` applies the resolver's `u*u*(3-2*u)` between
-  keys; enums/strings/booleans/nulls step per contract.
-- `contacts` and `holds` tracks are **sparse** (7 and 6 keys): they carry
-  resolved intents at beat boundaries only; the resolver holds the last value
-  between them. All other tracks are keyed at every beat (~43 keys, t = 0.0
-  through 28.533).
+  Track-level `interp` is `"smooth"` on the seven continuous tracks
+  (resolver `u*u*(3-2*u)` between keys) and `"step"` on `contacts`/`holds`,
+  whose values are resolved intents/state that must change discretely at
+  beat boundaries (API.md resolver: `'step'` holds `k_i`; only numeric
+  leaves interpolate, so a sparse intent track must not glide). Enums,
+  strings, booleans and nulls step per contract on all tracks.
+- `contacts` and `holds` tracks are **sparse** (7 keys each): they carry
+  resolved intents at beat boundaries only; with `interp:"step"` the
+  resolver holds the last value until the next key. All other tracks are
+  keyed at every beat (~44 keys incl. the t=5.700 hold, t = 0.0 through
+  28.533).
 - `anchors` maps the scene-layout ids actually referenced. `rear-door` is an
   extent `{x0,y0,x1,y1}` per `scene-layout.json`; the rest are `[x,y]` world
   points.
@@ -98,10 +103,15 @@ zone `counter`. Exit carries count pose into cue 2.
   "hand comes to rest on tray edge ~f250–291" (8.33–9.71).
 - Entry at t=5.733 is already mid-stride (`gaitPhase:0.05`, one foot planted
   at `walk-start`, other swinging) — no stand→walk pop `[P]` per map.
-- **Note:** the store→nun cut teleports her from counter (x690) to the aisle
-  (x~505); this follows the action map's "walk-in from the aisle beside the
-  washers" `[P]` — the wide `store` shot shows her small at the counter and
-  the reframed `nun` shot re-stages the arrival. Flagged for coordinator.
+- **Note:** the store→nun cut re-stages her from counter (x690) to the aisle
+  (x~505). Every continuous track carries an identical **hold key at
+  t=5.700** (the cue-1/2 boundary minus one frame) duplicating the t=4.4
+  values, so interpolation between 5.700 and 5.733 spans only 0.033 s — the
+  whole transition lands inside the cut and no visible slide occurs during
+  the store tail (review fix D-1). This follows the action map's "walk-in
+  from the aisle beside the washers" `[P]` — the wide `store` shot shows her
+  small at the counter and the reframed `nun` shot re-stages the arrival.
+  Flagged for coordinator.
 
 ### Cue 3 — "งานของฉันมีแค่รับเหรียญ ใส่ผ้า" · caption 11.730–14.750 (f352–442), shots `work` f347–433 + `work-drum` head f434–442 `[S timing]`
 - **Coin-duty mime** `[P]`: t=11.733–13.2 — three small right-hand
@@ -208,14 +218,22 @@ still" — is exactly these values `[S map / P numbers]`.
 6. **`gaze.yawDeg` sign convention** unspecified; magnitudes only.
 7. **Anchor ids pending CR-01 freeze** — all ids used exist in
    `scene-layout.json` but that file marks the registry unfinalized.
-8. **`contacts`/`holds` sparsity** — resolver holds last value; first
-   `contacts`/`holds` key is at t=0/5.733 respectively, so pre-5.733 `holds`
-   resolves from the t=0 key (feet planted since 0.0 — correct for cue 1).
+8. **`contacts`/`holds` sparsity** — resolver holds last value under
+   `interp:"step"`; first `contacts`/`holds` key is at t=0/5.733 respectively,
+   so pre-5.733 `holds` resolves from the t=0 key (feet planted since 0.0 —
+   correct for cue 1). A `holds` key was added at t=20.867 (`gaze.locked`
+   false) so the advisory hold matches the authoritative `gaze` track's
+   unlock at the quiet→tray cut (review note V-2).
 
 ## Verification performed
 
 - `python -c "import json; json.load(...)"` — JSON parses; all 9 tracks
-  present; 43 keys on continuous tracks, sparse `contacts`(7)/`holds`(6).
+  present; 44 keys on continuous tracks (incl. the t=5.700 hold keys),
+  sparse `contacts`(7)/`holds`(7), `interp:"step"` on both sparse tracks.
+- Review-fix pass (spec `2.1-review-fixes.md`): D-1 hold keys at t=5.700 on
+  all continuous tracks compress the store→nun transition into the 0.033 s
+  cut; D-2 `contacts`/`holds` now step; V-2 `holds` key at t=20.867 aligns
+  `gaze.locked` with the `gaze` track. Handoff pose at t=28.533 unchanged.
 - No files outside the two owned paths were created or modified; no tests or
   renders run (per spec). Representative keys: cue-2 walk entry t=5.733,
   cue-5 impact t=21.833, cue-6 handoff t=28.533 — all visible verbatim in the
