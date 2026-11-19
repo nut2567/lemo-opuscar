@@ -1,4 +1,4 @@
-﻿# แผนการเคลื่อนไหวเต็มตัวของเซล · Snowy Neon EP1 ฉบับ Jessica
+# แผนการเคลื่อนไหวเต็มตัวของเซล · Snowy Neon EP1 ฉบับ Jessica
 
 **แผนสำหรับการผลิต — ยังไม่เริ่มผลิต** · ฉบับนี้จำกัดขอบเขตเหลือ **Jessica edition เดียว** และใช้ `films/horror-x-snowy-neon-code/ep1-source/` เป็นฐานงานหลัก ไม่ใช้ `ep1-recut/devin-work` หรือวัสดุของฉบับซับเดิม
 
@@ -356,7 +356,7 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 - เสียงพากย์ Jessica aligned กับภาพ: ใช้ dry WAV 60.000 วินาทีที่ตรง SRT เท่านั้น; `verify-media.py`/equivalent ต้องผ่าน narration correlation ทุก cue และไม่พบลำดับเสียง/ภาพเลื่อน
 - Motion ผ่าน motion-test gate ก่อน full render และผ่าน visual QA หลัง full render: ตรวจคู่เฟรมสำคัญ 745–746 (ลูกค้าปรากฏ), ช่วง 1069/1241 (คนหาย/ประตูว่าง), ช่วง 53.55–54.35 (coinPlace) และเฟรม 1799 (เฝ้าประตูว่าง)
 - ตรวจเงา การบังเคาน์เตอร์/ประตู ช่องแสงเย็น–อบอุ่น และ contact shadows จากภาพจริง ไม่ใช่จาก JSON อย่างเดียว
-- ตรวจไม่มี footsteps, ไม่มี clip ดำผิดปกติ, loudness/peak อยู่ในเกณฑ์ verifier และ SFX beats เดิม (`14.95`, `21.82`, `32.75`, `33.53`, `41.52`, optional `53.95`) ยังลงจังหวะเดิม
+- ตรวจไม่มี footsteps, ไม่มี clip ดำผิดปกติ, loudness/peak อยู่ในเกณฑ์ verifier และ SFX beats เดิม (`14.95`, `21.82`, `32.75`, `33.53`, cloth-rustle `40.98` นาน 0.38 วิ จบก่อนประตูว่าง 41.367 — accepted deviation จาก v1 cloth `41.52` ตาม audio revision v2 ที่ผู้ใช้สั่ง, optional `53.95`) ยังลงจังหวะเดิม
 - ยืนยัน caption size ที่ render จริงตรงกับค่าที่ C2 สรุป และตรวจ cue ที่ยาวสุดบน phone-scale preview
 
 ## ประมาณเวลาและการทำงานขนาน
@@ -420,28 +420,26 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 | 1.0 | ✅ | API contract และ read-only provisioning หลักฐานอยู่ใน main; ตรวจแล้ว `cel-motion-10` ไม่มี source/commit เฉพาะ และเก็บรายงานต้นฉบับ+ฉบับแก้ไว้ใน `.agent-runs/task_{b99c89b83e04,ad4d91b43e47}/report.md` |
 | 1.1 | ✅ | แก้ null semantics ของ `s`, `groundY`, `gaitPhase`, `sinceSeconds` และพิกัด nullable แล้ว; ตรวจ source และคัดลอกโมดูล/fixtures เข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.2 | ✅ | โมดูลช่วงบนและ fixtures 10 กรณีตรวจ schema แล้ว และคัดลอกเข้า source tree พร้อมยืนยัน SHA-256 |
-| 1.3 | ❌ | ยังไม่เริ่ม; 1.1/1.2 ผ่านแล้ว จึงเริ่มรวม rig เข้ากับ renderer ได้ |
-| 2.1 | ✅ | cues 1–6 ผ่าน independent review; แก้ rootPath slide ช่วง store→nun, เปลี่ยน contacts/holds เป็น `step`, จัด gaze hold และคง handoff frame 856/SRT; ดู `2.1-review-fixes-report.md` |
-| 2.2 | ✅ | cues 7–12 ผ่านการตรวจ source-level; handoff frame 856 ตรงกับ 2.1 ทั้ง 9 tracks และตัด coin path ออกจาก pose data; ดู `2.2-review-fixes-report.md` |
+| 1.3 | ✅ | Coordinator wiring อยู่ใน `ep1-source/entry.mjs`/`main.mjs`: per-frame evaluator, lower/upper SVG, scene path, per-zone clip, cel limb suppression, contact shadows และ dynamic lighting; clips 12s + cue-4/coin-watch supplements ตรวจแล้ว. Evidence `.agent-runs/snowy-neon-cel-motion-continuation/evidence/motion-integration/QA-UPDATE.md` |
+| 2.1 | ✅ | cues 1–6 ผ่าน independent review; follow-up เพิ่ม contact/hold keys เฉพาะช่วงเดินและ hand/gaze transitions; cue-4 half-step y=1310 คงตาม source; handoff frame 856/SRT ไม่เปลี่ยน. รายงาน `.agent-runs/snowy-neon-cel-motion-continuation/reports/` |
+| 2.2 | ✅ | cues 7–12 ผ่าน review; coin airborne ที่ depart 53.55, target tray/contact 53.95, placed ที่ settle 54.35; cue-6/7 handoff ทั้ง 9 tracks ตรงกัน. Notes อัปเดตตาม JSON; hand interp key คงตาม resolver semantics |
 | 2.3 | ✅ | ตรวจ schema, cue coverage, handoff, coinPlace ownership และท่าจบจาก source; ตรวจภาพจริงต่อใน 5.2; ดู `2.3-pose-merge-acceptance.md` |
-| 3.1 | ✅ | `scene-layout.json` อยู่ใน source tree; รายงาน audit ของแพ็กเกจ scene ระบุ fixture checks |
-| 3.2 | ✅ | `occlusion.mjs` และ scene fixtures อยู่ใน source tree; รายงาน audit ระบุ fixture checks และ coordinator blockers |
+| 3.1 | ✅ | `scene-layout.json` freeze CR-01; registry report 21/21 spatial anchors resolved, zero conflicts; non-spatial grip/contact labels documented |
+| 3.2 | ✅ | `occlusion.mjs` ปรับ counter body เป็น x628..740, approach band 570..790, rear-door occlusion direction และ lighting composite; fixture 40/0 |
 | 4.1 | ✅ | ตรวจหลักฐานขนาด 19.2 px เทียบ 22.4 px และบันทึกข้อแตกต่างแล้ว |
-| 4.2 | ⏳ | บันทึกคำตัดสินขนาดเล็ก 19.2 px (`capvw=1.7778`) แล้ว; การตั้งเป็นค่าใช้งานถาวรของ renderer รอ coordinator integration |
-| 4.3 | ✅ | ตรวจบน viewport มือถือ 390×693 ที่ DPR 2; cues 3/5/12 ผ่านการตรวจบรรทัดและตำแหน่ง |
-| 5.1 | ✅ | checklist QA 60 ข้อและ gate JSON 60 รายการครบ; แก้ SRC-14/15 แล้ว; ยังไม่ได้รัน QA checks |
-| 5.2 | ❌ | รอ rig, pose, scene, integration และ checklist พร้อม |
-| 5.3 | ❌ | รอ 5.2 และ Jessica aligned dry WAV 60 วินาที; WAV ยังเป็น blocker |
+| 4.2 | ✅ | หลักฐานคำตัดสินเดิมของผู้ใช้กำหนด 22.4 px (`capvw=2.0741`); ตรงกับ default ปัจจุบันใน `index.html`, ไม่ต้องแก้ renderer |
+| 4.3 | ✅ | ตรวจ renderer จริงที่ `capvw=2.0741`, 390×693 DPR 2; cues 3/5/12 บรรทัดเดียว, font loaded, cue 12 ไม่ล้น; ขอบล่าง y≈1763 อยู่ใน safe band; SRT hash ตรงเดิม. หลักฐาน `.agent-runs/snowy-neon-cel-motion-continuation/evidence/captions-22.4/` |
+| 5.1 | ⏳ | SRC-01..25 ผ่าน (SRC-25 ผ่าน independent offline ASR cue-level adjudication; ไม่มี word-level timestamps claim). MT metric gates รวม hand contact ผ่านหลังซ่อม (771 samples, 0 เกิน 4 px, max 3.256 px); MT visual gates 03/05/06/07/08 ยังต้อง map กับ corrected-render pixel evidence. 4 contact-shadow fixture groups ยัง structural-only เพราะไม่มี numeric expectations ใน spec. Evidence `evidence/audio-alignment-independent/src25-adjudication.md`, `evidence/gate-audit/src-mt-status.md`, `postrepair-contact-verification.md`, `contact-shadow-fixtures.md` |
+| 5.2 | ⏳ | Integration + motion clips, key stills, resolver/rig/caption checks ผ่าน. Full-cut hand contact ผ่าน 771/771; foot/coin checks ผ่านระดับ evaluator (ไม่ใช่ pixel verification). Visual review พบ FR-04..13/15 pass; FR-14 planted-vs-airborne shadow ยัง uncertain หลัง eyeball review เพราะ floor checker/ขาแยกเงาไม่ได้ชัด. 4 contact-shadow fixture groups structural-only. Evidence `evidence/gate-audit/final-visual-review.md`, `final-visual-coordinator-review.md`, `postrepair-contact-verification.md`, `fullcut-foot-coin-scan.md` |
+| 5.3 | ⏳ | Corrected full 60s render: H.264 1080×1920, 30fps, 1,800 frames, AAC stereo 48kHz; decode/black-run และ loudness ผ่าน (−14.6 LUFS/−1.5 dBTP), 24 narration mux samples offset 0 ms, min correlation 0.7441. SRC-25/FR-20 ผ่านที่ cue-level; FR-19 บันทึก rustle v2 @40.98s/0.38s เป็น accepted deviation และมี signal/onset check (ไม่ใช่ user audition); FR-25 determinism ผ่าน. Final acceptance ยังรอ FR-14 shadow distinction. Evidence `evidence/full-render-corrected/jessica-02/`, `evidence/audio-alignment-independent/src25-adjudication.md`, `evidence/gate-audit/fr19-onset-check.md`, `fr25-determinism.md`, `final-visual-review.md` |
 
-### งานที่พร้อมเริ่มได้ทันที
+### งานที่เหลือ
 
-- **1.3** เริ่มรวม rig ได้ เพราะงาน 1.1 และ 1.2 ผ่านการตรวจรับแล้ว
-- **2.3** source-level pose merge ผ่านแล้ว; ตรวจภาพจริงของเท้า framing และ gaze/glance ใน 5.2
-- **4.2** ตัดสินขนาดซับ 19.2 px แล้ว; ตั้งค่า renderer ถาวรระหว่าง integration
-- **5.2** รอ 1.3 และการรวม rig/pose/scene เข้ากับ production path
-- **5.3** รอ 5.2 ผ่านและ Jessica aligned dry WAV 60 วินาทีที่ตรงกับ SRT
+- **5.1** Map corrected-render FR pixel evidence to visual MT-03/05/06/07/08 criteria; freeze numeric shadow expectations หากต้องการปิด shadow fixture groups. SRC-25/FR-20 ผ่านที่ cue-level; ดู adjudication report สำหรับข้อจำกัดเรื่อง word-level timestamps
+- **5.2** แก้หรือรับรอง FR-14 planted-vs-airborne shadow distinction; hand-contact gate ผ่านแล้วจาก full-cut regression. 4 shadow fixture groups ยังไม่มี numeric contract expectations
+- **5.3** ปิด FR-14 ก่อน final acceptance; FR-04..13/15 pixel gates, SRC-25/FR-20, FR-19 accepted deviation/signal evidence และ FR-25 determinism บันทึกแล้ว
 หลักฐานสถานะ: `.agent-runs/snowy-neon-cel-motion-task1/evidence/source-provisioning-1-1-1-2.md`, รายงานตรวจ/แก้ไข 2.1–2.3 ใน `.agent-runs/snowy-neon-cel-motion-task1/reports/`, merged cue map ที่ `.agent-runs/snowy-neon-cel-motion-2-3-merge-review/MERGED-CUE-MAP.md`, รายงาน 4.1–4.3 ใน `.agent-runs/snowy-neon-cel-motion-task4/reports/`, 5.1 checklist/gates และ ledger/worker report ของ 3.1–3.2.
 
 ### ข้อกำหนดเวลาสำหรับ render ล่าสุด
 
-ผู้ใช้แจ้งว่าเหลือเวลา 1 ชั่วโมง 20 นาที และให้รวมข้อมูลที่พร้อมลง Git ก่อน โดย **งด full combined render ในช่วงเวลานี้**; เตรียมไฟล์ที่ commit แล้วเพื่อย้ายไป render บนอีกเครื่องได้ หากงานและ dependency เสร็จก่อนกรอบเวลา จึงค่อยพิจารณา render ตาม gate ในแผน ทั้งนี้ full Jessica render ยังรอ aligned dry WAV 60 วินาทีที่ตรงกับ SRT และ 5.2 ผ่านก่อน
+ผู้ใช้แจ้งเมื่อ 19 พ.ย. ว่าขอเริ่ม full render ได้ทันที; coordinator สร้าง corrected full render หลังซ่อม hand contacts ที่ `evidence/full-render-corrected/jessica-02/`. สถานะล่าสุดและหลักฐานแต่ละ gate อยู่ใน build `REPORT.md` และ `evidence/gate-audit/`; final acceptance ยังรอ FR-14 shadow distinction.

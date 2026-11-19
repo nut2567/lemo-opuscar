@@ -3,6 +3,8 @@ import {drawNeon,initNeon,signLines,fontStatus} from './neon.mjs';
 import {drawCharacters,characterMarkup} from './characters.mjs';
 import {getCharacterModel,CHARACTER_MODELS,DEFAULT_MODEL} from '../../models/registry.mjs';
 import {drawWeather,drawPost} from './weather.mjs';
+import {contactShadows,lightingComposite,lightingGrade} from './ep1-source/motion/scene/occlusion.mjs';
+import {contactShadowMarkup} from './ep1-source/motion/scene/contact-shadow-svg.mjs';
 
 const W=1080,H=1920,GROUND=1440;
 const canvas=document.getElementById('film'),ctx=canvas.getContext('2d',{alpha:false});
@@ -28,28 +30,52 @@ if(modelParam){
 }
 window.CHARACTER_MODEL=characterModel;
 const cameraPresets=[{cx:540,cy:960,z:1,skew:0},{cx:465,cy:1090,z:1.16,skew:-.025},{cx:605,cy:1030,z:1.24,skew:.016}];
-function nunLayer(t){
- const mark=characterMarkup(t,{model:characterModel,uid:'snowy'});
+function nunLayer(t,motionEvaluation=null){
+ const motion=characterModel==='cel'?motionEvaluation:null;
+ const root=motion?.lowerBodyResult?.root;
+ const lightRoot=root?.anchorWorld??[690,925];
+ const light=lightingComposite(lightRoot[0],lightRoot[1]);
+ const lightContext=lightingGrade(lightRoot[0],lightRoot[1]);
+ const opacity=n=>Number(n).toFixed(3);
+ const mark=characterMarkup(t,{
+  model:characterModel,uid:'snowy',
+  ...(root?{x:root.anchorWorld?.[0],y:root.anchorWorld?.[1],scale:root.scale,facing:root.facing,suppressMotionLimbs:true}:{}),
+ });
+ const clipId=motion?.clip?.id??'nunClip';
+ const clipSvg=motion?.clip?.svg??'<clipPath id="nunClip" clipPathUnits="userSpaceOnUse"><rect width="1080" height="1110"/></clipPath>';
+ let actor=mark;
+ if(motion?.svg?.fragments){
+  const feet=motion.lowerBodyResult?.feet??{};
+  const contacts=Object.values(feet).filter(f=>f?.planted&&Array.isArray(f.contactWorld)).map(f=>({
+   x:f.contactWorld[0],y:f.contactWorld[1],type:'foot-plant',weight:1,surface:'floor',
+  }));
+  const shadows=contactShadowMarkup(contactShadows(contacts),{uid:'snowy',frame:motion.frameContext?.frame,ambient:lightContext.ambient}).fragments.beforeActor;
+  actor=shadows+motion.svg.fragments.beforeBase+mark+motion.svg.fragments.afterBase;
+ }
  // Grade the character for the room and clip the light spill to its silhouette.
  return `<defs>
-  <g id="nunModel">${mark}</g>
-  <clipPath id="nunClip" clipPathUnits="userSpaceOnUse"><rect width="1080" height="1110"/></clipPath>
+  <g id="nunModel">${actor}</g>
+  ${clipSvg}
   <mask id="nunLightMask" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1110"><use href="#nunModel"/></mask>
   <filter id="nunInteriorGrade" color-interpolation-filters="sRGB">
-   <feComponentTransfer><feFuncR type="linear" slope="0.88"/><feFuncG type="linear" slope="0.84"/><feFuncB type="linear" slope="0.82"/></feComponentTransfer>
+   <feComponentTransfer><feFuncR type="linear" slope="${opacity(light.rSlope)}"/><feFuncG type="linear" slope="${opacity(light.gSlope)}"/><feFuncB type="linear" slope="${opacity(light.bSlope)}"/></feComponentTransfer>
   </filter>
   <radialGradient id="nunLampSpill" gradientUnits="userSpaceOnUse" cx="708" cy="1052" r="154">
-   <stop stop-color="#ffc585" stop-opacity="0.29"/><stop offset=".57" stop-color="#ffc585" stop-opacity="0.10"/><stop offset="1" stop-color="#ffc585" stop-opacity="0"/>
+   <stop stop-color="#ffc585" stop-opacity="${opacity(light.warmOverlayOpacity)}"/><stop offset=".57" stop-color="#ffc585" stop-opacity="${opacity(light.warmOverlayOpacity*.35)}"/><stop offset="1" stop-color="#ffc585" stop-opacity="0"/>
   </radialGradient>
   <linearGradient id="nunGlassLight" gradientUnits="userSpaceOnUse" x1="643" y1="876" x2="705" y2="967">
-   <stop stop-color="#83c5d6" stop-opacity="0.13"/><stop offset="1" stop-color="#83c5d6" stop-opacity="0"/>
+   <stop stop-color="#83c5d6" stop-opacity="${opacity(light.coolOverlayOpacity)}"/><stop offset="1" stop-color="#83c5d6" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="nunPinkRim" gradientUnits="userSpaceOnUse" x1="620" y1="0" x2="740" y2="0">
+   <stop stop-color="#ff4fa8" stop-opacity="0"/><stop offset="1" stop-color="#ff4fa8" stop-opacity="${opacity(light.pinkRimOpacity)}"/>
   </linearGradient>
  </defs>
- <g clip-path="url(#nunClip)">
+ <g clip-path="url(#${clipId})">
   <use href="#nunModel" filter="url(#nunInteriorGrade)"/>
   <g mask="url(#nunLightMask)">
    <rect x="620" y="810" width="155" height="300" fill="url(#nunLampSpill)"/>
    <rect x="620" y="810" width="155" height="300" fill="url(#nunGlassLight)"/>
+   <rect x="620" y="810" width="155" height="300" fill="url(#nunPinkRim)"/>
   </g>
  </g>`;
 }
@@ -63,7 +89,7 @@ window.EV=[{t:2.5,type:'cut'},{t:3.7,type:'coin'},{t:5,type:'cut'},{t:6.25,type:
 // sampled {cx,cy,z,skew} — its z is final, no per-shot zoom ramp — and the
 // identical matrix is applied to Canvas and SVG. shotIndex overrides the
 // 2.5 s shot derivation for callers that already know the segment.
-export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,showCloth=true}={}){
+export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,showCloth=true,motionEvaluation=null}={}){
  const st=Math.max(0,Math.min(7.5-1/3000,Number(sourceSeconds)||0));
  const et=elapsedSeconds===undefined?st:Number(elapsedSeconds)||0;
  const shot=shotIndex===undefined?Math.min(2,Math.floor(st/2.5)):shotIndex;
@@ -140,8 +166,8 @@ export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,
  // counter front and her legs/soles never overpaint the shop interior.
  // The y-scale uses the same animated z as the Canvas camera.
  nunCam.setAttribute('transform',`translate(${W/2} ${H/2}) matrix(${z} 0 ${cam.skew} ${z} ${-cam.cx*z} ${-cam.cy*z})`);
- nunCam.innerHTML=nunLayer(st);
- window.FRAME_META={time:st,shot,source:'procedural Canvas2D',imageInputs:0,characterModel,sourceSeconds:st,elapsedSeconds:et,camera:cam?{cx:cam.cx,cy:cam.cy,z,skew:cam.skew}:undefined,shotIndex:shot};
+ nunCam.innerHTML=nunLayer(st,motionEvaluation);
+ window.FRAME_META={time:st,shot,source:'procedural Canvas2D',imageInputs:0,characterModel,sourceSeconds:st,elapsedSeconds:et,camera:cam?{cx:cam.cx,cy:cam.cy,z,skew:cam.skew}:undefined,shotIndex:shot,motion:motionEvaluation?{frame:motionEvaluation.frameContext.frame,zone:motionEvaluation.lowerBodyResult?.root?.zone,scenePathSource:motionEvaluation.scenePathSource,diagnostics:motionEvaluation.diagnostics}:null};
  return window.FRAME_META;
 }
 // Legacy proof hook: identical to renderSnowyFrame with sourceSeconds =

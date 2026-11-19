@@ -14,7 +14,7 @@ export const HEIGHT = 1920;
 // cues.* are the live-insert beats consumed by entry.mjs drawInsert, in
 // film seconds: tray = coin-on-tray impact, slot = coin fully in slot /
 // washer spins up, motor = suds onset. Audio-only beats (the washer
-// strikes, cloth whoosh) live in eventsFor() below.
+// strikes, cloth rustle) live in eventsFor() below.
 export const variants = {
   original: {
     edition: 'original',
@@ -32,7 +32,7 @@ export const variants = {
     edition: 'jessica',
     srt: './captions/jessica.srt',
     picture: './picture/jessica.json',
-    cues: { tray: 21.82, slot: 32.75, motor: 33.53, cloth: 41.52 },
+    cues: { tray: 21.82, slot: 32.75, motor: 33.53, cloth: 40.98 },
   },
 };
 
@@ -68,11 +68,20 @@ export function eventsFor(edition) {
         { t: 21.82, type: 'coin', note: 'tray impact on กระทบ 21.42-22.08' },
         { t: 32.75, type: 'coin-slot', note: 'exact beat — coin fully in slot' },
         { t: 33.53, type: 'washer', note: 'single motor onset for the spin clause; NO second strike' },
-        { t: 41.52, type: 'cloth', note: 'exit whoosh ~0.15 s after last cloth pixel; no footsteps anywhere' },
+        // ACCEPTED DEVIATION from the stale v1 beat cloth@41.52: the
+        // user-directed v2 audio revision (specs/audio-revision.md,
+        // evidence/audio-revision/REPORT.md) replaces the loud exit
+        // whoosh with a quiet dry fabric rustle at 40.98 s for 0.38 s,
+        // inside the visible hem recession and ending at ~41.36 s before
+        // the doorway is empty at 41.367 s. The exact rustle was NOT
+        // separately auditioned by the user; do not claim sound-quality
+        // approval. No footsteps anywhere.
+        { t: 40.98, type: 'cloth-rustle', dur: 0.38, note: 'v2 quiet rustle replacing v1 cloth whoosh @41.52 (accepted deviation); ends before doorway-empty 41.367; no footsteps' },
       ],
       optional: [
-        { t: 25.0, type: 'cloth', note: 'soft cloth swell under มากับผ้าขาวผืนใหญ่' },
-        { t: 46.95, type: 'cloth', note: 'soft cloth swell under คืนที่สอง' },
+        // v2 revision removed the optional visitor cloth accents at
+        // 25.0 and 46.95 (mix_v2 remove_ids cloth-cue6/cloth-cue11); only
+        // the optional coin beat remains.
         { t: 53.95, type: 'coin', note: 'coinPlace tray contact; keep quieter than the 21.82 impact or omit' },
       ],
     };

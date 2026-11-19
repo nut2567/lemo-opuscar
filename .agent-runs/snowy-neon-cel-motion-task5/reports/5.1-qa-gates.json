@@ -1,9 +1,9 @@
-﻿{
+{
     "version":  1,
     "task":  "5.1",
     "plan":  "docs/plans/snowy-neon-cel-motion.th.md",
     "prepared":  "2026-11-19",
-    "note":  "QA gate definitions only; no formal gate execution yet. Pose files 2.1 and 2.2 have been delivered and are ready for coordinator source validation.",
+    "note":  "QA gate definitions updated to approved 22.4px caption decision. Execution results are in the motion integration evidence report; FR gates remain pending.",
     "thresholds":  {
                        "footPlantErrorMax":  2,
                        "footPlantUnit":  "world px",
@@ -18,8 +18,8 @@
                        "loudnessMinLUFS":  -16,
                        "loudnessMaxLUFS":  -13,
                        "peakMaxDBTP":  -1,
-                       "captionSizeVw":  1.7778,
-                       "captionSizePx1080":  19.2,
+                       "captionSizeVw":  2.0741,
+                       "captionSizePx1080":  22.4,
                        "captionSafeBandY":  [
                                                 1724,
                                                 1764
@@ -138,9 +138,11 @@
                                           "cue":  9
                                       },
                                       {
-                                          "t":  41.52,
-                                          "type":  "cloth",
-                                          "cue":  10
+                                          "t":  40.98,
+                                          "type":  "cloth-rustle",
+                                          "cue":  10,
+                                          "dur":  0.38,
+                                          "note":  "ACCEPTED DEVIATION from stale v1 cloth@41.52: user-directed v2 audio revision schedules quiet dry rustle 40.98-41.36 s, before doorway-empty 41.367 s; exact rustle NOT separately user-auditioned; no footsteps"
                                       }
                                   ],
                      "optional":  [
@@ -316,7 +318,7 @@
                                            "1.2"
                                        ],
                       "blockedBy":  [
-                                        "1.3"
+
                                     ]
                   },
                   {
@@ -354,7 +356,7 @@
                   {
                       "id":  "SRC-14",
                       "phase":  "source",
-                      "objective":  "Cue 6/7 boundary at frame 856 — shared key allowed when values match",
+                      "objective":  "Cue 6/7 boundary at frame 856 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â shared key allowed when values match",
                       "evidence":  "ep1-source/motion/poses/jessica-01-06.json (cue 6 end) + jessica-07-12.json (cue 7 start) + jessica-01-06.notes.md handoff contract",
                       "output":  "check keys at t=28.533 for value-identical match per handoff contract",
                       "pass":  "shared boundary key at t=28.533 allowed when both files carry identical values; no key in one file at a time strictly owned by the other; no conflicting values or missing boundary pose",
@@ -388,8 +390,8 @@
                       "phase":  "source",
                       "objective":  "Pose anchor references valid",
                       "evidence":  "ep1-source/motion/poses/*.json + scene/scene-layout.json",
-                      "output":  "collect all anchor id strings; look up in scene-layout.json",
-                      "pass":  "every referenced anchor exists in scene-layout.json",
+                      "output":  "resolve spatial references with anchor-registry.mjs; classify documented contact/grip/coin labels as non-spatial",
+                      "pass":  "all spatial references resolve; non-spatial labels remain classified and no coordinates are invented",
                       "owner":  "coordinator",
                       "dependencies":  [
                                            "2.1",
@@ -479,7 +481,7 @@
                   {
                       "id":  "SRC-22",
                       "phase":  "source",
-                      "objective":  "Cue 8 — cel is not the coin inserter",
+                      "objective":  "Cue 8 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â cel is not the coin inserter",
                       "evidence":  "ep1-source/motion/poses/jessica-07-12.json",
                       "output":  "check hand targets for cue 8 (frames 956-1003)",
                       "pass":  "cel hand targets are neutral/watching, not at slot contact",
@@ -509,10 +511,10 @@
                   {
                       "id":  "SRC-24",
                       "phase":  "source",
-                      "objective":  "Caption decision settled at 19.2 px",
-                      "evidence":  ".agent-runs/snowy-neon-cel-motion-task4/reports/4.2-caption-decision.md",
+                      "objective":  "Caption decision settled at 22.4 px",
+                      "evidence":  ".agent-runs/snowy-neon-ep1-devin40/CAPTION-DIRECTION.md; .agent-runs/snowy-neon-cel-motion-continuation/evidence/captions-22.4/",
                       "output":  "read decision record",
-                      "pass":  "value is 1.7778 vw (19.2 px at 1080); override mechanism confirmed in entry.mjs:15-18",
+                      "pass":  "value is 2.0741 vw (22.4 px at 1080); approved decision and renderer default confirmed",
                       "owner":  "coordinator",
                       "dependencies":  [
                                            "4.2"
@@ -525,9 +527,9 @@
                       "id":  "SRC-25",
                       "phase":  "source",
                       "objective":  "Jessica WAV blocker status",
-                      "evidence":  "ep1-source/narrative-cut/out/jessica-v1/speech.wav or user-provided path",
+                      "evidence":  "films/horror-x-snowy-neon-code/narrative-cut/out/jessica-v1/speech.wav (local candidate)",
                       "output":  "file existence + duration check",
-                      "pass":  "WAV exists, 60.000s, 48 kHz, matches SRT alignment",
+                      "pass":  "WAV exists, 60.000s, 48 kHz, and independent SRT alignment is verified",
                       "fail_is_blocker":  true,
                       "blocks":  [
                                      "FR-20",
@@ -539,12 +541,14 @@
                                        ],
                       "blockedBy":  [
 
-                                    ]
+                                    ],
+                      "status":  "PASS",
+                      "result":  "Independent offline whisper-large-v3-turbo Thai ASR was adjudicated against all 12 SRT cues; full cue text is covered in order with noted ASR normalization/homophone variants. Segment timestamps support cue-level coverage (not word-level alignment); cue-3/4 pause and the silent WAV tail were checked. See evidence/audio-alignment-independent/src25-adjudication.md."
                   },
                   {
                       "id":  "MT-01",
                       "phase":  "motion-test",
-                      "objective":  "Foot plant — no sliding during stance (cue 2)",
+                      "objective":  "Foot plant ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â no sliding during stance (cue 2)",
                       "evidence":  "test clip frames 183-291",
                       "output":  "LowerBodyResult.feet.\u003cside\u003e.contactErrorWorld where planted===true",
                       "pass":  "contactErrorWorld \u003c= 2.0 for all planted frames; sliding===false",
@@ -618,7 +622,9 @@
                                         "2.1",
                                         "2.2",
                                         "5.2"
-                                    ]
+                                    ],
+                      "status":  "FAIL",
+                      "result":  "Entry-identical canonical-frame scan: cue 3 has 150 active hand samples; max 18.732 px; 1082/1117 active samples across the cut exceed 4.0 px. See motion-integration/contact-fullscan-report.md."
                   },
                   {
                       "id":  "MT-05",
@@ -694,10 +700,10 @@
                   {
                       "id":  "MT-09",
                       "phase":  "motion-test",
-                      "objective":  "Caption renders at 19.2 px with ?capvw=1.7778",
-                      "evidence":  "test clip render with capvw override",
+                      "objective":  "Caption renders at 22.4 px with ?capvw=2.0741",
+                      "evidence":  "browser render with capvw=2.0741; computed font-size in 390px viewport",
                       "output":  "computed font-size in browser",
-                      "pass":  "font-size 6.933 px at 390 px viewport (1.7778 vw) or 19.2 px at 1080 px",
+                      "pass":  "font-size 8.089 px at 390 px viewport (2.0741 vw) or 22.4 px at 1080 px",
                       "owner":  "coordinator",
                       "dependencies":  [
                                            "4.2",
@@ -738,7 +744,9 @@
                                        ],
                       "blockedBy":  [
                                         "5.3"
-                                    ]
+                                    ],
+                      "status":  "PASS",
+                      "result":  "Draft build: 60.000 s, H.264 1080x1920, 30 fps, 1800 frames, AAC 48 kHz stereo; full decode and blackdetect passed; see evidence/full-render-draft/jessica-01/media-qa.json."
                   },
                   {
                       "id":  "FR-02",
@@ -776,7 +784,7 @@
                       "objective":  "Customer reveal at frame ~746",
                       "evidence":  "extract frames 744-748 from final MP4",
                       "output":  "visual inspection",
-                      "pass":  "cloth figure visible starting frame 746 (±1 frame)",
+                      "pass":  "cloth figure visible starting frame 746 (Ãƒâ€šÃ‚Â±1 frame)",
                       "keyFrame":  746,
                       "owner":  "coordinator",
                       "dependencies":  [
@@ -1013,10 +1021,10 @@
                   {
                       "id":  "FR-19",
                       "phase":  "full-render",
-                      "objective":  "SFX beat alignment",
-                      "evidence":  "audio waveform at 14.95, 21.82, 32.75, 33.53, 41.52 (optional 53.95)",
-                      "output":  "listen + waveform inspection",
-                      "pass":  "each required SFX audible within ±0.1s of spec time",
+                      "objective":  "SFX beat alignment (reconciled to approved v2 intent)",
+                      "evidence":  "audio waveform/onset inspection at 14.95, 21.82, 32.75, 33.53, cloth-rustle 40.98 dur 0.38 ending before doorway-empty 41.367 (optional coin 53.95); accepted deviation from stale v1 cloth@41.52 per user-directed v2 revision (specs/audio-revision.md, evidence/audio-revision/REPORT.md); exact rustle quality NOT separately user-auditioned",
+                      "output":  "waveform/onset inspection (signal-level presence/onset may be reported; no listening pass claimed)",
+                      "pass":  "each required SFX present with onset within Ãƒâ€šÃ‚Â±0.1s of spec time; rustle onset at 40.98 s, duration ~0.38 s, ending before 41.367 s; no footsteps",
                       "owner":  "coordinator",
                       "dependencies":  [
                                            "5.3"
@@ -1031,7 +1039,7 @@
                       "objective":  "Narration-to-picture alignment",
                       "evidence":  "python verify-media.py \u003coutput.mp4\u003e \u003cdry.wav\u003e \u003ctimeline-qa.json\u003e",
                       "output":  "per-cue correlation and offset",
-                      "pass":  "correlation \u003e= 0.69 and offset \u003c= ±10ms for every check point",
+                      "pass":  "correlation \u003e= 0.69 and offset \u003c= Ãƒâ€šÃ‚Â±10ms for every check point",
                       "threshold":  {
                                         "correlationMin":  0.69,
                                         "offsetMaxMs":  10
@@ -1042,17 +1050,17 @@
                                            "SRC-25"
                                        ],
                       "blockedBy":  [
-                                        "5.3",
-                                        "SRC-25"
-                                    ]
+                                    ],
+                      "status":  "PASS",
+                      "result":  "Refreshed corrected-render media-qa.json: 24 samples, minimum correlation 0.7441 (>=0.69), all offsets 0.0 ms (<=10 ms); SRC-25 cue-level transcript adjudication passed. Evidence: evidence/audio-alignment-independent/src25-adjudication.md and evidence/full-render-corrected/jessica-02/media-qa.json."
                   },
                   {
                       "id":  "FR-21",
                       "phase":  "full-render",
                       "objective":  "Caption phone-scale check (cue 12)",
-                      "evidence":  "browser render at 390x693 viewport DPR 2 with ?capvw=1.7778",
+                      "evidence":  "browser render at 390x693 viewport DPR 2 with ?capvw=2.0741; evidence/captions-22.4",
                       "output":  "one-line fit + tone mark legibility",
-                      "pass":  "cue 12 single line; computed 6.933 px; tone marks distinguishable at 2x DPR",
+                      "pass":  "cue 12 single line; computed 8.089 px at 390px viewport; tone marks distinguishable at 2x DPR",
                       "owner":  "coordinator",
                       "dependencies":  [
                                            "5.3"
@@ -1067,7 +1075,7 @@
                       "objective":  "Caption safe-band placement",
                       "evidence":  "caption bounding box at 1080x1920 raster",
                       "output":  "span bottom y value",
-                      "pass":  "1724 \u003c= caption bottom y \u003c= 1764",
+                      "pass":  "caption span bottom within 1724..1764; 22.4 px recheck raster y about 1763",
                       "threshold":  {
                                         "yMin":  1724,
                                         "yMax":  1764
@@ -1187,9 +1195,9 @@
     "phaseSummary":  {
                          "source":  {
                                         "count":  25,
-                                        "verifiableNow":  23,
+                                        "verifiableNow":  24,
                                         "waitingPoseDelivery":  0,
-                                        "waitingRigIntegration":  2
+                                        "waitingRigIntegration":  0
                                     },
                          "motionTest":  {
                                             "count":  10,

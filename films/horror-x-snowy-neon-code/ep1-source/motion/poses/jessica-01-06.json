@@ -4342,14 +4342,14 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                672,
+                704,
                 1101
               ],
               "pinch": 0,
@@ -4358,14 +4358,14 @@
             },
             "right": {
               "targetWorld": [
-                716,
-                1090
+                667.2,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                704,
+                672,
                 1101
               ],
               "pinch": 0,
@@ -4379,14 +4379,14 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                672,
+                704,
                 1101
               ],
               "pinch": 0,
@@ -4395,14 +4395,14 @@
             },
             "right": {
               "targetWorld": [
-                716,
-                1090
+                667.2,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                704,
+                672,
                 1101
               ],
               "pinch": 0,
@@ -4416,14 +4416,14 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                709.6,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                672,
+                704,
                 1101
               ],
               "pinch": 0,
@@ -4432,14 +4432,14 @@
             },
             "right": {
               "targetWorld": [
-                716,
-                1090
+                667.3,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                704,
+                672,
                 1101
               ],
               "pinch": 0,
@@ -4453,14 +4453,14 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                672,
+                704,
                 1101
               ],
               "pinch": 0,
@@ -4469,14 +4469,14 @@
             },
             "right": {
               "targetWorld": [
-                716,
-                1090
+                667.2,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                704,
+                672,
                 1101
               ],
               "pinch": 0,
@@ -4490,14 +4490,14 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                672,
+                704,
                 1101
               ],
               "pinch": 0,
@@ -4506,14 +4506,14 @@
             },
             "right": {
               "targetWorld": [
-                716,
-                1090
+                667.2,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                704,
+                672,
                 1101
               ],
               "pinch": 0,
@@ -4664,8 +4664,8 @@
             },
             "right": {
               "targetWorld": [
-                714,
-                1090
+                704.6,
+                1084
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4689,28 +4689,22 @@
                 1080
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                668,
-                1101
-              ],
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": null,
               "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             },
             "right": {
               "targetWorld": [
-                714,
-                1090
+                709.1,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                704,
-                1101
-              ],
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": null,
               "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
@@ -4722,14 +4716,14 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                672,
+                704,
                 1101
               ],
               "pinch": 0,
@@ -4738,14 +4732,14 @@
             },
             "right": {
               "targetWorld": [
-                716,
-                1090
+                667.2,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
               "contactAnchor": "tray",
               "contactWorld": [
-                704,
+                672,
                 1101
               ],
               "pinch": 0,
@@ -4759,24 +4753,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4786,6 +4764,22 @@
                 1101
               ],
               "pinch": 0.4,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.2,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -4796,24 +4790,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4823,6 +4801,22 @@
                 1101
               ],
               "pinch": 0.3,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.2,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -4833,24 +4827,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4860,6 +4838,22 @@
                 1101
               ],
               "pinch": 0.3,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.2,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -4870,24 +4864,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4897,6 +4875,22 @@
                 1101
               ],
               "pinch": 0.3,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.2,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -4907,24 +4901,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                700,
-                1084
+                699.4,
+                1082.7
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4934,6 +4912,22 @@
                 1098
               ],
               "pinch": 0.6,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.3,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -4944,24 +4938,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
+                709.6,
+                1085
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4973,16 +4951,11 @@
               "pinch": 0.3,
               "elbowPoleWorld": null,
               "gripId": null
-            }
-          }
-        },
-        {
-          "t": 13.2,
-          "value": {
-            "left": {
+            },
+            "right": {
               "targetWorld": [
-                664,
-                1096
+                667.3,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -4994,11 +4967,16 @@
               "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
-            },
-            "right": {
+            }
+          }
+        },
+        {
+          "t": 13.2,
+          "value": {
+            "left": {
               "targetWorld": [
-                700,
-                1084
+                699.2,
+                1082.6
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5010,6 +4988,22 @@
               "pinch": 0.6,
               "elbowPoleWorld": null,
               "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.2,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
+              "elbowPoleWorld": null,
+              "gripId": null
             }
           }
         },
@@ -5018,21 +5012,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                620,
-                1120
-              ],
-              "targetLocal": null,
-              "contactType": "none",
-              "contactAnchor": null,
-              "contactWorld": null,
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
+                709.5,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5044,16 +5025,11 @@
               "pinch": 0.3,
               "elbowPoleWorld": null,
               "gripId": null
-            }
-          }
-        },
-        {
-          "t": 14.2,
-          "value": {
-            "left": {
+            },
+            "right": {
               "targetWorld": [
-                560,
-                1145
+                667.3,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5062,11 +5038,16 @@
               "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
-            },
-            "right": {
+            }
+          }
+        },
+        {
+          "t": 14.2,
+          "value": {
+            "left": {
               "targetWorld": [
-                700,
-                1084
+                699.3,
+                1082.6
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5076,6 +5057,19 @@
                 1098
               ],
               "pinch": 0.4,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                560,
+                1145
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": null,
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5086,21 +5080,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                560,
-                1145
-              ],
-              "targetLocal": null,
-              "contactType": "none",
-              "contactAnchor": null,
-              "contactWorld": null,
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                700,
-                1084
+                699.3,
+                1082.6
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5110,6 +5091,19 @@
                 1098
               ],
               "pinch": 0.4,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                560,
+                1145
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": null,
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5120,21 +5114,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                560,
-                1145
-              ],
-              "targetLocal": null,
-              "contactType": "none",
-              "contactAnchor": null,
-              "contactWorld": null,
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                700,
-                1084
+                699.3,
+                1082.6
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5146,6 +5127,19 @@
               "pinch": 0.4,
               "elbowPoleWorld": null,
               "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                560,
+                1145
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": null,
+              "pinch": 0,
+              "elbowPoleWorld": null,
+              "gripId": null
             }
           }
         },
@@ -5153,6 +5147,22 @@
           "t": 14.967,
           "value": {
             "left": {
+              "targetWorld": [
+                709.3,
+                1084.9
+              ],
+              "targetLocal": null,
+              "contactType": "tray",
+              "contactAnchor": "tray",
+              "contactWorld": [
+                704,
+                1101
+              ],
+              "pinch": 0.3,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
               "targetWorld": [
                 610,
                 1110
@@ -5164,11 +5174,16 @@
               "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
-            },
-            "right": {
+            }
+          }
+        },
+        {
+          "t": 15.3,
+          "value": {
+            "left": {
               "targetWorld": [
-                716,
-                1090
+                709.4,
+                1084.9
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5180,16 +5195,11 @@
               "pinch": 0.3,
               "elbowPoleWorld": null,
               "gripId": null
-            }
-          }
-        },
-        {
-          "t": 15.3,
-          "value": {
-            "left": {
+            },
+            "right": {
               "targetWorld": [
-                650,
-                1098
+                658.7,
+                1084.3
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5201,11 +5211,16 @@
               "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
-            },
-            "right": {
+            }
+          }
+        },
+        {
+          "t": 15.667,
+          "value": {
+            "left": {
               "targetWorld": [
-                716,
-                1090
+                709.1,
+                1084.8
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5217,16 +5232,11 @@
               "pinch": 0.3,
               "elbowPoleWorld": null,
               "gripId": null
-            }
-          }
-        },
-        {
-          "t": 15.667,
-          "value": {
-            "left": {
+            },
+            "right": {
               "targetWorld": [
-                664,
-                1096
+                667,
+                1084.7
               ],
               "targetLocal": null,
               "contactType": "tray",
@@ -5236,22 +5246,6 @@
                 1101
               ],
               "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                704,
-                1101
-              ],
-              "pinch": 0.3,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5262,33 +5256,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                708.8,
+                1084.7
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                716,
-                1090
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 704,
                 1101
               ],
               "pinch": 0.3,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5299,8 +5293,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                670,
-                1102
+                714,
+                1094
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5312,8 +5306,8 @@
             },
             "right": {
               "targetWorld": [
-                714,
-                1094
+                670,
+                1102
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5330,8 +5324,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                670,
-                1102
+                714,
+                1094
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5343,8 +5337,8 @@
             },
             "right": {
               "targetWorld": [
-                714,
-                1094
+                670,
+                1102
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5361,8 +5355,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                670,
-                1102
+                714,
+                1094
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5374,8 +5368,8 @@
             },
             "right": {
               "targetWorld": [
-                714,
-                1094
+                670,
+                1102
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5392,8 +5386,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                670,
-                1102
+                714,
+                1094
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5405,8 +5399,8 @@
             },
             "right": {
               "targetWorld": [
-                714,
-                1094
+                670,
+                1102
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5423,33 +5417,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                705.2,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                710,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 700,
                 1101
               ],
               "pinch": 0.2,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.1,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5460,33 +5454,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                705.2,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                710,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 700,
                 1101
               ],
               "pinch": 0.2,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.1,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5497,33 +5491,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                660,
-                1092
+                706.3,
+                1085.6
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                668,
-                1098
-              ],
-              "pinch": 0.2,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                712,
-                1100
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 702,
                 1102
               ],
               "pinch": 0.5,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                663.4,
+                1081.6
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                668,
+                1098
+              ],
+              "pinch": 0.2,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5534,33 +5528,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                705.2,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                710,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 700,
                 1101
               ],
               "pinch": 0.2,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.1,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5571,33 +5565,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                705.2,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                710,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 700,
                 1101
               ],
               "pinch": 0.2,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.1,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5608,33 +5602,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                705.2,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                710,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 700,
                 1101
               ],
               "pinch": 0.2,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.1,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5645,33 +5639,33 @@
           "value": {
             "left": {
               "targetWorld": [
-                664,
-                1096
+                705.2,
+                1084.8
               ],
               "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
-              "contactWorld": [
-                672,
-                1101
-              ],
-              "pinch": 0,
-              "elbowPoleWorld": null,
-              "gripId": null
-            },
-            "right": {
-              "targetWorld": [
-                710,
-                1096
-              ],
-              "targetLocal": null,
-              "contactType": "tray",
-              "contactAnchor": "tray",
+              "contactType": "none",
+              "contactAnchor": null,
               "contactWorld": [
                 700,
                 1101
               ],
               "pinch": 0.2,
+              "elbowPoleWorld": null,
+              "gripId": null
+            },
+            "right": {
+              "targetWorld": [
+                667.1,
+                1084.7
+              ],
+              "targetLocal": null,
+              "contactType": "none",
+              "contactAnchor": null,
+              "contactWorld": [
+                672,
+                1101
+              ],
+              "pinch": 0,
               "elbowPoleWorld": null,
               "gripId": null
             }
@@ -5682,8 +5676,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                668,
-                1100
+                706,
+                1098
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5695,8 +5689,8 @@
             },
             "right": {
               "targetWorld": [
-                706,
-                1098
+                668,
+                1100
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5713,8 +5707,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                672,
-                1104
+                700,
+                1102
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5726,8 +5720,8 @@
             },
             "right": {
               "targetWorld": [
-                700,
-                1102
+                672,
+                1104
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5744,8 +5738,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                674,
-                1106
+                696,
+                1104
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5757,8 +5751,8 @@
             },
             "right": {
               "targetWorld": [
-                696,
-                1104
+                674,
+                1106
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5775,8 +5769,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                674,
-                1106
+                696,
+                1104
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5788,8 +5782,8 @@
             },
             "right": {
               "targetWorld": [
-                696,
-                1104
+                674,
+                1106
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5806,8 +5800,8 @@
           "value": {
             "left": {
               "targetWorld": [
-                674,
-                1106
+                696,
+                1104
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5819,8 +5813,8 @@
             },
             "right": {
               "targetWorld": [
-                696,
-                1104
+                674,
+                1106
               ],
               "targetLocal": null,
               "contactType": "none",
@@ -5830,7 +5824,8 @@
               "elbowPoleWorld": null,
               "gripId": null
             }
-          }
+          },
+          "interp": "step"
         },
         {
           "t": 28.533,
@@ -7667,20 +7662,14 @@
               "left": {
                 "active": true,
                 "kind": "hand-prop",
-                "targetWorld": [
-                  672,
-                  1101
-                ],
+                "targetWorld": null,
                 "anchor": "tray",
                 "hold": true
               },
               "right": {
                 "active": true,
                 "kind": "hand-prop",
-                "targetWorld": [
-                  704,
-                  1101
-                ],
+                "targetWorld": null,
                 "anchor": "tray",
                 "hold": true
               }
@@ -7751,6 +7740,262 @@
           }
         },
         {
+          "t": 6.2,
+          "value": {
+            "feet": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  560,
+                  1280
+                ],
+                "anchor": "walk-mid",
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            }
+          }
+        },
+        {
+          "t": 6.7,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  600,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            }
+          }
+        },
+        {
+          "t": 7.2,
+          "value": {
+            "feet": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  638,
+                  1280
+                ],
+                "anchor": "walk-arrive",
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            }
+          }
+        },
+        {
+          "t": 7.7,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  672,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": null,
+                "anchor": "tray",
+                "hold": true
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": [
+                  690,
+                  1101
+                ],
+                "anchor": "tray",
+                "hold": true
+              }
+            }
+          }
+        },
+        {
+          "t": 8.2,
+          "value": {
+            "feet": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1280
+                ],
+                "anchor": "counter-pose",
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": [
+                  690,
+                  1101
+                ],
+                "anchor": "tray",
+                "hold": true
+              }
+            }
+          }
+        },
+        {
           "t": 8.6,
           "value": {
             "feet": {
@@ -7779,22 +8024,72 @@
               "left": {
                 "active": true,
                 "kind": "hand-prop",
-                "targetWorld": [
-                  672,
-                  1101
-                ],
+                "targetWorld": null,
                 "anchor": "tray",
                 "hold": true
               },
               "right": {
                 "active": true,
                 "kind": "hand-prop",
+                "targetWorld": null,
+                "anchor": "tray",
+                "hold": true
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
                 "targetWorld": [
-                  704,
+                  690,
                   1101
                 ],
                 "anchor": "tray",
                 "hold": true
+              }
+            }
+          }
+        },
+        {
+          "t": 13.667,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  676,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": null,
+                "anchor": "tray",
+                "hold": true
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
               }
             },
             "props": {
@@ -7839,6 +8134,118 @@
             },
             "hands": {
               "left": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": null,
+                "anchor": "tray",
+                "hold": true
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": [
+                  690,
+                  1101
+                ],
+                "anchor": "tray",
+                "hold": true
+              }
+            }
+          }
+        },
+        {
+          "t": 15.3,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  676,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": null,
+                "anchor": "tray",
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": null,
+                "anchor": "tray",
+                "hold": true
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": [
+                  690,
+                  1101
+                ],
+                "anchor": "tray",
+                "hold": true
+              }
+            }
+          }
+        },
+        {
+          "t": 16.0,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  676,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1280
+                ],
+                "anchor": null,
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
                 "active": false,
                 "kind": "none",
                 "targetWorld": null,
@@ -7846,14 +8253,11 @@
                 "hold": false
               },
               "right": {
-                "active": true,
-                "kind": "hand-prop",
-                "targetWorld": [
-                  692,
-                  1098
-                ],
-                "anchor": "tray",
-                "hold": true
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
               }
             },
             "props": {
@@ -7925,6 +8329,62 @@
           }
         },
         {
+          "t": 20.867,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  676,
+                  1310
+                ],
+                "anchor": "half-step-back",
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1310
+                ],
+                "anchor": null,
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": [
+                  690,
+                  1101
+                ],
+                "anchor": "tray",
+                "hold": true
+              }
+            }
+          }
+        },
+        {
           "t": 21.833,
           "value": {
             "feet": {
@@ -7951,24 +8411,18 @@
             },
             "hands": {
               "left": {
-                "active": true,
-                "kind": "hand-prop",
-                "targetWorld": [
-                  668,
-                  1098
-                ],
-                "anchor": "tray",
-                "hold": true
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
               },
               "right": {
-                "active": true,
-                "kind": "hand-prop",
-                "targetWorld": [
-                  702,
-                  1102
-                ],
-                "anchor": "tray",
-                "hold": true
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
               }
             },
             "props": {
@@ -7982,6 +8436,115 @@
                 ],
                 "anchor": "tray",
                 "hold": true
+              }
+            }
+          }
+        },
+        {
+          "t": 22.013,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  676,
+                  1310
+                ],
+                "anchor": "half-step-back",
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1310
+                ],
+                "anchor": null,
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": true,
+                "kind": "hand-prop",
+                "targetWorld": [
+                  690,
+                  1101
+                ],
+                "anchor": "tray",
+                "hold": true
+              }
+            }
+          }
+        },
+        {
+          "t": 25.8,
+          "value": {
+            "feet": {
+              "left": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  676,
+                  1310
+                ],
+                "anchor": "half-step-back",
+                "hold": true
+              },
+              "right": {
+                "active": true,
+                "kind": "foot-plant",
+                "targetWorld": [
+                  704,
+                  1310
+                ],
+                "anchor": null,
+                "hold": true
+              }
+            },
+            "hands": {
+              "left": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              },
+              "right": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
+              }
+            },
+            "props": {
+              "coin": null,
+              "tray": {
+                "active": false,
+                "kind": "none",
+                "targetWorld": null,
+                "anchor": null,
+                "hold": false
               }
             }
           }
@@ -8119,12 +8682,197 @@
           }
         },
         {
+          "t": 6.2,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "planted": true,
+                "sinceSeconds": 6.2
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
+            },
+            "root": {
+              "moving": true,
+              "sinceSeconds": 5.733
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 6.7,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": true,
+                "sinceSeconds": 6.7
+              },
+              "right": {
+                "planted": false,
+                "sinceSeconds": null
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
+            },
+            "root": {
+              "moving": true,
+              "sinceSeconds": 5.733
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 7.2,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "planted": true,
+                "sinceSeconds": 7.2
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
+            },
+            "root": {
+              "moving": true,
+              "sinceSeconds": 5.733
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 7.7,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": true,
+                "sinceSeconds": 7.7
+              },
+              "right": {
+                "planted": false,
+                "sinceSeconds": null
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
+            },
+            "root": {
+              "moving": true,
+              "sinceSeconds": 5.733
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 8.2,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "planted": true,
+                "sinceSeconds": 8.2
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
+            },
+            "root": {
+              "moving": true,
+              "sinceSeconds": 5.733
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
           "t": 8.6,
           "value": {
             "feet": {
               "left": {
                 "planted": true,
-                "sinceSeconds": 8.2
+                "sinceSeconds": 8.6
               },
               "right": {
                 "planted": true,
@@ -8255,6 +9003,80 @@
             "gaze": {
               "locked": true,
               "sinceSeconds": 21.833
+            },
+            "root": {
+              "moving": false,
+              "sinceSeconds": null
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 25.2,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": true,
+                "sinceSeconds": 16.333
+              },
+              "right": {
+                "planted": true,
+                "sinceSeconds": 16.333
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": false,
+              "sinceSeconds": null
+            },
+            "root": {
+              "moving": false,
+              "sinceSeconds": null
+            },
+            "freeze": {
+              "active": false,
+              "reason": null
+            }
+          }
+        },
+        {
+          "t": 27.0,
+          "value": {
+            "feet": {
+              "left": {
+                "planted": true,
+                "sinceSeconds": 16.333
+              },
+              "right": {
+                "planted": true,
+                "sinceSeconds": 16.333
+              }
+            },
+            "hands": {
+              "left": {
+                "holding": false,
+                "sinceSeconds": null
+              },
+              "right": {
+                "holding": false,
+                "sinceSeconds": null
+              }
+            },
+            "gaze": {
+              "locked": true,
+              "sinceSeconds": 27.0
             },
             "root": {
               "moving": false,

@@ -2,7 +2,7 @@
 // Local coords: head centre (0,0); shoulders y~120-145, waist y300, hem y648
 // (counter clips at local y370), hands y~300-350, tray x-65..65 y348-364.
 // Flat two-tone cels, warm brown ink, subtle cyan-left / pink-right neon rims.
-export function celBodyMarkup(t = 0, uid = 'snowy') {
+export function celBodyMarkup(t = 0, uid = 'snowy', options = {}) {
   const p = `cel-woman-${uid}`;
   const bob = (Math.sin(t * 1.9) * 1.3).toFixed(2);
   const INK = '#80614f';
@@ -10,6 +10,7 @@ export function celBodyMarkup(t = 0, uid = 'snowy') {
   const NAVY = '#232c4e', NAVY_S = '#161d33', NAVY_L = '#31406b';
   const CREAM = '#efe2c4', CREAM_S = '#d8c6a0';
   const CYAN = '#54e0ff', PINK = '#ff6fb1';
+  const limbVisibility = options.suppressMotionLimbs ? ' style="display:none"' : '';
   const coinSpots = [[-36, 353], [-18, 353], [0, 352], [18, 353], [36, 353]];
   const coins = coinSpots.map(([cx, cy]) =>
     `<circle cx="${cx}" cy="${cy}" r="4.2" fill="#e9cd7f" stroke="#7a5a26" stroke-width="1"/>` +
@@ -36,7 +37,7 @@ export function celBodyMarkup(t = 0, uid = 'snowy') {
 <path d="M 56 290 L 78 284 L 74 296 L 84 304 L 58 310 Z" fill="${CREAM_S}" stroke="${INK}" stroke-width="1.2"/>
 <circle cx="58" cy="297" r="4.5" fill="${CREAM_S}" stroke="${INK}" stroke-width="1.2"/>
 </g>
-<g id="${p}-arms">
+<g id="${p}-arms"${limbVisibility}>
 <path id="${p}-forearm-l" d="M -90 202 C -94 245 -90 285 -80 318 L -63 320 C -61 282 -60 242 -59 206 C -68 200 -80 198 -90 202 Z" fill="${SKIN}" stroke="${INK}" stroke-width="1.6"/>
 <path d="M -90 206 C -93 246 -90 286 -81 316 L -77 316 C -85 286 -88 246 -86 208 Z" fill="${SKIN_L}" opacity="0.5"/>
 <path d="M -69 248 L -62 248 C -61 275 -61 298 -63 318 L -72 318 C -70 292 -70 268 -71 250 Z" fill="${SKIN_S}"/>
@@ -54,7 +55,7 @@ export function celBodyMarkup(t = 0, uid = 'snowy') {
 <g id="${p}-coins">${coins}</g>
 <path d="M -65 355 L 65 355 C 65 362 60 364 53 364 L -53 364 C -60 364 -65 362 -65 355 Z" fill="#39415c"/>
 </g>
-<g id="${p}-hands" transform="translate(0 ${bob})">
+<g id="${p}-hands"${limbVisibility} transform="translate(0 ${bob})">
 <g id="${p}-hand-l" fill="${SKIN}" stroke="${INK}" stroke-width="1.5">
 <path d="M -74 304 C -76 296 -70 291 -62 291 L -40 291 C -31 291 -26 296 -27 304 L -28 320 C -34 327 -46 330 -56 327 C -66 324 -73 316 -74 308 Z"/>
 <path d="M -56 296 L -30 300 C -32 312 -42 322 -56 322 C -64 318 -69 310 -68 302 Z" fill="${SKIN_S}" stroke="none"/>

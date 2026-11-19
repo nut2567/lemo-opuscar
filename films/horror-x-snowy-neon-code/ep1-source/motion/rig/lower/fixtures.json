@@ -807,7 +807,7 @@
             },
             "right": {
               "planted": false,
-              "sinceSeconds": 0
+              "sinceSeconds": null
             }
           },
           "root": {
@@ -1246,7 +1246,7 @@
           "feet": {
             "left": {
               "planted": false,
-              "sinceSeconds": 0
+              "sinceSeconds": null
             },
             "right": {
               "planted": true,

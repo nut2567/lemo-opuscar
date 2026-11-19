@@ -1,7 +1,7 @@
 {
   "$schema": "scene-layout",
   "version": "jessica-3.1",
-  "note": "Scene geometry for Jessica edition cel motion. All coordinates are world-space 1080x1920. No motion/API-CONTRACT.md exists in this worktree; anchor ids are descriptive and must be frozen by the coordinator's contract before rig/pose workers reference them. See contract-requirements at the end for items that block full integration.",
+  "note": "Scene geometry for Jessica edition cel motion. All coordinates are world-space 1080x1920. The CelMotionSpec contract is motion/API.md; the anchor id registry is frozen by scene/anchor-registry.mjs (buildAnchorRegistry/resolveAnchor, edition 'jessica') over this file's anchors, walkway.waypoints and standing-positions plus the pose-spec anchors maps. See anchor-registry below for the CR-01 reconciliation and contract-requirements at the end for items that still block full integration.",
 
   "canvas": {
     "width": 1080,
@@ -42,7 +42,7 @@
     "washer-row": {
       "footprint": [138, 1032, 456, 1327],
       "source": "INTERFACE.md washer footprint x~138..456, floor contact y1198..1327; washers.mjs ROW array",
-      "note": "Four commercial washers drawn far-to-near in environment cache. Not re-drawn at runtime except for live insert shots."
+      "note": "Four commercial washers drawn far-to-near in environment cache. Not re-drawn at runtime except for live insert shots. washer-drum-nearest.extent below is this row's nearest (ROW[0]) front-face bounds."
     },
     "tile-floor": {
       "back-edge-y": 1164,
@@ -109,9 +109,10 @@
     "washer-drum-nearest": {
       "type": "prop",
       "world": [253, 1210],
-      "extent-front": [185, 1098, 302, 1327],
+      "extent": [185, 1098, 302, 1327],
+      "extent-role": "front-face",
       "source": "washers.mjs ROW[0]: x185 bottom1327 s0.91 w0.74. Front width=174*0.91*0.74=117, height=252*0.91=229. Top=1327-229=1098. Drum center approx at 60% height: 1098+137=1235, center x=185+58=243",
-      "note": "Nearest washer front face and approximate drum center. Cel works near this washer for cue 3 cloth insertion."
+      "note": "Nearest washer front face and approximate drum center. `extent` is the ROW[0] front-face bounds (formerly extent-front); `world` [253,1210] is the approximate drum center used as the cue-3 cloth-insertion target. Cel works near this washer for cue 3 cloth insertion."
     },
     "rear-door": {
       "type": "opening",
@@ -291,44 +292,86 @@
     }
   },
 
+  "anchor-registry": {
+    "status": "frozen",
+    "resolver": "motion/scene/anchor-registry.mjs — buildAnchorRegistry({sceneLayout, poseFiles:[jessica-01-06.json, jessica-07-12.json]}), resolveAnchor(id, edition='jessica')",
+    "contract": "motion/API.md (CelMotionSpec); scene geometry per INTERFACE.md and environment.mjs / characters.mjs / entry.mjs / washers.mjs",
+    "categories": {
+      "world-anchors": "anchors.* — spatial scene references. Each carries type, world point, and extent/radius where the source provides them. 14 ids: counter-front, counter-top, tray, coin-hand, coin-lift, coin-tray-land, slot, washer-drum-nearest, rear-door, rear-door-gaze, lamp, lamp-spill, cloth-pivot, cel-standing.",
+      "foot-contact-waypoints": "walkway.waypoints — walk path ids resolve to foot-contact points (y 1265-1310), NOT head-center. Ids: walk-start, walk-mid, walk-arrive, counter-pose.",
+      "standing-positions": "standing-positions.* — multi-point records (head/hip/feet); the registry resolves the id to feet. Ids: at-counter, half-step-back, at-washer.",
+      "non-spatial-labels": "gripId / contactType / ContactIntent.kind / coin id / fixture contact-label strings — classified, never resolved, never given geometry. See nonSpatialIds."
+    },
+    "head-center-vs-foot-contact": {
+      "note": "The Cel SVG/render anchor is head-center (690,925) at scale 0.5 (API.md, INTERFACE.md, models/cel). Foot-contact of the same stance is ~y1280 on the tile floor. These are distinct registry ids sharing one stance, not duplicates; consumers must pick the convention their field requires (rootPath.anchorWorld = head-center; contactAnchor on feet = foot-contact).",
+      "aliases": [
+        { "stance": "count-pose at counter (cues 1,3,5,6,8-12)", "head-center": [690, 925], "foot-contact": [690, 1280], "ids": ["cel-standing", "counter-pose", "at-counter"] },
+        { "stance": "half-step back (cue 4)", "head-center": [690, 920], "foot-contact": [690, 1310], "ids": ["half-step-back"] },
+        { "stance": "at washer (cue 3 cloth insertion)", "head-center": [480, 925], "foot-contact": [480, 1280], "ids": ["at-washer"] }
+      ]
+    },
+    "pose-drift": {
+      "note": "Pose tracks author rootPath.anchorWorld directly; the registry is scene-geometry truth and does not sample or correct pose data. Authored drift is preserved: the cue-6/7 handoff keys use anchorWorld [690,917] (8px above nominal) with matching pelvisWorld [690,1099] and groundY 1310. Do not rewrite pose data to match the registry.",
+      "nominalHeadCenter": [690, 925],
+      "driftedHeadCenter": [690, 917],
+      "occurrences": ["poses/jessica-01-06.json t=21.833", "poses/jessica-07-12.json t=28.533"]
+    },
+    "nonSpatialIds": {
+      "note": "Id-shaped strings observed in Jessica pose tracks and rig/scene fixtures that are labels, not spatial anchors. The registry classifies them unresolved by design; no geometry may be invented for them. 'tray' is the one overlap: it is both a contactType enum value and a real anchor — anchor membership wins and it resolves to [690,1101].",
+      "gripIds": ["coin-place", "coin-6"],
+      "coinIds": ["coin-6"],
+      "fixtureContactLabels": ["sole-left", "sole-right", "floor-contact", "half-step-contact", "listen-contact", "night-hold-contact", "stop-contact", "walk-contact", "watch-contact", "cloth-direction"],
+      "contactTypeEnum": ["none", "tray", "coin", "slot", "prop"],
+      "contactKindEnum": ["none", "sole", "tray", "coin", "washer", "resting", "contact", "foot-plant", "hand-prop"]
+    },
+    "verification": "Resolved via anchor-registry.mjs diagnostic: 21 registered ids, all spatial references from pose tracks and fixtures resolve; the only unresolved reference is grip-id 'coin-place' (non-spatial, by design); 0 coordinate conflicts between layout and pose-spec declarations."
+  },
+
   "contract-requirements": {
-    "status": "NO_CONTRACT",
-    "note": "No motion/API-CONTRACT.md exists in this worktree. The following must be frozen by the coordinator before rig/pose workers can bind to these scene anchors.",
+    "status": "RESOLVED",
+    "note": "The CelMotionSpec contract is motion/API.md. CR-01..CR-07 decisions are recorded here and exercised by evaluate-frame.mjs, clip-strategy.mjs and the live renderer.",
     "items": [
       {
         "id": "CR-01",
         "topic": "Anchor id registry",
-        "detail": "Freeze the set of valid anchor ids and their world coordinates. This layout proposes: counter-front, counter-top, tray, coin-hand, coin-lift, coin-tray-land, slot, washer-drum-nearest, rear-door, rear-door-gaze, lamp, lamp-spill, cloth-pivot, cel-standing, walk-start, walk-mid, walk-arrive, counter-pose, half-step-back, at-washer."
+        "status": "RESOLVED",
+        "detail": "Frozen by scene/anchor-registry.mjs over this file plus the pose-spec anchors maps; see the anchor-registry section. Registered world anchors: counter-front, counter-top, tray, coin-hand, coin-lift, coin-tray-land, slot, washer-drum-nearest, rear-door, rear-door-gaze, lamp, lamp-spill, cloth-pivot, cel-standing. Foot-contact waypoints: walk-start, walk-mid, walk-arrive, counter-pose. Standing positions (resolve to feet): at-counter, half-step-back, at-washer. Grip ids, contact labels and coin ids are classified non-spatial and intentionally unresolved."
       },
       {
         "id": "CR-02",
         "topic": "Character root convention",
-        "detail": "Define whether character position is tracked at head-center (690,925), hip-center (~690,1107), or foot-contact (~690,1280), and in world or local coords. This layout uses world coords and provides all three."
+        "status": "RESOLVED",
+        "detail": "CelMotionSpec root.anchorWorld is the head-center in world1080x1920 coordinates ([690,925] at the count stance); pelvis and foot-contact remain separate pose outputs. entry.mjs passes the already sampled camera and film frame to evaluate-frame.mjs."
       },
       {
         "id": "CR-03",
         "topic": "Floor contact y-level",
-        "detail": "The floor at counter depth is approximately y=1280 (consistent with INTERFACE.md body-to-y1290 for a character with ~10px toe offset). Contract must state the canonical foot-plant y for the counter standing position."
+        "status": "RESOLVED",
+        "detail": "Counter standing foot-contact uses y=1280; the authored half-step-back stance at y=1310 is an explicit separate stance. Lower rig contacts use world coordinates from pose keys and the built Jessica walkway ScenePath."
       },
       {
         "id": "CR-04",
         "topic": "Counter occlusion mode",
-        "detail": "Current main.mjs clips ALL of the SVG layer below y=1110 globally. The plan requires position-based occlusion: clip only when cel rootX is within the counter x-range [~600,760]. Coordinator must decide: (a) modify nunClip to be position-dependent, (b) move character to Canvas layer for some shots, or (c) accept global clip. This affects full-body walking in cue 2."
+        "status": "RESOLVED",
+        "detail": "main.mjs uses clipStrategy per evaluated root zone: counter-line clips at y=1110 while shop zones use the counter-footprint union so aisle pixels remain visible. Painted body extent is x=628..740; the approach band remains x=570..790."
       },
       {
         "id": "CR-05",
         "topic": "Full-body visibility for walking",
-        "detail": "Cue 2 describes 2-3 steps from washer area to counter. If the cel starts at x~480 (left of counter), the current y=1110 global clip hides the lower body even though the counter is NOT between the camera and the character. Coordinator must specify how the renderer handles full-body visibility during the walk."
+        "status": "RESOLVED",
+        "detail": "Cue-2 walkway uses the built Jessica ScenePath; the counter-footprint clip keeps the legs visible outside x=628..740 below y=1110, and switches to the counter-line clip as the root enters the counter zone."
       },
       {
         "id": "CR-06",
         "topic": "Contact shadow rendering layer",
-        "detail": "Contact shadows under feet are at y~1280 (below the y=1110 SVG clip). They must render on the Canvas layer, not SVG. Coordinator must specify the draw order and compositing mode for these shadows relative to the environment and character layers."
+        "status": "RESOLVED",
+        "detail": "contactShadowMarkup converts planted-foot contacts into a world-space SVG group placed after the Canvas environment and before lower legs/base/upper limbs in main.mjs. The same per-zone clip applies, keeping shadows outside the counter footprint and behind the counter in the counter zone."
       },
       {
         "id": "CR-07",
         "topic": "Lighting helper interface",
-        "detail": "occlusion.mjs exports a lightingGrade(rootX, rootY) helper returning warm/cool/ambient/rim intensities. The contract must specify what format the renderer expects and how it composites the grade (e.g., feComponentTransfer slopes, overlay opacity, etc.)."
+        "status": "RESOLVED",
+        "detail": "occlusion.mjs lightingComposite(rootX,rootY) returns RGB feComponentTransfer slopes plus warm/cool/pink overlay opacities and voidDarken. main.mjs applies those to the cel SVG filter and masked light gradients; lightingGrade.ambient scales contact shadows."
       }
     ]
   }

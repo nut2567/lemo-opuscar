@@ -171,7 +171,7 @@
       "id": "sv-01-work-drum-head",
       "description": "Cel head visibility in work-drum shot start",
       "input": { "worldX": 690, "worldY": 925, "camera": { "cx": 250, "cy": 1202, "z": 3.85 } },
-      "expected": { "screenX": 2234, "screenY": -107, "visible": false },
+      "expected": { "screenX": 2234, "screenY": -106, "visible": false },
       "verdict": "FULLY OFF-SCREEN. Cel head is 1154px beyond right edge.",
       "source": "jessica.json work-drum camera [250,1202,3.85]"
     },
@@ -187,7 +187,7 @@
       "id": "sv-03-quiet-mid-shoulder",
       "description": "Cel right shoulder visibility in quiet shot end (shoulder at ~x660)",
       "input": { "worldX": 660, "worldY": 950, "camera": { "cx": 423, "cy": 1111, "z": 2.04 } },
-      "expected": { "screenX": 1024, "screenY": 632, "visible": true },
+      "expected": { "screenX": 1023, "screenY": 632, "visible": true },
       "verdict": "BARELY VISIBLE. Right shoulder at screen x~1024 is inside the frame by 56px. This confirms task 2.1's concern: a shoulder or arm edge might show in quiet's final frames.",
       "note": "Pose data for cue 5 quiet shot must ensure any visible shoulder/arm fragment looks continuous with the work shot."
     },

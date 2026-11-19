@@ -70,7 +70,7 @@
     "tray": 21.82,
     "slot": 32.75,
     "motor": 33.53,
-    "cloth": 41.52
+    "cloth": 40.98
   },
   "cuts": [
     [0, "store"],
@@ -154,7 +154,7 @@
     "rear-exit": {
       "camera": [548, 1001, 3.32], "move": [19, -6, 0.1], "source": [6.1, 7.42], "cloth": true, "action": 2.35,
       "serves": "caption cue 10 'ชายผ้าลับประตูหลัง ไม่มีเสียงฝีเท้า' + silence hold (frames 1198-1404); hem slips behind right jamb frames ~1199-1240, doorway verifiably empty from frame 1241 through shot end",
-      "verdict": "PASS measured (evidence 15); cloth whoosh SFX @41.52 (frame ~1246) kept; no footsteps; empty hold 86 frames past caption end is deliberate"
+      "verdict": "PASS measured (evidence 15); cloth exit SFX reconciled to the v2 quiet rustle @40.98 s for 0.38 s (accepted deviation from stale v1 cloth whoosh @41.52, per user-directed v2 audio revision — exact rustle not separately user-auditioned); no footsteps; empty hold 86 frames past caption end is deliberate"
     },
     "second-night": {
       "camera": [552, 1001, 2.36], "move": [-16, 11, 0.13], "source": [5.91, 6.23], "cloth": true,
@@ -193,12 +193,15 @@
       { "type": "coin", "t": 21.82, "owner": "cue 5", "note": "tray impact on spoken 'กระทบ' 21.42-22.08" },
       { "type": "coin-slot", "t": 32.75, "owner": "cue 8", "note": "exact beat — coin fully in slot" },
       { "type": "washer", "t": 33.53, "owner": "cue 9", "note": "single motor onset for the spin clause; NO second strike (coordinator + evidence 14 Proposal C rejected)" },
-      { "type": "cloth", "t": 41.52, "owner": "cue 10", "note": "exit whoosh ~0.15 s after last cloth pixel (frame ~1240); no footsteps anywhere" }
+      { "type": "cloth-rustle", "t": 40.98, "dur": 0.38, "owner": "cue 10", "note": "ACCEPTED DEVIATION from stale v1 cloth whoosh @41.52: user-directed v2 audio revision (specs/audio-revision.md, evidence/audio-revision/REPORT.md) schedules a quiet dry fabric rustle at 40.98 s for 0.38 s, ending ~41.36 s inside the visible hem recession and before the doorway is empty at 41.367 s; replaces the loud whoosh, which is removed. Exact rustle quality NOT separately user-auditioned; no footsteps anywhere" }
     ],
     "optional": [
-      { "type": "cloth", "t": 25.0, "owner": "cue 6", "note": "soft cloth swell under 'มากับผ้าขาวผืนใหญ่' marking the customer's presence (evidence 11)" },
-      { "type": "cloth", "t": 46.95, "owner": "cue 11", "note": "soft cloth swell under 'คืนที่สอง' marking each night's return (evidence 16)" },
       { "type": "coin", "t": 53.95, "owner": "cue 12", "note": "contact sound synced to the coinPlace tray contact at 53.95 s; keep quieter than the 21.82 tray impact; omit for a quieter beat (evidence 17, coordinator decision 17)" }
+    ],
+    "removedInV2": [
+      { "type": "cloth", "t": 25.0, "reason": "v1 optional cloth swell under 'มากับผ้าขาวผืนใหญ่' removed by the user-directed v2 revision (gratuitous visitor cloth accent; mix_v2 remove_ids cloth-cue6)" },
+      { "type": "cloth", "t": 46.95, "reason": "v1 optional cloth swell under 'คืนที่สอง' removed by the user-directed v2 revision (mix_v2 remove_ids cloth-cue11)" },
+      { "type": "cloth", "t": 41.52, "reason": "v1 required exit whoosh replaced by the cloth-rustle at 40.98 s per the user-directed v2 revision (accepted deviation; recorded above)" }
     ],
     "rejected": [
       { "type": "washer", "t": 16.9, "reason": "cue-4 tail extension would eat cue 5's designed room silence (evidence 09 Proposal B)" },

@@ -38,7 +38,7 @@ export function celWomanMarkup(t, options = {}) {
   return `<g transform="translate(${N(x)} ${N(y)}) scale(${N(sc * f)} ${N(sc)})">` +
     celHairBackMarkup(t, uid) +
     celFaceMarkup(t, uid) +
-    celBodyMarkup(t, uid) +
+    celBodyMarkup(t, uid, { suppressMotionLimbs: options.suppressMotionLimbs === true }) +
     celEyesMarkup(t, uid) +
     celHairFrontMarkup(t, uid) +
     `</g>`;

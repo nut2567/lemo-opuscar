@@ -1,5 +1,6 @@
 import { drawWasher, ROW } from '../washers.mjs';
 import { DURATION, FPS, HEIGHT, WIDTH, eventsFor, expandCuts, parseSrt, variants } from './timeline.mjs';
+import { evaluateJessicaMotionFrame } from './motion/evaluate-frame.mjs';
 
 // ep1-source sits one level below the film root; the base also lets
 // neon.mjs resolve 'assets/fonts/…' and entry fetches stay absolute.
@@ -33,6 +34,20 @@ if (!srtResponse.ok) throw new Error(`Could not load ${variant.srt}`);
 const captions = parseSrt(await srtResponse.text());
 await document.fonts.load('20px CaptionKanit', captions.map(cue => cue.text).join(' '));
 if (!document.fonts.check('16px CaptionKanit')) throw new Error('CaptionKanit failed to load');
+
+async function fetchJson(relativePath) {
+  const response = await fetch(new URL(relativePath, import.meta.url));
+  if (!response.ok) throw new Error(`Could not load ${relativePath}`);
+  return response.json();
+}
+
+const motionAssets = version === 'jessica'
+  ? await Promise.all([
+      fetchJson('./motion/scene/scene-layout.json'),
+      fetchJson('./motion/poses/jessica-01-06.json'),
+      fetchJson('./motion/poses/jessica-07-12.json'),
+    ]).then(([sceneLayout, firstHalf, secondHalf]) => ({ sceneLayout, firstHalf, secondHalf }))
+  : null;
 
 const caption = document.querySelector('#caption');
 const captionText = caption.querySelector('span');
@@ -144,7 +159,21 @@ window.render = time => {
   const [first, last] = cut.source ?? [3.21, 4.06];
   const action = cut.action ? clamp((seconds - cut.startFrame / FPS) / cut.action) : progress;
   const sourceSeconds = first + (last - first) * action;
-  const meta = renderSnowyFrame({ sourceSeconds, elapsedSeconds: seconds, camera, showCloth: !!cut.cloth });
+  const cue = captions.find(line => line.start <= seconds && seconds < line.end);
+  const motion = motionAssets
+    ? evaluateJessicaMotionFrame({
+        edition: version,
+        seconds,
+        shot: { ...cut, progress },
+        captions,
+        cueIndex: cue ? captions.indexOf(cue) + 1 : null,
+        camera,
+        sourceSeconds,
+        ...motionAssets,
+        uid: 'snowy',
+      })
+    : null;
+  const meta = renderSnowyFrame({ sourceSeconds, elapsedSeconds: seconds, camera, showCloth: !!cut.cloth, motionEvaluation: motion });
   let look = null;
   if (cut.glance) {
     look = cut.id === 'watch' ? 1 : ease(clamp((progress - .23) / .55));
@@ -153,7 +182,6 @@ window.render = time => {
     }
   }
   const insertState = drawInsert(cut, camera, seconds);
-  const cue = captions.find(line => line.start <= seconds && seconds < line.end);
   if (captionText.textContent !== (cue?.text ?? '')) captionText.textContent = cue?.text ?? '';
   caption.hidden = !cue;
   window.FRAME_META = {

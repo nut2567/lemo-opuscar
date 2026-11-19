@@ -186,7 +186,7 @@
         "contacts": { "hands": { "left": { "active": false }, "right": { "active": false } }, "props": { "coin": { "active": false }, "tray": { "active": false } } },
         "hands": { "left": { "contact": null, "pinch": 0 }, "right": { "contact": null, "pinch": 0 } },
         "gaze": { "targetWorld": null, "weight": 0, "locked": false },
-        "props": { "tray": { "visible": false, "world": null }, "coin": { "state": "none" }, "apron": { "swayDeg": 0 } }
+        "props": { "tray": { "visible": false, "world": null }, "coin": { "state": "none" }, "apron": { "swayDeg": 0.352 } }
       }
     },
     {
@@ -368,7 +368,7 @@
         "contacts": { "hands": { "left": { "active": false }, "right": { "active": false } }, "props": { "coin": { "active": false }, "tray": { "active": true } } },
         "hands": { "left": { "contact": null }, "right": { "contact": null } },
         "gaze": { "targetWorld": [714, 1100], "weight": 0.85, "locked": false },
-        "props": { "tray": { "visible": true, "planted": true }, "coin": { "state": "none", "owner": "none" }, "apron": { "swayDeg": 0 } }
+        "props": { "tray": { "visible": true, "planted": true }, "coin": { "state": "none", "owner": "none" }, "apron": { "swayDeg": -0.66 } }
       }
     },
     {
@@ -458,7 +458,7 @@
       "expect": {
         "contacts": { "hands": { "left": { "active": false }, "right": { "active": false } }, "props": { "coin": { "active": false }, "tray": { "active": true } } },
         "hands": { "left": { "contact": null }, "right": { "contact": null } },
-        "gaze": { "targetWorld": [532, 980], "weight": 0.55, "locked": false, "eyeOffsetLocal": [3, 1] },
+        "gaze": { "targetWorld": [532, 980], "weight": 0.55, "locked": false, "eyeOffsetLocal": [2.859, 0.909] },
         "props": { "tray": { "visible": true, "planted": true }, "coin": { "state": "none" }, "apron": { "swayDeg": 0 } }
       }
     },

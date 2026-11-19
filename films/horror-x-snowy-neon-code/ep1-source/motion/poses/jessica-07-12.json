@@ -61,8 +61,8 @@
         { "t": 48.2, "value": { "torso": { "dx": -2, "dy": -1, "rotDeg": 4 }, "head": { "dx": -3, "dy": -9, "rotDeg": 22 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 3 } } },
         { "t": 48.5667, "value": { "torso": { "dx": -2, "dy": -2, "rotDeg": 7 }, "head": { "dx": -3, "dy": -6, "rotDeg": 20 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 2 } } },
         { "t": 52.5333, "value": { "torso": { "dx": -2, "dy": -2, "rotDeg": 5 }, "head": { "dx": -3, "dy": -7, "rotDeg": 16 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 2 } } },
-        { "t": 53.55, "value": { "torso": { "dx": -1, "dy": -1, "rotDeg": 3 }, "head": { "dx": -2, "dy": -4, "rotDeg": 8 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 1 } } },
-        { "t": 54.35, "value": { "torso": { "dx": -2, "dy": -2, "rotDeg": 4 }, "head": { "dx": -3, "dy": -6, "rotDeg": 12 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 2 } } },
+        { "t": 53.55, "value": { "torso": { "dx": -1, "dy": 10, "rotDeg": 3 }, "head": { "dx": -2, "dy": -4, "rotDeg": 8 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 1 } } },
+        { "t": 54.35, "value": { "torso": { "dx": -2, "dy": 10, "rotDeg": 4 }, "head": { "dx": -3, "dy": -6, "rotDeg": 12 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 2 } } },
         { "t": 54.6667, "value": { "torso": { "dx": -2, "dy": -2, "rotDeg": 5 }, "head": { "dx": -3, "dy": -7, "rotDeg": 14 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 2 } } },
         { "t": 55.4, "value": { "torso": { "dx": -2, "dy": -2, "rotDeg": 6 }, "head": { "dx": -3, "dy": -9, "rotDeg": 24 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 3 } } },
         { "t": 55.7, "value": { "torso": { "dx": -2, "dy": -2, "rotDeg": 9 }, "head": { "dx": -3, "dy": -9, "rotDeg": 24 }, "neck": { "dx": 0, "dy": 0, "rotDeg": 3 } } },
@@ -89,17 +89,21 @@
           "left":  { "targetWorld": [674, 1106], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null },
           "right": { "targetWorld": [696, 1104], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null }
         } },
-        { "t": 53.55, "value": {
+        { "t": 52.5333, "value": {
           "left":  { "targetWorld": [674, 1106], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null },
-          "right": { "targetWorld": [715, 1083], "targetLocal": null, "contactType": "coin", "contactAnchor": "coin-hand", "contactWorld": [715, 1083], "pinch": 1, "elbowPoleWorld": null, "gripId": "coin-place" }
+          "right": { "targetWorld": [696, 1104], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null }
+        } },
+        { "t": 53.55, "value": {
+          "left":  { "targetWorld": [713, 1066], "targetLocal": null, "contactType": "coin", "contactAnchor": "coin-hand", "contactWorld": [715, 1083], "pinch": 1, "elbowPoleWorld": null, "gripId": "coin-place" },
+          "right": { "targetWorld": [696, 1104], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null }
         } },
         { "t": 53.95, "value": {
-          "left":  { "targetWorld": [674, 1106], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null },
-          "right": { "targetWorld": [714, 1100], "targetLocal": null, "contactType": "tray", "contactAnchor": "coin-tray-land", "contactWorld": [714, 1100], "pinch": 0, "elbowPoleWorld": null, "gripId": null }
+          "left":  { "targetWorld": [713, 1084], "targetLocal": null, "contactType": "tray", "contactAnchor": "coin-tray-land", "contactWorld": [714, 1100], "pinch": 0, "elbowPoleWorld": null, "gripId": null },
+          "right": { "targetWorld": [696, 1104], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null }
         }, "interp": "linear" },
         { "t": 54.1, "value": {
-          "left":  { "targetWorld": [674, 1106], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null },
-          "right": { "targetWorld": [700, 1102], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null }
+          "left":  { "targetWorld": [713, 1084], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null },
+          "right": { "targetWorld": [696, 1104], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null }
         } },
         { "t": 54.35, "value": {
           "left":  { "targetWorld": [674, 1106], "targetLocal": null, "contactType": "none", "contactAnchor": null, "contactWorld": null, "pinch": 0, "elbowPoleWorld": null, "gripId": null },
@@ -133,12 +137,17 @@
         } },
         { "t": 53.55, "value": {
           "tray": { "anchorWorld": [690, 1101], "local": null, "planted": true, "visible": true },
-          "coin": { "state": "held", "owner": "right", "id": "coin-place", "targetWorld": null, "contactWorld": null, "settleWorld": null },
+          "coin": { "state": "airborne", "owner": "none", "id": "coin-place", "targetWorld": null, "contactWorld": null, "settleWorld": null },
           "apron": { "swayDeg": 0, "lift": 0 }
         } },
-        { "t": 53.96, "value": {
+        { "t": 53.95, "value": {
           "tray": { "anchorWorld": [690, 1101], "local": null, "planted": true, "visible": true },
-          "coin": { "state": "placed", "owner": "none", "id": "coin-place", "targetWorld": null, "contactWorld": null, "settleWorld": [714, 1100] },
+          "coin": { "state": "airborne", "owner": "none", "id": "coin-place", "targetWorld": [714, 1100], "contactWorld": [714, 1100], "settleWorld": [714, 1100] },
+          "apron": { "swayDeg": 0, "lift": 0 }
+        } },
+        { "t": 54.35, "value": {
+          "tray": { "anchorWorld": [690, 1101], "local": null, "planted": true, "visible": true },
+          "coin": { "state": "placed", "owner": "none", "id": "coin-place", "targetWorld": null, "contactWorld": [714, 1100], "settleWorld": [714, 1100] },
           "apron": { "swayDeg": 0, "lift": 0 }
         } }
       ]
@@ -163,8 +172,8 @@
             "right": { "active": true, "kind": "foot-plant", "targetWorld": [707, 1310], "anchor": null, "hold": true }
           },
           "hands": {
-            "left":  { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false },
-            "right": { "active": true, "kind": "coin", "targetWorld": [715, 1083], "anchor": "coin-hand", "hold": true }
+            "left":  { "active": true, "kind": "coin", "targetWorld": null, "anchor": "coin-hand", "hold": true },
+            "right": { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false }
           },
           "props": { "coin": null, "tray": { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false } }
         } },
@@ -174,12 +183,23 @@
             "right": { "active": true, "kind": "foot-plant", "targetWorld": [707, 1310], "anchor": null, "hold": true }
           },
           "hands": {
-            "left":  { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false },
-            "right": { "active": true, "kind": "tray", "targetWorld": [714, 1100], "anchor": "coin-tray-land", "hold": false }
+            "left":  { "active": true, "kind": "tray", "targetWorld": null, "anchor": "coin-tray-land", "hold": false },
+            "right": { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false }
           },
           "props": { "coin": { "active": true, "kind": "contact", "targetWorld": [714, 1100], "anchor": "coin-tray-land", "hold": false }, "tray": { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false } }
         } },
-        { "t": 53.96, "value": {
+        { "t": 54.1, "value": {
+          "feet": {
+            "left":  { "active": true, "kind": "foot-plant", "targetWorld": [673, 1310], "anchor": "half-step-back", "hold": true },
+            "right": { "active": true, "kind": "foot-plant", "targetWorld": [707, 1310], "anchor": null, "hold": true }
+          },
+          "hands": {
+            "left":  { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false },
+            "right": { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false }
+          },
+          "props": { "coin": { "active": true, "kind": "contact", "targetWorld": [714, 1100], "anchor": "coin-tray-land", "hold": false }, "tray": { "active": false, "kind": "none", "targetWorld": null, "anchor": null, "hold": false } }
+        } },
+        { "t": 54.35, "value": {
           "feet": {
             "left":  { "active": true, "kind": "foot-plant", "targetWorld": [673, 1310], "anchor": "half-step-back", "hold": true },
             "right": { "active": true, "kind": "foot-plant", "targetWorld": [707, 1310], "anchor": null, "hold": true }
@@ -232,7 +252,7 @@
         } },
         { "t": 53.55, "value": {
           "feet": { "left": { "planted": true, "sinceSeconds": 16.333 }, "right": { "planted": true, "sinceSeconds": 16.333 } },
-          "hands": { "left": { "holding": false, "sinceSeconds": null }, "right": { "holding": true, "sinceSeconds": 53.55 } },
+          "hands": { "left": { "holding": true, "sinceSeconds": 53.55 }, "right": { "holding": false, "sinceSeconds": null } },
           "gaze": { "locked": false, "sinceSeconds": null },
           "root": { "moving": false, "sinceSeconds": null },
           "freeze": { "active": false, "reason": null }

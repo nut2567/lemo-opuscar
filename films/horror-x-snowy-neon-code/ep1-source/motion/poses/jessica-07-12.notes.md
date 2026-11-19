@@ -17,6 +17,13 @@ compiles this to `PoseSample`; rigs never read this file.
   boundary key of every track now matches `jessica-01-06.json` (Task 2.1
   final) field-for-field (verified by deep-equal, see correction report),
   and the renderer-owned coinPlace coin path was removed from pose contacts.
+  Reconciled again per `specs/19-review-cue-7-12-pose-data.md` — coin state
+  timing now follows the frozen coinPlace beats (`airborne` depart→settle,
+  `placed` at 54.35) and the coinPlace prose below was corrected to match
+  the JSON (report: `reports/19-cue-7-12-pose-audit.md`). Repaired per the
+  MT-04 contact scan: coinPlace moved to the reachable left hand with
+  separated wrist/fingertip targets, hand-contact intents now release at
+  54.1 while the independent coin/tray prop contacts are unchanged.
 
 ## Frame/second grid used `[S]`
 
@@ -34,9 +41,14 @@ compiles this to `PoseSample`; rigs never read this file.
 
 `coinPlace` contract `[S jessica.json]`: depart **53.55**, tray contact
 **53.95**, settled **54.35**. Hand/contact keys land on those seconds;
-`props.coin` state flips at 53.55 (`held`) and 53.96 (`placed`) and
-`contacts.props.coin` marks the tray `contact`/`resting` at the fixed
-`coin-tray-land` anchor — all `step`-interpolated discrete intents.
+`props.coin` runs `airborne` from depart 53.55 with all position fields
+null (the renderer owns the arc), re-keys `airborne` anchored at the fixed
+`coin-tray-land` [714,1100] from contact 53.95 through the settle hop, and
+flips `placed` at settle **54.35**; `contacts.props.coin` marks the tray
+`contact` at 53.95 and `resting` from 54.35 — all `step`-interpolated
+discrete intents. `held` never appears: grasp and depart coincide at
+53.55, so there is no carry interval (the grip intent stays on
+`hands.left` contact/pinch and `holds.hands.left.holding`).
 
 ## Cue-6/7 boundary (frame 856 = t 28.533) — verified match
 
@@ -106,19 +118,36 @@ All later keys in this file use that convention.
     decision-guard`, gaze unlocks at 52.5333); weight settles even
     ({0.5/0.5, shift [0,−2]} by 53.55 — deliberate action, not fear). Gaze
     drops to `tray` [690,1101] at 53.55 for the coin work.
-  - **coinPlace** `[S times]`: right hand `contactType:'coin'` /
-    `contactAnchor:'coin-hand'` at **53.55** ([715,1083], pinch 1,
-    gripId `coin-place`), then `contactType:'tray'` /
-    `contactAnchor:'coin-tray-land'` at **53.95** ([714,1100], pinch 0 —
-    fingers release onto the tray). Between those two keys the *hand* travels
-    under the track's `linear` interp — that is hand pose only. **No coin
-    path is encoded**: `props.coin` carries only discrete `state`
-    (`held`→`placed`), `owner`, and the fixed `settleWorld` [714,1100];
-    `contacts.props.coin` marks only the static tray `contact`/`resting`
-    intents at 53.95/53.96. Both tracks are `interp:"step"`, so no position
+  - **coinPlace** `[S times]`: the **left** hand performs the reach (the
+    right hand stays at rest [696,1104]). At **53.55** it keys
+    `contactType:'coin'` / `contactAnchor:'coin-hand'` with wrist
+    `targetWorld` [713,1066] and fingertip `contactWorld` [715,1083]
+    (pinch 1, gripId `coin-place`); at **53.95** it keys
+    `contactType:'tray'` / `contactAnchor:'coin-tray-land'` with wrist
+    `targetWorld` [713,1084] and fingertip `contactWorld` [714,1100]
+    (pinch 0 — fingers release onto the tray). The wrist holds the
+    tray-touch position [713,1084] through the **54.1** key while
+    `contactType`/`contactWorld` release to `none`, then withdraws to rest
+    ([674,1106]) by **54.35**. `contacts.hands.left` mirrors those beats
+    with `targetWorld:null` so the measured target follows the moving
+    `contactWorld`, and its step key at **54.1** deactivates the hand
+    contact as the hand leaves the tray; the independent
+    `contacts.props.coin` contact/resting intents are unchanged. The
+    per-key `"interp":"linear"` on the 53.95 key governs the hold segment
+    to 54.1; the 53.55→53.95 hand travel resolves the track's `smooth`.
+    Torso `dy:+10` at the 53.55/54.35 keys lowers the shoulder line into
+    the verified reach envelope (8–12 tested). **No coin path is encoded**:
+    `props.coin` carries discrete `state`/`owner`/`id` only — `airborne`
+    (all positions null, `owner:'none'` because there is no `held`
+    interval) at depart 53.55, `airborne` anchored at the fixed
+    `coin-tray-land` [714,1100] from contact 53.95 through the settle hop
+    (mirroring the upper-fixture `cue12-hand-to-tray-contact` precedent at
+    frame 1619), `placed` at settle 54.35; `contacts.props.coin` marks the
+    static tray `contact` at 53.95 through the 54.1 release key and
+    `resting` from 54.35. Both tracks are `interp:"step"`, so no position
     can interpolate between keys — the data cannot supply a moving coin.
-    Withdraw to rest ([696,1104]) by **54.35**; the five tray coins stay
-    static (`tray.planted/visible` constant, no coin geometry keys).
+    The five tray coins stay static (`tray.planted/visible` constant, no
+    coin geometry keys).
   - `watch` (54.6667–59.9667): ordered turn per plan — gaze returns to
     `rear-door-gaze` at 54.6667 (eyes lead, weight 0.7, lock:false),
     `lock:true` + full weight at 55.4; head rotDeg completes +24 at 55.4;
@@ -140,18 +169,20 @@ unused), `slot` [210,1154] (declared, unused — customer-owned action),
 
 ## Invented (`[P]`) values — flagged
 
-- Night-two reach targets [694,1099]→[690,1100] and the 54.1 withdraw
-  waypoint [700,1102]: proposed positions just above the counter front
-  (y1110) near the tray; consistent with 2.1's hand rest targets but
-  unverified against rendered frames.
+- Night-two reach targets [694,1099]→[690,1100]: proposed positions just
+  above the counter front (y1110) near the tray; consistent with 2.1's hand
+  rest targets but unverified against rendered frames. The old 54.1
+  withdraw waypoint [700,1102] is gone — 54.1 now holds the tray-touch
+  pose while the hand-contact intent releases.
 - Cue-11/12 `weight`/`upperKeys` micro-values (torso rotDeg drift, head dy
-  offsets, weight rebalancing to even at coinPlace): acting proposals;
-  feet/lowerKeys stay frozen at the 2.1 handoff plant so nothing claims
-  real footwork.
+  offsets, weight rebalancing to even at coinPlace, and the coinPlace
+  torso `dy:+10` reach correction): acting proposals verified against the
+  evaluator contact envelope; feet/lowerKeys stay frozen at the 2.1
+  handoff plant so nothing claims real footwork.
 - `holds.freeze` reasons (`silent-listen`, `night-three-freeze`,
   `decision-guard`, `watch-hold`) and onsets 41.6/48.9/52.5333/56.2 are
   `[P]`.
-- `props.coin.id:'coin-place'` and `hands.right.gripId:'coin-place'` are
+- `props.coin.id:'coin-place'` and `hands.left.gripId:'coin-place'` are
   authoring labels for the single renderer-hooked coin; they carry no
   geometry.
 
@@ -177,13 +208,15 @@ unused), `slot` [210,1154] (declared, unused — customer-owned action),
   `sheet`, `empty-washer`; partially visible in `rear-exit`, `third-night`;
   confirmed in `faceless`, `decision`, `watch`. Keys degrade to holds where
   off-frame.
-- **coinPlace ownership:** pose data now owns ONLY Jessica's hand pose and
-  hand contact (`coin` at `coin-hand` 53.55, `tray` at `coin-tray-land`
-  53.95) plus discrete coin state flags with no positions over time. The
-  coin's travel, arc, and landing render are the renderer-owned hook
-  (task 34); if the coordinator prefers zero coin state in pose data,
-  `props.coin`/`contacts.props.coin` keys can be dropped without affecting
-  the hand beats.
+- **coinPlace ownership:** pose data now owns ONLY Jessica's left-hand pose
+  and hand contact (`coin` at `coin-hand` 53.55, `tray` at
+  `coin-tray-land` 53.95, hand-contact release 54.1) plus discrete coin
+  state flags at fixed anchors — positions appear only as the static
+  `coin-tray-land` [714,1100] anchor triple on the post-contact
+  `airborne`/`placed` keys, never as a path. The coin's travel, arc, and
+  landing render are the renderer-owned hook (task 34); if the coordinator
+  prefers zero coin state in pose data, `props.coin`/`contacts.props.coin`
+  keys can be dropped without affecting the hand beats.
 - **WAV-dependent timings:** glance-peak alignment (~29.97), listen-tilt
   (~41.6), night reach-arrest windows, and the ~47.80 cut alternative remain
   provisional until the aligned Jessica dry WAV exists.
@@ -203,12 +236,20 @@ unused), `slot` [210,1154] (declared, unused — customer-owned action),
 - **f1457 / 48.5667 (night-three cut):** right hand back at rest
   [696,1104]; head dy −6 rotDeg +20 fixed; freeze re-arms `night-three-
   freeze` at 48.9 — vs night-two's arrested reach [690,1100] at 48.2.
-- **f1619 / 53.95 (coinPlace contact):** right hand `contactType:'tray'`,
-  `contactAnchor:'coin-tray-land'`, contactWorld [714,1100], pinch 0;
-  `props.coin` → `placed` at 53.96; `contacts.props.coin` `contact`→
-  `resting` at the same fixed anchor; five tray coins untouched.
+- **f1607 / 53.5667 (coinPlace depart, canonical):** left hand
+  `contactType:'coin'`, `contactAnchor:'coin-hand'`, wrist [713,1066],
+  fingertip target near [715,1083], pinch 1; right hand at rest.
+- **f1619 / 53.95 (coinPlace contact):** left hand `contactType:'tray'`,
+  `contactAnchor:'coin-tray-land'`, wrist [713,1084], contactWorld
+  [714,1100], pinch 0; `props.coin` `airborne` anchored at
+  `coin-tray-land` [714,1100] through the settle hop, `placed` at settle
+  54.35 (f1631); `contacts.props.coin` `contact`@53.95 → `resting`@54.35
+  at the same fixed anchor; five tray coins untouched.
+- **f1623 / 54.1 (hand-contact release):** `contacts.hands.left` and the
+  hand's own `contactType`/`contactWorld` go inactive while the wrist key
+  still holds [713,1084]; withdraw completes at the 54.35 rest key.
 - **f1799 / 59.9667 (film end):** gaze locked `rear-door-gaze`, head
   rotDeg +25 / torso +10, hands at rest, feet planted, freeze `watch-hold`.
 
-*Source-level deliverable only — no tests run, nothing rendered, no other
-files touched.*
+*Evaluator-verified pose data — frames 856–1799 active hand contacts max
+0.849 world px (16 samples, cue 12 only); no render, no other files touched.*

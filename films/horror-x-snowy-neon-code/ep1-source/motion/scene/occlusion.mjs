@@ -18,11 +18,19 @@
 
 // ---- Scene constants (from INTERFACE.md / environment.mjs) ---------------
 
-const COUNTER_LEFT   = 600;   // expanded from 628 to allow entry margin
-const COUNTER_RIGHT  = 760;   // expanded from 740 for exit margin
+const COUNTER_LEFT   = 628;   // painted counter body left edge (environment.mjs fillRect(628,1108,112,228))
+const COUNTER_RIGHT  = 740;   // painted counter body right edge
 const COUNTER_CLIP_Y = 1110;  // world y: existing SVG clip line
 const COUNTER_TOP_Y  = 1096;  // counter top slab surface
 const COUNTER_BODY   = { x1: 628, y1: 1108, x2: 740, y2: 1340 };
+
+// Conservative clip band around the painted body, retained from the v1
+// decision range (600..760) because frozen fixture co-03 requires
+// clipY=1110 at rootX=575. This is a decision margin, not drawn geometry
+// (see clip-strategy.mjs COUNTER-X-EXTENT diagnostic).
+const APPROACH_LEFT  = 570;
+const APPROACH_RIGHT = 790;
+const APPROACH_RAMP  = 30;    // px over which counterOverlapFraction ramps 0->1
 
 const REAR_DOOR      = { x1: 470, y1: 775, x2: 595, y2: 1185 };
 const REAR_JAMB_R    = 595;
@@ -78,34 +86,32 @@ export function counterOcclusion(rootX, rootY = 925) {
     };
   }
 
-  // Transitional zone: character partially behind counter edge
-  const margin = 30; // px transition zone
-  const leftEdge  = COUNTER_LEFT - margin;
-  const rightEdge = COUNTER_RIGHT + margin;
-
-  if (rootX >= leftEdge && rootX < COUNTER_LEFT) {
-    // Approaching from left: partial occlusion ramps up
-    const t = (rootX - leftEdge) / margin;
+  // Transition zones hug the painted body edges; the outer bounds are the
+  // retained approach margins, not the counter geometry itself.
+  if (rootX >= APPROACH_LEFT && rootX < COUNTER_LEFT) {
+    // Approaching from left: partial occlusion ramps up over APPROACH_RAMP
+    // px, then saturates for the rest of the approach band.
+    const t = clamp((rootX - APPROACH_LEFT) / APPROACH_RAMP, 0, 1);
     return {
       occluded: true,
       clipY: COUNTER_CLIP_Y,
       mode: 'transition-in',
       behindCounter: false,
       counterOverlapFraction: t,
-      note: `Entering counter zone from left; overlap fraction ${t.toFixed(2)}`
+      note: `Entering painted counter edge x${COUNTER_LEFT} from left; overlap fraction ${t.toFixed(2)}`
     };
   }
 
-  if (rootX > COUNTER_RIGHT && rootX <= rightEdge) {
-    // Exiting to right: partial occlusion ramps down
-    const t = 1 - (rootX - COUNTER_RIGHT) / margin;
+  if (rootX > COUNTER_RIGHT && rootX <= APPROACH_RIGHT) {
+    // Exiting to right: partial occlusion ramps down over APPROACH_RAMP px.
+    const t = clamp((APPROACH_RIGHT - rootX) / APPROACH_RAMP, 0, 1);
     return {
       occluded: true,
       clipY: COUNTER_CLIP_Y,
       mode: 'transition-out',
       behindCounter: false,
       counterOverlapFraction: t,
-      note: `Exiting counter zone to right; overlap fraction ${t.toFixed(2)}`
+      note: `Exiting painted counter edge x${COUNTER_RIGHT} to right; overlap fraction ${t.toFixed(2)}`
     };
   }
 
@@ -446,34 +452,45 @@ export function lightingComposite(rootX, rootY) {
 
 // ---- 6. Rear door jamb occlusion -----------------------------------------
 //
-// When the character (or cloth) overlaps the rear doorway, the right
-// jamb at x=595 clips anything extending past it. This is currently
-// handled by characters.mjs's clip rect for the cloth; this helper
-// provides the same logic for the cel if she approaches the doorway.
+// The rear doorway (x470..595, y775..1185) is painted into the environment
+// layer — void, casing and jambs — which renders BEFORE the SVG character
+// layer. A character standing on the shop side (the cel) is therefore IN
+// FRONT of the opening in render order: she occludes the void, and the
+// jamb/opening never occludes her. Clipping her INTO the opening is only
+// correct for a figure inside the void — the exiting cloth, which
+// characters.mjs already clips with its own rect(471,776,123,408). This
+// helper therefore reports front-of-opening for the cel and must not emit
+// an opening clip for her.
 
 /**
  * @param {number} rootX — character root world x
  * @param {number} bodyHalfWidth — approximate half-width of character in world px
- * @returns {{ clipped: boolean, clipRect: number[]|null, jambSide: string|null }}
+ * @returns {{ clipped: boolean, clipRect: number[]|null, jambSide: string|null,
+ *             depth?: string, note?: string }}
  */
 export function rearDoorOcclusion(rootX, bodyHalfWidth = 40) {
   const charLeft  = rootX - bodyHalfWidth;
   const charRight = rootX + bodyHalfWidth;
 
   // Check if character overlaps the rear doorway horizontally
-  const overlapsLeft  = charLeft < REAR_DOOR.x2 && charRight > REAR_DOOR.x1;
-  const overlapsRight = charRight > REAR_DOOR.x2;
+  const overlapsOpening = charLeft < REAR_DOOR.x2 && charRight > REAR_DOOR.x1;
 
-  if (!overlapsLeft) {
+  if (!overlapsOpening) {
     return { clipped: false, clipRect: null, jambSide: null };
   }
 
-  // Character overlaps doorway; clip to the opening
+  // Front-side overlap: no clip. jambSide reports which opening bound the
+  // body crosses ('right' past jamb x595, 'left' past x470, 'inside' when
+  // fully within the opening span) for diagnostics only.
+  const jambSide = charRight > REAR_DOOR.x2 ? 'right'
+    : charLeft < REAR_DOOR.x1 ? 'left' : 'inside';
+
   return {
-    clipped: true,
-    clipRect: [REAR_DOOR.x1, REAR_DOOR.y1, REAR_DOOR.x2, REAR_DOOR.y2],
-    jambSide: overlapsRight ? 'right' : 'left',
-    note: 'Character overlaps rear doorway; clip body parts inside the opening only'
+    clipped: false,
+    clipRect: null,
+    jambSide,
+    depth: 'front-of-opening',
+    note: 'Cel stands in front of the rear opening in render order (environment paints void/jamb first); the doorway does not clip her.'
   };
 }
 

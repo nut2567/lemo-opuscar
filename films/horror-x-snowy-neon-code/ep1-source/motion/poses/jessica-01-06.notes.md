@@ -26,11 +26,14 @@ provisional.
   beat boundaries (API.md resolver: `'step'` holds `k_i`; only numeric
   leaves interpolate, so a sparse intent track must not glide). Enums,
   strings, booleans and nulls step per contract on all tracks.
-- `contacts` and `holds` tracks are **sparse** (7 keys each): they carry
-  resolved intents at beat boundaries only; with `interp:"step"` the
-  resolver holds the last value until the next key. All other tracks are
-  keyed at every beat (~44 keys incl. the t=5.700 hold, t = 0.0 through
-  28.533).
+- `contacts` and `holds` tracks are **sparse** and resolved with
+  `interp:"step"` (last value holds until the next key). `contacts` now has
+  18 keys and `holds` 14: in addition to the original beat keys, intent keys
+  were added at the cue-2 foot-plant steps (6.2/6.7/7.2/7.7/8.2), the cue-3/4
+  hand beats (13.667/15.3), the cue-5/6 release boundaries (20.867/22.013/
+  25.8), the cue-6 gaze unlock/lock (25.2/27.0), and the t=16.0 contact
+  release described below. All other tracks are keyed at every beat
+  (~44 keys incl. the t=5.700 hold, t = 0.0 through 28.533).
 - `anchors` maps the scene-layout ids actually referenced. `rear-door` is an
   extent `{x0,y0,x1,y1}` per `scene-layout.json`; the rest are `[x,y]` world
   points.
@@ -225,11 +228,46 @@ still" — is exactly these values `[S map / P numbers]`.
    false) so the advisory hold matches the authoritative `gaze` track's
    unlock at the quiet→tray cut (review note V-2).
 
+## Hand-contact repair pass (API v1 `errorWorld <= 4.0`)
+
+Evaluator-driven fix of the authored hand intents; no choreography, timing,
+root/leg/camera data, or threshold changed.
+
+- **Side labels:** under `facing:-1` the screen-left hand is the rig's
+  `right` chain (left shoulder sits screen-right). `hands.left/right`,
+  `contacts.hands.*` and `holds.hands.*` were swapped on every key whose
+  `rootPath.facing` is `-1` so authored tray sides match the solved shoulders.
+- **Wrist targets:** `hands.<side>.targetWorld` is the IK *wrist* target while
+  `contactWorld` is the fingertip aim. For every key carrying a
+  `contactWorld`, `targetWorld` was re-solved from the real evaluator's
+  shoulder position as `contactWorld + 17 * unit(shoulder - contactWorld)`
+  (34-local-unit hand × pose scale 0.5 ≈ 17 world px), so the solved
+  fingertip lands on the authored contact point instead of ~15–35 px off.
+- **Contact release:** hand `contactType` set to `"none"` (keeping
+  `contactWorld` as a visual aim point) at t=8.2 (cue-2 turn crossing),
+  t=16.0 (shoulder→contact distance exceeds arm reach as she settles back),
+  and t ∈ {20.867, 21.533, 21.833, 22.013, 22.65, 24.867, 25.2} (cue-5/6
+  shoulder rise makes tray contact physically unreachable — hands hover at
+  the tray edge). Matching `contacts.hands` intents were set inactive at
+  t=16.0 (new sparse key) and at the existing 20.867/21.833/22.013 keys.
+- **Measurement target:** `contacts.hands.*.targetWorld` is `null` on every
+  key, so the API measures fingertip-vs-`contactWorld` directly rather than
+  against a second authored point that could drift from the solved hand.
+- **Handoff boundary:** the t=28.533 `hands` key keeps the contracted
+  field-for-field values shared with `jessica-07-12.json` (unswapped rest
+  targets [674,1106]/[696,1104]); the preceding t=28.3 key carries
+  `interp:"step"` (a supported per-key override) so the last cue-6 frames
+  hold the repaired pose and the boundary swap resolves discretely at the
+  cue-6/7 cut. `test-resolver.mjs` handoff equivalence passes.
+- **Verification:** entry-equivalent scan of canonical frames 0–855 with the
+  real scene layout and both pose halves — 755 active hand-contact samples,
+  **0 failures**, max `errorWorld` 3.256 (limit 4.0).
+
 ## Verification performed
 
 - `python -c "import json; json.load(...)"` — JSON parses; all 9 tracks
   present; 44 keys on continuous tracks (incl. the t=5.700 hold keys),
-  sparse `contacts`(7)/`holds`(7), `interp:"step"` on both sparse tracks.
+  sparse `contacts`(18)/`holds`(14), `interp:"step"` on both sparse tracks.
 - Review-fix pass (spec `2.1-review-fixes.md`): D-1 hold keys at t=5.700 on
   all continuous tracks compress the store→nun transition into the 0.033 s
   cut; D-2 `contacts`/`holds` now step; V-2 `holds` key at t=20.867 aligns
