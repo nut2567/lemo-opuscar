@@ -421,7 +421,7 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 | 1.1 | ✅ | แก้ null semantics ของ `s`, `groundY`, `gaitPhase`, `sinceSeconds` และพิกัด nullable แล้ว; ตรวจ source และคัดลอกโมดูล/fixtures เข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.2 | ✅ | โมดูลช่วงบนและ fixtures 10 กรณีตรวจ schema แล้ว และคัดลอกเข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.3 | ❌ | ยังไม่เริ่ม; 1.1/1.2 ผ่านแล้ว จึงเริ่มรวม rig เข้ากับ renderer ได้ |
-| 2.1 | ⏳ | Devin ส่ง pose JSON/notes cues 1–6 แล้วและบันทึกใน Git; Claude กำลังตรวจรับแบบ read-only ก่อน integration (`ctx_e9ed5f479164`) |
+| 2.1 | ✅ | pose JSON/notes cues 1–6 ตรวจ source-level แล้วและ commit `c041a02`; Claude ทำ independent read-only review ก่อน integration (`ctx_e9ed5f479164`) |
 | 2.2 | ⏳ | Devin กำลังทำ pose JSON/notes cues 7–12 (`ctx_8ed8f4c446a6`); semantic action map เป็นข้อมูลตั้งต้น |
 | 2.3 | ⏳ | รวม cue map เชิงความหมายแล้ว; การตรวจ pose schema, cue boundary และ transition จริงรอ 2.1–2.2 |
 | 3.1 | ✅ | `scene-layout.json` อยู่ใน source tree; รายงาน audit ของแพ็กเกจ scene ระบุ fixture checks |
