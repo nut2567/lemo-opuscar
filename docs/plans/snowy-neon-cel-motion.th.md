@@ -421,7 +421,7 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 | 1.1 | ✅ | แก้ null semantics ของ `s`, `groundY`, `gaitPhase`, `sinceSeconds` และพิกัด nullable แล้ว; ตรวจ source และคัดลอกโมดูล/fixtures เข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.2 | ✅ | โมดูลช่วงบนและ fixtures 10 กรณีตรวจ schema แล้ว และคัดลอกเข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.3 | ❌ | ยังไม่เริ่ม; 1.1/1.2 ผ่านแล้ว จึงเริ่มรวม rig เข้ากับ renderer ได้ |
-| 2.1 | ⏳ | Devin กำลังทำ pose JSON/notes cues 1–6 (`ctx_90feb9670e5d`); semantic action map เป็นข้อมูลตั้งต้น |
+| 2.1 | ⏳ | Devin ส่ง pose JSON/notes cues 1–6 แล้วและบันทึกใน Git; Claude กำลังตรวจรับแบบ read-only ก่อน integration (`ctx_e9ed5f479164`) |
 | 2.2 | ⏳ | Devin กำลังทำ pose JSON/notes cues 7–12 (`ctx_8ed8f4c446a6`); semantic action map เป็นข้อมูลตั้งต้น |
 | 2.3 | ⏳ | รวม cue map เชิงความหมายแล้ว; การตรวจ pose schema, cue boundary และ transition จริงรอ 2.1–2.2 |
 | 3.1 | ✅ | `scene-layout.json` อยู่ใน source tree; รายงาน audit ของแพ็กเกจ scene ระบุ fixture checks |
@@ -429,16 +429,20 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 | 4.1 | ✅ | ตรวจหลักฐานขนาด 19.2 px เทียบ 22.4 px และบันทึกข้อแตกต่างแล้ว |
 | 4.2 | ⏳ | บันทึกคำตัดสินขนาดเล็ก 19.2 px (`capvw=1.7778`) แล้ว; การตั้งเป็นค่าใช้งานถาวรของ renderer รอ coordinator integration |
 | 4.3 | ✅ | ตรวจบน viewport มือถือ 390×693 ที่ DPR 2; cues 3/5/12 ผ่านการตรวจบรรทัดและตำแหน่ง |
-| 5.1 | ❌ | ยังไม่เริ่ม; checklist เตรียมได้ทันทีควบคู่กับงาน implementation |
+| 5.1 | ⏳ | Claude กำลังจัดทำ QA checklist และ machine-readable gate list (`ctx_245fb494f8b8`); ยังไม่มีการรัน checks |
 | 5.2 | ❌ | รอ rig, pose, scene, integration และ checklist พร้อม |
 | 5.3 | ❌ | รอ 5.2 และ Jessica aligned dry WAV 60 วินาที; WAV ยังเป็น blocker |
 
 ### งานที่พร้อมเริ่มได้ทันที
 
-- **2.1 และ 2.2** เริ่มแล้วและกำลังทำขนานกัน; cue maps ที่เตรียมไว้เป็นเพียงแนวทาง ส่วน pose JSON/notes จริงยังอยู่ระหว่างทำ
+- **2.1** เขียน pose JSON/notes แล้วและรอ Claude review; **2.2** กำลังทำ pose JSON/notes โดย Devin
 - **1.3** เริ่มได้ทันทีเพราะ 1.1 และ 1.2 ผ่านการตรวจรับแล้ว
-- **5.1** เริ่มเตรียม QA checklist ได้โดยไม่ต้องรอ rig หรือ pose
+- **5.1** เริ่มทำ QA checklist แล้ว โดยแยกเกณฑ์ source-only, motion-test และ final-render
 - **1.3** เริ่มได้ทันทีเพราะ 1.1/1.2 ตรวจรับแล้ว; **2.3** ต้องรอ pose JSON ทั้งสองช่วงก่อนตรวจ transition จริง
 - **5.3** ยังเริ่มไม่ได้จนมี WAV ที่ตรงกับ SRT และ 5.2 ผ่าน
 
 หลักฐานสถานะ: `.agent-runs/snowy-neon-cel-motion-task1/evidence/source-provisioning-1-1-1-2.md`, รายงาน tasks 2.1/2.2 และ `.agent-runs/snowy-neon-cel-motion-2-3-merge-review/MERGED-CUE-MAP.md`, รายงาน 4.1–4.3 ใน `.agent-runs/snowy-neon-cel-motion-task4/reports/`, และ ledger/worker report ของ 3.1–3.2.
+
+### ข้อกำหนดเวลาสำหรับ render ล่าสุด
+
+ผู้ใช้แจ้งว่าเหลือเวลา 1 ชั่วโมง 20 นาที และให้รวมข้อมูลที่พร้อมลง Git ก่อน โดย **งด full combined render ในช่วงเวลานี้**; เตรียมไฟล์ที่ commit แล้วเพื่อย้ายไป render บนอีกเครื่องได้ หากงานและ dependency เสร็จก่อนกรอบเวลา จึงค่อยพิจารณา render ตาม gate ในแผน ทั้งนี้ full Jessica render ยังรอ aligned dry WAV 60 วินาทีที่ตรงกับ SRT และ 5.2 ผ่านก่อน
