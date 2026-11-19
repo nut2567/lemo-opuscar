@@ -417,7 +417,7 @@ Build/render Jessica เต็ม 60.000 วินาที + verify media/timel
 
 | รหัส | สถานะ | ความคืบหน้า / เงื่อนไข |
 |---|---|---|
-| 1.0 | ✅ | ตรึง `motion/API.md` และตรวจ read-only source provisioning พร้อม SHA-256 สำหรับ worktree |
+| 1.0 | ✅ | API contract และ read-only provisioning หลักฐานอยู่ใน main; ตรวจแล้ว `cel-motion-10` ไม่มี source/commit เฉพาะ และเก็บรายงานต้นฉบับ+ฉบับแก้ไว้ใน `.agent-runs/task_{b99c89b83e04,ad4d91b43e47}/report.md` |
 | 1.1 | ✅ | แก้ null semantics ของ `s`, `groundY`, `gaitPhase`, `sinceSeconds` และพิกัด nullable แล้ว; ตรวจ source และคัดลอกโมดูล/fixtures เข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.2 | ✅ | โมดูลช่วงบนและ fixtures 10 กรณีตรวจ schema แล้ว และคัดลอกเข้า source tree พร้อมยืนยัน SHA-256 |
 | 1.3 | ❌ | ยังไม่เริ่ม; 1.1/1.2 ผ่านแล้ว จึงเริ่มรวม rig เข้ากับ renderer ได้ |
