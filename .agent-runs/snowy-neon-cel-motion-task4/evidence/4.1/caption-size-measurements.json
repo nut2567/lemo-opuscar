@@ -1,0 +1,266 @@
+{
+  "task": "4.1-caption-size-evidence",
+  "jessica_srt_sha256": "ab5c060b61498bfe8bc8b93d3d2e83d6a2031842e6741b7eb0b1823a97b7f716",
+  "srt_unchanged": true,
+  "raster": {
+    "width": 1080,
+    "height": 1920
+  },
+  "font": "Kanit-Regular.ttf",
+  "margin_pct": 0.07,
+  "usable_width_px": 928.8,
+  "sizes": {
+    "19.2px": {
+      "font_size_px": 19.2,
+      "font_size_vw": 1.7778,
+      "usable_width_px": 928.8,
+      "measurements": [
+        {
+          "cue": 1,
+          "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้ายี่สิบสี่ชั่วโมง",
+          "width_px": 387,
+          "height_px": 22,
+          "fits_one_line": true,
+          "margin_remaining_px": 541.8
+        },
+        {
+          "cue": 2,
+          "text": "ฉันชื่อนุ่น เข้ากะดึกที่นี่มาสองสัปดาห์",
+          "width_px": 273,
+          "height_px": 22,
+          "fits_one_line": true,
+          "margin_remaining_px": 655.8
+        },
+        {
+          "cue": 3,
+          "text": "งานของฉันมีแค่รับเหรียญ ใส่ผ้า",
+          "width_px": 241,
+          "height_px": 17,
+          "fits_one_line": true,
+          "margin_remaining_px": 687.8
+        },
+        {
+          "cue": 4,
+          "text": "แล้วรอให้เครื่องซักเสร็จ",
+          "width_px": 180,
+          "height_px": 17,
+          "fits_one_line": true,
+          "margin_remaining_px": 748.8
+        },
+        {
+          "cue": 5,
+          "text": "ดึก ๆ ร้านเงียบจนได้ยินเหรียญตกกระทบถาด",
+          "width_px": 341,
+          "height_px": 17,
+          "fits_one_line": true,
+          "margin_remaining_px": 587.8
+        },
+        {
+          "cue": 6,
+          "text": "ทุกคืนมีลูกค้าคนเดิมมากับผ้าขาวผืนใหญ่",
+          "width_px": 308,
+          "height_px": 22,
+          "fits_one_line": true,
+          "margin_remaining_px": 620.8
+        },
+        {
+          "cue": 7,
+          "text": "ฉันไม่เคยเห็นหน้าเขา",
+          "width_px": 155,
+          "height_px": 17,
+          "fits_one_line": true,
+          "margin_remaining_px": 773.8
+        },
+        {
+          "cue": 8,
+          "text": "เขาหยอดเหรียญเอง",
+          "width_px": 154,
+          "height_px": 16,
+          "fits_one_line": true,
+          "margin_remaining_px": 774.8
+        },
+        {
+          "cue": 9,
+          "text": "พอผ้าเริ่มหมุน คนก็หายไปจากข้างเครื่อง",
+          "width_px": 307,
+          "height_px": 23,
+          "fits_one_line": true,
+          "margin_remaining_px": 621.8
+        },
+        {
+          "cue": 10,
+          "text": "ฉันเห็นแค่ชายผ้าลับประตูหลัง ไม่มีเสียงฝีเท้า",
+          "width_px": 332,
+          "height_px": 23,
+          "fits_one_line": true,
+          "margin_remaining_px": 596.8
+        },
+        {
+          "cue": 11,
+          "text": "คืนที่สองกับคืนที่สามก็เหมือนเดิม",
+          "width_px": 256,
+          "height_px": 17,
+          "fits_one_line": true,
+          "margin_remaining_px": 672.8
+        },
+        {
+          "cue": 12,
+          "text": "คืนนี้ฉันวางเหรียญ แล้วเฝ้ามองประตูหลัง อยากรู้ว่าเขามาจากไหน",
+          "width_px": 488,
+          "height_px": 22,
+          "fits_one_line": true,
+          "margin_remaining_px": 440.8
+        }
+      ],
+      "longest_cue": 12,
+      "longest_width_px": 488,
+      "all_fit_one_line": true,
+      "phone_390px": {
+        "scale_factor": 0.3611,
+        "effective_font_px": 6.93,
+        "note": "At 390px width, 19.2px renders at ~6.9px effective",
+        "above_min_readable": true
+      },
+      "thai_marks": [
+        {
+          "label": "plain",
+          "height": 11
+        },
+        {
+          "label": "tonemarks",
+          "height": 17
+        },
+        {
+          "label": "full_cue12",
+          "height": 22
+        }
+      ]
+    },
+    "22.4px": {
+      "font_size_px": 22.4,
+      "font_size_vw": 2.0741,
+      "usable_width_px": 928.8,
+      "measurements": [
+        {
+          "cue": 1,
+          "text": "นี่คือคืนสุดท้ายที่ฉันทำงานในร้านซักผ้ายี่สิบสี่ชั่วโมง",
+          "width_px": 439,
+          "height_px": 24,
+          "fits_one_line": true,
+          "margin_remaining_px": 489.8
+        },
+        {
+          "cue": 2,
+          "text": "ฉันชื่อนุ่น เข้ากะดึกที่นี่มาสองสัปดาห์",
+          "width_px": 311,
+          "height_px": 24,
+          "fits_one_line": true,
+          "margin_remaining_px": 617.8
+        },
+        {
+          "cue": 3,
+          "text": "งานของฉันมีแค่รับเหรียญ ใส่ผ้า",
+          "width_px": 276,
+          "height_px": 19,
+          "fits_one_line": true,
+          "margin_remaining_px": 652.8
+        },
+        {
+          "cue": 4,
+          "text": "แล้วรอให้เครื่องซักเสร็จ",
+          "width_px": 206,
+          "height_px": 19,
+          "fits_one_line": true,
+          "margin_remaining_px": 722.8
+        },
+        {
+          "cue": 5,
+          "text": "ดึก ๆ ร้านเงียบจนได้ยินเหรียญตกกระทบถาด",
+          "width_px": 390,
+          "height_px": 19,
+          "fits_one_line": true,
+          "margin_remaining_px": 538.8
+        },
+        {
+          "cue": 6,
+          "text": "ทุกคืนมีลูกค้าคนเดิมมากับผ้าขาวผืนใหญ่",
+          "width_px": 352,
+          "height_px": 24,
+          "fits_one_line": true,
+          "margin_remaining_px": 576.8
+        },
+        {
+          "cue": 7,
+          "text": "ฉันไม่เคยเห็นหน้าเขา",
+          "width_px": 179,
+          "height_px": 19,
+          "fits_one_line": true,
+          "margin_remaining_px": 749.8
+        },
+        {
+          "cue": 8,
+          "text": "เขาหยอดเหรียญเอง",
+          "width_px": 180,
+          "height_px": 19,
+          "fits_one_line": true,
+          "margin_remaining_px": 748.8
+        },
+        {
+          "cue": 9,
+          "text": "พอผ้าเริ่มหมุน คนก็หายไปจากข้างเครื่อง",
+          "width_px": 353,
+          "height_px": 25,
+          "fits_one_line": true,
+          "margin_remaining_px": 575.8
+        },
+        {
+          "cue": 10,
+          "text": "ฉันเห็นแค่ชายผ้าลับประตูหลัง ไม่มีเสียงฝีเท้า",
+          "width_px": 383,
+          "height_px": 25,
+          "fits_one_line": true,
+          "margin_remaining_px": 545.8
+        },
+        {
+          "cue": 11,
+          "text": "คืนที่สองกับคืนที่สามก็เหมือนเดิม",
+          "width_px": 287,
+          "height_px": 19,
+          "fits_one_line": true,
+          "margin_remaining_px": 641.8
+        },
+        {
+          "cue": 12,
+          "text": "คืนนี้ฉันวางเหรียญ แล้วเฝ้ามองประตูหลัง อยากรู้ว่าเขามาจากไหน",
+          "width_px": 566,
+          "height_px": 24,
+          "fits_one_line": true,
+          "margin_remaining_px": 362.8
+        }
+      ],
+      "longest_cue": 12,
+      "longest_width_px": 566,
+      "all_fit_one_line": true,
+      "phone_390px": {
+        "scale_factor": 0.3611,
+        "effective_font_px": 8.09,
+        "note": "At 390px width, 22.4px renders at ~8.1px effective",
+        "above_min_readable": true
+      },
+      "thai_marks": [
+        {
+          "label": "plain",
+          "height": 12
+        },
+        {
+          "label": "tonemarks",
+          "height": 19
+        },
+        {
+          "label": "full_cue12",
+          "height": 24
+        }
+      ]
+    }
+  }
+}

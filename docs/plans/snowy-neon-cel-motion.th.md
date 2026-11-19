@@ -1,84 +1,444 @@
-# แผนการแสดงเต็มตัวของเซล · Snowy Neon EP1
+# แผนการเคลื่อนไหวเต็มตัวของเซล · Snowy Neon EP1 ฉบับ Jessica
 
-**แผนสำหรับการผลิต** · ครอบคลุมการแสดงตามบททั้งสองฉบับ วิธีประกอบตัวละครเข้ากับฉาก และเกณฑ์ตรวจรับ เวลาซับในตารางคือต้นฉบับ ส่วนเวลาท่าที่เสนอให้ยืนยันจากภาพพร้อมเสียงในคลิปทดสอบ
+**แผนสำหรับการผลิต — ยังไม่เริ่มผลิต** · ฉบับนี้จำกัดขอบเขตเหลือ **Jessica edition เดียว** และใช้ `films/horror-x-snowy-neon-code/ep1-source/` เป็นฐานงานหลัก ไม่ใช้ `ep1-recut/devin-work` หรือวัสดุของฉบับซับเดิม
 
-เซลรับบทนุ่นในทั้งสองฉบับ ใช้หน้า ผมยาว ชุด และสีแสงจากโมเดลที่ผ่านการเลือกแล้ว ใช้การเดินและการวางข้อต่อของนุ่นโมเดลแรกเป็นต้นแบบ เริ่มเรื่องด้วยร่างกายที่คล่องกับงานกะดึก จากนั้นให้มือชะงัก น้ำหนักถอย และสายตาจับประตูมากขึ้นตามสิ่งที่เธอเห็น ตอนจบ ความนิ่งคือผลจากการตัดสินใจหยุดงานเพื่อเฝ้ามอง
+## ขอบเขตและเป้าหมาย
 
-## ออกแบบการเคลื่อนไหว
+- ส่งมอบภาพยนตร์แนวตั้งหนึ่งฉบับ: **60.000 วินาที, 1080×1920, 30 fps, 1,800 เฟรม**, เสียงพากย์ Jessica และซับ `jessica.srt` ตรงเวลากัน
+- ใช้ `ep1-source/picture/jessica.json` เป็นตารางช็อต/คิว/แอ็กชัน และ `ep1-source/captions/jessica.srt` เป็นซับ 12 ช่วงเดิม ห้ามแก้ข้อความซับหรือเลื่อนเวลา cue
+- รักษาแบบเซลที่ผ่านการอนุมัติแล้ว: หน้า ผม ชุดสี และโครงร่างตัวจาก `models/cel/` ต้องเป็น motion layer ที่เคลื่อนไหวบนแบบเดิม ไม่วาดหน้า/ผม/ชุดใหม่ให้ต่างจากแบบที่อนุมัติ
+- รักษา invariants ของฉาก Snowy Neon: พิกัดโลก 1080×1920, กล้อง Canvas/SVG เดียวกัน, clip ตัวละครใต้เคาน์เตอร์ที่ world `y=1110`, ช่องประตูหลัง `x470–595, y775–1185`, เคาน์เตอร์ `x630–740, y1110–1335`, ไม่มี image input, ไม่มี `Math.random`, ไม่มี state ที่ทำให้เฟรมเดียวกันเรนเดอร์ต่างกัน
+- **ไม่ทำ** งานซ้ำสำหรับฉบับ `original`/Niwat/free-voice, ไม่ build `original`, ไม่สร้าง pose/timeline แยกสำหรับฉบับนั้น และไม่ถือว่า `first-minute/` หรือ `ep1-recut/devin-work` เป็น input ที่ต้องใช้
+- ก่อน dispatch ต้องจัดการปัญหา worktree: `/films/` อยู่ใน `.gitignore` จึงห้ามสมมติว่า child worktree ใหม่มี local `ep1-source` inputs; coordinator ต้อง provision ชุด source แบบ read-only เข้าแต่ละ worker worktree หรือใช้ workspace strategy ที่อนุญาตและ verify path ก่อน launch
 
-- **เดินเต็มตัว** วางท่าเริ่มถ่ายน้ำหนัก ยกเท้า ส้นแตะ พื้นรับน้ำหนักเต็มฝ่าเท้า ดันปลายเท้า และหยุดด้วยเท้าตาม ให้สะโพกเคลื่อนผ่านเท้าหลักแล้วค่อยลงน้ำหนัก แขนแกว่งสวนขา และผมกับชายผ้ากันเปื้อนตามหลังลำตัวเล็กน้อย ช็อตเปิดกะดึกควรเห็นอย่างน้อยสองก้าวและจังหวะหยุดในมุมสามส่วน
-- **มือและของในฉาก** ใช้ท่าเอื้อม จับ ยก ปล่อย และถอนมือแยกกัน วางตำแหน่งนิ้วกับเหรียญและขอบถาดในพิกัดเดียวกับฉาก ตอนเหรียญหลุดจากนิ้วให้เปลี่ยนจากตามมือไปตามวิถีของเหรียญ จากนั้นให้เหรียญหยุดบนถาด ถาดมีตำแหน่งของตัวเองที่เคาน์เตอร์ ผ้าที่นุ่นจัดช่วงงานประจำเป็นคนละผืนกับผ้าขาวของลูกค้า
-- **ความกลัวและสายตา** ให้สายตาเริ่มก่อนศีรษะ ตามด้วยไหล่และลำตัวเฉพาะเมื่อท่านั้นต้องถ่ายน้ำหนัก ใช้การชะงักของนิ้ว การหยุดครึ่งก้าว หรือการค้างน้ำหนักที่ขาหลังแทนการสั่นตลอดฉาก เวลาเล่าว่าไม่มีเสียงฝีเท้า เธอหันฟังและค้างท่าด้วยความตั้งใจ
-- **ข้อต่อและการเรนเดอร์** เพิ่มชุดข้อต่อเซลเต็มตัวที่เลือกใช้ได้ในงานนี้ แยกสะโพก เข่า ข้อเท้า ไหล่ ศอก ข้อมือ และศีรษะ คำนวณท่าจากเวลาและตำแหน่งในฉากโดยตรง เพื่อให้เปิดตรวจเฟรมใดก่อนก็ได้ ใช้หลักตรึงฝ่าเท้ากับพื้นในช่วงรับน้ำหนักจากโมเดลนุ่นเดิม จัดทางเดินในช่องว่างข้างเครื่อง วางเงาที่จุดสัมผัสพื้น และเปลี่ยนการบังตัวละครตามตำแหน่งจริงเมื่อเข้าไปหลังเคาน์เตอร์
+## หลักฐานต้นทางและสิ่งที่ต้องมีก่อนเริ่ม
 
-อ้างอิง [ตัวประกอบโมเดลเซล](../../models/cel/cel-woman.js), [ท่าเดินและข้อต่อของนุ่นตัวแรก](../../models/noon/original-actor.js), [ตำแหน่งร้านและเคาน์เตอร์](../../films/horror-x-snowy-neon-code/INTERFACE.md)
-
-## ข้อต่อ ตำแหน่ง และลำดับการบังในฉาก
-
-- **ชุดข้อต่อเต็มตัว** ใช้โหมดเฉพาะฉบับเคลื่อนไหว เก็บการเรียกโมเดลเซลเดิมและนุ่นเดิมให้ได้ภาพตามเดิม แยกการขยับทั้งตัวจากการแกว่งของลำตัว วาดขาไกลและแขนไกลด้านหลังผ้ากันเปื้อน จัดแขนใกล้กับมือให้อยู่หน้าลำตัวตามท่า คำนวณศอกและเข่าจากตำแหน่งมือกับเท้าที่ต้องแตะ ใช้ช็อตมุมสามส่วนสำหรับท่าเดินและหัน เพราะอ่านใบหน้าเดิมได้พร้อมการถ่ายน้ำหนัก
-- **จุดวางตัวในร้าน** ใช้เครื่องซักด้านซ้ายเป็นจุดเริ่มเดิน ให้เซลเดินไปทางเคาน์เตอร์ในทางโล่งหน้าตัวเครื่อง จุดจบของศีรษะหลังเคาน์เตอร์อ้างอิงตำแหน่งเดิม `(690,925)` ที่สเกล `0.50` ส่วนจุดเริ่มเดินให้กำหนดจากตำแหน่งฝ่าเท้าบนพื้นกระเบื้องจริง แล้วคำนวณตำแหน่งศีรษะกลับจากข้อต่อเต็มตัว ให้ระยะก้าวสัมพันธ์กับการเคลื่อนสะโพก กล้องใช้สำหรับจัดกรอบและคงทิศเดินบนจอ
-- **การบังตามตำแหน่ง** ในพื้นที่เปิดให้เห็นขาและเงาสัมผัสพื้น พอเข้าแนวเคาน์เตอร์ให้ส่วนหน้าของเคาน์เตอร์บังขาตามรูปทรงจริง กล้องและเงาใช้พิกัดฉากเดียวกัน ช็อตใกล้ของช่องหยอดหรือถังซักให้ตัวละครอยู่พ้นกรอบเมื่อเธอไม่มีบทในช็อตนั้น เช็กเฟรมก่อนและหลังตัดว่าท่าลงน้ำหนักและตำแหน่งมือสอดคล้องกัน
-- **ถาดและสายตา** ยึดถาดกับเคาน์เตอร์ใกล้ `(690,1101)` และคำนวณตำแหน่งนิ้วจากจุดจับจริงในแต่ละท่า แยกเป้าสายตาเป็นถาด ช่องหยอด ถังซัก และประตูหลัง ช่วงเปิดตัวลูกค้าให้เซลอยู่หลังเคาน์เตอร์ และใช้ตา ศีรษะ มือ และไหล่เล่าอาการจำได้ เว้นพื้นที่ช่องประตู `x470–595, y775–1185` ให้ชายผ้าขาวอ่านชัด
-- **จังหวะจบ** ใช้จุดยืนหลังเคาน์เตอร์เป็นหลัก เห็นมือจบการกระทำก่อนตากับลำตัวหันเข้าหาประตู ค่อย ๆ ผ่อนหัวไหล่แล้วค้างสายตา ถ้าช็อตทดสอบแสดงว่ากรอบนี้อ่านท่าหันยาก ให้ลองมุมเฉียงกว้างขึ้นหนึ่งจังหวะ โดยยังเห็นถาดและประตูจุดเดิม
-- **แสงและความต่อเนื่อง** ระหว่างเดินให้แสงเย็นจากกระจกและแสงอุ่นจากเคาน์เตอร์เปลี่ยนตามตำแหน่งเซล ตรวจไฟขอบตัวหลังหันซ้ายหรือขวา ให้เงาเคลื่อนตามเท้าบนพื้น และเก็บภาพสะท้อนถนนตามองค์ประกอบเดิม
-
-## จังหวะฉบับ Jessica
-
-เวลาในตารางเป็นช่วงแสดงซับเดิมของฉบับ Jessica คำในอัญประกาศเป็นจุดฟังสำหรับวางท่า จังหวะรายคำในฉบับนี้ให้จับจากไฟล์เสียงจริงก่อนลงคีย์เฟรม
-
-| ช่วงซับ (วินาที) | คำหรือเหตุการณ์ | การแสดง |
+| รายการ | สถานะใน checkout นี้ | ใช้อย่างไร |
 |---|---|---|
-| 01 · 0.270–4.400 | «คืนสุดท้าย» | เปิดให้เห็นร้านและป้ายก่อน เห็นเซลจัดงานอยู่ด้านในด้วยจังหวะมือที่คุ้นเคย แล้วพักมือก่อนตัดเข้าใกล้ |
-| 02 · 6.100–9.710 | «ฉันชื่อนุ่น เข้ากะดึก» | ให้เธอเดินจากช่องทางข้างเครื่อง 2–3 ก้าว เท้าสุดท้ายหยุดข้างเคาน์เตอร์ ไหล่หยุดตาม แล้ววางมือบนขอบโต๊ะโดยมองงานตรงหน้า |
-| 03 · 11.730–14.750 | «รับเหรียญ ใส่ผ้า» | นิ้วเอื้อมแตะและรวบเหรียญก่อนหันสะโพก ยกผ้าของงานประจำด้วยสองมือ แล้วตัดให้เห็นมือส่งผ้าเข้าปากถังตามคำเล่า |
-| 04 · 14.840–16.600 | «รอให้เครื่องซักเสร็จ» | ถอนมือพ้นปากถัง เหยียดหลัง ถอยครึ่งก้าว ลงน้ำหนักที่ส้นแล้วค้างมองถังหมุน |
-| 05 · 18.840–22.650 | «เงียบ…เหรียญตกกระทบถาด» | ให้การกลับมาที่ถาดจบก่อนจังหวะเงียบ มือค้างเหนือถาด เมื่อเหรียญแตะที่ 21.82 ให้ปลายนิ้วหรือไหล่สะดุ้งครั้งเดียวแล้วหยุด |
-| 06 · 24.870–28.300 | «ลูกค้าคนเดิม…ผ้าขาว» | ลูกค้าปรากฏครั้งแรกเฟรม 746 เซลเงยตาเมื่อเริ่มจำได้ ศีรษะตาม มือถอยจากขอบถาด น้ำหนักย้ายไปขาหลัง ลูกค้ายังคลุมหน้ามิด |
-| 07 · 28.530–30.160 | «ฉันไม่เคยเห็นหน้าเขา» | จัดสองตัวในกรอบให้เห็นดวงตาเซล เธอเปลี่ยนมุมศีรษะเล็กน้อยเพื่อมองให้ชัด แล้วหยุดที่ท่าค้างเมื่อเห็นแต่ผ้า |
-| 08 · 32.100–33.240 | «เขาหยอดเหรียญเอง» | เน้นเหรียญของลูกค้าเข้าช่องที่ 32.75 ช็อตนี้ให้เซลอยู่นอกภาพหรือมืออยู่กับตัว เพื่อให้ชัดว่าลูกค้าเป็นคนหยอด |
-| 09 · 33.240–37.110 | «ผ้าเริ่มหมุน…หายไป» | เก็บช็อตผ้าหมุนในถังและเสียงมอเตอร์ที่ 33.53 ตัดไปพื้นที่ว่างที่เฟรม 1069 ให้เซลหันตาไปยังจุดเดิมของลูกค้าแล้วหยุดมอง |
-| 10 · 39.960–43.950 | «ชายผ้าลับประตูหลัง…ไม่มีเสียงฝีเท้า» | ตาตามขอบผ้าถึงวงกบ ใช้เสียงเสียดสีฉบับ v2 ที่ 40.98 ประตูว่างจากเฟรม 1241 ให้เธอค้างหันหูไปทางประตูและผ่อนไหล่ช้า ๆ |
-| 11 · 47.000–49.700 | «คืนที่สองกับคืนที่สาม» | คืนที่สองมือถอนจากถาดแล้วเกือบกลับทำงาน คืนที่สามมือหยุดค้างทันที ใช้มุมและท่าที่แตกต่างให้เห็นว่าเป็นคนละคืน ตรวจจุดตัดเทียบการออกเสียงจริง |
-| 12 · 52.570–57.690 | «วางเหรียญ แล้วเฝ้ามองประตูหลัง» | มือเริ่มเคลื่อนที่ 53.55 นิ้วปล่อยให้เหรียญแตะถาดที่ 53.95 และเหรียญหยุดภายใน 54.35 เหรียญเดิมยังอยู่ เมื่อมือหยุด ให้ตา ศีรษะ และไหล่หันไปทางประตูว่างตามลำดับ ค้างถึงเฟรม 1799 |
+| `ep1-source/picture/jessica.json` | มีอยู่ใน checkout หลัก | source of truth ของ 16 cuts, shots, cues, actions, coinPlace และ shot verdicts; ต้อง provision เข้า worker worktree แบบ read-only |
+| `ep1-source/captions/jessica.srt` | มีอยู่ใน checkout หลัก | source of truth ของซับ 12 ช่วง; ห้าม re-time/re-cue |
+| `ep1-source/entry.mjs`, `index.html`, `timeline.mjs`, `build.sh`, `verify-*.mjs/.py`, `README.md` | มีอยู่ใน checkout หลัก | wiring/build/verify เดิม; coordinator เป็นเจ้าของการ integrate |
+| `films/horror-x-snowy-neon-code/INTERFACE.md` และไฟล์ scene/model ที่เกี่ยวข้อง | ต้องตรวจซ้ำตอน dispatch | ใช้เป็น scene/anchor reference; ถ้าอยู่ใต้ `/films/` ที่ ignore ต้องอยู่ใน source bundle ที่ provision ให้ worker |
+| Jessica dry narration WAV 60.000 วินาทีที่ตรง SRT | **ยังไม่อยู่ใน source package** | `README.md` ระบุให้ส่ง path ของ aligned dry WAV เข้ามาตอน build; `picture/jessica.json` อ้าง `narrative-cut/out/jessica-v1/speech.wav` แต่โฟลเดอร์ `narrative-cut` ไม่อยู่ใน checkout นี้ ต้องได้รับไฟล์จริงหรือ path ที่ยืนยันได้ก่อน final render/audio-motion validation |
+| `ep1-recut/devin-work` | ไม่มีใน checkout นี้ | ไม่ต้องใช้; ให้ย้ายฐานเวลาภาพ/ซับมาใช้ `ep1-source` ทั้งหมด |
+| หลักฐาน caption เก่าที่ `CAPTION-NOTES.md` อ้าง (`.agent-runs/snowy-neon-ep1-devin40/...`) | ไม่พบใน checkout ปัจจุบัน | ต้องกู้คืนหลักฐานเดิมหรือสร้างการเปรียบเทียบใหม่ก่อนสรุปขนาดซับ |
+| Git baseline | source package อยู่บน `main` ที่ commit `fb485d6`; orchestration ledger อาจมี local update | ให้ recheck `git status` ก่อน dispatch; ห้าม revert งานของผู้อื่น |
+| `/films/` gitignore + child worktrees | `.gitignore` มี `/films/`; new-child worktree อาจไม่มีไฟล์ local ใต้ `films/` | pre-dispatch blocker: coordinator ต้อง copy/bundle `ep1-source` inputs ที่จำเป็นแบบ read-only เข้าแต่ละ worker worktree หรือยืนยัน workspace strategy ที่ให้ worker อ่าน input เดียวกันได้; ห้ามปล่อย worker ที่ไม่มี input |
+| Worker roster | roster ตั้งต้นมี Devin 5 slots | ต้อง recheck Orca host/account readiness ตอน dispatch; ห้ามอ้างว่างานเริ่มแล้วหรือพร้อมเต็มที่ |
 
-## จังหวะฉบับซับเดิม
+### ข้อขัดแย้งขนาดซับที่ต้องตัดสินก่อน render
 
-ฉบับนี้อ้างอิงเสียง Niwat และไฟล์ซับต้นฉบับ คำหลักและเวลาท่าด้านล่างใช้ไทม์ไลน์ของฉบับนี้โดยเฉพาะ
+ผู้ใช้ขอ “ซับขนาดเล็กล่าสุด” แต่ไฟล์ปัจจุบันให้ค่าที่ต่างกัน:
 
-| ช่วงซับ (วินาที) | คำหรือเหตุการณ์ | การแสดง |
+- `ep1-source/index.html` ตั้ง default เป็น **22.4 px บน raster 1080×1920** (`2.0741vw`) และ comment อธิบายว่าเป็นขนาดที่เล็กที่สุดในชุด `{19.2, 22.4, 24}` ที่ restores Thai tone marks เมื่อดูที่ phone scale 390 px
+- `ep1-source/captions/CAPTION-NOTES.md` แนะนำ baseline ที่ accepted v5 คือ **19.2 px** (`1.7778vw`) และบอกให้ตรวจ cue ที่ยาวที่สุดที่ phone scale
+- `docs/snowy-neon-ep1-delivery.th.md` ระบุ 22.4 px ในเอกสารส่งมอบเดิม
+
+แผนนี้ **ไม่ถือว่าทั้ง 19.2 และ 22.4 ได้รับอนุมัติพร้อมกัน** ให้ coordinator ทำ evidence check แยกก่อน final render:
+
+1. ค้นหาคำสั่ง/หลักฐาน “latest small subtitle style” ล่าสุดจากผู้ใช้หรือ CAPTION-DIRECTION ที่แท้จริง
+2. เรนเดอร์เปรียบเทียบ Jessica cue ที่ยาวที่สุด (cue 12) และตัวอย่าง cue 3/5 ที่ 19.2 px กับ 22.4 px ทั้งที่ 1080×1920 และมุมมอง phone 390 px
+3. ตรวจว่า Thai marks อ่านได้, ซับยังอยู่ใน safe band เดิม, ทุก cue ยังพอดีหนึ่งบรรทัด และไม่เปลี่ยน `jessica.srt`
+4. บันทึกค่าที่ผู้ใช้อนุมัติจริงเป็นค่าเดียวก่อน integration/render; ถ้ายังไม่มีคำตอบ ให้คง default ปัจจุบันของ renderer ไว้เป็นสถานะชั่วคราวและติด blocker ว่าต้องยืนยันก่อน final acceptance
+
+## เนื้อเรื่อง จังหวะภาพ และแอ็กชันที่ต้องรักษา
+
+ตัวละครที่แสดงยังเป็น **เซลในบทนุ่น/พนักงานซักผ้ายามดึก** เสียงบรรยายเป็น Jessica เท่านั้น ตารางนี้สรุป `jessica.srt` + `picture/jessica.json`; ห้ามเลื่อนเวลาเพื่อให้ motion สวยขึ้น
+
+| Cue | SRT window (วินาที) | Shot coverage หลัก | จังหวะที่ต้องแสดง |
+|---|---:|---|---|
+| 1 | 0.270–4.400 | `store` | เปิดร้าน/ป้ายก่อน แล้วเห็นเซลทำงานประจำด้วยมือที่คุ้นเคย ก่อนพักมือและตัดเข้าใกล้ |
+| 2 | 6.100–9.710 | `nun` | เดิน 2–3 ก้าวจากช่องทางข้างเครื่อง เท้าสุดท้ายหยุดข้างเคาน์เตอร์ ไหล่หยุดตาม แล้วมือวางบนขอบถาด |
+| 3 | 11.730–14.750 | `work`, `work-drum` | รับเหรียญ/จัดงานประจำและส่งผ้าเข้าปากถังตามคำเล่า โดยแยกมือกับเหรียญกับมือกับผ้า |
+| 4 | 14.840–16.600 | `work-drum` | ถอนมือพ้นปากถัง เหยียดหลัง ถอยครึ่งก้าว แล้วค้างมองถังหมุน |
+| 5 | 18.840–22.650 | `quiet`, `tray` | ห้องเงียบ เหรียญตกกระทบถาดที่ cue `21.82`; มือค้างเหนือถาดและมีปฏิกิริยาสะดุ้งครั้งเดียวหลังเหรียญแตะ |
+| 6 | 24.870–28.300 | `customer` | ลูกค้าปรากฏเฟรม ~746 เซลเงยจำได้ ศีรษะตาม มือนิ่งขึ้นและน้ำหนักถอยไปขาหลัง |
+| 7 | 28.530–30.160 | `faceless` | มองลูกค้าให้ชัด เห็นแต่ผ้าขาว มุมศีรษะเล็กน้อยแล้วค้างท่า |
+| 8 | 32.100–33.240 | `slot` | เน้นเหรียญลูกค้าเข้าช่องที่ `32.75`; เซลไม่แย่งแอ็กชันนี้ |
+| 9 | 33.240–37.110 | `slot`, `sheet`, `empty-washer` | ผ้าหมุน มอเตอร์ที่ `33.53` แล้วตัดไปพื้นที่ว่าง; เซลหันตาไปจุดลูกค้าเดิมและหยุดมอง |
+| 10 | 39.960–43.950 | `rear-exit` | ชายผ้าลับประตูหลัง; ประตูว่างตั้งแต่เฟรม ~1241 เซลค้างฟัง/หันหู ไม่มีเสียงฝีเท้า |
+| 11 | 47.000–49.700 | `second-night`, `third-night` | คืนที่สองถอนมือเกือบกลับทำงาน คืนที่สามมือหยุดค้างทันที ต้องใช้ท่าที่ต่างกันอย่างอ่านรู้ |
+| 12 | 52.570–57.690 | `decision`, `watch` | วางเหรียญจริง: เริ่ม `53.55`, contact `53.95`, settled `54.35`; แล้วตา/ศีรษะ/ไหล่หันไปประตูว่างตามลำดับและค้างถึงเฟรม 1799 |
+
+### กฎ motion ที่สืบทอดจากแผนเดิม
+
+- เดินเต็มตัวต้องเห็นอย่างน้อยสองก้าวและจังหวะหยุดในช็อตเปิดกะ; ให้สะโพกผ่านเท้าหลักก่อนลงน้ำหนักเต็มฝ่าเท้า ใช้ท่าเอื้อม/จับ/ยก/ปล่อย/ถอนแยกกัน และใช้ช็อตมุมสามส่วนเมื่อท่าเดินหรือหันต้องอ่านใบหน้า
+- สายตานำก่อนศีรษะ ไหล่และลำตัวตามเฉพาะเมื่อท่านั้นต้องถ่ายน้ำหนัก ความกลัวใช้การชะงักนิ้ว/ค้างน้ำหนัก/หยุดครึ่งก้าว แทนการสั่นตลอดฉาก
+- เหรียญและวัตถุอยู่ในพิกัดฉากเดียวกับมือ: เหรียญหลุดจากนิ้วต้องเปลี่ยนเจ้าของการเคลื่อนจากมือไปวิถีเหรียญ แล้วหยุดบนถาด; coinPlace ของ cue 12 ต้องเห็นเหรียญจริงหนึ่งเหรียญจากมือไปถาด โดยเหรียญห้าเหรียญเดิมบนถาดยังอยู่และไม่ขยับ
+- แสงและเงาต้องต่อเนื่อง: แสงเย็นจากกระจก/แสงอุ่นจากเคาน์เตอร์เปลี่ยนตามตำแหน่งเซล เงาสัมผัสพื้นอยู่ใต้เท้าที่รับน้ำหนักจริง และตัวละครถูกบังโดยเคาน์เตอร์/มุมฉากตามตำแหน่งจริงเมื่อเข้าแนวหลังเคาน์เตอร์
+
+## สัญญา API และผังไฟล์ที่เสนอ
+
+ก่อน dispatch ให้ coordinator ตรึงสัญญา API ฉบับเดียว และ provision source inputs ให้ worker worktree ก่อน แล้วค่อยปล่อยห้าแพ็กเกจพร้อมกัน ทุกโมดูลต้องเป็น pure function ของเวลากับ context: ไม่มี DOM โดยตรงใน logic, ไม่มี `Math.random`, ไม่มี mutable state, และเปิดเฟรมลำดับใดก็ได้ต้องได้ผลเดิม
+
+```text
+films/horror-x-snowy-neon-code/ep1-source/
+  # inputs ที่ provision แบบ read-only ให้แต่ละ worker worktree (ไม่ใช่ worker output)
+  picture/jessica.json
+  captions/jessica.srt
+  captions/CAPTION-NOTES.md
+  index.html / entry.mjs / timeline.mjs / build.sh / verify-*.mjs/.py / README.md
+  motion/
+    API.md                           # coordinator-owned, ตรึงก่อน launch
+    rig/lower/lower-body.mjs         # WP-LOWER (งานที่ 1.1)
+    rig/lower/fixtures.json          # WP-LOWER
+    rig/upper/upper-body.mjs         # WP-UPPER (งานที่ 1.2)
+    rig/upper/fixtures.json          # WP-UPPER
+    poses/jessica-01-06.json         # WP-POSE-1-6 (งานที่ 2.1)
+    poses/jessica-01-06.notes.md     # WP-POSE-1-6
+    poses/jessica-07-12.json         # WP-POSE-7-12 (งานที่ 2.2)
+    poses/jessica-07-12.notes.md     # WP-POSE-7-12
+    scene/scene-layout.json          # WP-SCENE (งานที่ 3.1)
+    scene/occlusion.mjs              # WP-SCENE (งานที่ 3.2)
+    scene/fixtures.json              # WP-SCENE
+```
+
+ไฟล์ wiring เดิม `entry.mjs`, `index.html`, `timeline.mjs`, `build.sh`, `verify-timeline.mjs`, `verify-media.py`, `picture/jessica.json` และ `captions/jessica.srt` เป็น **coordinator-owned/read-only สำหรับ worker** ห้าม worker แก้โดยตรง; integration เข้า renderer ทำโดย coordinator หลังผลงาน settle
+
+### เนื้อหาสัญญา API ที่ต้องตรึง
+
+- `FrameContext`: `{ edition:'jessica', frame, seconds, cue, shot, camera, sourceSeconds }` โดย `frame = round(seconds*30)`, `cue` คือ 1–12 หรือ `null`, `shot` คือ shot id จาก `picture/jessica.json`
+- `PoseSample`: ผลรวมจาก pose JSON สองครึ่งที่ผ่าน schema เดียวกัน ประกอบด้วย `rootPath`, `weight`, `lowerKeys`, `upperKeys`, `hands`, `gaze`, `props`, `contacts` และ `holds`; pose JSON เก็บทิศทางการแสดง/จุดสัมผัสเชิง semantics ไม่ใช่ pixel mask หรือ screenshot
+- Lower-body contract: รับ `FrameContext + PoseSample + scene.path` แล้วคืน `root`, `hips`, `knees`, `ankles`, `toes`, `footContacts`, `gaitPhase` ใน world/local coords ที่ระบุใน contract; ต้องรองรับเดิน, หยุด, ถอยครึ่งก้าว, หัน และลงน้ำหนักโดยเท้าไม่ไถลในช่วง stance
+- Upper-body contract: รับ `FrameContext + PoseSample + lowerBodyResult` แล้วคืน `torso`, `shoulders`, `arms`, `hands`, `fingers`, `head`, `gaze`; ต้องใช้ root/hip transform จาก lower-body เพื่อให้ลำตัวและแขนเคลื่อนตามร่างเดียวกัน แต่ห้าม upper-body ไปแก้ข้อต่อขา
+- Scene contract: `scene-layout.json` เป็นข้อมูลเส้นทาง/anchor/occlusion/แสง; `occlusion.mjs` คืน draw-order, counter occlusion, contact-shadow specs และ lighting zones จากตำแหน่งร่างกาย/เท้า โดยไม่วาดทับ environment เดิม
+- Contact types ที่ใช้ร่วมกัน: `foot-plant`, `hand-prop`, `coin-release`, `coin-place`, `gaze-target`, `body-occlusion`; ทุก contact ต้องผูกกับ scene anchor id เช่น `counter-front`, `tray`, `slot`, `rear-door`, `washer-row` ไม่ใช่พิกัดลอย ๆ ที่ไม่มีเจ้าของ
+- Interpolation: JSON เก็บ keyframes/beats; rig เป็นผู้ interpolate แบบ deterministic (แนะนำ smoothstep ระหว่าง keyframes และ hold ตรง keyframe); ห้ามให้ pose JSON หรือ rig ใด ๆ ใช้เวลา wall-clock
+
+## ลำดับงาน แผนภาพพึ่งพา และกำหนดการ
+
+```text
+Coordinator: readiness + provision read-only ep1-source inputs + ตรึง API contract
+        |
+        v
+WP-LOWER lower-body rig ─┐
+WP-UPPER upper-body rig ─┤
+WP-POSE-1-6 cues 1-6   ─┼─ ทำขนานกันใน worktree แยก, ใช้ schema เดียวกัน
+WP-POSE-7-12 cues 7-12 ─┤
+WP-SCENE scene map     ─┘
+        |
+        +-- ขนาน: caption-size evidence review + QA checklist prep
+        v
+Coordinator integrate rig/pose/scene เข้า entry/build wiring + สร้าง motion-test harness
+        |
+        v
+คลิปทดสอบ 8–12 วินาทีจากฉากจริง → ตรวจ/แก้จนผ่าน gate
+        |
+        v
+Build/render Jessica เต็ม 60.000 วินาที + verify media/timeline/visual QA
+```
+
+กฎพึ่งพาที่ต้องยึด:
+
+- **Pre-dispatch:** `/films/` ถูก ignore ใน `.gitignore`; coordinator ต้องสร้าง read-only source bundle/copy ของ `ep1-source` inputs ที่จำเป็น (`picture/`, `captions/`, wiring/verifier/README และ scene reference ที่ worker ต้องอ่าน) ลงในแต่ละ worker worktree ก่อน launch หรือยืนยัน workspace strategy ที่ให้ worker เข้าถึง input เดียวกันได้ ห้ามปล่อย worker แล้วให้ไปหาไฟล์ `films/` เอง
+- Coordinator ต้อง publish contract ก่อน launch; ห้า worker packages เริ่มพร้อมกันหลัง contract freeze และ source provisioning verify ผ่าน
+- Pose สองครึ่งและ rig สองครึ่งใช้ schema เดียวกัน แต่ไม่ต้องรอผลลัพธ์ของกันและกัน; แต่ละแพ็กเกจ inject scene path/prop anchors ผ่าน contract fixture ได้ ไม่ต้องรอ `scene-layout.json` ฉบับสุดท้าย
+- Coordinator integrate เฉพาะหลัง worker ทั้งห้าคืน patch/diff + evidence + unresolved issues ครบหรือ settle ด้วย error ที่บันทึกไว้ ห้าม integrate ครึ่ง ๆ
+- QA checklist prep และ caption-size evidence review ทำขนานกับ implementation ได้ แต่ visual QA ต้องรอ integration; caption decision ต้องสรุปก่อน final render
+- Motion test ต้องผ่านก่อน full render; ถ้า test เผยปัญหา ให้แก้เฉพาะ scope ที่เป็นเจ้าของแล้ววนกลับมาที่ gate เดิม
+
+## งานที่ 1 — Cel motion rig เต็มตัว
+
+เป้าหมายของงานนี้คือสร้าง motion rig เต็มตัวที่ deterministic สำหรับเซล Jessica: lower-body package และ upper-body package เป็น worker assignments แยกกันภายใต้ contract เดียวกัน ส่วน contract/integration เป็นงานของ coordinator
+
+### 1.0 Shared contract, readiness และ source provisioning
+
+- เป้าหมาย: ตรึง `motion/API.md` ฉบับเดียว, ยืนยัน readiness ของ source/WAV/caption blockers และ verify ว่าแต่ละ worker worktree มี `ep1-source` inputs แบบ read-only ก่อน launch
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/API.md` + readiness/provisioning note ใน evidence area ของ coordinator; ไม่แก้ worker output files
+- เจ้าของ: coordinator (ไม่ใช่ Devin worker package)
+- ก่อนหน้า/พึ่งพา: recheck `git status`, roster readiness, `.gitignore`/worktree strategy; contract ต้อง freeze ก่อน worker start
+- เวลา active โดยประมาณ: 0.75–1.25 ชม. คนก่อน launch + 0.25 ชม. ตอน review contract
+- การทำงานขนาน: block การ launch; caption/QA prep สามารถเริ่มใน checkout หลักได้หลัง contract พร้อม
+- ส่งมอบ: contract ที่ freeze, รายการไฟล์ที่ provision ต่อ worktree, readiness/blocker note
+- เกณฑ์ยอมรับ: contract ระบุ units, `FrameContext`, `PoseSample`, lower/upper/scene signatures, contact types, interpolation, ownership และ error-report format ชัดเจน; ทุก worker worktree verify แล้วว่าอ่าน `jessica.json`/`jessica.srt`/wiring inputs ได้แบบ read-only หรือมี blocker ที่บันทึกไว้
+
+### 1.1 Lower-body rig package (WP-LOWER)
+
+- เป้าหมาย: สร้าง deterministic lower-body sampler และ fixtures สำหรับราก/สะโพก/ขา/เข่า/ข้อเท้า/ปลายเท้า การปลูกเท้า และ gait ที่ใช้ซ้ำได้กับทุกช็อต Jessica
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/rig/lower/lower-body.mjs` และ `motion/rig/lower/fixtures.json` เท่านั้นในแพ็กเกจนี้; ห้ามแก้ `models/`, `characters.mjs`, `main.mjs`, `entry.mjs`, pose/scene files หรือ wiring ของ worker อื่น
+- เจ้าของ: Devin worker package WP-LOWER (lower-body rig)
+- ก่อนหน้า/พึ่งพา: API contract ที่ coordinator ตรึงแล้ว + source provisioning verified; ใช้ fixture path ที่ตรง schema ได้ ไม่ต้องรอ `scene-layout.json` แต่ห้าม hardcode พิกัดฉากจริง
+- เวลา active โดยประมาณ: 2.50–3.25 ชม. คน
+- การทำงานขนาน: เริ่มพร้อม WP-UPPER, WP-POSE-1-6, WP-POSE-7-12, WP-SCENE หลัง contract freeze; ภายในแพ็กเกจทำ sampler ก่อน fixtures
+- ส่งมอบ: patch/diff, `lower-body.mjs`, `fixtures.json`, ตัวอย่าง output JSON สำหรับ frame ที่เลือก, ตาราง no-slide/continuity metrics, unresolved issues
+- เกณฑ์ยอมรับ: export ตรง signature ที่ contract กำหนด; output เป็น finite numbers; pure/deterministic; เท้าที่อยู่ใน stance มี world velocity ~0; เท้าสวิงยกพ้นพื้นตาม arc; fixtures ครอบคลุม cue 2 เดินเข้า/หยุด, cue 4 ถอยครึ่งก้าว, cue 11 คืนสอง–สาม และ cue 12 เฝ้าประตู; ไม่แตะไฟล์นอก scope
+
+### 1.2 Upper-body rig package (WP-UPPER)
+
+- เป้าหมาย: สร้าง deterministic upper-body sampler และ fixtures สำหรับลำตัว ไหล่ แขน มือ นิ้ว ศีรษะ และสายตา โดยใช้ root/hip transform ของ lower-body และคงแบบเซลที่อนุมัติ
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/rig/upper/upper-body.mjs` และ `motion/rig/upper/fixtures.json` เท่านั้นในแพ็กเกจนี้; ห้าม redraw face/hair/body design และห้ามแก้ไฟล์ lower-body/pose/scene/wiring
+- เจ้าของ: Devin worker package WP-UPPER (upper-body rig)
+- ก่อนหน้า/พึ่งพา: API contract; ใช้ lower-body result fixture ที่ตรง schema ได้ ไม่ต้อง import ไฟล์จริงของ WP-LOWER
+- เวลา active โดยประมาณ: 3.00–3.75 ชม. คน
+- การทำงานขนาน: เริ่มพร้อม WP-LOWER, WP-POSE-1-6, WP-POSE-7-12, WP-SCENE หลัง contract freeze
+- ส่งมอบ: patch/diff, `upper-body.mjs`, `fixtures.json`, output JSON samples, contact/gaze metrics, unresolved issues
+- เกณฑ์ยอมรับ: hands/forearms เป็น finite IK targets; head/gaze แยกจาก torso ตาม contract; upper-body ไม่แก้ hip/knee/ankle/toe; deterministic; fixtures ครอบคลุม coin/tray cues 3/5/12, cloth cue 3, customer cues 6–9, rear door cues 10–12 และ coin-place window `53.55/53.95/54.35`; แบบหน้า/ผม/ชุดยังอ้างอิง cel เดิม
+
+### 1.3 Coordinator rig integration gate
+
+- เป้าหมาย: หลัง WP-LOWER และ WP-UPPER settle ให้ coordinator ตรวจ compatibility ของ lower/upper rig, wire โมดูลเข้ากับ coordinator-owned entry path แบบ read-only contract และผลิต rig smoke sample ก่อน pose/scene ทั้งหมด settle
+- ขอบเขตไฟล์/ผลลัพธ์: review note + integration patch ของไฟล์ coordinator-owned (`entry.mjs` และ `index.html`/`timeline.mjs`/`build.sh` เฉพาะที่จำเป็น); ไม่แก้ไฟล์ worker
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: WP-LOWER และ WP-UPPER settle; API contract เดิม; pose/scene อาจยังไม่เสร็จ ให้ใช้ fixtures ที่ตรง schema
+- เวลา active โดยประมาณ: 0.50–0.75 ชม. คนหลัง settle
+- การทำงานขนาน: ทำหลัง rig workers settle โดยอาจขนานกับการรอ pose/scene workers
+- ส่งมอบ: compatibility verdict, rig smoke sample, รายการ field ที่ต้อง map ตอน full integration
+- เกณฑ์ยอมรับ: upper-body ไม่ import path ที่ทำให้ circular dependency; root/hip consumption ตรง schema; lower/upper compose เป็น `PoseSample -> lowerBodyResult -> upperBodyResult` ได้; ไม่มี deviation ที่ไม่ได้บันทึก
+
+## งานที่ 2 — Jessica pose data
+
+เป้าหมายของงานนี้คือแปลงจังหวะซับ/ช็อต/แอ็กชันของ Jessica ทั้ง 12 cue เป็น pose keys ที่ schema เดียวกัน โดยแบ่งเป็นสอง worker packages ตามช่วง cue และให้ coordinator ตรวจ cross-pose/transition หลัง settle
+
+### 2.1 Jessica pose data cues 1–6 (WP-POSE-1-6)
+
+- เป้าหมาย: ครอบคลุม cue 1–6: opening/store, เดินเข้า+แนะนำตัว, งานรับเหรียญ/ใส่ผ้า, รอเครื่องซัก, เหรียญตกถาดที่ 21.82 และลูกค้าปรากฏ/เซลจำได้; ระบุท่าเดิน, จุดหยุด, มือกับเหรียญ, มือกับผ้า, half-step back, hand freeze, coin impact reaction และ weight shift ไปขาหลัง
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/poses/jessica-01-06.json` และ `motion/poses/jessica-01-06.notes.md` เท่านั้นในแพ็กเกจนี้; อ่าน `picture/jessica.json`, `captions/jessica.srt`, `timeline.mjs` แบบ read-only; ห้ามแก้ rig/scene/wiring
+- เจ้าของ: Devin worker package WP-POSE-1-6
+- ก่อนหน้า/พึ่งพา: API contract + source provisioning verified; scene anchor ids จาก contract
+- เวลา active โดยประมาณ: 2.50–3.00 ชม. คน
+- การทำงานขนาน: เริ่มพร้อม WP-LOWER, WP-UPPER, WP-POSE-7-12, WP-SCENE หลัง contract freeze
+- ส่งมอบ: patch/diff, pose JSON cues 1–6, notes อธิบาย beat ที่มาจาก shot/action, validation output, unresolved issues
+- เกณฑ์ยอมรับ: cue range และ shot ids ตรง `jessica.json`; ไม่มีการ retime cue; cue 5 มี coin impact/contact beat ที่ 21.82; cue 6 มี customer reveal/reaction keys; contacts อ้าง scene anchor ids; keyframes มี intent/hold ที่อ่านย้อนกลับได้; JSON parse ผ่านและไม่มี unknown anchor id
+
+### 2.2 Jessica pose data cues 7–12 (WP-POSE-7-12)
+
+- เป้าหมาย: ครอบคลุม cue 7–12: faceless reveal, เหรียญลูกค้าเข้าช่องที่ 32.75, ผ้าหมุน/คนหาย/มอเตอร์ 33.53, ประตูว่างและการฟังโดยไม่มี footsteps, คืนที่สอง–สามที่ต้องต่างกันชัดเจน และ cue 12 coinPlace + watch door จนเฟรม 1799
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/poses/jessica-07-12.json` และ `motion/poses/jessica-07-12.notes.md` เท่านั้นในแพ็กเกจนี้; อ่าน `picture/jessica.json`, `captions/jessica.srt`, `timeline.mjs` แบบ read-only; ห้ามแก้ rig/scene/wiring
+- เจ้าของ: Devin worker package WP-POSE-7-12
+- ก่อนหน้า/พึ่งพา: API contract + source provisioning verified; scene anchor ids จาก contract
+- เวลา active โดยประมาณ: 3.00–3.75 ชม. คน
+- การทำงานขนาน: เริ่มพร้อม WP-LOWER, WP-UPPER, WP-POSE-1-6, WP-SCENE หลัง contract freeze
+- ส่งมอบ: patch/diff, pose JSON cues 7–12, notes, validation output, unresolved issues
+- เกณฑ์ยอมรับ: cue 8 ไม่ให้เซลแสดงเป็นคนหยอดเหรียญ; cue 9 มี gaze hold ไปยังจุดลูกค้าเดิมหลังคนหาย; cue 10 ไม่มี footstep implication; cue 11 มีสองคืนที่อ่านต่างกัน; cue 12 มี coinPlace `53.55/53.95/54.35` และ watch-to-end keys; ไม่มี retime/gap/overlap ใน cue ownership
+
+### 2.3 Coordinator cross-pose/transition validation
+
+- เป้าหมาย: รวมตรวจ pose JSON สองครึ่งหลัง WP-POSE-1-6 และ WP-POSE-7-12 settle ว่า schema เดียวกัน, cue coverage ไม่ชนกัน, boundary ระหว่าง cue 6/7 และ transition ไปสู่ final watch สมเหตุสมผล
+- ขอบเขตไฟล์/ผลลัพธ์: validation report + integration notes ใน evidence area ของ coordinator; ไม่แก้ไฟล์ pose โดยตรง เว้นแต่ตีกลับให้ worker เจ้าของแก้
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: WP-POSE-1-6 และ WP-POSE-7-12 settle; API contract เดิม
+- เวลา active โดยประมาณ: 0.50–0.75 ชม. คนหลัง settle
+- การทำงานขนาน: ทำหลัง pose halves เสร็จ โดยอาจขนานกับการรอ rig/scene settle
+- ส่งมอบ: validation report, รายการ correction ที่ส่งกลับให้ worker, go/no-go สำหรับ integration
+- เกณฑ์ยอมรับ: ทั้งสองไฟล์ parse; cue 1–12 ครบพอดี; boundary cue 6→7 และ cue 12→end ไม่มี key ที่ขัดกัน; anchor references ครบ; ไม่มี retime ของ `jessica.srt`
+
+## งานที่ 3 — Scene map, occlusion, contact shadows และ lighting
+
+เป้าหมายของงานนี้คือทำแผนที่ฉากที่ rig/pose ใช้ร่วมกัน: เส้นทางเดิน, anchor ของ props/ประตู/เคาน์เตอร์, กฎ occlusion, contact shadows และ lighting zones โดยไม่แก้โมดูลฉากเดิม
+
+### 3.1 Scene layout package (WP-SCENE part A)
+
+- เป้าหมาย: encode เส้นทางเดินของเซล, จุดเริ่ม/จุดหยุด, ขอบเขตพื้นที่เปิด/หลังเคาน์เตอร์, anchor ของถาด เหรียญ ช่องหยอด ปากถัง ประตูหลัง และพื้นกระเบื้อง ในพิกัดโลกเดียวกับ `INTERFACE.md` และ `picture/jessica.json`
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/scene/scene-layout.json` เท่านั้นในส่วนนี้; ห้ามแก้ `environment.mjs`, `washers.mjs`, `characters.mjs`, `main.mjs`, `neon.mjs` หรือ `weather.mjs`
+- เจ้าของ: Devin worker package WP-SCENE
+- ก่อนหน้า/พึ่งพา: API contract scene schema + source provisioning verified; อ่าน `INTERFACE.md`, `characters.mjs`, `main.mjs`, `picture/jessica.json` แบบ read-only
+- เวลา active โดยประมาณ: 1.25–1.50 ชม. คน
+- การทำงานขนาน: เริ่มพร้อม WP-LOWER, WP-UPPER, WP-POSE-1-6, WP-POSE-7-12 หลัง contract freeze; ไม่ต้องรอ rig/pose outputs
+- ส่งมอบ: patch/diff, `scene-layout.json`, คำอธิบายใน notes/report, unresolved issues
+- เกณฑ์ยอมรับ: ค่า geometry สอดคล้อง INTERFACE (counter, rear opening, Nun/cel anchor, counter clip y1110); path มี waypoint ที่เดินได้จริง; anchor ids ตรง contract; JSON deterministic/readable
+
+### 3.2 Occlusion, contact shadows และ lighting package (WP-SCENE part B)
+
+- เป้าหมาย: implement pure helpers สำหรับ draw-order, counter occlusion, contact shadows ใต้เท้า/มือเมื่อแตะพื้น/ถาด และ lighting zones ที่เปลี่ยนตามตำแหน่งเซล; ส่งออก spec ให้ coordinator integrate โดยไม่วาดทับ scene เดิม
+- ขอบเขตไฟล์/ผลลัพธ์: `motion/scene/occlusion.mjs` และ `motion/scene/fixtures.json` เท่านั้นในส่วนนี้; ห้ามแก้ scene layout ของส่วนอื่น นอกเหนือจากไฟล์ WP-SCENE เป็นเจ้าของ และห้ามแก้ environment/scene modules เดิม
+- เจ้าของ: Devin worker package WP-SCENE
+- ก่อนหน้า/พึ่งพา: 3.1 และ contract เดิม; ใช้ anchor ids/geometry จาก `scene-layout.json` ของแพ็กเกจเดียวกัน
+- เวลา active โดยประมาณ: 1.00–1.25 ชม. คน
+- การทำงานขนาน: ต่อจาก 3.1 ในแพ็กเกจเดียวกัน; worker อื่นทำงานของตนต่อไป
+- ส่งมอบ: patch/diff, `occlusion.mjs`, `fixtures.json`, contact-shadow/lighting samples, unresolved issues
+- เกณฑ์ยอมรับ: helpers pure/deterministic; คืน draw-order, counter occlusion, contact-shadow specs และ lighting zones จากตำแหน่งร่างกาย/เท้า; ไม่วาดทับ environment เดิม; fixtures ครอบคลุม behind-counter, tray/slot proximity และ rear-door watch
+
+### 3.3 Coordinator scene contract review
+
+- เป้าหมาย: ตรวจ `scene-layout.json` + `occlusion.mjs` เทียบ INTERFACE/contract หลัง WP-SCENE settle และเตรียม mapping สำหรับ full integration
+- ขอบเขตไฟล์/ผลลัพธ์: review note + integration risk list ใน evidence area ของ coordinator; ไม่แก้ไฟล์ worker
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: WP-SCENE settle; API contract เดิม
+- เวลา active โดยประมาณ: 0.25–0.50 ชม. คนหลัง settle
+- การทำงานขนาน: ทำหลัง WP-SCENE settle โดยอาจขนานกับ pose/rig reviews
+- ส่งมอบ: scene compatibility verdict, รายการ anchor/geometry ที่ต้อง map ตอน integrate
+- เกณฑ์ยอมรับ: counter/rear-opening/anchor ids ตรง contract; occlusion ไม่ขัดกับ clip `y=1110`; ไม่มี deviation ที่ไม่ได้บันทึก
+
+## งานที่ 4 — Jessica captions และ latest-small-size evidence
+
+เป้าหมายของงานนี้คือ settle ค่าขนาดซับที่ผู้ใช้อนุมัติล่าสุดโดยไม่แตะ `jessica.srt` และไม่ render จริงก่อนตัดสิน; งานนี้เป็น coordinator-owned evidence/decision lane ที่ทำขนานกับ implementation ได้
+
+### 4.1 Caption-size evidence review
+
+- เป้าหมาย: รวบรวมหลักฐาน “latest small subtitle style” ล่าสุด, เปรียบเทียบ renderer default 22.4 px กับ CAPTION-NOTES baseline 19.2 px ที่ 1080×1920 และ phone-scale 390 px โดยเฉพาะ cue 12 ที่ยาวที่สุด และตัวอย่าง cue 3/5
+- ขอบเขตไฟล์/ผลลัพธ์: evidence note/ภาพเปรียบเทียบใน `.agent-runs/snowy-neon-cel-motion/` หรือ evidence area ที่ coordinator กำหนด; ไม่แก้ `index.html`, `jessica.srt` หรือ caption files
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: `ep1-source` inputs พร้อมใน checkout หลัก; อาจเริ่มหลัง contract freeze และทำขนานกับ worker implementation
+- เวลา active โดยประมาณ: 0.25–0.50 ชม. คน
+- การทำงานขนาน: ขนานกับงานที่ 1–3; ต้องสรุปก่อน final render
+- ส่งมอบ: evidence note, ภาพ/ตารางเปรียบเทียบ 19.2 vs 22.4 px, ข้อเสนอค่าที่ควรใช้พร้อมเหตุผล
+- เกณฑ์ยอมรับ: พบหลักฐานอนุมัติล่าสุดหรือบันทึกว่าไม่มี; ตรวจ Thai marks, safe band, one-line fit ของทุก cue และ phone-scale readability; ไม่เปลี่ยนข้อความ/เวลา cue
+
+### 4.2 Caption decision record และ renderer default handling
+
+- เป้าหมาย: บันทึกค่าขนาดซับที่อนุมัติจริงหนึ่งค่า หรือบันทึก blocker ชัดเจนถ้ายังไม่มีคำตอบ; ระบุว่าตอน render จะใช้ `?capvw=`/ค่าใดและคง default ปัจจุบันไว้เป็นสถานะชั่วคราวได้หรือไม่
+- ขอบเขตไฟล์/ผลลัพธ์: decision note ใน evidence area + รายการ integration requirement สำหรับ coordinator; ไม่แก้ worker files
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: 4.1 และคำตอบ/หลักฐานจากผู้ใช้ถ้ามี
+- เวลา active โดยประมาณ: 0.50–1.00 ชม. คน
+- การทำงานขนาน: ต่อจาก 4.1; สามารถทำขนานกับ rig/pose/scene settle
+- ส่งมอบ: decision record, integration requirement, unresolved blocker ถ้ามี
+- เกณฑ์ยอมรับ: มีค่าเดียวที่อนุมัติจริงหรือ blocker ที่ระบุชัด; ไม่ assert ว่า 19.2 และ 22.4 อนุมัติพร้อมกัน; `jessica.srt` ไม่เปลี่ยน
+
+### 4.3 ตรวจซับบนภาพมือถือ
+
+- เป้าหมาย: ตรวจการแสดงผลจริงของซับขนาดที่เลือกบน viewport มือถือ โดยเน้น cue 12 ที่ยาวที่สุด, เครื่องหมายวรรณยุกต์/สระ และตำแหน่ง safe band ด้านล่าง
+- ขอบเขตไฟล์/ผลลัพธ์: browser screenshots และ QA note ใน `.agent-runs/snowy-neon-cel-motion-task4/evidence/4.3/` กับ `.agent-runs/snowy-neon-cel-motion-task4/reports/4.3-mobile-caption-check.md`; ไม่แก้ `index.html`, `entry.mjs`, `jessica.srt` หรือไฟล์ caption
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: 4.2 ตัดสินขนาดซับและระบุ `?capvw=` แล้ว
+- เวลา active โดยประมาณ: 0.25–0.50 ชม. คน
+- การทำงานขนาน: ทำหลัง 4.2; ทำระหว่างการตรวจคลิปทดสอบได้
+- ส่งมอบ: ภาพ viewport มือถือ, ระบุขนาด viewport/วิธี render/override, บันทึกการอ่าน cue 12 และ safe-band รวมถึงข้อบกพร่องถ้ามี
+- เกณฑ์ยอมรับ: ใช้ browser rendering จริงที่ viewport กว้าง 390 px; cue 12 อยู่บรรทัดเดียวและวรรณยุกต์อ่านได้; ขอบล่างซับอยู่ใน safe band ที่ปรับสเกลจาก 1080×1920; SRT ไม่เปลี่ยน; ถ้า browser rendering ทำไม่ได้ให้บันทึก blocker โดยไม่อ้าง PIL ว่าเป็น browser QA
+
+## งานที่ 5 — QA, motion-test gate และ final Jessica render/acceptance
+
+เป้าหมายของงานนี้คือพิสูจน์ motion ในฉากจริงก่อน full render และส่งมอบ Jessica edition เดียวที่ผ่าน media/visual/audio QA
+
+### 5.1 QA checklist และ harness preparation
+
+- เป้าหมาย: เตรียม checklist เฟรมสำคัญ, contact metrics, verify commands และ test-clip gate ให้พร้อมใช้หลัง integration โดยไม่ render จริง
+- ขอบเขตไฟล์/ผลลัพธ์: checklist/harness spec ใน evidence area ของ coordinator; ไม่แก้ worker files หรือ source wiring
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: contract + source timing พร้อม; ทำขนานกับ implementation
+- เวลา active โดยประมาณ: 0.50–1.00 ชม. คน
+- การทำงานขนาน: ขนานกับงานที่ 1–4; ใช้จริงหลัง integration
+- ส่งมอบ: QA checklist, harness spec, รายการ verify commands และ pass/fail criteria
+- เกณฑ์ยอมรับ: ครอบคลุม foot plant/no-slide, hand/object contact, gaze, occlusion, contact shadows, lighting, caption size, media specs และ deterministic checks
+
+### 5.2 Full integration และ 8–12 วินาที motion-test gate
+
+- เป้าหมาย: หลัง worker ทั้งห้าและ coordinator reviews settle ให้ integrate pose/rig/scene ทั้งหมดเข้า `entry.mjs`/build path ที่ coordinator เป็นเจ้าของ แล้ว render/inspect คลิปทดสอบ 8–12 วินาทีจากฉากจริงก่อน full render
+- ขอบเขตไฟล์/ผลลัพธ์: patch ของ `entry.mjs`, `index.html`, `timeline.mjs`, `build.sh` เฉพาะที่จำเป็น + test clip/evidence ใน coordinator area; ไม่แก้ worker output files
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: WP-LOWER, WP-UPPER, WP-POSE-1-6, WP-POSE-7-12, WP-SCENE settle; 1.3 rig gate, 2.3 pose validation, 3.3 scene review, 4.2 caption decision ผ่านหรือ blocker ชัดเจน; 5.1 checklist พร้อม
+- เวลา active โดยประมาณ: 1.75–3.00 ชม. คน + render wall time
+- การทำงานขนาน: ทำหลัง worker settlement; caption/QA prep ทำไว้ล่วงหน้าแล้ว
+- ส่งมอบ: integrated build path, test clip 8–12 วินาที, QA note, รายการ correction ที่ส่งกลับให้ worker ถ้ามี
+- เกณฑ์ยอมรับ: คลิปทดสอบแสดง cue 2 เดินเข้า/หยุด, cue 3 งานเหรียญ/ผ้า และ cue 4 รอเครื่องในฉากจริง; เท้าไม่ไถล, มือ–เหรียญสัมผัสถูก, ไม่มีตัวทะลุเคาน์เตอร์, หน้าเซลตรงแบบอนุมัติ, caption size ตาม 4.2; ห้ามนับ full render ว่าผ่านจาก test clip อย่างเดียว
+
+### 5.3 Full Jessica render และ final acceptance
+
+- เป้าหมาย: เมื่อ test gate ผ่าน, Jessica WAV พร้อม และ caption decision settled ให้ build/render/verify Jessica 60.000 วินาทีฉบับเดียวและทำ visual/media/audio QA ขั้นสุดท้าย
+- ขอบเขตไฟล์/ผลลัพธ์: output ใต้ `ep1-source/out/jessica/` หรือ path ที่ build กำหนด + QA JSON/sheets ใน evidence area; coordinator เป็นเจ้าของ integration/render decisions
+- เจ้าของ: coordinator
+- ก่อนหน้า/พึ่งพา: 5.2 pass; Jessica aligned dry WAV 60.000 วินาทีที่ตรง SRT พร้อม; 4.2 caption decision settled
+- เวลา active โดยประมาณ: 1.00–2.00 ชม. คน + render wall time
+- การทำงานขนาน: ทำหลัง 5.2 เท่านั้น; ไม่มี worker implementation เหลือถ้าไม่มี correction
+- ส่งมอบ: `out/jessica/*.mp4/.srt` ตาม build, QA JSON/sheets, final acceptance note
+- เกณฑ์ยอมรับ: 60.000 วินาที, 1080×1920, 30 fps, 1,800 เฟรม; `jessica.srt` byte-for-byte เหมือน source และแสดงครบ 12 cue ตามเวลาเดิม; narration/SRT aligned; visual/audio QA ผ่าน; ไม่มีงานฉบับ original/Niwat
+
+## ตาราง coordinator gates และเวลา
+
+| Gate | งาน | Output | เมื่อเทียบกับงานอื่น | Active person-hours โดยประมาณ | เงื่อนไขผ่าน |
+|---|---|---|---|---|---|
+| C1 Contract + readiness + provisioning | ยืนยัน source package, WAV/caption blockers, `.gitignore`/worktree inputs และ publish API contract | `motion/API.md`, readiness/provisioning note | ก่อน launch worker | 0.75–1.50 ชม. คน | contract freeze; blockers ชัด; ทุก worktree มี read-only inputs หรือ blocker; ไม่อ้าง worker พร้อม |
+| C2 Caption-size evidence | ตัดสิน 19.2 vs 22.4 px จากหลักฐานล่าสุด + render comparison | evidence note ใต้ `.agent-runs/snowy-neon-cel-motion/` | ทำขนาน implementation; ต้องสรุปก่อน final render | 0.50–1.00 ชม. คน | มีค่าที่ผู้ใช้อนุมัติจริงหนึ่งค่า หรือบันทึก blocker; SRT ไม่เปลี่ยน |
+| C3 QA checklist/harness prep | เตรียม frame checklist, contact metrics, verify commands และ test-clip gate | checklist/harness spec ใน evidence area | ทำขนาน implementation; ใช้จริงหลัง integrate | 0.50–1.00 ชม. คน | ครอบคลุม foot plant, hand/object contact, occlusion, captions, media specs |
+| C4 Rig integration gate | รวม lower/upper rig เข้า coordinator-owned path หลัง WP-LOWER/WP-UPPER settle | rig smoke sample + integration note | หลัง rig workers settle; อาจขนาน pose/scene | 0.50–0.75 ชม. คน | lower/upper compose ตาม contract; ไม่มี circular dependency |
+| C5 Full integration + motion test | integrate pose/rig/scene ทั้งหมดและ render/inspect test clip 8–12 วินาที | integrated build path + test clip + QA note | หลัง worker ทั้งห้า settle + C1–C4 พร้อม | 1.75–3.00 ชม. คน + render wall time | test clip ผ่านเกณฑ์ motion/occlusion/caption; แก้เฉพาะ scope ที่ fail |
+| C6 Full Jessica render/acceptance | build `jessica` เต็ม 60.000 วินาทีและ verify | `out/jessica/*.mp4/.srt` + QA JSON/sheets | C2, C5 pass, Jessica WAV พร้อม | 1.00–2.00 ชม. คน + render wall time | 60.000s/1080×1920/30fps/1800 frames; narration/SRT aligned; visual/audio QA ผ่าน |
+
+### Motion-test gate ที่เสนอ
+
+- คลิปหลักยาว **12.000 วินาที** ครอบคลุมประมาณ `6.000–18.000` เพื่อเห็น cue 2 เดินเข้า/หยุด, cue 3 งานเหรียญ/ผ้า และ cue 4 รอเครื่องในฉากจริง; เลือก window สุดท้ายให้ลงตัวกับ shot boundaries หลัง integration
+- ถ้า integration แสดงความเสี่ยงสูงเฉพาะ coinPlace/watch ให้ coordinator อาจเพิ่ม spot-check 8 วินาทีช่วง `51.800–59.800` ภายใน gate เดียวกันก่อน full render แต่ห้ามนับว่า full render ผ่านจาก test clip อย่างเดียว
+- เกณฑ์ที่ต้องดูด้วยตา/เฟรม: เท้าที่รับน้ำหนักอยู่บนพื้น, เท้าสวิงไม่ทะลุพื้น, มือกับเหรียญ/ถาด/ผ้าสัมผัสถูกต้อง, ตัวละครไม่ทะลุเคาน์เตอร์, ลูกค้า/ประตูอ่านตาม shot, หน้าและผมเซลยังเป็นแบบเดิม, caption size ตามค่าที่ C2 สรุป
+
+## การยอมรับขั้นสุดท้ายสำหรับ Jessica edition
+
+- ไฟล์ภาพ `60.000 วินาที, 1080×1920, 30 fps, 1,800 เฟรม`, H.264 + AAC 48 kHz stereo ตาม verifier เดิม; `jessica.srt` byte-for-byte เหมือน source และแสดงครบ 12 cue ตามเวลาเดิม
+- เสียงพากย์ Jessica aligned กับภาพ: ใช้ dry WAV 60.000 วินาทีที่ตรง SRT เท่านั้น; `verify-media.py`/equivalent ต้องผ่าน narration correlation ทุก cue และไม่พบลำดับเสียง/ภาพเลื่อน
+- Motion ผ่าน motion-test gate ก่อน full render และผ่าน visual QA หลัง full render: ตรวจคู่เฟรมสำคัญ 745–746 (ลูกค้าปรากฏ), ช่วง 1069/1241 (คนหาย/ประตูว่าง), ช่วง 53.55–54.35 (coinPlace) และเฟรม 1799 (เฝ้าประตูว่าง)
+- ตรวจเงา การบังเคาน์เตอร์/ประตู ช่องแสงเย็น–อบอุ่น และ contact shadows จากภาพจริง ไม่ใช่จาก JSON อย่างเดียว
+- ตรวจไม่มี footsteps, ไม่มี clip ดำผิดปกติ, loudness/peak อยู่ในเกณฑ์ verifier และ SFX beats เดิม (`14.95`, `21.82`, `32.75`, `33.53`, `41.52`, optional `53.95`) ยังลงจังหวะเดิม
+- ยืนยัน caption size ที่ render จริงตรงกับค่าที่ C2 สรุป และตรวจ cue ที่ยาวสุดบน phone-scale preview
+
+## ประมาณเวลาและการทำงานขนาน
+
+ตัวเลขทั้งหมดเป็น **ค่าประมาณแบบ active person-hours** ไม่ใช่เวลารอคิว; wall-clock สั้นกว่าผลรวมเพราะห้า worker packages ทำขนานกันหลัง contract freeze
+
+| เฟส | งาน | Active person-hours โดยประมาณ | Wall-clock โดยประมาณ | หมายเหตุ |
+|---|---|---:|---:|---|
+| 0 | C1 contract/readiness/provisioning + C2/C3 prep เริ่ม | 0.75–1.50 | 0.75–1.50 ชม. | contract + source provisioning ต้องเสร็จก่อน launch; caption/QA prep ทำต่อได้ขนาน |
+| 1 | WP-LOWER lower-body rig | 2.50–3.25 | สูงสุด ~3.5 ชม. | ขนานกับ WP-UPPER, WP-POSE-1-6, WP-POSE-7-12, WP-SCENE |
+| 1 | WP-UPPER upper-body rig | 3.00–3.75 | สูงสุด ~3.75 ชม. | ขนานกับ WP-LOWER, WP-POSE-1-6, WP-POSE-7-12, WP-SCENE |
+| 2 | WP-POSE-1-6 cues 1–6 | 2.50–3.00 | สูงสุด ~3.0 ชม. | ขนานกับ rig/scene/pose-7-12 |
+| 2 | WP-POSE-7-12 cues 7–12 | 3.00–3.75 | สูงสุด ~3.75 ชม. | ขนานกับ rig/scene/pose-1-6 |
+| 3 | WP-SCENE scene map/occlusion/shadows/lighting | 2.75–3.25 | สูงสุด ~3.25 ชม. | ขนานกับ rig/pose workers |
+| 2 | C2 caption evidence + C3 checklist | 0.50–1.00 | ซ้อนในเฟส 1–2 | ต้องสรุปก่อน C6 |
+| 3 | C4 rig gate + C5 full integration/test | 2.25–3.75 | ~2.5–4.5 ชม. รวม render/inspect | เริ่มหลัง worker ทั้งห้า settle |
+| 4 | C6 full render/verify + แก้รอบแรก | 1.00–2.00 | ~2.0–5.0 ชม. ขึ้นกับเครื่องและ revision | ทำหลัง WAV + caption + test gate พร้อม |
+
+- **ผลรวม active person-hours โดยประมาณ: ~18–23 ชม.** (worker packages ~14–17 ชม. + coordinator gates ~4–6 ชม.)
+- **เวลาผ่านไปจริงหลัง source assets พร้อม: ประมาณ 5–9 ชั่วโมง** ถ้า Orca/Devin 5 slots พร้อม, source provisioning สำเร็จ, ไม่มี blocker และ revision หลัง motion test ไม่ใหญ่
+- เวลาจริงจะยาวขึ้นถ้า: Jessica WAV ยังไม่ส่งมา, caption decision ยังไม่สรุป, source provisioning ใน child worktree ไม่สำเร็จ, worker หนึ่ง settle ช้ากว่าคนอื่นมาก, motion test พบ pose/foot/occlusion ต้องแก้หลายรอบ หรือเครื่อง render ช้ากว่าที่ประเมิน
+
+## Readiness, blocker และเงื่อนไขหยุด
+
+- **Pre-dispatch blocker:** `/films/` ถูก ignore ใน `.gitignore`; ห้ามสมมติว่า new-child worktree มี local `ep1-source` inputs. Coordinator ต้อง provision ชุด source แบบ read-only เข้าแต่ละ worker worktree หรือยืนยัน allowed workspace strategy และ verify ว่า worker อ่าน `picture/jessica.json`, `captions/jessica.srt`, `CAPTION-NOTES.md`, wiring/verifier และ scene references ที่จำเป็นได้ก่อน launch
+- **Blocker สำคัญ:** Jessica aligned dry narration WAV 60.000 วินาทีที่ตรง `jessica.srt` ยังไม่อยู่ใน `ep1-source`; ต้องได้รับไฟล์/path จริงก่อน C6 และก่อน audio-to-motion validation ขั้นสุดท้าย
+- **Blocker รอง:** caption size ยังไม่ settle เพราะ 22.4 px (renderer default/comment) ขัดกับ 19.2 px (CAPTION-NOTES accepted v5 baseline); ต้องมีหลักฐานอนุมัติล่าสุดหรือ render comparison ที่ผู้ใช้/coordinator ยอมรับ
+- **ข้อจำกัดหลักฐาน:** `.agent-runs/snowy-neon-ep1-devin40/...` และ `narrative-cut/` ไม่อยู่ใน checkout ปัจจุบัน; ถ้าจำเป็นต้องใช้เป็นหลักฐานให้กู้คืนหรือสร้าง evidence ใหม่ ห้ามอ้างว่าไฟล์นั้นมีอยู่
+- **Worker readiness:** roster ตั้งต้นรองรับ Devin 5 slots แต่ต้อง recheck Orca host/account ตอน dispatch; ห้ามสมมติว่า workers เริ่มแล้วหรือพร้อมเต็มที่
+- **Git:** baseline คือ `main` ที่ `fb485d6`; recheck `git status` ก่อน dispatch เพราะ orchestration/ledger อาจมี local changes ที่ไม่เกี่ยวกับ source package
+- หยุดและ escalate ถ้า: contract ยังไม่ freeze, source provisioning ไม่สำเร็จ, worker คืน patch นอก scope, pose JSON ไม่ครอบคลุม cue, scene layout ขัด INTERFACE, motion test ไม่ผ่านหลังแก้ scope เดิมครบ, หรือ WAV/caption decision ยังไม่มีคำตอบก่อน full render
+
+## สิ่งที่ห้ามทำในงานนี้
+
+- ห้ามแก้ `jessica.srt`, `picture/jessica.json` timing, shot cuts หรือ subtitle text เพื่อให้ motion ง่ายขึ้น
+- ห้าม build/verify/release ฉบับ `original`/Niwat/free-voice หรือทำ pose/timeline ซ้ำสำหรับฉบับนั้น
+- ห้ามให้ worker แก้ `entry.mjs`, `index.html`, `timeline.mjs`, `build.sh`, `verify-*`, `models/`, `characters.mjs`, `main.mjs`, `environment.mjs`, `washers.mjs`, `neon.mjs`, `weather.mjs` หรือไฟล์ของ worker อื่น
+- ห้ามใช้ `first-minute/` หรือ `ep1-recut/devin-work` เป็นฐาน; ใช้ `ep1-source` เท่านั้น
+- ห้ามปล่อย worker ใน child worktree ที่ไม่มี `ep1-source` inputs แล้วคาดหวังให้อ่านไฟล์ ignored ใต้ `films/` ได้เอง
+- ห้าม render เต็มก่อน motion-test gate ผ่าน และห้ามส่งมอบถ้า Jessica WAV หรือ caption decision ยังเป็น blocker
+- ห้าม commit secrets, audio WAV ที่ผู้ใช้ไม่ได้อนุญาต, หรือไฟล์ output ขนาดใหญ่เข้า source package
+
+## บทสรุปสำหรับผู้เริ่มงาน
+
+1. Coordinator ยืนยัน readiness, provision read-only `ep1-source` inputs ให้แต่ละ worker worktree, publish `motion/API.md`, และเริ่ม C2/C3 ขนานกับ implementation
+2. Dispatch ห้า Devin packages พร้อมกันใน worktree แยก: WP-LOWER, WP-UPPER, WP-POSE-1-6, WP-POSE-7-12, WP-SCENE โดย map เข้า workstreams 1–3 ตามหัวข้อนี้
+3. รอ worker ทั้งห้า settle, review patch/diff/evidence/unresolved issues, แล้ว integrate โดย coordinator เท่านั้น
+4. Render/inspect คลิปทดสอบ 8–12 วินาทีจากฉากจริง; แก้เฉพาะ scope ที่ fail แล้ววนกลับ gate
+5. เมื่อ test ผ่าน, WAV Jessica และ caption size พร้อม จึง build/render/verify Jessica 60.000 วินาทีฉบับเดียว
+
+อ้างอิงหลัก: `films/horror-x-snowy-neon-code/ep1-source/README.md`, `ep1-source/picture/jessica.json`, `ep1-source/captions/jessica.srt`, `ep1-source/captions/CAPTION-NOTES.md`, `ep1-source/index.html`, `ep1-source/entry.mjs`, `ep1-source/timeline.mjs`, `films/horror-x-snowy-neon-code/INTERFACE.md`, `models/registry.mjs`, `models/cel/`, `models/noon/original-actor.js`
+
+*แผนนี้เป็น execution plan เท่านั้น; ไม่ได้เริ่มผลิต ไม่ได้ dispatch worker และไม่ได้รัน render/test ในการเขียนเอกสาร* (หมายเหตุ: เอกสารนี้เขียนเป็นภาษาไทยตามต้นฉบับ และใช้ค่าประมาณที่ต้องยืนยันกับสภาพเครื่องจริงก่อน dispatch)
+
+## สถานะตารางงานหลักล่าสุด — 19 พ.ย. 2026
+
+สัญลักษณ์: ✅ ส่งมอบและตรวจรับตาม deliverable ในแผนแล้ว · ⏳ กำลังทำหรือรอ dependency · ❌ ยังไม่เริ่ม
+
+| รหัส | สถานะ | ความคืบหน้า / เงื่อนไข |
 |---|---|---|
-| 01 · 0.300–5.790 | «คืนสุดท้าย…ยี่สิบสี่ชั่วโมง» | ให้ป้ายกับหน้าร้านอ่านได้ เซลในร้านทำจังหวะแตะ จัด และวางเหรียญแบบคนที่ทำงานนี้จนคุ้น |
-| 02 · 5.992–10.652 | «ฉันชื่อนุ่น รับกะดึก» | เห็นเซลเดินเข้าเคาน์เตอร์และลงน้ำหนักทั้งเท้าเมื่อหยุด ช่วงบอกเวลาสี่ทุ่มถึงหกโมงเช้าให้ภาพอยู่กับกิจวัตรของเธอ |
-| 03 · 10.854–15.184 | «เก็บเหรียญ ใส่ผ้า แล้วเฝ้าเครื่อง» | เริ่มหยิบเหรียญราว 12.79 จากนั้นตัดไปมือส่งผ้าธรรมดาเข้าถังช่วง «ใส่ผ้า» แล้วจัดไหล่และเท้าเข้าท่ายืนรอ |
-| 04 · 15.386–20.416 | «ร้านแทบไม่มีคน…เสียงเครื่องซักผ้า» | กวาดตาดูพื้นที่ว่าง ศีรษะตามช้า ๆ แล้วเอนน้ำหนักไปทางเครื่องเมื่อเล่าถึงเสียงหมุน ให้จังหวะฟังสัมพันธ์กับมอเตอร์ต่อเนื่องฉบับ v2 |
-| 05 · 20.617–24.667 | «เหรียญ…ตกกระทบถาด» | ชะลอมือก่อนเหรียญตก เมื่อแตะถาดที่ 23.43 ให้ไหล่ยกเบา ๆ และตาตามเหรียญจนหยุด |
-| 06 · 24.869–29.539 | «ลูกค้าคนเดิม…ผ้าสีขาวผืนใหญ่» | เปิดตัวลูกค้าด้วยจุดตัดเฟรม 746 เซลชะงักตอนจำได้ กลั้นมือไว้ข้างตัว แล้วมองตามแนวผ้าจากไหล่ลงชายผ้า |
-| 07 · 29.741–33.851 | «เงยขึ้นเมื่อไร…ชายผ้าผ่านประตูหลัง» | ให้เห็นเธอเงยตาและศีรษะช่วงราว 31 วินาที แล้วเปลี่ยนจุดมองลงไปที่ชายผ้า ก่อนตัดเข้าเฟรมวงกบ |
-| 08 · 34.053–38.753 | «ไม่เคยรอถาดเหรียญ…หยอดเหรียญเอง» | มือเซลอยู่ห่างจากช่องหยอด เหรียญของลูกค้าเข้าช่องที่ 37.50 ให้เครื่องเป็นจุดสนใจและจัดท่าตัวละครให้เข้าใจว่าเธอเฝ้าดู |
-| 09 · 38.954–43.864 | «ผ้าสีขาวหมุนวน…เจ้าของผ้าไม่อยู่» | ตาเซลตามถังช่วงแรก แล้วขยับศีรษะไปหาพื้นที่ข้างเครื่องหลังจุดตัดเฟรม 1246 ค้างที่พื้นที่ว่างให้ผู้ชมเห็นว่าคนหาย |
-| 10 · 44.066–49.566 | «หายไปทางประตูหลัง…ไม่มีเสียงฝีเท้า» | ตาตามผ้า เสียงเสียดสีที่ 45.22 ขณะผ้ายังขยับ ประตูว่างจากเฟรม 1365 เซลไม่ก้าวตาม ให้ท่าฟังค้างอยู่ผ่านประโยคว่าไม่มีเสียงฝีเท้า |
-| 11 · 49.768–54.998 | «คืนแรก…คืนที่สอง…คืนที่สาม» | คืนแรกส่ายหัวเบา ๆ แล้วกลับทำงาน คืนที่สองชะงักมือค้างนานขึ้น คืนที่สามปล่อยมือลงและหันมองประตูเลย ใช้คัตตามช่องคำเดิม |
-| 12 · 55.200–59.750 | «หยุดเก็บเหรียญ แล้วเฝ้ามองประตูหลัง» | มือที่เริ่มเอื้อมหยุดแล้วถอนกลับช่วง 55.97–56.71 เหรียญค้างนิ่งบนถาด จากนั้นถ่ายน้ำหนักและหันไปทางประตูว่าง ค้างสายตาจนถึงเฟรม 1799 |
+| 1.0 | ✅ | ตรึง `motion/API.md` และตรวจ read-only source provisioning พร้อม SHA-256 สำหรับ worktree |
+| 1.1 | ✅ | แก้ null semantics ของ `s`, `groundY`, `gaitPhase`, `sinceSeconds` และพิกัด nullable แล้ว; ตรวจ source และคัดลอกโมดูล/fixtures เข้า source tree พร้อมยืนยัน SHA-256 |
+| 1.2 | ✅ | โมดูลช่วงบนและ fixtures 10 กรณีตรวจ schema แล้ว และคัดลอกเข้า source tree พร้อมยืนยัน SHA-256 |
+| 1.3 | ❌ | ยังไม่เริ่ม; 1.1/1.2 ผ่านแล้ว จึงเริ่มรวม rig เข้ากับ renderer ได้ |
+| 2.1 | ⏳ | Devin กำลังทำ pose JSON/notes cues 1–6 (`ctx_90feb9670e5d`); semantic action map เป็นข้อมูลตั้งต้น |
+| 2.2 | ⏳ | Devin กำลังทำ pose JSON/notes cues 7–12 (`ctx_8ed8f4c446a6`); semantic action map เป็นข้อมูลตั้งต้น |
+| 2.3 | ⏳ | รวม cue map เชิงความหมายแล้ว; การตรวจ pose schema, cue boundary และ transition จริงรอ 2.1–2.2 |
+| 3.1 | ✅ | `scene-layout.json` อยู่ใน source tree; รายงาน audit ของแพ็กเกจ scene ระบุ fixture checks |
+| 3.2 | ✅ | `occlusion.mjs` และ scene fixtures อยู่ใน source tree; รายงาน audit ระบุ fixture checks และ coordinator blockers |
+| 4.1 | ✅ | ตรวจหลักฐานขนาด 19.2 px เทียบ 22.4 px และบันทึกข้อแตกต่างแล้ว |
+| 4.2 | ⏳ | บันทึกคำตัดสินขนาดเล็ก 19.2 px (`capvw=1.7778`) แล้ว; การตั้งเป็นค่าใช้งานถาวรของ renderer รอ coordinator integration |
+| 4.3 | ✅ | ตรวจบน viewport มือถือ 390×693 ที่ DPR 2; cues 3/5/12 ผ่านการตรวจบรรทัดและตำแหน่ง |
+| 5.1 | ❌ | ยังไม่เริ่ม; checklist เตรียมได้ทันทีควบคู่กับงาน implementation |
+| 5.2 | ❌ | รอ rig, pose, scene, integration และ checklist พร้อม |
+| 5.3 | ❌ | รอ 5.2 และ Jessica aligned dry WAV 60 วินาที; WAV ยังเป็น blocker |
 
-## แบ่งงานและตรวจรับเบื้องต้น
+### งานที่พร้อมเริ่มได้ทันที
 
-| เจ้าของ | ขอบเขต | เงื่อนไขส่งต่อ |
-|---|---|---|
-| Devin 1 | ข้อต่อเซลเต็มตัว ท่าเดิน หยุด หัน ขยับแขน และจุดอ้างอิงฝ่าเท้ากับมือ | ตกลงรูปแบบข้อมูลท่ากับทีมตั้งแต่ต้น ตรวจว่าเปิดเฟรมสลับลำดับแล้วได้ท่าเดิม |
-| Devin 2 | คีย์เฟรมการแสดง Jessica ตามตารางทั้ง 12 ช่วง | ตรวจการวางเหรียญและส่งค่าจุดสัมผัสมือให้คนจัดฉาก |
-| Devin 3 | คีย์เฟรมการแสดงฉบับซับเดิมทั้ง 12 ช่วง | แยกเวลาและท่าหยุดเก็บเหรียญจาก Jessica |
-| Devin 4 | ทางเดิน ตำแหน่งอุปกรณ์ โครงบังหน้า–หลัง และแสงในฉาก | ตรวจกรอบเต็มตัวในช็อตเดินและการเข้าหลังเคาน์เตอร์ แก้เฉพาะไฟล์จัดฉากที่ถือสิทธิ์ |
-| Devin 5 | คลิปทดสอบ เกณฑ์ตรวจการเคลื่อนไหว และตรวจ MP4 ทั้งสองฉบับ | เริ่มเตรียมเกณฑ์ทันที รันกับคลิปทดสอบก่อน แล้วรันซ้ำกับไฟล์จริง |
+- **2.1 และ 2.2** เริ่มแล้วและกำลังทำขนานกัน; cue maps ที่เตรียมไว้เป็นเพียงแนวทาง ส่วน pose JSON/notes จริงยังอยู่ระหว่างทำ
+- **1.3** เริ่มได้ทันทีเพราะ 1.1 และ 1.2 ผ่านการตรวจรับแล้ว
+- **5.1** เริ่มเตรียม QA checklist ได้โดยไม่ต้องรอ rig หรือ pose
+- **1.3** เริ่มได้ทันทีเพราะ 1.1/1.2 ตรวจรับแล้ว; **2.3** ต้องรอ pose JSON ทั้งสองช่วงก่อนตรวจ transition จริง
+- **5.3** ยังเริ่มไม่ได้จนมี WAV ที่ตรงกับ SRT และ 5.2 ผ่าน
 
-ให้ทีมทำ **คลิปทดสอบ 8–12 วินาที** จากฉากจริง โดยเลือกช่วงเดินเข้าทำงานและมือแตะเหรียญหนึ่งครั้ง ตรวจว่าน้ำหนักลงเท้าแล้วเท้าอยู่กับพื้น เห็นจังหวะนิ้วกับวัตถุ ไม่เห็นลำตัวทะลุเคาน์เตอร์ และหน้าตาของเซลตรงกับโมเดลที่เลือก เมื่อผ่านจึงลงรายละเอียดทั้งสองฉบับและตรวจช็อตสำคัญที่ความเร็วจริง
-
-**เวลาประเมินสำหรับงานแสดงละเอียด** คลิปทดสอบแรกประมาณ 1–2 ชั่วโมงเมื่อเริ่มพร้อมกัน และงานเต็มสองฉบับประมาณ **ครึ่งวันถึงหนึ่งวันทำงาน** รวมประกอบ ตรวจ และเผื่อแก้หนึ่งรอบ เวลาจริงขึ้นกับจำนวนท่าที่ต้องเก็บใหม่หลังดูคลิปทดสอบ
-
-แบ่งการผลิตเป็นสามช่วง เริ่มข้อต่อ ผังฉาก และการวางจังหวะบนเสียงคู่ขนาน เมื่อตกลงรูปแบบข้อมูลท่าแล้วให้ลงคีย์เฟรมสองฉบับพร้อมกัน คนจัดฉากเป็นเจ้าของไฟล์ประกอบภาพ และคนตรวจเป็นเจ้าของชุดทดสอบ เมื่อผ่านคลิปทดสอบจึงรวมงานและเรนเดอร์เต็ม แยกคนละ worktree เมื่อมีงานแก้ไฟล์เดียวกัน ชุดตัดต่อฉบับ Jessica และฉบับซับเดิมอยู่ในโฟลเดอร์งานท้องถิ่น `ep1-recut/devin-work` ให้เตรียมไฟล์ต้นทางทั้งสองฉบับก่อนเริ่ม
-
-เกณฑ์ตรวจรับหลังประกอบ
-
-- ดูคลิปที่ความเร็วจริงและไล่เฟรมช่วงลงเท้า ปล่อยเหรียญ ชายผ้าลับวงกบ และหันมองประตู บันทึกเฟรมสัมผัสพื้นหรือวัตถุและตรวจว่าเท้าที่รับน้ำหนักอยู่บนพื้น มือกับเหรียญสัมผัสจริง และเหรียญคงอยู่หลังปล่อย
-- ตรวจคู่เฟรม 745–746 ว่าลูกค้าปรากฏเมื่อถึงคิว และตรวจเฟรม 1799 ว่าเซลยังเฝ้ามองประตูว่าง ตรวจเงา การบัง และทิศมองจากภาพตัวอย่างของทั้งสองฉบับ
-- ตรวจไฟล์ 60.000 วินาที, 1080×1920, 30 fps, 1,800 เฟรมต่อฉบับ ถอดรหัสภาพและเสียงครบ ตรวจซับทั้ง 12 ช่วงกับไฟล์ต้นฉบับ และเช็กขนาด 22.4 px บนภาพย่อมือถือ
-- ใช้เสียงมิกซ์ v2 ของแต่ละฉบับ ตรวจว่าเสียงพากย์ไม่มีการเลื่อนและเสียงช็อตสำคัญยังลงตรงภาพ เก็บไฟล์เคลื่อนไหวเป็นรุ่นใหม่ แล้วทดสอบโหมดเซลเดิมและนุ่นเดิมอีกครั้ง
+หลักฐานสถานะ: `.agent-runs/snowy-neon-cel-motion-task1/evidence/source-provisioning-1-1-1-2.md`, รายงาน tasks 2.1/2.2 และ `.agent-runs/snowy-neon-cel-motion-2-3-merge-review/MERGED-CUE-MAP.md`, รายงาน 4.1–4.3 ใน `.agent-runs/snowy-neon-cel-motion-task4/reports/`, และ ledger/worker report ของ 3.1–3.2.
