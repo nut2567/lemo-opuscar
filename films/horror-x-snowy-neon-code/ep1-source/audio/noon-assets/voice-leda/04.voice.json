@@ -1,0 +1,18 @@
+{
+  "provider": "gemini",
+  "script_file": "D:\\peoject_wepapp\\lemo-opuscar\\films\\horror-x-snowy-neon-code\\ep1-source\\audio\\noon-assets\\voice-leda\\04.txt",
+  "script_sha256": "1a0981b629485f4de800dfa680114804c94d8399781a448dd980b54b33982938",
+  "audio_file": "D:\\peoject_wepapp\\lemo-opuscar\\films\\horror-x-snowy-neon-code\\ep1-source\\audio\\noon-assets\\voice-leda\\04.wav",
+  "generated_at_utc": "2026-11-20T13:44:01.530971+00:00",
+  "voice_selection_status": "generated_not_auditorily_verified",
+  "duration_seconds": null,
+  "caption_alignment": "not_performed",
+  "voice_id": "Leda",
+  "model": "gemini-3.8-flash-tts",
+  "speed": 1.0,
+  "language": "th",
+  "credential": "GEMINI_API_KEY_7",
+  "style": "Whispering, hushed and tense: a young Thai woman alone on a late-night laundromat shift quietly telling a ghost story, close to the mic, unhurried",
+  "bytes": 120988,
+  "sha256": "7cae4dbf3a86c3554f518caca837a8ce6fc542c85e085e1878779dd61d4ad4ea"
+}
