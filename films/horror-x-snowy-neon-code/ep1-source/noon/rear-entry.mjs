@@ -140,14 +140,37 @@ const DEFS = `<defs>
     <stop offset=".6" stop-color="#ff4fa8" stop-opacity=".02"/>
     <stop offset="1" stop-color="#ff4fa8" stop-opacity="0"/>
   </linearGradient>
-  <linearGradient id="re-washerBody" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#26313f"/><stop offset=".6" stop-color="#18222e"/>
-    <stop offset="1" stop-color="#0e1520"/>
+  <!-- washer cabinet materials: the washers.mjs / washer-row.mjs metal,
+       panel, drum and face-light gradients, in the cabinet's local
+       100 x 118 unit space (userSpaceOnUse resolves inside each
+       cabinet's own transform, so one set serves every unit) -->
+  <linearGradient id="re-wMetal" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="15">
+    <stop offset="0" stop-color="#87a2b3"/><stop offset=".42" stop-color="#54768b"/>
+    <stop offset=".78" stop-color="#2e4a5e"/><stop offset="1" stop-color="#24394c"/>
   </linearGradient>
-  <radialGradient id="re-drum" cx=".5" cy=".5" r=".5">
-    <stop offset="0" stop-color="#101a26"/><stop offset=".7" stop-color="#0a1018"/>
-    <stop offset="1" stop-color="#060a12"/>
-  </radialGradient>
+  <linearGradient id="re-wPanel" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="118">
+    <stop offset="0" stop-color="#46617a"/><stop offset=".52" stop-color="#2a4158"/>
+    <stop offset="1" stop-color="#1a2c3d"/>
+  </linearGradient>
+  <linearGradient id="re-wDrum" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="80" y2="118">
+    <stop offset="0" stop-color="#7f9db0"/><stop offset=".36" stop-color="#152e40"/>
+    <stop offset="1" stop-color="#4a7186"/>
+  </linearGradient>
+  <linearGradient id="re-wFace" gradientUnits="userSpaceOnUse" x1="86" y1="4" x2="30" y2="114">
+    <stop offset="0" stop-color="#ffcb8c" stop-opacity=".25"/>
+    <stop offset=".55" stop-color="#f8c586" stop-opacity=".10"/>
+    <stop offset="1" stop-color="#233342" stop-opacity=".12"/>
+  </linearGradient>
+  <linearGradient id="re-wRoom" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="118">
+    <stop offset="0" stop-color="#0d0a12" stop-opacity="0"/>
+    <stop offset=".7" stop-color="#0d0a12" stop-opacity=".06"/>
+    <stop offset="1" stop-color="#0d0a12" stop-opacity=".2"/>
+  </linearGradient>
+  <linearGradient id="re-wSide" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="118">
+    <stop offset="0" stop-color="#3d566b"/><stop offset="1" stop-color="#17283a"/>
+  </linearGradient>
+  <clipPath id="re-wBody" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="100" height="118"/></clipPath>
+  <clipPath id="re-wGlass" clipPathUnits="userSpaceOnUse"><ellipse cx="50" cy="67" rx="23" ry="25"/></clipPath>
   <linearGradient id="re-counterTop" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0" stop-color="#54432f"/><stop offset=".5" stop-color="#3d3227"/>
     <stop offset="1" stop-color="#2a211a"/>
@@ -300,31 +323,125 @@ function checkerFloor() {
 function floorWalls() { return checkerFloor(); }
 
 // ------------------------------------------------------------- z20 washers
-function washer(x, y, w, h, phase, sec) {
-  const r = w * 0.5;
-  const doorCY = y + h * 0.52;
-  const rot = n(sec * 0.5 + phase, 3);
-  let s = `<ellipse cx="${n(x + w / 2)}" cy="${n(y + h + 6)}" rx="${n(w * 0.62)}" ry="${n(h * 0.09)}" fill="url(#re-shadow)"/>`;
-  s += rect(x, y, w, h, 'url(#re-washerBody)', 'rx="10" stroke="#0a0f16" stroke-width="2"');
-  s += rect(x + 6, y + 6, w - 12, h * 0.16, '#1a2531', 'rx="6"');
-  s += rect(x + w * 0.62, y + 10, w * 0.3, h * 0.1, '#0b1118', 'rx="3"');
-  // porthole: ring + drum glass + one rotating paddle hint
-  s += `<circle cx="${n(x + w / 2)}" cy="${n(doorCY)}" r="${n(r * 0.86)}" fill="#0d141d" stroke="#46586e" stroke-width="5"/>`;
-  s += `<circle cx="${n(x + w / 2)}" cy="${n(doorCY)}" r="${n(r * 0.72)}" fill="url(#re-drum)" stroke="#2c3c50" stroke-width="2"/>`;
-  const px = x + w / 2 + Math.cos(rot) * r * 0.4, py = doorCY + Math.sin(rot) * r * 0.4;
-  s += line(`M${n(x + w / 2)} ${n(doorCY)} L${n(px)} ${n(py)}`, '#3d5064', 5, .8);
-  s += `<circle cx="${n(x + w / 2)}" cy="${n(doorCY)}" r="${n(r * 0.14)}" fill="#22303f" stroke="#4fdcff" stroke-width="1.4" opacity=".6"/>`;
-  // cyan glint arc on the door rim (glass spill from the shop window)
-  s += `<path d="M${n(x + w / 2 - r * 0.8)} ${n(doorCY - r * 0.35)} A${n(r * 0.82)} ${n(r * 0.82)} 0 0 1 ${n(x + w / 2 - r * 0.1)} ${n(doorCY - r * 0.75)}" fill="none" stroke="#4fdcff" stroke-width="2.4" opacity=".28" stroke-linecap="round"/>`;
-  s += rect(x + w * 0.12, y + h - 8, w * 0.2, 6, '#05080d', 'opacity=".8"');
+// The same commercial coin-op front-loaders as the rest of the film
+// (FILM/washers.mjs drawWasher, and the upright cabinet of
+// noon/washer-row.mjs): pale blue-grey steel cabinet, control header with
+// vent slot, coin slot + knob, countdown display and LEDs, unit number,
+// round porthole with a coloured accent ring, bezel and drum glass,
+// chrome door handle, toe-kick vents and the warm face light. Ported to
+// SVG in the washer-row cabinet's local 100 x 118 unit space (w:h 0.847).
+// These two are units 03 and 04 of the washer-row insert, with the same
+// accents and states (03 running a drift cycle with suds, 04 idle) and
+// 03's display counting down on the same clock (266 s total - film s), so
+// the two shots agree. A shallow top and right-hand cheek give the volume:
+// the camera sits above counter height and both units are left of the
+// room's centre line, so their tops and right sides face it.
+const WCU = 1.85;                       // px per cabinet unit -> 185 x 218 px
+const WDX = 4, WDY = 9;                 // top/side depth offset, local units
+const WASHER_UNITS = Object.freeze([
+  Object.freeze({ i: 3, x: 100, on: true, drumPhase: 'drift', suds: true, accent: '#ff4fa8', phase: 300, total: 266 }),
+  Object.freeze({ i: 4, x: 307, on: false, drumPhase: 'idle', suds: false, accent: '#3dff9a', phase: 0, total: 0 }),
+]);
+const WASHER_BOTTOM = 1600;             // shared floor-contact line
+
+function washerClock(sec) {
+  const s = Math.max(0, Math.floor(sec));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
+function washerAngle(w, sec) {         // washers.mjs drumAngle()
+  if (!w.on) return 0;
+  if (w.drumPhase === 'spin') return (((sec * 38 + w.phase) % 360) + 360) % 360;
+  if (w.drumPhase === 'tumble') return Math.sin(sec * 1.8 + w.phase * 0.01) * 45;
+  if (w.drumPhase === 'drift') return Math.sin(sec * 0.5 + w.phase * 0.01) * 12;
+  return (((sec * 21 + w.phase) % 360) + 360) % 360;
+}
+
+function washer(w, sec) {
+  const on = w.on, accent = w.accent;
+  const y = WASHER_BOTTOM - 118 * WCU;
+  const display = on ? washerClock(w.total - sec) : '--';
+  const font = 'font-family="Kanit, CaptionKanit, sans-serif"';
+  // floor contact shadow (world space), slightly wider than the cabinet
+  let s = `<ellipse cx="${n(w.x + 50 * WCU + 4)}" cy="${WASHER_BOTTOM + 4}" rx="${n(56 * WCU)}" ry="16" fill="url(#re-shadow)" opacity=".95"/>`;
+  s += `<g transform="translate(${n(w.x)} ${n(y)}) scale(${WCU})">`;
+  // depth: top plane and right cheek behind the front face
+  s += path(`M0 0 L${WDX} ${-WDY} L${100 + WDX} ${-WDY} L100 0 Z`, 'url(#re-wMetal)',
+    'stroke="#0c1926" stroke-width="1" stroke-linejoin="round"');
+  s += path(`M0 0 L${WDX} ${-WDY} L${100 + WDX} ${-WDY} L100 0 Z`, '#8FB2D4', 'opacity=".16"');
+  s += path(`M100 0 L${100 + WDX} ${-WDY} L${100 + WDX} ${118 - WDY} L100 118 Z`, 'url(#re-wSide)',
+    'stroke="#0c1926" stroke-width="1" stroke-linejoin="round"');
+  s += path(`M100 0 L${100 + WDX} ${-WDY} L${100 + WDX} ${118 - WDY} L100 118 Z`, '#0c1926', 'opacity=".3"');
+  s += line(`M0 0 L${WDX} ${-WDY} M100 0 L${100 + WDX} ${-WDY}`, '#dce9e8', 0.6, .35);
+  // cabinet front
+  s += rect(0, 0, 100, 118, 'url(#re-wMetal)', 'stroke="#0c1926" stroke-width="1.6"');
+  s += `<g clip-path="url(#re-wBody)">`;
+  s += rect(5, 9, 90, 101, 'url(#re-wPanel)', 'stroke="#7f9db1" stroke-width=".6"');
+  // control header: vent slot, coin slot + knob, display, LEDs
+  s += rect(5, 9, 90, 20, '#2b4256', 'stroke="#8faebf" stroke-width=".5"');
+  s += rect(9, 14, 15, 5, '#101d2b', 'stroke="#9db8c4" stroke-width=".5"');
+  s += line('M11 16.5 L22 16.5', '#cfe2ea', 0.8, .8);
+  s += rect(46, 14, 8, 5, '#0a1420', 'stroke="#b18270" stroke-width=".5"');
+  s += `<circle cx="55.5" cy="16.5" r="1.6" fill="#33465a" stroke="#b18270" stroke-width=".4"/>`;
+  s += rect(64, 13, 18, 7, '#081019', `stroke="${accent}" stroke-width=".5"`);
+  s += `<text x="67.5" y="18.4" font-size="4.4" ${font} fill="${on ? '#FFE3B0' : '#5d7583'}">${display}</text>`;
+  s += rect(87, 14.5, 2.4, 2.4, '#22384a', `stroke="${accent}" stroke-width=".4"`);
+  s += `<circle cx="92.5" cy="15.7" r="1.7" fill="${on ? '#F2C894' : '#42586a'}"/>`;
+  s += `<circle cx="96.5" cy="15.7" r="1.7" fill="#33465a"/>`;
+  s += `<text x="8" y="33" font-size="4" ${font} fill="#c1d3dc" opacity=".75">0${w.i}</text>`;
+  // porthole: accent ring, bezel, glass
+  s += `<ellipse cx="50" cy="67" rx="35" ry="37" fill="#0a1724" stroke="${accent}" stroke-width="1.8"/>`;
+  s += `<ellipse cx="50" cy="67" rx="28.5" ry="30" fill="url(#re-wDrum)" stroke="#35536a" stroke-width="1.6"/>`;
+  s += `<g clip-path="url(#re-wGlass)">`;
+  s += rect(20, 40, 60, 54, '#0a1a29');
+  if (on) {
+    s += `<g transform="rotate(${n(washerAngle(w, sec), 2)} 50 67)">`;
+    for (const [cx, cy, rx, ry, col, op] of [
+      [37, 57, 8, 4.5, '#e9f0ee', 0.85], [63, 59, 7, 4, '#d3dedb', 0.75],
+      [49, 82, 7, 4, '#bfcfcd', 0.65], [43, 66, 5.5, 3.5, '#c7dbd4', 0.6]]) {
+      s += `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${col}" opacity="${n(0.95 * op, 3)}"/>`;
+    }
+    s += line('M28 67 L72 67', '#8ea9b6', 2.6, .33);
+    s += `<circle cx="50" cy="67" r="3.2" fill="#22384a"/><circle cx="50" cy="67" r="1.3" fill="${accent}"/>`;
+    s += '</g>';
+    if (w.suds) {
+      for (let j = 0; j < 5; j++) {
+        const sx = Math.sin(sec * 2.3 + j * 1.26 + w.phase) * 9;
+        const sy = Math.cos(sec * 1.8 + j * 1.5 + w.phase) * 8;
+        const sr = 1.4 + 0.7 * Math.sin(sec * 3.1 + j * 2 + w.phase);
+        const op = 0.16 + 0.09 * Math.sin(sec * 2 + j + w.phase);
+        s += `<ellipse cx="${n(50 + sx, 2)}" cy="${n(67 + sy, 2)}" rx="${n(sr, 2)}" ry="${n(sr * 0.72, 2)}" fill="#cfe7ec" opacity="${n(op, 3)}"/>`;
+      }
+    }
+  } else {
+    s += `<circle cx="50" cy="67" r="3.2" fill="#22384a" opacity=".55"/><circle cx="50" cy="67" r="1.3" fill="#536680" opacity=".55"/>`;
+  }
+  // glass reflections
+  s += `<ellipse cx="44" cy="60" rx="6" ry="9" transform="rotate(-28.6 44 60)" fill="#aebfc4" opacity=".28"/>`;
+  s += `<ellipse cx="41" cy="66" rx="3.4" ry="7" transform="rotate(-28.6 41 66)" fill="#dce9e8" opacity=".35"/>`;
+  s += line('M30 60 Q33 50 44 48 M64 90 Q68 82 66 76', '#cfe7ec', 1.1, .3);
+  s += '</g>';
+  // door handle, toe kick + vents
+  s += line('M88.5 55 L88.5 79', '#d3e2e6', 1.9, 1);
+  s += rect(5, 101, 90, 13, '#0a1420', 'stroke="#122435" stroke-width=".7" opacity=".92"');
+  s += line([18, 32, 46, 60, 74, 86].map(vx => `M${vx} 103 L${vx} 111`).join(' '), '#1d3242', 1.1, .9);
+  s += line('M7 111.5 L93 111.5', '#122435', 1.1, .8);
+  // cool glass spill (screen, as washer-row's lighting pass), warm overhead
+  // face light, then the room's own fall-off toward the floor
+  s += rect(0, 0, 100, 118, '#8fd3ea', 'opacity=".12" style="mix-blend-mode:screen"');
+  s += rect(0, 0, 100, 118, 'url(#re-wFace)') + rect(0, 0, 100, 118, 'url(#re-wRoom)');
+  s += '</g>';
+  // cyan glass spill on the left edge, pink neon kiss on the right cheek
+  s += rect(0.8, 0, 2.2, 118, '#4fdcff', 'opacity=".22"');
+  s += rect(100, -WDY + 1, WDX, 118 - 2, '#ff4fa8', 'opacity=".08"');
+  s += '</g>';
   return s;
 }
 
 function washers(sec) {
   // one parallel row, same size and shared floor line (bottom y=1600), equal
-  // 40 px gaps, clear of the laundry basket (x520+) — no pasted/angled look
-  return washer(150, 1415, 140, 185, 0.4, sec) +
-         washer(330, 1415, 140, 185, 1.9, sec);
+  // 22 px gaps, clear of the laundry basket (x520+) — no pasted/angled look
+  return WASHER_UNITS.map(w => washer(w, sec)).join('');
 }
 
 // ------------------------------------------------------------- z30 counter

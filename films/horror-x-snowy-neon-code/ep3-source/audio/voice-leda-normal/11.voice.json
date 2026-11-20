@@ -1,0 +1,18 @@
+{
+  "provider": "gemini",
+  "script_file": "E:\\AI\\lemo-opuscar\\films\\horror-x-snowy-neon-code\\ep3-source\\audio\\voice-leda-normal\\kore\\11.txt",
+  "script_sha256": "3edd2d7f71f3e94b64466792d4e82ec2d010368bc6f34289fce8ebd6d389498d",
+  "audio_file": "E:\\AI\\lemo-opuscar\\films\\horror-x-snowy-neon-code\\ep3-source\\audio\\voice-leda-normal\\kore\\11.wav",
+  "generated_at_utc": "2026-11-20T20:32:56.137793+00:00",
+  "voice_selection_status": "generated_not_auditorily_verified",
+  "duration_seconds": null,
+  "caption_alignment": "not_performed",
+  "voice_id": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "speed": 1.0,
+  "language": "th",
+  "credential": "GEMINI_API_KEY_7",
+  "style": "Whispering very close behind the listener's ear: slow, cold, flat and breathy, no emotion, not quite human",
+  "bytes": 117148,
+  "sha256": "d7e4254851122269bf09c25840f8344819d200eae9e8104ce684a5ac1fe7baa5"
+}

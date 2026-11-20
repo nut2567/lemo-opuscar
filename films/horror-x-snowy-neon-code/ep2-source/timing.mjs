@@ -41,8 +41,35 @@ export const estimateSeconds = line =>
 
 const r3 = v => Math.round(v * 1000) / 1000;
 
-// [{n, start, end, text}] — caption window = estimated spoken window.
+// ------------------------------------------------------------ real voice --
+// Gemini Leda, normal (not whispered) calm delivery, approved 2026-11-21:
+// audio/voice-leda-normal/01..12.wav. Measured with ffmpeg silencedetect
+// (-40 dB, 0.12 s): lead = speech onset in the file, speech = spoken length.
+export const VOICE_DIR = 'audio/voice-leda-normal';
+export const TAKES = Object.freeze([
+  [0.000, 4.467], [0.240, 4.283], [0.237, 3.705], [0.244, 3.235],
+  [0.244, 4.783], [0.338, 3.902], [0.195, 3.486], [0.395, 4.748],
+  [0.350, 5.027], [0.282, 3.601], [0.233, 2.310], [0.229, 5.106],
+].map(([lead, speech]) => Object.freeze({ lead, speech })));
+// Spoken onset of each line (film seconds). Cuts and beats did not move: lines
+// 5, 8 and 9 run a few tenths over their cut (an L-cut), everything else sits
+// inside its shot as before.
+export const STARTS = Object.freeze([0.30, 5.46, 10.35, 14.40, 17.95, 23.05, 27.35, 31.15, 36.20, 41.55, 45.65, 49.34]);
+
+// A fast line keeps its caption up a little past the speech so it can be read
+// at no more than READ_CPS Thai characters per second.
+export const READ_CPS = 10.5;
+
+// [{n, start, end, text}] — caption window = spoken window (held longer for a
+// fast line). LINES uses the measured takes; any other list falls back to the
+// character-rate estimate.
 export function lineTimes(lines = LINES, first = FIRST_START) {
+  if (lines === LINES) {
+    return lines.map((line, i) => ({
+      n: i + 1, start: STARTS[i], text: line.text,
+      end: r3(STARTS[i] + Math.max(TAKES[i].speech, thaiChars(line.text) / READ_CPS)),
+    }));
+  }
   let t = first;
   return lines.map((line, i) => {
     const start = r3(t), end = r3(t + estimateSeconds(line));

@@ -1,0 +1,182 @@
+{
+  "note": "Narration windows from the measured Leda takes (timing.mjs TAKES/STARTS). Regenerate with make-captions.mjs; mix-ep3.py reads this file.",
+  "voiceDir": "audio/voice-leda-normal",
+  "lines": [
+    {
+      "n": 1,
+      "start": 0.4,
+      "text": "ฉันวิ่งกลับมาหน้าร้าน ในร้านไม่มีใครเลย",
+      "speaker": "noon",
+      "end": 4.255,
+      "thaiChars": 38,
+      "voiceLead": 0,
+      "voiceSpeech": 3.855
+    },
+    {
+      "n": 2,
+      "start": 4.85,
+      "text": "เครื่องแรกยังหมุนอยู่ มีผ้าขาวผืนเดิมอยู่ข้างใน",
+      "speaker": "noon",
+      "end": 10.235,
+      "thaiChars": 46,
+      "voiceLead": 0,
+      "voiceSpeech": 5.385
+    },
+    {
+      "n": 3,
+      "start": 10.75,
+      "text": "ฉันบอกตัวเองว่า คงมีใครแกล้งกัน",
+      "speaker": "noon",
+      "end": 14.498,
+      "thaiChars": 30,
+      "voiceLead": 0.297,
+      "voiceSpeech": 3.748
+    },
+    {
+      "n": 4,
+      "start": 14.95,
+      "text": "แต่ฉันไม่กล้าเปิดเครื่อง ไม่กล้าเงยหน้ามองประตูหลัง",
+      "speaker": "noon",
+      "end": 19.712,
+      "thaiChars": 50,
+      "voiceLead": 0.313,
+      "voiceSpeech": 4.688
+    },
+    {
+      "n": 5,
+      "start": 20.3,
+      "text": "ฉันนั่งนิ่งอยู่หลังเคาน์เตอร์ ฟังมันหมุนทั้งคืน",
+      "speaker": "noon",
+      "end": 24.681,
+      "thaiChars": 46,
+      "voiceLead": 0,
+      "voiceSpeech": 4.333
+    },
+    {
+      "n": 6,
+      "start": 26.4,
+      "text": "จนฟ้าเริ่มสาง เครื่องก็หยุดหมุนเอง",
+      "speaker": "noon",
+      "end": 30.023,
+      "thaiChars": 33,
+      "voiceLead": 0.234,
+      "voiceSpeech": 3.623
+    },
+    {
+      "n": 7,
+      "start": 30.7,
+      "text": "ฉันเปิดฝาเครื่อง ดึงผ้าผืนใหญ่ออกมา",
+      "speaker": "noon",
+      "end": 34.268,
+      "thaiChars": 34,
+      "voiceLead": 0.214,
+      "voiceSpeech": 3.568
+    },
+    {
+      "n": 8,
+      "start": 34.8,
+      "text": "ผ้ายังอุ่นอยู่ มีชื่อปักอยู่ที่มุมผ้า",
+      "speaker": "noon",
+      "end": 39.191,
+      "thaiChars": 36,
+      "voiceLead": 0.28,
+      "voiceSpeech": 4.391
+    },
+    {
+      "n": 9,
+      "start": 39.7,
+      "text": "เป็นชื่อฉัน ชื่อที่ฉันไม่เคยบอกเขา",
+      "speaker": "noon",
+      "end": 43.394,
+      "thaiChars": 33,
+      "voiceLead": 0.271,
+      "voiceSpeech": 3.694
+    },
+    {
+      "n": 10,
+      "start": 45.6,
+      "text": "แล้วตอนนั้นเอง ฉันก็ได้ยินเสียงจากข้างหลัง",
+      "speaker": "noon",
+      "end": 49.984,
+      "thaiChars": 41,
+      "voiceLead": 0,
+      "voiceSpeech": 4.384
+    },
+    {
+      "n": 11,
+      "start": 51.1,
+      "text": "“ใส่เหรียญ”",
+      "speaker": "behind",
+      "end": 52.865,
+      "thaiChars": 9,
+      "voiceLead": 0.27,
+      "voiceSpeech": 1.765
+    },
+    {
+      "n": 12,
+      "start": 53.8,
+      "text": "ฉันค่อย ๆ หันกลับไป",
+      "speaker": "noon",
+      "end": 55.947,
+      "thaiChars": 17,
+      "voiceLead": 0.248,
+      "voiceSpeech": 2.147
+    }
+  ],
+  "beats": {
+    "dawnStart": 20.6,
+    "dawnEnd": 27.6,
+    "drumStop": 29.3,
+    "doorOpen": 30.9,
+    "sheetOut": 32.2,
+    "nameReveal": 38.2,
+    "behind": 51.1,
+    "turnStart": 53.7,
+    "clothEdge": 54.8,
+    "fadeOut": 58,
+    "black": 58.8,
+    "coinDrop": 59.2
+  },
+  "cuts": [
+    [
+      0,
+      "run-back"
+    ],
+    [
+      4.6,
+      "drum-turning"
+    ],
+    [
+      10.5,
+      "counter-sit"
+    ],
+    [
+      19.9,
+      "time-lapse"
+    ],
+    [
+      28,
+      "drum-stop"
+    ],
+    [
+      30.4,
+      "open-door"
+    ],
+    [
+      34.6,
+      "sheet-hold"
+    ],
+    [
+      37.6,
+      "name-macro"
+    ],
+    [
+      45.3,
+      "voice-behind"
+    ],
+    [
+      53.7,
+      "turn"
+    ]
+  ]
+}
