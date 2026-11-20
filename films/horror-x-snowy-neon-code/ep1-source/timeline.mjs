@@ -34,6 +34,15 @@ export const variants = {
     picture: './picture/jessica.json',
     cues: { tray: 21.82, slot: 32.75, motor: 33.53, cloth: 40.98 },
   },
+  // Gemini Leda normal-voice cut (2026-11-21): the Jessica picture and beats
+  // unchanged; captions re-timed to the measured takes
+  // (noon/leda-normal-timing.mjs -> captions/leda-normal.srt).
+  'leda-normal': {
+    edition: 'leda-normal',
+    srt: './captions/leda-normal.srt',
+    picture: './picture/jessica.json',
+    cues: { tray: 21.82, slot: 32.75, motor: 33.53, cloth: 40.98 },
+  },
 };
 
 // events.json contract for the audio tasks (32 manifests / 35 mixes).
@@ -61,7 +70,7 @@ export function eventsFor(edition) {
       ],
     };
   }
-  if (edition === 'jessica') {
+  if (edition === 'jessica' || edition === 'leda-normal') {
     return {
       required: [
         { t: 14.95, type: 'washer', note: 'single strike + 1.8 s motor hum under แล้วรอให้เครื่องซักเสร็จ' },

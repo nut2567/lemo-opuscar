@@ -85,3 +85,13 @@ while the timeline and media checks verify the intended timing and content.
 
 Do not commit the output directory, the supplied Jessica WAV, or other local
 media; this package is meant to be built from source on each machine.
+
+## Leda normal-voice cut (2026-11-21)
+
+`leda-normal` cut: Gemini Leda, calm normal voice (`audio/noon-assets/voice-leda-normal/`),
+captions `captions/leda-normal.srt` from `noon/make-leda-normal.mjs` (measured takes,
+picture cuts unchanged), mixed by `noon/mix-noon.py --voice-dir voice-leda-normal --srt
+captions/leda-normal.srt --timing noon/leda-normal-timing.json --even --opening-fx-db -12`,
+picture `node core/render/video.mjs <ep1-source> --q cut=leda-normal`. The rear-entry
+washers are now the same commercial units as the washer-row shot. Released render:
+`out/leda-normal/horror-x-ep1-snowy-neon-noon-60s-leda-normal.mp4` (+ `.srt`).

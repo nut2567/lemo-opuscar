@@ -6,6 +6,8 @@ Inputs (all inside ep1-source/):
   audio/noon-assets/voice/01..12.mp3  ElevenLabs Jessica lines (one per jessica.srt cue)
   audio/noon-assets/sfx/*.mp3         ElevenLabs sound effects (prompts in *.txt / jobs.json)
   noon/coin-clink.py                  deterministic coin-on-coin clinks (exact picture sync)
+  audio/noon-assets/voice-leda-normal/01..12.wav  Gemini Leda normal takes (raw WAV; use with
+                                      --srt captions/leda-normal.srt --timing noon/leda-normal-timing.json)
 Voice lines start at their caption cue; if a line would run into the next
 cue it is sped up at most 10 % and, if still long, the next line waits.
 No footsteps near the customer beats (cue 10: "ไม่มีเสียงฝีเท้า").
@@ -91,6 +93,11 @@ def main():
                     help='gain for ALL effects during the opening 0-11 s (ramps back by 11.8 s); -6 = half, so the narration is not masked')
     ap.add_argument('--even', action='store_true',
                     help='level each voice line by loudness (not peak) and even the whole mix (compressor + LRA-limited loudnorm)')
+    ap.add_argument('--srt', default=os.path.join(SRC, 'captions', 'jessica.srt'),
+                    help='caption track whose cue starts place the lines (default captions/jessica.srt)')
+    ap.add_argument('--timing',
+                    help='measured-take timing JSON (noon/leda-normal-timing.json): each take is cut to its measured '
+                         'speech (after its pause edits) with 0.03 s pre-roll, so the spoken onset lands on the caption start')
     args = ap.parse_args()
     if args.tone == 'low':
         TONE['af'] = {
@@ -103,19 +110,46 @@ def main():
 
     # ---- narration --------------------------------------------------------
     voice = np.zeros((N, 2))
-    cues = srt_cues(os.path.join(SRC, 'captions', 'jessica.srt'))
+    cues = srt_cues(args.srt)
+    timing = json.load(open(args.timing, encoding='utf-8'))['lines'] if args.timing else None
+    if timing is not None and len(timing) != len(cues):
+        raise SystemExit(f'mix-noon.py: {args.timing} has {len(timing)} lines, {args.srt} has {len(cues)} cues')
     prev_end = 0.0
     for i, (start, _end) in enumerate(cues):
-        path = os.path.join(SRC, 'audio', 'noon-assets', args.voice_dir, f'{i + 1:02d}.mp3')
-        clip = decode(path, kind='voice')
+        stem = os.path.join(SRC, 'audio', 'noon-assets', args.voice_dir, f'{i + 1:02d}')
+        # .mp3 first (the committed Jessica/whisper/Leda dirs hold trimmed MP3s);
+        # a dir of raw Gemini takes holds only .wav
+        path = next((stem + ext for ext in ('.mp3', '.wav') if os.path.isfile(stem + ext)), None)
+        if path is None:
+            raise SystemExit(f'mix-noon.py: missing voice line {stem}.mp3/.wav')
+        line = timing[i] if timing is not None else None
+        tail = 0.15 if line else 0.0
+        shift = min(0.03, line['voiceLead']) if line else 0.0
+
+        def take(tempo=1.0):
+            c = decode(path, tempo, kind='voice')
+            if line:
+                # shorten long silent pauses (file seconds, 10 ms crossfades),
+                # then cut to the measured speech with 0.03 s pre-roll
+                for a, b in sorted(line.get('edits', []), reverse=True):
+                    ia, ib, xf = int(a / tempo * SR), int(b / tempo * SR), int(0.01 * SR)
+                    ramp = np.linspace(1, 0, xf)[:, None]
+                    head = c[:ia].copy()
+                    head[-xf:] = head[-xf:] * ramp + c[ib:ib + xf] * (1 - ramp)
+                    c = np.concatenate([head, c[ib + xf:]])
+                lead = max(0, int((line['voiceLead'] - shift) / tempo * SR))
+                c = c[lead:lead + int((line['editedSpeech'] + shift + tail) / tempo * SR)]
+            return c
+
+        clip = take()
         dur = len(clip) / SR
-        t = max(start, prev_end + 0.12)
+        t = max(start - shift, prev_end + 0.12)
         nxt = cues[i + 1][0] if i + 1 < len(cues) else DUR - 0.3
         tempo = 1.0
-        if t + dur > nxt - 0.1:
-            tempo = min(1.10, dur / max(0.5, nxt - 0.1 - t))
+        if t + dur - tail > nxt - 0.1:
+            tempo = min(1.10, (dur - tail) / max(0.5, nxt - 0.1 - t))
             if tempo > 1.0:
-                clip = decode(path, tempo, kind='voice')
+                clip = take(tempo)
                 dur = len(clip) / SR
         if args.even:
             # same loudness for every line: RMS over the voiced part (gate -45 dBFS)
@@ -128,9 +162,13 @@ def main():
         else:
             clip /= max(1e-9, np.abs(clip).max())
             place(voice, clip, t, 0.5, 0.005, 0.03)
-        prev_end = t + dur
-        report['voice'].append({'cue': i + 1, 'start': round(t, 3), 'end': round(t + dur, 3), 'tempo': round(tempo, 3),
-                                'captionStart': start})
+        prev_end = t + dur - tail
+        entry = {'cue': i + 1, 'start': round(t + shift, 3), 'end': round(t + dur, 3), 'tempo': round(tempo, 3),
+                 'captionStart': start}
+        if line:
+            entry.update({'file': os.path.basename(path), 'speechEnd': round(t + dur - tail, 3),
+                          'captionEnd': cues[i][1], 'pauseEditsS': round(sum(b - a for a, b in line.get('edits', [])), 3)})
+        report['voice'].append(entry)
 
     # ---- effects ----------------------------------------------------------
     fx = np.zeros((N, 2))

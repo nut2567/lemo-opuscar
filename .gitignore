@@ -2,6 +2,9 @@ node_modules/
 .venv/
 .lemo-deps.lock/
 __pycache__/
+.env
+.env.*
+!.env.example
 .DS_Store
 # Models and large assets (the docs say where to download them)
 core/tts/*.onnx

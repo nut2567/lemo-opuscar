@@ -187,3 +187,26 @@ test('pose switches: idle -> walk -> idle', () => {
     assert.ok(Math.abs(actorX(svg(u)).x - x1) < 0.06, `x drift after walk at ${u}`);
   }
 });
+
+test('washers: the film\'s coin-op front-loaders (washer-row units 03/04), one parallel row', () => {
+  const s = rearEntrySvg({ local: 0.48, duration: DUR, seconds: 6.2 });
+  const layer = s.slice(s.indexOf('<g data-z="20">'), s.indexOf('<g data-z="30">'));
+  // two cabinets, each with the washer-row porthole (accent ring + glass clip)
+  const cabs = [...layer.matchAll(/<g transform="translate\(([-\d.]+) ([-\d.]+)\) scale\(([\d.]+)\)">/g)]
+    .map(m => ({ x: +m[1], y: +m[2], s: +m[3] }));
+  assert.equal(cabs.length, 2);
+  assert.equal((layer.match(/clip-path="url\(#re-wGlass\)"/g) || []).length, 2);
+  // same size, same floor line, clear gap, clear of the laundry basket (x520)
+  assert.equal(cabs[0].y, cabs[1].y);
+  assert.equal(cabs[0].s, cabs[1].s);
+  const w = 100 * cabs[0].s, cheek = 4 * cabs[0].s;
+  assert.ok(cabs[1].x - (cabs[0].x + w + cheek) >= 12, 'gap between cabinets');
+  assert.ok(cabs[1].x + w + cheek < 520, 'clear of the basket');
+  assert.ok(Math.abs(cabs[0].y + 118 * cabs[0].s - 1600) < 0.2, 'bottom on the y1600 floor line');
+  // washer-row materials / accents / controls
+  for (const id of ['re-wMetal', 're-wPanel', 're-wDrum']) assert.ok(layer.includes(`url(#${id})`), id);
+  assert.ok(layer.includes('stroke="#ff4fa8"') && layer.includes('stroke="#3dff9a"'), 'unit accents 03/04');
+  // unit 03 counts down on the washer-row clock (266 s - film seconds), 04 idle
+  assert.ok(layer.includes('>4:19</text>') && layer.includes('>--</text>'));
+  assert.ok(layer.includes('>03</text>') && layer.includes('>04</text>'));
+});

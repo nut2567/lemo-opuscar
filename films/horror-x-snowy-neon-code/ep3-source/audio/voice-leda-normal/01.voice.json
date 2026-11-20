@@ -1,0 +1,18 @@
+{
+  "provider": "gemini",
+  "script_file": "E:\\AI\\lemo-opuscar\\films\\horror-x-snowy-neon-code\\ep3-source\\audio\\voice-leda-normal\\01.txt",
+  "script_sha256": "9598f3648f71b2b44e971c999f1a84ff2f353e9a9b6de6e50771514ad7ec3827",
+  "audio_file": "E:\\AI\\lemo-opuscar\\films\\horror-x-snowy-neon-code\\ep3-source\\audio\\voice-leda-normal\\01.wav",
+  "generated_at_utc": "2026-11-20T20:09:35.385822+00:00",
+  "voice_selection_status": "generated_not_auditorily_verified",
+  "duration_seconds": null,
+  "caption_alignment": "not_performed",
+  "voice_id": "Leda",
+  "model": "gemini-3.8-flash-tts",
+  "speed": 1.0,
+  "language": "th",
+  "credential": "GEMINI_API_KEY_7",
+  "style": "Calm, low and serious: a young Thai woman quietly telling a true ghost story in her normal speaking voice, not whispering, not cheerful, no smile, unhurried",
+  "bytes": 201628,
+  "sha256": "43ba48f11c33d237aa693fd2d3e7f99558ade3b8450efde4fe62032d819eef05"
+}

@@ -1,115 +1,140 @@
 {
-  "note": "ESTIMATED narration windows (no voice yet). Regenerate with make-captions.mjs; mix-ep2.py reads this file.",
+  "note": "Narration windows from the measured Leda takes (timing.mjs TAKES/STARTS). Regenerate with make-captions.mjs; mix-ep2.py reads this file.",
+  "voiceDir": "audio/voice-leda-normal",
   "secPerThaiChar": 0.1064,
   "pauseSeconds": 0.25,
   "lines": [
     {
       "n": 1,
       "start": 0.3,
-      "end": 4.912,
       "text": "คืนนี้ฉันไม่รอแล้ว ฉันเดินเข้าประตูหลังเอง",
+      "end": 4.767,
       "eleven": "คืนนี้ฉันไม่รอแล้ว... ฉันเดินเข้าประตูหลังเอง",
       "thaiChars": 41,
-      "estSeconds": 4.612
+      "estSeconds": 4.612,
+      "voiceLead": 0,
+      "voiceSpeech": 4.467
     },
     {
       "n": 2,
-      "start": 5.462,
-      "end": 10.037,
+      "start": 5.46,
       "text": "หลังประตูเป็นทางเดินแคบ ๆ ไปถึงทางออกด้านหลัง",
+      "end": 9.743,
       "eleven": "หลังประตูเป็นทางเดินแคบ ๆ ไปถึงทางออกด้านหลัง",
       "thaiChars": 43,
-      "estSeconds": 4.575
+      "estSeconds": 4.575,
+      "voiceLead": 0.24,
+      "voiceSpeech": 4.283
     },
     {
       "n": 3,
-      "start": 10.537,
-      "end": 14.048,
+      "start": 10.35,
       "text": "ประตูเหล็กบานนั้น ฉันล็อกไว้ทุกคืน",
+      "end": 14.055,
       "eleven": "ประตูเหล็กบานนั้น ฉันล็อกไว้ทุกคืน",
       "thaiChars": 33,
-      "estSeconds": 3.511
+      "estSeconds": 3.511,
+      "voiceLead": 0.237,
+      "voiceSpeech": 3.705
     },
     {
       "n": 4,
-      "start": 14.398,
-      "end": 17.59,
+      "start": 14.4,
       "text": "ฉันลองหมุนกลอนดู มันยังล็อกแน่น",
+      "end": 17.635,
       "eleven": "ฉันลองหมุนกลอนดู มันยังล็อกแน่น",
       "thaiChars": 30,
-      "estSeconds": 3.192
+      "estSeconds": 3.192,
+      "voiceLead": 0.244,
+      "voiceSpeech": 3.235
     },
     {
       "n": 5,
-      "start": 18.04,
-      "end": 21.87,
+      "start": 17.95,
       "text": "โซ่ยังคล้องอยู่ บนฝุ่นมีแค่รอยเท้าฉัน",
+      "end": 22.733,
       "eleven": "โซ่ยังคล้องอยู่ บนฝุ่นมีแค่รอยเท้าฉัน",
       "thaiChars": 36,
-      "estSeconds": 3.83
+      "estSeconds": 3.83,
+      "voiceLead": 0.244,
+      "voiceSpeech": 4.783
     },
     {
       "n": 6,
-      "start": 22.37,
-      "end": 26.557,
+      "start": 23.05,
       "text": "ถ้าเขาไม่ได้เข้าทางนี้ แล้วเขามาจากไหน",
+      "end": 26.952,
       "eleven": "ถ้าเขาไม่ได้เข้าทางนี้... แล้วเขามาจากไหน",
       "thaiChars": 37,
-      "estSeconds": 4.187
+      "estSeconds": 4.187,
+      "voiceLead": 0.338,
+      "voiceSpeech": 3.902
     },
     {
       "n": 7,
-      "start": 27.457,
-      "end": 30.755,
+      "start": 27.35,
       "text": "ข้างทางเดินมีห้องจอกล้องวงจรปิด",
+      "end": 30.836,
       "eleven": "ข้างทางเดินมีห้องจอกล้องวงจรปิด",
       "thaiChars": 31,
-      "estSeconds": 3.298
+      "estSeconds": 3.298,
+      "voiceLead": 0.195,
+      "voiceSpeech": 3.486
     },
     {
       "n": 8,
-      "start": 31.205,
-      "end": 35.355,
+      "start": 31.15,
       "text": "ฉันย้อนภาพเมื่อคืน ตอนชายผ้าลับประตูหลัง",
+      "end": 35.898,
       "eleven": "ฉันย้อนภาพเมื่อคืน ตอนชายผ้าลับประตูหลัง",
       "thaiChars": 39,
-      "estSeconds": 4.15
+      "estSeconds": 4.15,
+      "voiceLead": 0.395,
+      "voiceSpeech": 4.748
     },
     {
       "n": 9,
-      "start": 35.805,
-      "end": 40.061,
+      "start": 36.2,
       "text": "ในจอ ผ้าขาวเข้ามาในทางเดินนี้ แล้วหยุดนิ่ง",
+      "end": 41.227,
       "eleven": "ในจอ ผ้าขาวเข้ามาในทางเดินนี้ แล้วหยุดนิ่ง",
       "thaiChars": 40,
-      "estSeconds": 4.256
+      "estSeconds": 4.256,
+      "voiceLead": 0.35,
+      "voiceSpeech": 5.027
     },
     {
       "n": 10,
-      "start": 40.661,
-      "end": 44.848,
+      "start": 41.55,
       "text": "ภาพกระตุกครั้งเดียว ทางเดินก็ว่างเปล่า",
+      "end": 45.151,
       "eleven": "ภาพกระตุกครั้งเดียว... ทางเดินก็ว่างเปล่า",
       "thaiChars": 37,
-      "estSeconds": 4.187
+      "estSeconds": 4.187,
+      "voiceLead": 0.282,
+      "voiceSpeech": 3.601
     },
     {
       "n": 11,
-      "start": 45.648,
-      "end": 48.84,
+      "start": 45.65,
       "text": "ฉันสลับไปดูภาพสดหน้าเคาน์เตอร์",
+      "end": 48.507,
       "eleven": "ฉันสลับไปดูภาพสดหน้าเคาน์เตอร์",
       "thaiChars": 30,
-      "estSeconds": 3.192
+      "estSeconds": 3.192,
+      "voiceLead": 0.233,
+      "voiceSpeech": 2.31
     },
     {
       "n": 12,
       "start": 49.34,
-      "end": 55.016,
       "text": "เหรียญที่ฉันวางไว้หายไป แล้วเครื่องแรกก็เริ่มหมุนเอง",
+      "end": 54.446,
       "eleven": "เหรียญที่ฉันวางไว้หายไป... แล้วเครื่องแรกก็เริ่มหมุนเอง",
       "thaiChars": 51,
-      "estSeconds": 5.676
+      "estSeconds": 5.676,
+      "voiceLead": 0.229,
+      "voiceSpeech": 5.106
     }
   ],
   "beats": {

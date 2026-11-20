@@ -109,15 +109,28 @@ def build(args):
     prev_end = 0.0
     for i, path in enumerate(clips):
         start = cues[i][0]
-        clip = decode(path)
+        line = timing['lines'][i] if i < len(timing.get('lines', [])) else {}
+        trim = 'voiceLead' in line and 'voiceSpeech' in line
+        tail = 0.15 if trim else 0.0
+
+        def take(tempo=1.0):
+            c = decode(path, tempo)
+            if trim:  # drop the take's silent head/tail so the onset lands on the caption start
+                a = max(0, int((line['voiceLead'] - 0.03) / tempo * SR))
+                c = c[a:a + int((line['voiceSpeech'] + 0.03 + tail) / tempo * SR)]
+            return c
+
+        shift = min(0.03, line['voiceLead']) if trim else 0.0
+        start -= shift
+        clip = take()
         dur = len(clip) / SR
         t = max(start, prev_end + 0.12)
         nxt = cues[i + 1][0] if i + 1 < len(cues) else DUR - 0.3
         tempo = 1.0
-        if t + dur > nxt - 0.1:
-            tempo = min(1.10, dur / max(0.5, nxt - 0.1 - t))
+        if t + dur - tail > nxt - 0.1:
+            tempo = min(1.10, (dur - tail) / max(0.5, nxt - 0.1 - t))
             if tempo > 1.0:
-                clip = decode(path, tempo)
+                clip = take(tempo)
                 dur = len(clip) / SR
         if args.even:
             mono = np.abs(clip).mean(axis=1)
@@ -128,8 +141,8 @@ def build(args):
         else:
             clip /= max(1e-9, np.abs(clip).max())
             place(voice, clip, t, 0.5, 0.005, 0.03)
-        prev_end = t + dur
-        report['voice'].append({'cue': i + 1, 'file': os.path.basename(path), 'start': round(t, 3),
+        prev_end = t + dur - tail
+        report['voice'].append({'cue': i + 1, 'file': os.path.basename(path), 'start': round(t + shift, 3),
                                 'end': round(t + dur, 3), 'tempo': round(tempo, 3), 'captionStart': start,
                                 'captionEnd': cues[i][1], 'overrunsCaption': round(t + dur - cues[i][1], 3)})
     report['scratch'] = not clips
@@ -189,6 +202,9 @@ def build(args):
                      f"glitch-tear@{beats['glitch']} (soft)", f"coin-slot@{beats['washerSlot'] - 0.4}",
                      f"washer-spin from {beats['washerMotor']}", 'dread-drone@17.5,34.5,50.5']
 
+    # The whole effects bus sits 40 % lower (user, 2026-11-21: narration first)
+    fx *= db(args.fx_db)
+    report['fxDb'] = args.fx_db
     # Room for the narration: duck every effect 6 dB inside each caption window
     pts = [(0, 0)]
     for a, b in cues:
@@ -216,6 +232,7 @@ def main():
     ap.add_argument('--voice-dir', help='folder with 01..12.mp3|wav (one per caption cue); omit for the scratch mix')
     ap.add_argument('--even', action='store_true', help='loudness-match voice lines and even the whole mix (as EP1 final)')
     ap.add_argument('--opening-fx-db', type=float, default=0.0)
+    ap.add_argument('--fx-db', type=float, default=-4.44, help='gain on the whole effects bus (-4.44 dB = 40 % lower amplitude)')
     args = ap.parse_args()
     mix, report = build(args)
     if args.even:

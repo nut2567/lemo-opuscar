@@ -2,7 +2,17 @@
 
 Second 60 s of the Snowy Neon Noon horror film, continuing straight from EP1's
 last line. 1080×1920, 30 fps, 60.000 s (1800 frames). Story and shot list:
-[`TREATMENT.md`](TREATMENT.md). **Status: scratch preview** — picture, Thai
+[`TREATMENT.md`](TREATMENT.md).
+
+**Update 2026-11-21: voiced.** Narration is Gemini Leda in a calm, normal (not
+whispered) voice, `audio/voice-leda-normal/01..12.wav`. `timing.mjs` now times
+captions from the measured takes (TAKES/STARTS; picture cuts unchanged, lines 5,
+8 and 9 run a few tenths over their cut) and `mix-ep2.py` trims each take to its
+speech and lowers the whole effects bus by 4.44 dB (40 %). Released render:
+`out/voiced-v2/horror-x-ep2-snowy-neon-noon-60s-voiced.mp4` (+ `.srt`). The text
+below describes the earlier scratch state.
+
+**Earlier status: scratch preview** — picture, Thai
 captions and local effects/ambience are done; the narration is not voiced yet,
 so caption and cut timings are estimates (see "Timing" below).
 
