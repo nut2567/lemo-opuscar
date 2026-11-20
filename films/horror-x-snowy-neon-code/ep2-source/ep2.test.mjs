@@ -38,9 +38,7 @@ test('no Part3 material: no dawn, name, embroidery or voice-behind beats', () =>
 });
 
 test('captions: SRT on disk == timing.mjs, 12 ordered cues, speech ends 54-56 s', () => {
-  const srt = fs.readFileSync(path.join(here, 'captions', 'ep2.srt'), 'utf8').replace(/
-/g, '
-');  // core.autocrlf may check it out as CRLF
+  const srt = fs.readFileSync(path.join(here, 'captions', 'ep2.srt'), 'utf8').split(String.fromCharCode(13)).join('');  // core.autocrlf may check it out as CRLF
   assert.equal(srt, toSrt(lineTimes()));
   const cues = parseSrt(srt);
   assert.ok(cues[0].start >= 0.2 && cues[0].start <= 0.5);
