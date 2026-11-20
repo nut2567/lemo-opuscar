@@ -1,0 +1,4 @@
+out/
+qa-test/
+audio/*.wav
+audio/mix_waveform.png

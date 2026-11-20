@@ -1,0 +1,13 @@
+rules-version: 2
+
+You are a worker in an Orca-routed assignment. The route is already selected: do not ask which agent/route to use, do not delegate recursively, do not spawn sub-workers. Work only inside `D:\workspace\lemo-opuscar\films\bat-rice-shadow-puppet\` and only on the files you own (listed below). Do not edit `core/`, `styles/`, other workers' files, or anything outside the film folder. Do not git commit (the lead commits). No paid APIs, no network installs.
+
+Read first: `films/bat-rice-shadow-puppet/CONTRACT.md` (binding interface), `styles/shadow-puppet/STYLE.md` (binding look), `films/bat-rice-shadow-puppet/carve.js` (carving toolkit you must use). You may read `styles/shadow-puppet/demo/*.js` for technique only (e.g. houyi.js shows a jointed puppet with rivets; scenery.js shows carved set pieces).
+
+Hard time box: **25 minutes**. Deliver a working first version early, then refine. When done, report via `orca orchestration worker_done` style completion as your Orca worker lifecycle instructs, with: files written, exported API, the verification command you ran and the path of the PNG/JPG sheet you produced, known limitations.
+
+# Task D — audio mix (shadow-theatre percussion/foley layer over the existing narration and music)
+Owned files: `audio/mix.py`, `audio/sfx/*`, `audio/mix.wav`, `audio/MIX.md`.
+Inputs (do not modify): `audio/narration.wav` (Thai Kore narration, 59.0 s, 48 kHz mono — the master clock), `audio/soundtrack.wav` (existing score, 59.0 s), shot times in CONTRACT.md.
+Target: `audio/mix.py` (python3, numpy/scipy/soundfile as available in `D:\workspace\lemo-opuscar\.venv` — run with `.venv\Scripts\python.exe`; you may import `core/audio/sfx.py` / `core/audio/sampler.py` helpers, read them first) that synthesises a small original shadow-theatre foley/percussion layer per STYLE.md §7: wooden clapper on 0.0 s (very soft, must not break the loop) and at shot 13 reveal (53.17 s) a big gong; small gong/woodblock hits on shot changes; a drum roll building through shot 08 storm (30.53–34.5) plus wind/rain hiss; rod-tap/leather flaps on 09–10 (flapping wings 40.2–45.1, quick flutter); a sad two-note pluck at 12 (49.97); no extra sound after 58.6 s that would not match the head (loop seam: last 0.15 s and first 0.15 s must have no percussion transient). Mix: narration 0 dB reference, soundtrack ducked so voice is ≥12 dB above bed while speaking, foley ~ -6 dB under voice. Output `audio/mix.wav`, 48 kHz stereo, exactly 59.000 s (2,832,000 samples), peak ≤ -1 dBFS. Do NOT loudness-normalise (the lead's mux does −14 LUFS).
+Verification: print duration/samples/peak; run `ffmpeg -i audio/mix.wav -af ebur128 -f null -` and paste I/LRA/peak into `audio/MIX.md` with the cue list (time → sound).

@@ -1,0 +1,315 @@
+{
+  "episode_id": "bat-rice",
+  "fps": 30,
+  "total_frames": 1770,
+  "tempo": 1.0,
+  "speech_end_frame": 1770,
+  "shots": [
+    {
+      "id": "01",
+      "kind": "hook",
+      "start_frame": 0,
+      "end_frame": 120,
+      "duration_frames": 120
+    },
+    {
+      "id": "02",
+      "kind": "awake",
+      "start_frame": 120,
+      "end_frame": 233,
+      "duration_frames": 113
+    },
+    {
+      "id": "03",
+      "kind": "plant",
+      "start_frame": 233,
+      "end_frame": 313,
+      "duration_frames": 80
+    },
+    {
+      "id": "04",
+      "kind": "first",
+      "start_frame": 313,
+      "end_frame": 433,
+      "duration_frames": 120
+    },
+    {
+      "id": "05",
+      "kind": "orders",
+      "start_frame": 433,
+      "end_frame": 615,
+      "duration_frames": 182
+    },
+    {
+      "id": "06",
+      "kind": "loft",
+      "start_frame": 615,
+      "end_frame": 754,
+      "duration_frames": 139
+    },
+    {
+      "id": "07",
+      "kind": "store",
+      "start_frame": 754,
+      "end_frame": 916,
+      "duration_frames": 162
+    },
+    {
+      "id": "08",
+      "kind": "storm",
+      "start_frame": 916,
+      "end_frame": 1035,
+      "duration_frames": 119
+    },
+    {
+      "id": "09",
+      "kind": "delivery",
+      "start_frame": 1035,
+      "end_frame": 1207,
+      "duration_frames": 172
+    },
+    {
+      "id": "10",
+      "kind": "heavy",
+      "start_frame": 1207,
+      "end_frame": 1354,
+      "duration_frames": 147
+    },
+    {
+      "id": "11",
+      "kind": "waiting",
+      "start_frame": 1354,
+      "end_frame": 1499,
+      "duration_frames": 145
+    },
+    {
+      "id": "12",
+      "kind": "stuck",
+      "start_frame": 1499,
+      "end_frame": 1595,
+      "duration_frames": 96
+    },
+    {
+      "id": "13",
+      "kind": "reveal",
+      "start_frame": 1595,
+      "end_frame": 1722,
+      "duration_frames": 127
+    },
+    {
+      "id": "14",
+      "kind": "return",
+      "start_frame": 1722,
+      "end_frame": 1770,
+      "duration_frames": 48
+    }
+  ],
+  "captions": [
+    {
+      "text": "ถ้าค้างคาววิวัฒนาการจนไม่ต้องนอน",
+      "startMs": 0.0,
+      "endMs": 2600.0,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "01"
+    },
+    {
+      "text": "จะเกิดอะไรขึ้น?",
+      "startMs": 2600.0,
+      "endMs": 4000.0,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "01"
+    },
+    {
+      "text": "มันมีเวลาว่างตอนกลางวัน",
+      "startMs": 4000.0,
+      "endMs": 5866.666666666667,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "02"
+    },
+    {
+      "text": "เลยตัดสินใจไปเป็นชาวนา",
+      "startMs": 5866.666666666667,
+      "endMs": 7766.666666666667,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "02"
+    },
+    {
+      "text": "กลางวันดำนา กลางคืนไล่แมลง",
+      "startMs": 7766.666666666667,
+      "endMs": 10433.333333333334,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "03"
+    },
+    {
+      "text": "ปีแรกเก็บเกี่ยวได้เต็มนา",
+      "startMs": 10433.333333333334,
+      "endMs": 12433.333333333334,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "04"
+    },
+    {
+      "text": "ชาวบ้านซื้อจนหมด เกลี้ยงยุ้ง!",
+      "startMs": 12433.333333333334,
+      "endMs": 14433.333333333334,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "04"
+    },
+    {
+      "text": "ปีต่อมาคนเลยสั่งข้าวทั้งหมู่บ้าน",
+      "startMs": 14433.333333333334,
+      "endMs": 17333.333333333332,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "05"
+    },
+    {
+      "text": "มันรีบขยายแปลง เตรียมรวยแล้วคราวนี้!",
+      "startMs": 17333.333333333332,
+      "endMs": 20500.0,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "05"
+    },
+    {
+      "text": "แต่ค้างคาวยังชอบอยู่ที่สูง",
+      "startMs": 20500.0,
+      "endMs": 22666.666666666668,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "06"
+    },
+    {
+      "text": "เลยสร้างยุ้งข้าวไว้บนต้นไม้!",
+      "startMs": 22666.666666666668,
+      "endMs": 25133.333333333332,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "06"
+    },
+    {
+      "text": "ขนขึ้นทีละรวง สะสมทั้งปี",
+      "startMs": 25133.333333333332,
+      "endMs": 27633.333333333332,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "07"
+    },
+    {
+      "text": "จนกระสอบข้าวเต็มยุ้ง รอส่งลูกค้า",
+      "startMs": 27633.333333333332,
+      "endMs": 30533.333333333332,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "07"
+    },
+    {
+      "text": "คืนก่อนส่ง พายุเข้าอย่างหนัก",
+      "startMs": 30533.333333333332,
+      "endMs": 32733.333333333332,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "08"
+    },
+    {
+      "text": "พัดบันไดหายไปทั้งอัน!",
+      "startMs": 32733.333333333332,
+      "endMs": 34500.0,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "08"
+    },
+    {
+      "text": "พอรถมารับ มันก็บินขึ้นไปทันที",
+      "startMs": 34500.0,
+      "endMs": 37166.666666666664,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "09"
+    },
+    {
+      "text": "แต่บินตัวเปล่า กับแบกข้าวมันคนละเรื่อง!",
+      "startMs": 37166.666666666664,
+      "endMs": 40233.333333333336,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "09"
+    },
+    {
+      "text": "มันกอดกระสอบ กระพือปีกสุดแรง",
+      "startMs": 40233.333333333336,
+      "endMs": 42766.666666666664,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "10"
+    },
+    {
+      "text": "ข้าวไม่ขยับ มีแต่ตัวเองที่หมุน!",
+      "startMs": 42766.666666666664,
+      "endMs": 45133.333333333336,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "10"
+    },
+    {
+      "text": "ชาวบ้านรอข้าวจนเย็น",
+      "startMs": 45133.333333333336,
+      "endMs": 47033.333333333336,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "11"
+    },
+    {
+      "text": "ได้ยินแต่เสียง เดี๋ยวก่อน ยังเอาลงไม่ได้!",
+      "startMs": 47033.333333333336,
+      "endMs": 49966.666666666664,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "11"
+    },
+    {
+      "text": "ข้าวที่ทำนามาทั้งปี เลยค้างอยู่ข้างบน",
+      "startMs": 49966.666666666664,
+      "endMs": 53166.666666666664,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "12"
+    },
+    {
+      "text": "จากค้างคาว ชาวบ้านเลยเรียกใหม่ว่า",
+      "startMs": 53166.666666666664,
+      "endMs": 56266.666666666664,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "13"
+    },
+    {
+      "text": "ค้างข้าว!",
+      "startMs": 56266.666666666664,
+      "endMs": 57400.0,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "13"
+    },
+    {
+      "text": "แล้วนี่ก็เป็นกรณีที่ว่า",
+      "startMs": 57400.0,
+      "endMs": 59000.0,
+      "timestampMs": null,
+      "confidence": null,
+      "shot": "14"
+    }
+  ],
+  "loop": {
+    "bridge_start_frame": 1722,
+    "bridge_end_frame": 1770,
+    "hook_start_frame": 0,
+    "body_phase_period_frames": 118.0
+  }
+}
