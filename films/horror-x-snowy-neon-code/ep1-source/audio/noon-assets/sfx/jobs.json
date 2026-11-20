@@ -1,0 +1,10 @@
+[
+ {"name":"room-tone","text":"quiet late-night laundromat room tone, low fluorescent light hum, faint neon sign buzz, distant muffled snowy street, no voices, no music","duration_seconds":30,"loop":true},
+ {"name":"exterior-neon","text":"neon sign electrical buzz and crackle outside a shop at night, soft winter wind, light snow, empty quiet street, no traffic, no voices","duration_seconds":6},
+ {"name":"rear-door","text":"an old interior back door slowly opening with a soft creak, quiet room","duration_seconds":2.5},
+ {"name":"soft-steps","text":"a woman's soft cloth slippers taking four quiet steps on a tiled floor, close, dry, no reverb tail","duration_seconds":2.5},
+ {"name":"washer-spin","text":"front-loading washing machine drum spinning steadily, low motor hum, water sloshing, seamless","duration_seconds":12,"loop":true},
+ {"name":"coin-slot","text":"a single coin pushed into a metal washing machine coin slot, click of the coin mechanism, then the machine starts with a clunk and motor whir","duration_seconds":3},
+ {"name":"cloth-rustle","text":"a long white bedsheet softly sliding and dragging across a tiled floor, quiet fabric rustle, no footsteps","duration_seconds":2.5},
+ {"name":"dread-drone","text":"subtle low eerie horror drone, slow tense atmosphere, very soft, no melody, no jump scare","duration_seconds":22}
+]

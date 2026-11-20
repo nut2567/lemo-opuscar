@@ -1,0 +1,31 @@
+{
+  "file": "D:\\workspace\\lemo-opuscar\\.agent-runs\\snowy-neon-noon-revision\\evidence\\06\\stem-60s.wav",
+  "sample_rate": 48000,
+  "window_ms": 0.5,
+  "threshold_lsb_rms": 400.0,
+  "tolerance_ms": 1.0,
+  "all_within_1ms": true,
+  "hits": [
+    {
+      "t": 21.58,
+      "expected_sample": 1035840,
+      "measured_onset_sample": 1035839,
+      "dev_ms": -0.021,
+      "within_1ms": true
+    },
+    {
+      "t": 21.82,
+      "expected_sample": 1047360,
+      "measured_onset_sample": 1047360,
+      "dev_ms": 0.0,
+      "within_1ms": true
+    },
+    {
+      "t": 22.06,
+      "expected_sample": 1058880,
+      "measured_onset_sample": 1058880,
+      "dev_ms": 0.0,
+      "within_1ms": true
+    }
+  ]
+}
