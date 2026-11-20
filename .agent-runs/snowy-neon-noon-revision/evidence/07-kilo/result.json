@@ -1,0 +1,56 @@
+{
+  "ok": false,
+  "status": "timeout",
+  "agent": "kilo-cli",
+  "task_id": "snowy-noon-07-review-verifiers",
+  "cwd": "D:\\workspace\\lemo-opuscar\\.agent-runs\\snowy-noon-07-review-verifiers\\kilo-cli",
+  "command": [
+    "kilo",
+    "run",
+    "Read request.txt and return only this bounded task; route already selected; do not delegate.",
+    "--agent",
+    "plan",
+    "--model",
+    "kilo/kilo-auto/free",
+    "--format",
+    "json",
+    "-f",
+    "D:\\workspace\\lemo-opuscar\\.agent-runs\\snowy-noon-07-review-verifiers\\kilo-cli\\request.txt"
+  ],
+  "model": "kilo/kilo-auto/free",
+  "attempts": [
+    {
+      "attempt": 1,
+      "outcome": "timeout",
+      "returncode": null,
+      "elapsed_seconds": 120.084189,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\PHP022025\\.config\\herd\\bin\\nvm\\v24.22.3\\node_modules\\@kilocode\\cli\\bin\\kilo",
+        "run",
+        "Read request.txt and return only this bounded task; route already selected; do not delegate.",
+        "--agent",
+        "plan",
+        "--model",
+        "kilo/kilo-auto/free",
+        "--format",
+        "json",
+        "-f",
+        "D:\\workspace\\lemo-opuscar\\.agent-runs\\snowy-noon-07-review-verifiers\\kilo-cli\\request.txt"
+      ],
+      "request_attempted": true,
+      "stdout_file": "raw-response-1.txt",
+      "stderr_file": "raw-stderr-1.txt",
+      "reported_model": {
+        "providerID": "kilo",
+        "modelID": "dots-studio/dots-3-note-preview:free"
+      },
+      "reported_cost": 0
+    }
+  ],
+  "access": "free",
+  "mode": "plan",
+  "dispatch_id": "1668d6d4132b49a0b8d16fd857d76d0b",
+  "error": "CLI attempt ended with timeout",
+  "pool_status": "available"
+}

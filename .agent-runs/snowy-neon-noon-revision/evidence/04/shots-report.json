@@ -1,0 +1,30 @@
+[
+  {
+    "seconds": 21.3,
+    "name": "coin-macro-falling",
+    "file": "coin-macro-falling.png",
+    "sha256": "1065a6ea05b4cc955062b8e640646b0ff2340e4d72515fd5ff5dabc6bcdd72c4",
+    "deterministic": true
+  },
+  {
+    "seconds": 21.82,
+    "name": "coin-macro-impact",
+    "file": "coin-macro-impact.png",
+    "sha256": "462fe533fecd73b7e5f833dddfa7f2bb899d421113c1ba543432cf8dbd53868b",
+    "deterministic": true
+  },
+  {
+    "seconds": 22.05,
+    "name": "coin-macro-settle",
+    "file": "coin-macro-settle.png",
+    "sha256": "77ef155f0caa8259d163592f5f7e597dfca5723c03db0c3c0b20d5e5fb109f12",
+    "deterministic": true
+  },
+  {
+    "seconds": 23.5,
+    "name": "coin-macro-quiet",
+    "file": "coin-macro-quiet.png",
+    "sha256": "f6c4b66ca44885e4cdc5f8857ff3c52610da04965ff123a8f3a2123da6604768",
+    "deterministic": true
+  }
+]

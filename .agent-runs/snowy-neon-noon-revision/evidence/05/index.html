@@ -1,0 +1,13 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>rear-entry spec05 stills</title>
+<body style="margin:0;background:#000">
+<div id="stage"></div>
+<script type="module">
+  import { rearEntrySvg } from '/films/horror-x-snowy-neon-code/ep1-source/noon/rear-entry.mjs';
+  window.renderShot = (local, seconds = 200 + local) => {
+    document.getElementById('stage').innerHTML = rearEntrySvg({ local, duration: 2.68, seconds });
+    return document.querySelector('#stage svg')?.outerHTML.length ?? 0;
+  };
+  window.READY = true;
+</script>

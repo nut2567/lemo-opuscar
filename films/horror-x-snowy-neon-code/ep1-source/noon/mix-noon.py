@@ -22,8 +22,16 @@ VOICE = os.path.join(SRC, 'audio', 'noon-assets', 'voice')
 SFX = os.path.join(SRC, 'audio', 'noon-assets', 'sfx')
 
 
-def decode(path, tempo=1.0):
-    af = ['-af', f'atempo={tempo:.4f}'] if abs(tempo - 1) > 1e-4 else []
+TONE = {'af': None}   # set by --tone low: extra ffmpeg filters for every source
+
+
+def decode(path, tempo=1.0, kind='sfx'):
+    chain = []
+    if abs(tempo - 1) > 1e-4:
+        chain.append(f'atempo={tempo:.4f}')
+    if TONE['af']:
+        chain.append(TONE['af'][kind])
+    af = ['-af', ','.join(chain)] if chain else []
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', path, *af, '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'],
                          check=True, capture_output=True).stdout
     return np.frombuffer(raw, dtype='<f4').reshape(-1, 2).astype(np.float64)
@@ -75,7 +83,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', required=True)
     ap.add_argument('--report')
+    ap.add_argument('--tone', choices=['normal', 'low'], default='normal',
+                    help='low: pitch every source down (rubberband, timing kept) and darken the top end')
+    ap.add_argument('--voice-dir', default='voice',
+                    help="folder under audio/noon-assets with 01..12.mp3 (voice = first take, voice-whisper = all lines whispered)")
+    ap.add_argument('--opening-fx-db', type=float, default=0.0,
+                    help='gain for ALL effects during the opening 0-11 s (ramps back by 11.8 s); -6 = half, so the narration is not masked')
+    ap.add_argument('--even', action='store_true',
+                    help='level each voice line by loudness (not peak) and even the whole mix (compressor + LRA-limited loudnorm)')
     args = ap.parse_args()
+    if args.tone == 'low':
+        TONE['af'] = {
+            # voice: -3 semitones, formants kept so she stays a woman, softer highs, a little low-mid body
+            'voice': 'rubberband=pitch=0.8409:formant=preserved,lowpass=f=6500,bass=g=3:f=180',
+            # effects / clinks: -4 semitones and darker
+            'sfx': 'rubberband=pitch=0.7937,lowpass=f=5000',
+        }
     report = {'voice': [], 'sfx': []}
 
     # ---- narration --------------------------------------------------------
@@ -83,8 +106,8 @@ def main():
     cues = srt_cues(os.path.join(SRC, 'captions', 'jessica.srt'))
     prev_end = 0.0
     for i, (start, _end) in enumerate(cues):
-        path = os.path.join(VOICE, f'{i + 1:02d}.mp3')
-        clip = decode(path)
+        path = os.path.join(SRC, 'audio', 'noon-assets', args.voice_dir, f'{i + 1:02d}.mp3')
+        clip = decode(path, kind='voice')
         dur = len(clip) / SR
         t = max(start, prev_end + 0.12)
         nxt = cues[i + 1][0] if i + 1 < len(cues) else DUR - 0.3
@@ -92,10 +115,19 @@ def main():
         if t + dur > nxt - 0.1:
             tempo = min(1.10, dur / max(0.5, nxt - 0.1 - t))
             if tempo > 1.0:
-                clip = decode(path, tempo)
+                clip = decode(path, tempo, kind='voice')
                 dur = len(clip) / SR
-        clip /= max(1e-9, np.abs(clip).max())
-        place(voice, clip, t, 0.5, 0.005, 0.03)
+        if args.even:
+            # same loudness for every line: RMS over the voiced part (gate -45 dBFS)
+            mono = np.abs(clip).mean(axis=1)
+            active = clip[mono > db(-45) * mono.max()]
+            rms = np.sqrt((active ** 2).mean()) if len(active) else 1e-9
+            clip *= db(-20) / max(1e-9, rms)
+            clip = np.tanh(clip * 1.4) / 1.4        # soft-clip the odd loud syllable
+            place(voice, clip, t, 1.0, 0.005, 0.03)
+        else:
+            clip /= max(1e-9, np.abs(clip).max())
+            place(voice, clip, t, 0.5, 0.005, 0.03)
         prev_end = t + dur
         report['voice'].append({'cue': i + 1, 'start': round(t, 3), 'end': round(t + dur, 3), 'tempo': round(tempo, 3),
                                 'captionStart': start})
@@ -139,7 +171,33 @@ def main():
                      'coin-slot@32.35', 'cloth-rustle@40.80', 'dread-drone@24.6,38.0',
                      'coin-clink.py @21.58/21.82/22.06 (+53.95 decision coin)']
 
+    if args.opening_fx_db:
+        fx *= envelope([(0, args.opening_fx_db), (11.0, args.opening_fx_db), (11.8, 0), (60, 0)])
+        report['openingFxDb'] = args.opening_fx_db
     mix = voice + fx
+    if args.even:
+        # Even the whole clip: write the raw mix, then compressor + LRA-limited
+        # loudnorm in ffmpeg so quiet and loud passages sit at one level.
+        import wave
+        raw = args.out + '.raw.wav'
+        pre = mix / max(1e-9, np.abs(mix).max()) * 0.7
+        with wave.open(raw, 'wb') as w:
+            w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
+            w.writeframes((np.clip(pre, -1, 1) * 32767).astype('<i2').tobytes())
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', raw, '-af',
+                        'acompressor=threshold=-26dB:ratio=3.5:attack=15:release=300:makeup=2,'
+                        'dynaudnorm=f=400:g=15:m=6:p=0.9,'
+                        'loudnorm=I=-16:TP=-1.5:LRA=4,aresample=48000',
+                        '-ar', str(SR), '-ac', '2', '-c:a', 'pcm_s16le', args.out], check=True)
+        os.remove(raw)
+        out = decode(args.out)
+        report.update({'tone': args.tone, 'even': True, 'duration': len(out) / SR,
+                       'peakDbfs': round(20 * np.log10(max(1e-9, np.abs(out).max())), 2),
+                       'rmsDbfs': round(20 * np.log10(max(1e-9, np.sqrt((out ** 2).mean()))), 2)})
+        if args.report:
+            json.dump(report, open(args.report, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+        print(json.dumps({k: report[k] for k in ('tone', 'even', 'duration', 'peakDbfs', 'rmsDbfs')}))
+        return
     peak = np.abs(mix).max()
     if peak > 0.89:
         mix *= 0.89 / peak
