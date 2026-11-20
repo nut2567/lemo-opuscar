@@ -1,0 +1,102 @@
+{
+  "input": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\out\\bat-rice-shadow-puppet.mp4",
+  "checks": {
+    "resolution": {
+      "ok": true,
+      "value": "1080x1920",
+      "detail": "expect 1080x1920"
+    },
+    "fps": {
+      "ok": true,
+      "value": 24.0,
+      "detail": "expect 24"
+    },
+    "duration": {
+      "ok": true,
+      "value": 59.0,
+      "detail": "expect 59.0±0.05"
+    },
+    "frames": {
+      "ok": true,
+      "value": 1416,
+      "detail": "expect ~1416"
+    },
+    "audio_present": {
+      "ok": true,
+      "value": "aac",
+      "detail": null
+    },
+    "audio_codec": {
+      "ok": true,
+      "value": "aac",
+      "detail": null
+    },
+    "audio_sample_rate": {
+      "ok": true,
+      "value": 48000,
+      "detail": "expect 48000"
+    },
+    "decode": {
+      "ok": true,
+      "value": 0,
+      "detail": "clean"
+    },
+    "black_frames": {
+      "ok": true,
+      "value": "0 black interval(s)",
+      "detail": ""
+    },
+    "loudness": {
+      "ok": true,
+      "value": -14.0,
+      "detail": "expect -14.0±1.0 LUFS"
+    },
+    "silence": {
+      "ok": true,
+      "value": "0 gap(s) in 0.3-58.7s",
+      "detail": ""
+    },
+    "loop_seam": {
+      "ok": true,
+      "value": 13.63,
+      "detail": "mean abs RGB diff first vs last frame"
+    },
+    "contact_sheet": {
+      "ok": true,
+      "value": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\contact.jpg",
+      "detail": null
+    },
+    "cut_frames": {
+      "ok": true,
+      "value": "14/14",
+      "detail": null
+    }
+  },
+  "limitations": [
+    "loop_seam threshold (20 mean-abs-RGB) and blackdetect pix_th are heuristics, not calibrated to this film's grade; review contact.jpg/cut-XX.jpg visually."
+  ],
+  "files": {
+    "qa_json": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\QA.json",
+    "contact": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\contact.jpg",
+    "cuts": [
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-01.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-02.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-03.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-04.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-05.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-06.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-07.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-08.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-09.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-10.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-11.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-12.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-13.jpg",
+      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-14.jpg"
+    ]
+  },
+  "summary": {
+    "hard_fail": [],
+    "soft_missing": []
+  }
+}
