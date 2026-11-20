@@ -1,0 +1,26 @@
+[
+  {
+    "seconds": 14.47,
+    "progress": 0,
+    "name": "washer-row-p0",
+    "file": "washer-row-p0.png",
+    "sha256": "e49231bff8fbf4587392ae5b35389bbf16f419e93e9e196b711c95ca6a4b958e",
+    "deterministic": true
+  },
+  {
+    "seconds": 15.86,
+    "progress": 0.5,
+    "name": "washer-row-p05",
+    "file": "washer-row-p05.png",
+    "sha256": "d40a6317292ea659f25265399d4d6a2fb3546a269967cf964daf736d46fca0e7",
+    "deterministic": true
+  },
+  {
+    "seconds": 17.25,
+    "progress": 1,
+    "name": "washer-row-p1",
+    "file": "washer-row-p1.png",
+    "sha256": "3d9efe238bea636a4c69a52e69195624e7b8786bbd173d9516babbfd61a8fdb3",
+    "deterministic": true
+  }
+]

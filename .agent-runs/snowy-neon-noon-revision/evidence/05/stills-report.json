@@ -1,0 +1,23 @@
+{
+  "errors": [],
+  "stills": [
+    {
+      "file": "rear-entry-local-0.4.png",
+      "local": 0.4,
+      "sha256": "8b0e57920e1039f4b7a9c51145ec8bdd5e6d978e14ee351f2ab38f486c4237ef",
+      "deterministic": true
+    },
+    {
+      "file": "rear-entry-local-1.4.png",
+      "local": 1.4,
+      "sha256": "0081ecb3d0956238c3449d809eedb712eca0690013d4630734ac36a51b45e247",
+      "deterministic": true
+    },
+    {
+      "file": "rear-entry-local-2.5.png",
+      "local": 2.5,
+      "sha256": "1bf3d47b068222d0afc0b59bec70422dad2abf77f11e3fdd417a3cfd489dc346",
+      "deterministic": true
+    }
+  ]
+}

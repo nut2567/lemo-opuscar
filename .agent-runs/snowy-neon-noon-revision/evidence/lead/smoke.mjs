@@ -1,0 +1,10 @@
+import { openDemo, closeServer } from '../../../../core/render/page.mjs';
+import path from 'node:path'; import { fileURLToPath } from 'node:url';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const demo = path.resolve(here, '../../../../films/horror-x-snowy-neon-code');
+const { browser, page } = await openDemo(demo, { w: 1080, h: 1920, warnings: true });
+const errs=[]; page.on('pageerror',e=>errs.push(e.message));
+const meta = await page.evaluate(() => window.render(3.7));
+await page.screenshot({ path: path.join(here, 'smoke-highlight-3.7.png') });
+console.log(JSON.stringify({ model: meta.characterModel, layers: meta.layers, errs }));
+await browser.close(); closeServer();

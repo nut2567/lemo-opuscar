@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><canvas id="a" width="1080" height="1920"></canvas><canvas id="b" width="1080" height="1920"></canvas>
+<script type="module">
+import {drawEnvironment,drawFrontGlazing} from '/films/horror-x-snowy-neon-code/environment.mjs';
+const A=document.getElementById('a').getContext('2d'),B=document.getElementById('b').getContext('2d');
+window.cmp=t=>{A.clearRect(0,0,1080,1920);B.clearRect(0,0,1080,1920);
+ drawEnvironment(A,t,0);drawEnvironment(B,t,0,{glazing:false});drawFrontGlazing(B,t);
+ const a=A.getImageData(0,0,1080,1920).data,b=B.getImageData(0,0,1080,1920).data;let s=0,m=0,n=0;
+ for(let i=0;i<a.length;i+=4)for(let c=0;c<3;c++){const d=Math.abs(a[i+c]-b[i+c]);s+=d;if(d>m)m=d;if(d>8)n++;}
+ return {mean:s/(a.length/4*3),max:m,over8:n};};
+window.READY=true;
+</script>
