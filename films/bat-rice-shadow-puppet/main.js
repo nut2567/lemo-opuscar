@@ -4,9 +4,9 @@ import { makeGL } from './gl.js';
 import { canvas, DYE, piece, drawPiece, fill, smooth, waves, within, ink } from './carve.js';
 import { clamp, lerp, seg, ss, eio, eo, back, vnoise } from '/core/lib.js';
 
-const qs = new URLSearchParams(location.search);
+const qs = new URLSearchParams(location.search), ONLY = qs.get('only');
 const W = 1080, H = 1920, GY = 1400, DUR = 59.0;
-const [trc, tr] = canvas(W, H), [frc, fr] = canvas(W, H);
+const [trc, tr] = canvas(W, H), [frc, fr] = canvas(W, H), [hrc, hr] = canvas(W, H);   // hr = hero layer: the bat, opaque, in front of every other puppet and set piece
 const GL = makeGL(document.getElementById('gl'));
 const E = (t, a, b) => ss(seg(t, a, b));
 const pulse = (t, a, b) => Math.sin(Math.PI * seg(t, a, b));
@@ -39,14 +39,30 @@ const REVEAL = (SUBS.find(c => c.text.includes('ค้างข้าว')) || {
 const shotAt = t => SH.find(s => t >= s.t0 && t < s.t1) || SH[SH.length - 1];
 const S = Object.fromEntries(SH.map(s => [s.kind, s]));
 
-// ---------- lamps: the light is the clock (day = four lamps, night = one) ----------
+// ---------- lamps: the light is the clock (day = four warm lamps on a cream cloth, night = one moon lamp on a blue sky) ----------
 const DAY = [[250, 520], [830, 520], [250, 1280], [830, 1280]];
-function lampSet(t, tt, level, gutter = 0) {   // level 1..4 (fractional fades the next lamp)
-  return DAY.map(([x, y], k) => {
-    const on = clamp(level - k, 0, 1) * (k === 0 ? 1 : 1);
-    const fl = 1 + .07 * (vnoise(tt * 7 + k * 13) - .5) * 2 + .03 * Math.sin(tt * 23 + k) + gutter * .45 * (vnoise(tt * 19 + k * 5) - .5) * 2;
-    return [k === 0 && level <= 1.05 ? 540 : x, k === 0 && level <= 1.05 ? 700 : y, Math.max(0, on * fl), .95];
-  });
+function lampSet(t, tt, level, gutter = 0, night = 0, moon = [760, 330]) {   // level 1..4 = day lamps lit (fractional fades the next one)
+  const fl = k => 1 + .07 * (vnoise(tt * 7 + k * 13) - .5) * 2 + .03 * Math.sin(tt * 23 + k) + gutter * .45 * (vnoise(tt * 19 + k * 5) - .5) * 2;
+  const L = DAY.map(([x, y], k) => [x, y, Math.max(0, clamp(level - k, 0, 1) * fl(k) * (1 - night)), .95]);
+  L.push([moon[0], moon[1], Math.max(0, 1.3 * night * fl(4)), .95]);
+  return L;
+}
+// grade: every value is a blend of the day look and the night look by `night` (0..1); `storm` greys the night and hides the stars
+const mix3 = (a, b, k) => a.map((v, i) => lerp(v, b[i], k));
+const GRADE = {
+  day:   { lcol: [1, .9, .74],  hotcol: [1, .9, .62],  skyTop: [1, 1, 1],       skyBot: [1, 1, 1],       vcol: [.7, .47, .25],  bcol: [1, .82, .6], bloom: .07 },
+  night: { lcol: [.8, .88, 1],  hotcol: [1, .95, .8],  skyTop: [.10, .20, .62], skyBot: [.34, .50, .95], vcol: [.22, .32, .62], bcol: [.7, .8, 1],  bloom: .26 },
+  storm: { lcol: [.8, .86, .95], hotcol: [.9, .92, 1], skyTop: [.13, .18, .36], skyBot: [.30, .38, .58], vcol: [.2, .25, .4],   bcol: [.7, .78, .9], bloom: .2 },
+};
+const dayExpo = n => .47 * 1.75 / Math.sqrt(n) * lerp(.6, 1, clamp((n - 1) / 2, 0, 1));
+function grade(o) {
+  const n = clamp(o.night || 0, 0, 1), st = clamp(o.storm || 0, 0, 1), N = {}, g = {};
+  for (const k of ['lcol', 'hotcol', 'skyTop', 'skyBot', 'vcol', 'bcol']) { N[k] = mix3(GRADE.night[k], GRADE.storm[k], st); g[k] = mix3(GRADE.day[k], N[k], n); }
+  g.bloom = lerp(GRADE.day.bloom, lerp(GRADE.night.bloom, GRADE.storm.bloom, st), n);
+  g.expo = lerp(dayExpo(Math.max(1, o.lamps)), 1.1, n);
+  g.stars = .85 * clamp((n - .45) / .55, 0, 1) * (1 - st);
+  g.heroKey = lerp(.6, .9, n); g.halo = lerp(.7, .5, n);
+  return g;
 }
 
 // ---------- the bat's loop pose (shot 01 at tau = t, shot 14 at tau = t - 59: continuous through the wrap) ----------
@@ -61,17 +77,17 @@ const flap = (tt, speed = 9) => .5 + .5 * Math.sin(tt * speed);
 // ---------- scene description per time ----------
 function scene(t) {
   const sh = shotAt(t), u = seg(t, sh.t0, sh.t1);
-  const o = { lamps: 4, gutter: 0, sky: null, field: { grow: .8, gold: 0, wind: 0 }, tree: null, house: false, rain: 0, bugs: null, bats: [], vill: [], truck: null, sacks: [], plaque: null, cam: [540, 960, 1], tt: t, frame: 0 };
+  const o = { lamps: 4, night: 0, storm: 0, gutter: 0, sky: null, field: { grow: .8, gold: 0, wind: 0 }, tree: null, house: false, rain: 0, bugs: null, bats: [], vill: [], truck: null, sacks: [], plaque: null, cam: [540, 960, 1], tt: t, frame: 0 };
   const bat = (p) => o.bats.push(p);
   switch (sh.kind) {
     case 'hook': case 'return': {
       const tau = sh.kind === 'hook' ? t : t - DUR; o.tt = tau;
-      o.lamps = 1.6; o.sky = { kind: 'moon', x: 760, y: 330, s: 1 }; o.field = { grow: .55, gold: 0, wind: .15 };
+      o.night = 1; o.sky = { kind: 'moon', x: 760, y: 330, s: 1 }; o.field = { grow: .55, gold: 0, wind: .15 };
       bat(hookBat(tau)); o.cam = [540, 1010, 1.06]; o.frame = 1; break;
     }
     case 'awake': {
       const l = t - sh.t0;
-      o.lamps = lerp(1.6, 4, E(t, sh.t0 + .3, sh.t0 + 2.0));
+      o.night = 1 - E(t, sh.t0 + .3, sh.t0 + 2.0);
       o.sky = l < 1.1 ? { kind: 'moon', x: 760, y: 330 - 400 * E(t, sh.t0 + .3, sh.t0 + 1.1), s: 1 } : { kind: 'sun', x: 300, y: 330 + 400 * (1 - back(seg(t, sh.t0 + 1.2, sh.t0 + 1.8), 1.3)), s: 1 };
       o.field = { grow: .55, gold: 0, wind: .1 };
       const hat = l > 2.0, idea = E(t, sh.t0 + 2.4, sh.t0 + 2.8);
@@ -80,7 +96,7 @@ function scene(t) {
     }
     case 'plant': {
       const night = E(t, 9.15, 9.45);
-      o.lamps = lerp(4, 1, night); o.sky = night < .5 ? { kind: 'sun', x: 300, y: 330, s: 1 } : { kind: 'moon', x: 760, y: 330, s: 1 };
+      o.night = night; o.sky = night < .5 ? { kind: 'sun', x: 300, y: 330, s: 1 } : { kind: 'moon', x: 760, y: 330, s: 1 };
       o.field = { grow: lerp(.12, .3, u), gold: 0, wind: .05 };
       if (night < .5) { const dip = .5 + .5 * Math.sin((t - sh.t0) * 7); bat({ x: lerp(260, 620, seg(t, sh.t0, 9.3)), y: GY + 10, s: 1.15, flip: 1, wingL: .15, wingR: .2 + .2 * dip, rot: .28 + .12 * dip, hat: true, hold: 'seedling' }); }
       else { const tt = t - 9.3; bat({ x: 540 + 220 * Math.sin(tt * 2.4), y: 1040 + 90 * Math.sin(tt * 4.1), s: 1.15, flip: Math.cos(tt * 2.4) > 0 ? 1 : -1, wingL: flap(t, 26), wingR: flap(t, 26), hat: true, rot: -.15, eyes: 'wide' });
@@ -126,23 +142,23 @@ function scene(t) {
     case 'store': {
       // a year passes: day/night alternate with each trip; sacks fill up
       const trips = 3, tp = (t - sh.t0) / (sh.t1 - sh.t0) * trips, k = Math.floor(tp), f = tp - k;
-      const night = k % 2 === 1;
-      o.lamps = night ? 1.3 : 4; o.sky = night ? { kind: 'moon', x: 300, y: 330 } : { kind: 'sun', x: 300, y: 330 };
-      o.field = { grow: 1, gold: night ? .6 : .9, wind: .15 };
+      const nf = k % 2 === 1 ? Math.min(E(f, 0, .15), 1 - E(f, .85, 1)) : 0, night = nf > .5;   // the night trip fades in and out instead of snapping
+      o.night = nf; o.sky = night ? { kind: 'moon', x: 300, y: 330 } : { kind: 'sun', x: 300, y: 330 };
+      o.field = { grow: 1, gold: lerp(.9, .6, nf), wind: .15 };
       o.tree = { x: 820, s: 1, t, ladder: 1, sacks: Math.min(6, Math.round(k * 2 + E(f, .55, .7) * 2)) };
       const up = f < .5 ? eio(f / .5) : 1 - eio((f - .5) / .5), a = [220, GY - 40], b = [G.x - 40, G.y + 20];
       bat({ x: lerp(a[0], b[0], up), y: lerp(a[1], b[1], up) - 120 * Math.sin(up * Math.PI), s: .95, flip: f < .5 ? 1 : -1, hat: true, hold: f < .5 ? 'stalk' : null, wingL: flap(t, 24), wingR: flap(t, 24), rot: -.15 });
       o.cam = [540, 900, 1.0]; break;
     }
     case 'storm': {
-      o.lamps = 2.2; o.gutter = 1; o.rain = 1; o.sky = null; o.field = { grow: 1, gold: .5, wind: 1 };
+      o.night = 1; o.storm = 1; o.gutter = 1; o.rain = 1; o.sky = null; o.field = { grow: 1, gold: .5, wind: 1 };
       const blow = E(t, 32.1, 33.9);
       o.tree = { x: 820, s: 1, t, sway: 1, ladder: 1, sacks: 6, ladderX: 700 * blow, ladderY: -260 * Math.sin(blow * Math.PI), ladderRot: 2.6 * blow };
       const sh2 = (vnoise(t * 13) - .5) * 14;
       o.cam = [540 + sh2, 900 + sh2 * .6, 1.02]; break;
     }
     case 'delivery': {
-      o.lamps = 3.6; o.sky = { kind: 'sun', x: 280, y: 330 }; o.field = { grow: .3, gold: 0, wind: .05 };
+      o.lamps = 3.6; o.night = 1 - E(t, sh.t0, sh.t0 + .8); o.sky = { kind: 'sun', x: 280, y: 330 }; o.field = { grow: .3, gold: 0, wind: .05 };
       o.tree = { x: 820, s: 1, t, ladder: 0, sacks: 6 };
       const drive = E(t, sh.t0, sh.t0 + 2.0);
       o.truck = { x: lerp(-400, 260, drive), y: GY + 10, s: .9, flip: 1, wheel: drive * 14 };
@@ -158,14 +174,14 @@ function scene(t) {
       const sx = G.x + 30, sy = G.y + 30, spin = E(t, 42.4, 44.4), l = t - sh.t0;
       o.sacks.push({ x: sx, y: sy, s: 1.05, rot: .02 * Math.sin(t * 30) * (1 - spin), squash: .05 * Math.abs(Math.sin(t * 18)) });
       const ang = spin * Math.PI * 4;
-      bat({ x: sx - 70 * Math.cos(ang), y: sy - 40 - 40 * Math.sin(ang) - 25 * Math.abs(Math.sin(t * 13)) * (1 - spin), s: .95, flip: Math.cos(ang) >= 0 ? 1 : -1, hat: true,
-        wingL: flap(t, 34), wingR: flap(t, 34), rot: ang * .5 + .2, eyes: t > 44.2 ? 'dizzy' : 'wide', dizzy: E(t, 44.0, 44.4), dz: t });
+      bat({ x: sx - 150 * Math.cos(ang), y: sy - 70 - 85 * Math.sin(ang) - 25 * Math.abs(Math.sin(t * 13)) * (1 - spin), s: .8, flip: Math.cos(ang) >= 0 ? 1 : -1, hat: true,
+        wingL: .3 + .4 * Math.abs(Math.sin(t * 17)), wingR: .3 + .4 * Math.abs(Math.sin(t * 17 + .6)), rot: ang * .5 + .2, eyes: t > 44.2 ? 'dizzy' : 'wide', dizzy: E(t, 44.0, 44.4), dz: t });
       const crash = back(seg(t, sh.t0, sh.t0 + .2), 1.4);
-      o.cam = [G.x + 10, G.y + 10, lerp(1.4, 2.1, crash) + .05 * Math.sin(spin * Math.PI)]; break;
+      o.cam = [G.x - 20, G.y - 20, lerp(1.3, 1.75, crash) + .05 * Math.sin(spin * Math.PI)]; break;
     }
     case 'waiting': {
       const eve = E(t, sh.t0, sh.t1);
-      o.lamps = lerp(3.6, 2.0, eve); o.sky = { kind: 'sun', x: 470, y: lerp(400, 860, eve) };
+      o.lamps = lerp(3.6, 2.6, eve); o.night = .8 * E(t, 46.6, sh.t1); o.sky = { kind: 'sun', x: 470, y: lerp(400, 860, eve) };
       o.field = { grow: .3, gold: 0 }; o.tree = { x: 820, s: 1, t, ladder: 0, sacks: 6 };
       o.truck = { x: 260, y: GY + 10, s: .9, flip: 1 };
       o.vill.push({ x: 110, y: GY + 10, s: .95, flip: 1, kind: 0, hold: 'watch', armF: lerp(-.3, -1.4, E(t, sh.t0 + .3, sh.t0 + .8)), head: .15 });
@@ -175,7 +191,7 @@ function scene(t) {
       o.cam = [540, 930, 1.02]; break;
     }
     case 'stuck': {
-      o.lamps = 1.7; o.sky = { kind: 'moon', x: 300, y: 380 }; o.field = { grow: .3, gold: 0 };
+      o.night = 1; o.sky = { kind: 'moon', x: 300, y: 380 }; o.field = { grow: .3, gold: 0 };
       o.tree = { x: 820, s: 1, t, ladder: 0, sacks: 6 };
       o.truck = { x: 260, y: GY + 10, s: .9, flip: 1 };
       o.vill.push({ x: 110, y: GY + 10, s: .95, flip: 1, kind: 0, head: -.35, armF: -.1 });
@@ -184,7 +200,7 @@ function scene(t) {
       o.cam = [lerp(G.x, 540, pull), lerp(G.y + 40, 980, pull), lerp(1.9, 1.0, pull)]; break;
     }
     case 'reveal': {
-      o.lamps = 3; o.sky = { kind: 'sun', x: 150, y: 640 }; o.field = { grow: .6, gold: .2, wind: .1 };
+      o.lamps = 3; o.night = 1 - E(t, sh.t0, sh.t0 + 1.0); o.sky = { kind: 'sun', x: 150, y: 640 }; o.field = { grow: .6, gold: .2, wind: .1 };
       o.tree = { x: 820, s: 1, t, ladder: 0, sacks: 6 };
       bat({ x: 400, y: GY + 10, s: 1.1, flip: 1, hat: true, wingL: .3, wingR: .75 + .1 * Math.sin(t * 10), ears: -.6, rot: .05, eyes: 'open' });
       o.vill.push({ x: 150, y: GY + 10, s: .95, flip: 1, kind: 0, armF: -2.3, head: -.3 });
@@ -203,6 +219,10 @@ function camClamp(c) { if (c[2] >= 1) { c[0] = clamp(c[0], 540 / c[2], W - 540 /
 function render(t) {
   t = clamp(t, 0, DUR - 1e-6);
   const o = scene(t), tt = o.tt;
+  if (ONLY) {   // QA layer isolation (qa/look_check.py): ?only=bat keeps the bat alone on the lit cloth, ?only=none the bare cloth, ?only=set everything but the bat
+    if (ONLY !== 'bat') o.bats = [];
+    if (ONLY !== 'set') { o.sky = null; o.house = false; o.tree = null; o.field = null; o.apron = false; o.truck = null; o.vill = []; o.papers = 0; o.sacks = []; o.bugs = null; o.rain = 0; o.plaque = null; }
+  }
   tr.setTransform(1, 0, 0, 1, 0, 0); tr.globalCompositeOperation = 'source-over'; tr.globalAlpha = 1; tr.filter = 'none';
   tr.fillStyle = '#fff'; tr.fillRect(0, 0, W, H); tr.globalCompositeOperation = 'multiply';
   const cam = camClamp(o.cam.slice()); tr.setTransform(cam[2], 0, 0, cam[2], W / 2 - cam[0] * cam[2], H / 2 - cam[1] * cam[2]);   // camera = 2D transform of the hide layer
@@ -210,25 +230,31 @@ function render(t) {
   if (o.house) set.drawHouse(tr, { x: 70, s: .85 });
   if (o.tree) { tr.save(); const pr = o.tree.press ?? 1; if (pr < 1) { tr.globalAlpha = clamp(pr, 0, 1); tr.filter = `blur(${(1 - clamp(pr, 0, 1)) * 12}px)`; }
     set.drawTree(tr, o.tree); tr.restore(); tr.filter = 'none'; tr.globalAlpha = 1; }
-  tr.save(); tr.translate(Math.sin(tt * .7) * 6, 1500); drawPiece(tr, APRON); tr.restore();
-  set.drawField(tr, { t: tt, x0: 0, x1: W, ...o.field });
+  if (o.apron !== false) { tr.save(); tr.translate(Math.sin(tt * .7) * 6, 1500); drawPiece(tr, APRON); tr.restore(); }
+  if (o.field) set.drawField(tr, { t: tt, x0: 0, x1: W, ...o.field });
   if (o.truck) cast.drawTruck(tr, tremor(o.truck, tt, .5, 30));
   o.vill.forEach((v, i) => cast.drawVillager(tr, tremor(v, tt, 1, 11 + i * 7)));
-  if (o.papers) for (let i = 0; i < o.papers; i++) { const x = 260 + i * 80, y = 1020 - (i % 2) * 70 - 20 * Math.sin(tt * 3 + i);
+  if (o.papers) for (let i = 0; i < o.papers; i++) { const x = 230 + i * 70, y = 1020 - (i % 2) * 70 - 20 * Math.sin(tt * 3 + i);
     tr.save(); tr.translate(x, y); tr.rotate(.2 * Math.sin(i * 2.3 + tt * 2)); tr.fillStyle = DYE.hide; tr.fillRect(-28, -36, 56, 72); tr.strokeStyle = DYE.ink; tr.lineWidth = 2.4; tr.strokeRect(-28, -36, 56, 72);
     for (let r = 0; r < 4; r++) { tr.beginPath(); tr.moveTo(-18, -20 + r * 13); tr.lineTo(18, -20 + r * 13); tr.stroke(); } tr.restore(); }
   o.sacks.forEach(s => cast.drawSack(tr, s));
-  o.bats.forEach((b, i) => cast.drawBat(tr, tremor(b, tt, 1, i * 3)));
   if (o.bugs) set.drawBugs(tr, o.bugs);
   if (o.rain) set.drawRain(tr, { t: Math.floor(tt * 12) / 12, amount: o.rain });
   if (o.plaque) { tr.save(); hud.drawPlaque(tr, o.plaque); tr.restore(); tr.filter = 'none'; tr.globalAlpha = 1; }
   tr.globalCompositeOperation = 'source-over';
+  // hero layer: the bat is drawn last, opaque, on its own canvas; the shader puts it in front of everything on the hide layer
+  const G = grade(o);
+  hr.setTransform(1, 0, 0, 1, 0, 0); hr.globalCompositeOperation = 'source-over'; hr.globalAlpha = 1; hr.clearRect(0, 0, W, H);
+  hr.setTransform(cam[2], 0, 0, cam[2], W / 2 - cam[0] * cam[2], H / 2 - cam[1] * cam[2]);
+  o.bats.forEach((b, i) => cast.drawBat(hr, tremor(b, tt, 1, i * 3), { opaque: true, halo: G.halo }));
   // front layer: subtitles (+ stage frame on the loop shots)
   fr.setTransform(1, 0, 0, 1, 0, 0); fr.clearRect(0, 0, W, H);
   if (o.frame && hud.drawFrame) hud.drawFrame(fr, { a: 1 });
   if (!qs.has('nosub')) { const c = SUBS.find(c => t >= c.t0 && t < c.t1); if (c) { const a = E(t, c.t0, c.t0 + .12), sl = 1 - eo(seg(t, c.t0, c.t0 + .2)); hud.drawSub(fr, c.text, a, sl); } }
-  const n = Math.max(1, o.lamps);
-  GL.render(trc, frc, { cam, rect: [0, 0, W, H], lamps: lampSet(t, tt, o.lamps, o.gutter), sigB: 950, sigC: 190, amb: .3, expo: 1.75 / Math.sqrt(n) * lerp(.6, 1, clamp((n - 1) / 2, 0, 1)), time: tt, vign: .42, bloom: .32 });
+  const moon = o.sky && o.sky.kind === 'moon' ? [o.sky.x, o.sky.y] : o.storm ? [540, 420] : [760, 330];
+  GL.render(trc, frc, { cam, rect: [0, 0, W, H], lamps: lampSet(t, tt, o.lamps, o.gutter, o.night, moon), sigB: 950, sigC: 190, amb: .3, expo: G.expo, time: tt, vign: .42, bloom: G.bloom,
+    lcol: G.lcol, hotcol: G.hotcol, bcol: G.bcol, vcol: G.vcol, skyTop: G.skyTop, skyBot: G.skyBot, skyY: [0, GY], stars: G.stars,
+    hero: hrc, heroKey: G.heroKey, heroShadow: ONLY === 'bat' ? 0 : .5 });   // (the QA bat-only view drops the cast shadow so the bat mask is the silhouette alone)
 }
 window.render = render; window.DUR = DUR; window.SUBS = SUBS;
 if (!navigator.webdriver) { let t0 = performance.now(); const loop = () => { render(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); }; loop(); }

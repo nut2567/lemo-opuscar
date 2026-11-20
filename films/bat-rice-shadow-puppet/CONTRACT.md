@@ -35,3 +35,37 @@ Every draw function draws onto `g` = the **transmittance** canvas 2D context, wh
 
 ## Shot timing (seconds) — from source/timeline.json
 01 hook 0–4 · 02 awake 4–7.77 · 03 plant 7.77–10.43 · 04 first 10.43–14.43 · 05 orders 14.43–20.5 · 06 loft 20.5–25.13 · 07 store 25.13–30.53 · 08 storm 30.53–34.5 · 09 delivery 34.5–40.23 · 10 heavy 40.23–45.13 · 11 waiting 45.13–49.97 · 12 stuck 49.97–53.17 · 13 reveal 53.17–57.4 · 14 return 57.4–59.0
+
+---
+
+# Revision 2 (rules-version: 2) — bat in front, normal daylight, blue night
+
+User request: the bat must be the clear focus — **opaque, in front of everything, never see-through and never covered by rice, grass, the tree, the hut or other puppets**; daylight is too glaring and must look normal; night must read as a **blue sky**. This revision overrides the "everything multiplies" rule of revision 1 for the bat only. Everything not listed here keeps its revision-1 behaviour, and every new input is optional: with the new inputs omitted, output must stay pixel-identical to revision 1.
+
+Lead owns `main.js` (hero layer, per-shot day/night grade, `?only=` QA flags), `CONTRACT.md`, `README.md`.
+
+## cast.js — `drawBat(g, p, opt = {})`
+- `opt.opaque` (bool, default false). When true the bat is drawn as an opaque front puppet:
+  1. halo pass (only if `opt.halo > 0`): the whole silhouette of the pose (every piece that will be drawn: both wings, ears, body, feet, hat, held prop, dizzy stars), **uncut** (carved holes filled) and expanded outward by 6 units, painted flat `#fff` with `source-over` at `globalAlpha = opt.halo` (0..1);
+  2. then every piece in the normal back-to-front order as: its own uncut solid shape in flat `#fff` with `source-over` (erases whatever is underneath, earlier bat pieces included), immediately followed by the normal carved dyed piece with `multiply`. Rivets after their pieces as before.
+  The function sets the composite operation it needs itself and leaves `g` exactly as it was on entry (op, alpha, transform, filter).
+- Works on both kinds of target: the white-backed transmittance canvas and an empty **transparent** canvas (hero layer): there the result is alpha = silhouette coverage, colour = white inside carved holes / dyed hide elsewhere.
+- `opt` omitted or `opaque` false: pixels identical to revision 1 (apart from the outline weight below).
+- Clarity: outer outlines of the bat's body, ears, wings and hat go from 2.4 to 3.6 units of ink. No other look change.
+
+## gl.js — `GL.render(tr, front, o, lmap)` new optional fields on `o`
+| field | default | meaning |
+|---|---|---|
+| `hero` | `null` | canvas, same size as `tr`, drawn with the same camera transform. Alpha = coverage of the front puppet, colour = its transmittance. `T = mix(T, heroRGB, heroA)` (un-premultiplied colour) |
+| `heroKey` | `0` | 0..1: inside the hero, share of the lighting replaced by a fixed key light, so the puppet reads the same by day and by night |
+| `keyCol`, `keyExpo` | `[1,.9,.72]`, `1.6` | key light colour and its value in exposed units: `hdr = mix(hdr, keyCol*keyExpo, heroA*heroKey)` |
+| `heroShadow` | `0` | 0..1 strength of the soft shadow the hero casts on the scenery behind it (`T_scene *= 1 - .55*heroShadow*blurredHeroA(offset)*(1-heroA)`) |
+| `heroShadowOff`, `heroShadowBlur` | `[10,14]`, `10` | shadow offset (x right, y down) and blur radius, world units (scale with `cam.z`) |
+| `skyTop`, `skyBot`, `skyY` | `[1,1,1]`, `[1,1,1]`, `[0,1400]` | colour multiplier on the **broad** light only: `(Ls + amb*tot)*lcol*mix(skyTop, skyBot, smoothstep(skyY[0], skyY[1], worldY))`. Hot lamp cores (`Lh*hotcol`) are not tinted |
+| `stars`, `starCol` | `0`, `[1,.95,.82]` | 0..1 amount of small soft stars fixed in world space above `skyY[1]`, added after exposure (`hdr += starCol*stars*field`, peak ≈ 3 at a star's centre), fading out over the last 250 units above `skyY[1]`, slow twinkle with `time`, deterministic, hidden by scenery (multiplied by `T`) and by the hero |
+| `vcol` | `[.7,.47,.25]` | vignette colour in the final composite |
+
+Order in the screen shader: light field → sky tint → `hdr = L*expo` → stars → hero shadow on `T` → hero replaces `T` → hero key light → `c = 1 - exp(-hdr*T*cloth*edge)`.
+
+## main.js QA flags (already implemented)
+`?only=bat` draws the bat alone on the lit cloth, `?only=none` the bare lit cloth, `?only=set` everything except the bat; lighting and grade are those of the full frame. `?nosub` hides subtitles.

@@ -1,5 +1,5 @@
 {
-  "input": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\out\\bat-rice-shadow-puppet.mp4",
+  "input": "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\out\\bat-rice-shadow-puppet.mp4",
   "checks": {
     "resolution": {
       "ok": true,
@@ -58,12 +58,12 @@
     },
     "loop_seam": {
       "ok": true,
-      "value": 13.63,
+      "value": 10.62,
       "detail": "mean abs RGB diff first vs last frame"
     },
     "contact_sheet": {
       "ok": true,
-      "value": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\contact.jpg",
+      "value": "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\contact.jpg",
       "detail": null
     },
     "cut_frames": {
@@ -76,23 +76,23 @@
     "loop_seam threshold (20 mean-abs-RGB) and blackdetect pix_th are heuristics, not calibrated to this film's grade; review contact.jpg/cut-XX.jpg visually."
   ],
   "files": {
-    "qa_json": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\QA.json",
-    "contact": "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\contact.jpg",
+    "qa_json": "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\QA.json",
+    "contact": "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\contact.jpg",
     "cuts": [
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-01.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-02.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-03.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-04.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-05.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-06.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-07.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-08.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-09.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-10.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-11.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-12.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-13.jpg",
-      "D:\\workspace\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-14.jpg"
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-01.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-02.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-03.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-04.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-05.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-06.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-07.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-08.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-09.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-10.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-11.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-12.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-13.jpg",
+      "D:\\peoject_wepapp\\lemo-opuscar\\films\\bat-rice-shadow-puppet\\qa\\cut-14.jpg"
     ]
   },
   "summary": {

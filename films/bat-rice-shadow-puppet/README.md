@@ -5,17 +5,22 @@ The animal-evolution episode `ai-video/episodes/bat-rice` (same story, same Gemi
 - Plan and who did what: `PLAN.md` · concept: `TREATMENT.md` · module interface: `CONTRACT.md` · worker specs: `specs/`
 - Picture: `main.js` (stage, lamps = time of day, camera, 14-shot timeline), `cast.js` (bat, villagers, pickup, sacks), `set.js` (field, tree granary, ladder, sky, rain), `hud.js` (Thai placard subtitles, carved ค้างข้าว plaque, stage frame); `carve.js`/`gl.js` copied from `styles/shadow-puppet/demo`
 - Sound: `audio/mix.py` (Kore narration + ducked original soundtrack + synthesised shadow-theatre percussion/foley), see `audio/MIX.md`
-- QA: `verify.py` → `qa/QA.json`, `qa/contact.jpg`, `qa/cut-XX.jpg`
+- QA: `verify.py` → `qa/QA.json`, `qa/contact.jpg`, `qa/cut-XX.jpg`; `qa/look_check.py` → `qa/look/look.json` (look of revision 2; `qa/look/baseline.json` = the same test on revision 1, 0/22)
 
 ## Rebuild (from the library root)
 ```sh
-cp <ai-video>/videos/bat-rice/public/audio/{narration,soundtrack}.wav films/bat-rice-shadow-puppet/audio/
+# source audio: copy narration.wav + soundtrack.wav from <ai-video>/videos/bat-rice/public/audio/, or, when they are not on the machine,
+# rebuild them from the recorded voice groups (reads ai-video read-only, no synthesis): .venv/Scripts/python.exe films/bat-rice-shadow-puppet/audio/restore_sources.py
 .venv/Scripts/python.exe films/bat-rice-shadow-puppet/audio/mix.py
 node core/render/video.mjs films/bat-rice-shadow-puppet --fps 24 --workers 6 --size 1080x1920 --out films/bat-rice-shadow-puppet/out/video24.mp4
 cd films/bat-rice-shadow-puppet && CRF=20 sh ../../styles/shadow-puppet/demo/tools/mux.sh out/video24.mp4 audio/mix.wav out/bat-rice-shadow-puppet.mp4 24 2
 ../../.venv/Scripts/python.exe verify.py out/bat-rice-shadow-puppet.mp4
+cd ../.. && .venv/Scripts/python.exe films/bat-rice-shadow-puppet/qa/look_check.py   # bat in front / day exposure / blue night
 ```
 Not in git: WAVs (source audio belongs to ai-video) and the rendered MP4 (`out/`, ~95 MB).
 
 ## Status
 QA passes (resolution, fps, 59.0 s, clean decode, no black frames, −14.0 LUFS, no silences > 0.8 s, 14/14 shot frames). Listening review is still required: the agent cannot hear audio; the percussion is synthesised, not sampled.
+
+## Revision 2 (user request)
+The bat is the focus: it is drawn last on its own opaque **hero layer** (`cast.drawBat(…, { opaque, halo })` → `gl.js` `hero`), in front of rice, tree, hut, props and villagers, with a thin light rim, a soft cast shadow and its own key light so it reads the same by day and by night. Daylight is exposed to a cream cloth instead of white (lower exposure, far less bloom). Night is a **blue sky** (tinted broad light, stars, a glowing moon lamp); the storm is a grey-blue night without stars. This deliberately departs from the library style's "night is fewer lamps, never added blue" for this film only. Interface: `CONTRACT.md` → Revision 2. Shot 10 was re-blocked (wider orbit, smaller wings, looser camera) so the opaque bat does not hide the sack.

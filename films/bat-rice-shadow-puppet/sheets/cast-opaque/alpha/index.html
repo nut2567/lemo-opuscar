@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{position:absolute;left:0;top:0}</style></head><body>
+<script type="module">
+import * as C from '../../../cast.js';
+C.buildCast();
+const cv = document.createElement('canvas'); cv.width = 1080; cv.height = 1920; cv.id = 'gl'; document.body.appendChild(cv);
+const g = cv.getContext('2d');
+window.render = () => {
+  g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
+  g.clearRect(0, 0, 1080, 1920);
+  C.drawBat(g, { x: 540, y: 960, s: 1.4, wingL: 1, wingR: 1, hat: true }, { opaque: true, halo: 0 });
+  const d = g.getImageData(0, 0, 1080, 1920).data;
+  const A = (x, y) => d[(Math.round(y) * 1080 + Math.round(x)) * 4 + 3];
+  const s = 1.4, bx = 540, by = 960;
+  // carved face hole centre in bat-local coords is ~(28,-158); also probe belly scale area and wing
+  const pts = {
+    outside: [40, 100],
+    body: [bx, by - 125 * s],
+    faceHole: [bx + 28 * s, by - 158 * s],
+    belly: [bx + 10 * s, by - 70 * s],
+    wing: [bx + 200 * s, by - 60 * s],
+    wing2: [bx + 120 * s, by - 100 * s],
+    earTip: [bx - 30 * s, by - 330 * s],
+    hat: [bx + 6 * s, by - 214 * s],
+  };
+  const out = {};
+  for (const k in pts) out[k] = A(...pts[k]);
+  // row scan at wing height: count opaque pixels and find left/right extent
+  out.rows = {};
+  for (const dy of [60, 120, 180, 240, 300]) {
+    const ry = Math.round(by - dy * s);
+    let lo = -1, hi = -1, cnt = 0;
+    for (let x = 0; x < 1080; x++) if (A(x, ry) > 200) { if (lo < 0) lo = x; hi = x; cnt++; }
+    out.rows['dy' + dy] = [lo, hi, cnt];
+  }
+  window.__alpha = out;
+  // draw checkerboard + bat + readout so the numbers are visible in the still
+  const v = document.createElement('canvas'); v.width = 1080; v.height = 1920; document.body.appendChild(v);
+  const vg = v.getContext('2d');
+  for (let y = 0; y < 24; y++) for (let x = 0; x < 14; x++) { vg.fillStyle = (x + y) % 2 ? '#3a3a3a' : '#8a8a8a'; vg.fillRect(x * 80, y * 80, 80, 80); }
+  vg.drawImage(cv, 0, 0);
+  vg.fillStyle = '#fff'; vg.font = '42px monospace';
+  vg.fillText('alpha probe (opaque bat, transparent bg)', 30, 120);
+  let yy = 180;
+  for (const k in out) { vg.fillText(k + ' = ' + out[k], 30, yy); yy += 52; }
+  cv.style.display = 'none';
+};
+window.READY = true;
+</script></body></html>
