@@ -5,9 +5,10 @@ import {drawWashers} from './washers.mjs';
 // overlay is evaluated per frame. World coords 1080x1920, curb/horizon y1440.
 // No signs, figures, snow, grain or reflections (owned by other modules).
 const W = 1080, H = 1920, CURB = 1440;
-const SHOP = { x: 130, y: 540, w: 610, h: 820 };   // x130..740 y540..1360
-const ENTRY = { x: 755, y: 540, w: 185, h: 820 };  // x755..940 y540..1360
-const FAC = { x: 70, y: 310, w: 940, h: 1130 };    // facade x70..1010 y310..1440
+export const SHOP = Object.freeze({ x: 130, y: 540, w: 610, h: 820 });   // x130..740 y540..1360
+export const ENTRY = Object.freeze({ x: 755, y: 540, w: 185, h: 820 });  // x755..940 y540..1360
+export const FAC = Object.freeze({ x: 70, y: 310, w: 940, h: 1130 });    // facade x70..1010 y310..1440
+export const FRONT_GLAZING_Z = 100;
 
 function mulberry32(seed) {
   let a = seed >>> 0;
@@ -486,14 +487,8 @@ function buildEnvironment() {
   g.strokeStyle = 'rgba(0,0,0,0.4)'; g.lineWidth = 3;
   g.beginPath(); g.moveTo(ENTRY.x + ENTRY.w * 0.5, ENTRY.y + 60); g.lineTo(ENTRY.x + ENTRY.w * 0.44, ENTRY.y + ENTRY.h); g.stroke();
   g.beginPath(); g.moveTo(ENTRY.x + ENTRY.w * 0.86, ENTRY.y + 80); g.lineTo(ENTRY.x + ENTRY.w * 0.8, ENTRY.y + ENTRY.h); g.stroke();
-  // Door push bar and hinge hint.
-  g.fillStyle = '#0d0a08'; g.fillRect(ENTRY.x + 16, ENTRY.y + 420, 8, 260);
-  g.fillStyle = '#3c332a'; rr(g, ENTRY.x + 96, ENTRY.y + 430, 70, 10, 5); g.fill();
-  g.fillStyle = 'rgba(255,230,190,0.15)'; g.fillRect(ENTRY.x + 96, ENTRY.y + 430, 70, 2);
   g.restore();
 
-  drawGlazing(g);
-  drawKickplate(g);
   const st1 = g.createLinearGradient(0, CURB, 0, H);
   st1.addColorStop(0, '#10121d'); st1.addColorStop(0.25, '#0b0d16'); st1.addColorStop(1, '#05060c');
   g.fillStyle = st1; g.fillRect(0, CURB, W, H - CURB);
@@ -501,7 +496,31 @@ function buildEnvironment() {
   const sheen = g.createRadialGradient(540, 1620, 40, 540, 1620, 620);
   sheen.addColorStop(0, 'rgba(70,85,125,0.07)'); sheen.addColorStop(1, 'rgba(70,85,125,0)');
   g.fillStyle = sheen; g.fillRect(0, CURB, W, H - CURB);
-  return { scene: c, facade };
+
+  // Front glazing lives on its own transparent layer so the storefront frame
+  // can be composited above the character while the baked reflection source
+  // keeps the same facade pixels as before.
+  const glazing = document.createElement('canvas');
+  glazing.width = W; glazing.height = H;
+  const fz = glazing.getContext('2d');
+  drawEntranceDoorFurniture(fz);
+  drawGlazing(fz);
+  drawKickplate(fz);
+
+  const scene = document.createElement('canvas');
+  scene.width = W; scene.height = H;
+  const sg = scene.getContext('2d');
+  sg.drawImage(c, 0, 0);
+  sg.drawImage(glazing, 0, 0);
+
+  return { scene, base: c, facade, glazing };
+}
+
+function drawEntranceDoorFurniture(g) {
+  // Door push bar and hinge hint.
+  g.fillStyle = '#0d0a08'; g.fillRect(ENTRY.x + 16, ENTRY.y + 420, 8, 260);
+  g.fillStyle = '#3c332a'; rr(g, ENTRY.x + 96, ENTRY.y + 430, 70, 10, 5); g.fill();
+  g.fillStyle = 'rgba(255,230,190,0.15)'; g.fillRect(ENTRY.x + 96, ENTRY.y + 430, 70, 2);
 }
 
 function drawGlazing(g) {
@@ -612,9 +631,14 @@ export function drawFacadeForReflection(ctx) {
   ctx.drawImage(environment.facade, 0, 0);
 }
 
-export function drawEnvironment(ctx, t, shot) {
+export function drawFrontGlazing(ctx, t) {
   environment ??= buildEnvironment();
-  ctx.drawImage(environment.scene, 0, 0);
+  ctx.drawImage(environment.glazing, 0, 0);
+}
+
+export function drawEnvironment(ctx, t, shot, opts = {}) {
+  environment ??= buildEnvironment();
+  ctx.drawImage(opts.glazing === false ? environment.base : environment.scene, 0, 0);
   // Deterministic interior-light breathing; clipped to the two glazed bays.
   ctx.save();
   ctx.beginPath();

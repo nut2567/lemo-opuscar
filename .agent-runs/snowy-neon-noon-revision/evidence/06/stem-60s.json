@@ -1,0 +1,33 @@
+{
+  "sample_rate": 48000,
+  "channels": 2,
+  "duration_s": 60.0,
+  "window_start_s": 0.0,
+  "peak_dbfs": -6.0,
+  "rms_dbfs": -47.8,
+  "normalise_scale": 0.2628,
+  "hits": [
+    {
+      "t": 21.58,
+      "strength": 0.63,
+      "pan": 0.05,
+      "onset_sample": 1035840,
+      "onset_s": 21.58
+    },
+    {
+      "t": 21.82,
+      "strength": 1.0,
+      "pan": 0.093,
+      "onset_sample": 1047360,
+      "onset_s": 21.82
+    },
+    {
+      "t": 22.06,
+      "strength": 0.71,
+      "pan": 0.079,
+      "onset_sample": 1058880,
+      "onset_s": 22.06
+    }
+  ],
+  "out": ".agent-runs\\snowy-neon-noon-revision\\evidence\\06\\stem-60s.wav"
+}

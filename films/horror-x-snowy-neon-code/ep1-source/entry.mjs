@@ -1,6 +1,11 @@
 import { drawWasher, ROW } from '../washers.mjs';
 import { DURATION, FPS, HEIGHT, WIDTH, eventsFor, expandCuts, parseSrt, variants } from './timeline.mjs';
-import { evaluateJessicaMotionFrame } from './motion/evaluate-frame.mjs';
+// Noon revision (2026-11-20): โมเดลนุ่น replaces the Cel motion rig. Staging
+// and the three full-frame insert shots live in ./noon/.
+import { noonStage } from './noon/staging.mjs';
+import { drawWasherRowShot } from './noon/washer-row.mjs';
+import { drawCoinMacroShot } from './noon/coin-macro.mjs';
+import { rearEntrySvg } from './noon/rear-entry.mjs';
 
 // ep1-source sits one level below the film root; the base also lets
 // neon.mjs resolve 'assets/fonts/…' and entry fetches stay absolute.
@@ -35,24 +40,37 @@ const captions = parseSrt(await srtResponse.text());
 await document.fonts.load('20px CaptionKanit', captions.map(cue => cue.text).join(' '));
 if (!document.fonts.check('16px CaptionKanit')) throw new Error('CaptionKanit failed to load');
 
-async function fetchJson(relativePath) {
-  const response = await fetch(new URL(relativePath, import.meta.url));
-  if (!response.ok) throw new Error(`Could not load ${relativePath}`);
-  return response.json();
-}
-
-const motionAssets = version === 'jessica'
-  ? await Promise.all([
-      fetchJson('./motion/scene/scene-layout.json'),
-      fetchJson('./motion/poses/jessica-01-06.json'),
-      fetchJson('./motion/poses/jessica-07-12.json'),
-    ]).then(([sceneLayout, firstHalf, secondHalf]) => ({ sceneLayout, firstHalf, secondHalf }))
-  : null;
-
 const caption = document.querySelector('#caption');
 const captionText = caption.querySelector('span');
 const insert = document.querySelector('#insert');
 const ctx = insert.getContext('2d');
+// Full-frame insert shots replace the storefront layers while active.
+const storefrontLayers = ['#film', '#nunLayer', '#front'].map(sel => document.querySelector(sel));
+const shotCanvas = document.querySelector('#shot');
+const shotCtx = shotCanvas.getContext('2d');
+const shotSvg = document.querySelector('#shotSvg');
+function drawFullFrameShot(cut, seconds, progress) {
+  const kind = cut.insert ?? null;
+  for (const el of storefrontLayers) el.hidden = !!kind;
+  shotCanvas.hidden = !(kind === 'washer-row' || kind === 'coin-macro');
+  shotSvg.hidden = kind !== 'rear-entry';
+  // Stateless: every call fully decides the insert layers from this cut.
+  if (kind !== 'rear-entry') shotSvg.innerHTML = '';
+  if (!kind) return null;
+  const local = seconds - cut.startFrame / FPS;
+  const duration = (cut.endFrame - cut.startFrame) / FPS;
+  if (kind === 'rear-entry') {
+    shotSvg.innerHTML = rearEntrySvg({ local, duration, seconds });
+  } else {
+    if (shotCanvas.width !== WIDTH || shotCanvas.height !== HEIGHT) {
+      shotCanvas.width = WIDTH; shotCanvas.height = HEIGHT;
+    }
+    shotCtx.setTransform(1, 0, 0, 1, 0, 0);
+    if (kind === 'washer-row') drawWasherRowShot(shotCtx, { seconds, progress, width: WIDTH, height: HEIGHT });
+    else drawCoinMacroShot(shotCtx, { seconds, shotStart: cut.startFrame / FPS, shotEnd: cut.endFrame / FPS, width: WIDTH, height: HEIGHT });
+  }
+  return kind;
+}
 
 const rawCuts = variant.dropCutsAt?.length
   ? picture.cuts.filter(([start]) => !variant.dropCutsAt.includes(start))
@@ -79,8 +97,10 @@ function drawCoin(x, y, turn) {
 // ~(715,1083) and the count-pose tray surface at y~1101; the coin lands at
 // world (714,1100), just right of the five existing tray coins, which stay
 // rendered and untouched inside the SVG layer.
+// Noon revision: count-pose right hand local (27,297) at scale .5 from the
+// head centre (640,925) puts the fingers near world (654,1073).
 const COIN_PLACE = {
-  hand: [715, 1083], lift: [713, 1066], tray: [714, 1100],
+  hand: [654, 1073], lift: [657, 1062], tray: [663, 1100],
 };
 function coinPlacePos(seconds, beat) {
   const { start, contact, settle } = beat;
@@ -97,7 +117,7 @@ function coinPlacePos(seconds, beat) {
 let lastInsert = null;
 function drawInsert(cut, camera, seconds) {
   const { tray, slot, motor } = variant.cues;
-  const coinOnTray = cut.id === 'tray' && seconds >= tray - .29 && seconds < tray + .19;
+  const coinOnTray = false; // the tray impact is now the coin-macro insert shot
   // once placed the coin stays on the tray for the rest of the shot
   const placing = cut.coinPlace && seconds >= cut.coinPlace.start;
   lastInsert = null;
@@ -160,33 +180,20 @@ window.render = time => {
   const action = cut.action ? clamp((seconds - cut.startFrame / FPS) / cut.action) : progress;
   const sourceSeconds = first + (last - first) * action;
   const cue = captions.find(line => line.start <= seconds && seconds < line.end);
-  const motion = motionAssets
-    ? evaluateJessicaMotionFrame({
-        edition: version,
-        seconds,
-        shot: { ...cut, progress },
-        captions,
-        cueIndex: cue ? captions.indexOf(cue) + 1 : null,
-        camera,
-        sourceSeconds,
-        ...motionAssets,
-        uid: 'snowy',
-      })
-    : null;
-  const meta = renderSnowyFrame({ sourceSeconds, elapsedSeconds: seconds, camera, showCloth: !!cut.cloth, motionEvaluation: motion });
-  let look = null;
-  if (cut.glance) {
-    look = cut.id === 'watch' ? 1 : ease(clamp((progress - .23) / .55));
-    for (const iris of document.querySelectorAll('#nunCam g[clip-path$="-iris)"]')) {
-      iris.setAttribute('transform', `translate(${-4.8 * look} ${-2.2 * look})`);
-    }
-  }
-  const insertState = drawInsert(cut, camera, seconds);
+  const fullFrame = drawFullFrameShot(cut, seconds, progress);
+  const local = seconds - cut.startFrame / FPS;
+  const stage = noonStage({ shotId: cut.id, local, duration: (cut.endFrame - cut.startFrame) / FPS, seconds });
+  const meta = fullFrame
+    ? { characterModel: window.CHARACTER_MODEL, fullFrame }
+    : renderSnowyFrame({ sourceSeconds, elapsedSeconds: seconds, camera, showCloth: !!cut.cloth, noonStage: stage });
+  const look = stage?.glance ?? null;
+  const insertState = fullFrame ? (insert.hidden = true, null) : drawInsert(cut, camera, seconds);
   if (captionText.textContent !== (cue?.text ?? '')) captionText.textContent = cue?.text ?? '';
   caption.hidden = !cue;
   window.FRAME_META = {
     ...meta, time: seconds, frame, narrativeShot: cut.id, shotId: cut.id,
-    caption: cue?.text ?? null, look, insert: insertState, insertDetail: lastInsert,
+    caption: cue?.text ?? null, look, insert: insertState, insertDetail: lastInsert, fullFrame,
+    noon: stage ? { visible: stage.visible, pose: stage.pose, x: stage.x, y: stage.y, scale: stage.scale } : null,
     kind: cut.kind ?? null, cloth: !!cut.cloth, progress,
   };
   return window.FRAME_META;

@@ -1,0 +1,33 @@
+{
+  "sample_rate": 48000,
+  "channels": 2,
+  "duration_s": 4.0,
+  "window_start_s": 20.87,
+  "peak_dbfs": -6.0,
+  "rms_dbfs": -36.09,
+  "normalise_scale": 0.2631,
+  "hits": [
+    {
+      "t": 21.58,
+      "strength": 0.63,
+      "pan": 0.05,
+      "onset_sample": 34080,
+      "onset_s": 0.71
+    },
+    {
+      "t": 21.82,
+      "strength": 1.0,
+      "pan": 0.093,
+      "onset_sample": 45600,
+      "onset_s": 0.95
+    },
+    {
+      "t": 22.06,
+      "strength": 0.71,
+      "pan": 0.079,
+      "onset_sample": 57120,
+      "onset_s": 1.19
+    }
+  ],
+  "out": ".agent-runs\\snowy-neon-noon-revision\\evidence\\06\\preview.wav"
+}

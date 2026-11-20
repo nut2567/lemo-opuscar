@@ -1,10 +1,9 @@
-import {drawEnvironment,drawFacadeForReflection} from './environment.mjs';
+import {drawEnvironment,drawFacadeForReflection,drawFrontGlazing} from './environment.mjs';
 import {drawNeon,initNeon,signLines,fontStatus} from './neon.mjs';
 import {drawCharacters,characterMarkup} from './characters.mjs';
 import {getCharacterModel,CHARACTER_MODELS,DEFAULT_MODEL} from '../../models/registry.mjs';
 import {drawWeather,drawPost} from './weather.mjs';
-import {contactShadows,lightingComposite,lightingGrade} from './ep1-source/motion/scene/occlusion.mjs';
-import {contactShadowMarkup} from './ep1-source/motion/scene/contact-shadow-svg.mjs';
+import {lightingComposite} from './ep1-source/motion/scene/occlusion.mjs';
 
 const W=1080,H=1920,GROUND=1440;
 const canvas=document.getElementById('film'),ctx=canvas.getContext('2d',{alpha:false});
@@ -12,16 +11,25 @@ const world=document.createElement('canvas');world.width=W;world.height=H;
 const wc=world.getContext('2d',{alpha:false});
 const reflection=document.createElement('canvas');reflection.width=W;reflection.height=H-GROUND;
 const rc=reflection.getContext('2d');
+// Front plane (z-index 100): glazing frame, door frame, glass sheen and the
+// snow in front of the shop. Drawn on its own transparent canvas ABOVE the
+// person layer so the shop front is never covered by her.
+const frontCanvas=document.getElementById('front');
+const fctx=frontCanvas?.getContext('2d');
+const frontWorld=document.createElement('canvas');frontWorld.width=W;frontWorld.height=H;
+const fw=frontWorld.getContext('2d');
+// Entrance-glass sign region (green เปิดบริการ tube, box x768..933 y582..638 plus glow).
+const ENTRY_SIGN=[755,552,185,116];
 // Inline-SVG layer for the registry character rig. It shares the Canvas camera:
 // viewBox 1080x1920 + preserveAspectRatio="none" reproduces the canvas'
 // independent x/y fit, and nunCam applies the same translate+matrix the
 // ctx transform uses, so character and world stay pixel-aligned at any viewport.
 const nunCam=document.getElementById('nunCam');
-// Character model selection: the registry default ('cel', the approved
-// pale/slim cel woman) is primary; ?model=noon explicitly opts into the
-// previous Nun rig kept for reuse. Unknown ids fail loudly at load.
+// Character model selection: this film now stars โมเดลนุ่น ('noon') from its
+// first appearance. ?model=cel still opts into the earlier Cel woman for
+// comparison. Unknown ids fail loudly at load.
 const modelParam=new URLSearchParams(location.search).get('model');
-let characterModel=DEFAULT_MODEL;
+let characterModel='noon';
 if(modelParam){
  try{getCharacterModel(modelParam);}catch{
   throw new Error(`unknown ?model="${modelParam}": expected one of ${Object.keys(CHARACTER_MODELS).join(', ')}`);
@@ -30,52 +38,55 @@ if(modelParam){
 }
 window.CHARACTER_MODEL=characterModel;
 const cameraPresets=[{cx:540,cy:960,z:1,skew:0},{cx:465,cy:1090,z:1.16,skew:-.025},{cx:605,cy:1030,z:1.24,skew:.016}];
-function nunLayer(t,motionEvaluation=null){
- const motion=characterModel==='cel'?motionEvaluation:null;
- const root=motion?.lowerBodyResult?.root;
- const lightRoot=root?.anchorWorld??[690,925];
- const light=lightingComposite(lightRoot[0],lightRoot[1]);
- const lightContext=lightingGrade(lightRoot[0],lightRoot[1]);
- const opacity=n=>Number(n).toFixed(3);
- const mark=characterMarkup(t,{
-  model:characterModel,uid:'snowy',
-  ...(root?{x:root.anchorWorld?.[0],y:root.anchorWorld?.[1],scale:root.scale,facing:root.facing,suppressMotionLimbs:true}:{}),
+// Layer stack (z-index, see ep1-source/noon/LAYERS.md): world canvas holds
+// back wall z0, rear door z1, interior z10, washers z20, cloth z30, counter
+// z40 and street z70; this SVG person layer is z50 and is clipped by the
+// counter front (z60) and the shop-window opening; the front glazing canvas
+// (z100) sits above her.
+const NOON_FILM_GRADE={r:.9,g:.86,b:.92}; // pulls the pale Noon palette into the night room
+// The person is clipped to the shop-window opening, minus the counter front
+// face (x630..740 below the counter top y1110), so the counter occludes her
+// legs and she can never paint over the facade or the entrance frame.
+const PERSON_CLIP='<clipPath id="nunClip" clipPathUnits="userSpaceOnUse"><path clip-rule="evenodd" d="M130 540H740V1360H130Z M630 1110H740V1360H630Z"/></clipPath>';
+function nunLayer(t,stage=null){
+ if(stage&&!stage.visible) return '';
+ const x=stage?.x??640,y=stage?.y??925,scale=stage?.scale??.5;
+ const [lx,ly]=stage?.lightAnchor??[x,y];
+ const light=lightingComposite(lx,ly);
+ const g=characterModel==='noon'?NOON_FILM_GRADE:{r:1,g:1,b:1};
+ const o=n=>Number(n).toFixed(3);
+ const mark=characterMarkup(stage?.t??t,{
+  model:characterModel,uid:'snowy',x,y,scale,facing:stage?.facing??1,
+  ...(stage?.pose?{pose:stage.pose}:{}),
  });
- const clipId=motion?.clip?.id??'nunClip';
- const clipSvg=motion?.clip?.svg??'<clipPath id="nunClip" clipPathUnits="userSpaceOnUse"><rect width="1080" height="1110"/></clipPath>';
- let actor=mark;
- if(motion?.svg?.fragments){
-  const feet=motion.lowerBodyResult?.feet??{};
-  const contacts=Object.values(feet).filter(f=>f?.planted&&Array.isArray(f.contactWorld)).map(f=>({
-   x:f.contactWorld[0],y:f.contactWorld[1],type:'foot-plant',weight:1,surface:'floor',
-  }));
-  const shadows=contactShadowMarkup(contactShadows(contacts),{uid:'snowy',frame:motion.frameContext?.frame,ambient:lightContext.ambient}).fragments.beforeActor;
-  actor=shadows+motion.svg.fragments.beforeBase+mark+motion.svg.fragments.afterBase;
- }
- // Grade the character for the room and clip the light spill to its silhouette.
+ // Soft contact shadows under planted feet (hidden by the counter clip
+ // once she is behind it).
+ const shadows=(stage?.feet??[]).map(f=>`<ellipse cx="${o(f.x)}" cy="${o(f.y+2)}" rx="${o(30*scale)}" ry="${o(7*scale)}" fill="#04060e" opacity="${f.planted?.42:.22}"/>`).join('');
+ const top=y-90*scale/.5, bottom=y+660*scale, left=x-110*scale/.5, w=220*scale/.5;
  return `<defs>
-  <g id="nunModel">${actor}</g>
-  ${clipSvg}
-  <mask id="nunLightMask" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1110"><use href="#nunModel"/></mask>
+  <g id="nunModel">${mark}</g>
+  ${PERSON_CLIP}
+  <mask id="nunLightMask" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920"><use href="#nunModel"/></mask>
   <filter id="nunInteriorGrade" color-interpolation-filters="sRGB">
-   <feComponentTransfer><feFuncR type="linear" slope="${opacity(light.rSlope)}"/><feFuncG type="linear" slope="${opacity(light.gSlope)}"/><feFuncB type="linear" slope="${opacity(light.bSlope)}"/></feComponentTransfer>
+   <feComponentTransfer><feFuncR type="linear" slope="${o(light.rSlope*g.r)}" intercept=".012"/><feFuncG type="linear" slope="${o(light.gSlope*g.g)}" intercept=".008"/><feFuncB type="linear" slope="${o(light.bSlope*g.b)}" intercept=".03"/></feComponentTransfer>
   </filter>
-  <radialGradient id="nunLampSpill" gradientUnits="userSpaceOnUse" cx="708" cy="1052" r="154">
-   <stop stop-color="#ffc585" stop-opacity="${opacity(light.warmOverlayOpacity)}"/><stop offset=".57" stop-color="#ffc585" stop-opacity="${opacity(light.warmOverlayOpacity*.35)}"/><stop offset="1" stop-color="#ffc585" stop-opacity="0"/>
+  <radialGradient id="nunLampSpill" gradientUnits="userSpaceOnUse" cx="708" cy="1052" r="190">
+   <stop stop-color="#ffc585" stop-opacity="${o(light.warmOverlayOpacity)}"/><stop offset=".57" stop-color="#ffc585" stop-opacity="${o(light.warmOverlayOpacity*.35)}"/><stop offset="1" stop-color="#ffc585" stop-opacity="0"/>
   </radialGradient>
-  <linearGradient id="nunGlassLight" gradientUnits="userSpaceOnUse" x1="643" y1="876" x2="705" y2="967">
-   <stop stop-color="#83c5d6" stop-opacity="${opacity(light.coolOverlayOpacity)}"/><stop offset="1" stop-color="#83c5d6" stop-opacity="0"/>
+  <linearGradient id="nunGlassLight" gradientUnits="userSpaceOnUse" x1="${o(x-47)}" y1="${o(y-49)}" x2="${o(x+15)}" y2="${o(y+60)}">
+   <stop stop-color="#83c5d6" stop-opacity="${o(light.coolOverlayOpacity+.05)}"/><stop offset="1" stop-color="#83c5d6" stop-opacity="0"/>
   </linearGradient>
-  <linearGradient id="nunPinkRim" gradientUnits="userSpaceOnUse" x1="620" y1="0" x2="740" y2="0">
-   <stop stop-color="#ff4fa8" stop-opacity="0"/><stop offset="1" stop-color="#ff4fa8" stop-opacity="${opacity(light.pinkRimOpacity)}"/>
+  <linearGradient id="nunPinkRim" gradientUnits="userSpaceOnUse" x1="${o(x-70*scale/.5)}" y1="0" x2="${o(x+50*scale/.5)}" y2="0">
+   <stop stop-color="#ff4fa8" stop-opacity="0"/><stop offset="1" stop-color="#ff4fa8" stop-opacity="${o(light.pinkRimOpacity+.04)}"/>
   </linearGradient>
  </defs>
- <g clip-path="url(#${clipId})">
+ <g clip-path="url(#nunClip)" data-z="50">
+  ${shadows}
   <use href="#nunModel" filter="url(#nunInteriorGrade)"/>
   <g mask="url(#nunLightMask)">
-   <rect x="620" y="810" width="155" height="300" fill="url(#nunLampSpill)"/>
-   <rect x="620" y="810" width="155" height="300" fill="url(#nunGlassLight)"/>
-   <rect x="620" y="810" width="155" height="300" fill="url(#nunPinkRim)"/>
+   <rect x="${o(left)}" y="${o(top)}" width="${o(w)}" height="${o(bottom-top)}" fill="url(#nunLampSpill)"/>
+   <rect x="${o(left)}" y="${o(top)}" width="${o(w)}" height="${o(bottom-top)}" fill="url(#nunGlassLight)"/>
+   <rect x="${o(left)}" y="${o(top)}" width="${o(w)}" height="${o(bottom-top)}" fill="url(#nunPinkRim)"/>
   </g>
  </g>`;
 }
@@ -89,7 +100,9 @@ window.EV=[{t:2.5,type:'cut'},{t:3.7,type:'coin'},{t:5,type:'cut'},{t:6.25,type:
 // sampled {cx,cy,z,skew} — its z is final, no per-shot zoom ramp — and the
 // identical matrix is applied to Canvas and SVG. shotIndex overrides the
 // 2.5 s shot derivation for callers that already know the segment.
-export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,showCloth=true,motionEvaluation=null}={}){
+// noonStage (optional) is ep1-source/noon/staging.mjs output: where Noon
+// stands, her pose, feet and light anchor for this frame.
+export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,showCloth=true,noonStage=null}={}){
  const st=Math.max(0,Math.min(7.5-1/3000,Number(sourceSeconds)||0));
  const et=elapsedSeconds===undefined?st:Number(elapsedSeconds)||0;
  const shot=shotIndex===undefined?Math.min(2,Math.floor(st/2.5)):shotIndex;
@@ -102,20 +115,26 @@ export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,
  }
  wc.setTransform(1,0,0,1,0,0);wc.globalAlpha=1;wc.globalCompositeOperation='source-over';wc.filter='none';wc.shadowBlur=0;
  wc.fillStyle='#1e1838';wc.fillRect(0,0,W,H);
- drawEnvironment(wc,et,shot);drawNeon(wc,st,shot);
+ // Glazing is NOT baked into the world: it is the z100 front layer below.
+ drawEnvironment(wc,et,shot,{glazing:false});
+ // The green เปิดบริการ tube is mounted ON the entrance glass, so it belongs
+ // to the z100 front plane (painted after the door frame below); every
+ // other tube stays in the world layer.
+ wc.save();wc.beginPath();wc.rect(0,0,W,H);wc.rect(...ENTRY_SIGN);wc.clip('evenodd');drawNeon(wc,st,shot);wc.restore();
  if(showCloth) drawCharacters(wc,st,shot);
  // Contact/cast shade inside the glazed shop bay only: the nun and counter
  // mass block the warm interior light, so the tile floor at the counter
  // base and the back wall behind her fall off gently. Clipped to the shop
  // window — never across the glass onto the street.
  wc.save();wc.beginPath();wc.rect(130,540,610,820);wc.clip();
- {
-  const fl=wc.createRadialGradient(620,1300,20,620,1300,230);
+ if(!noonStage||noonStage.visible){
+  const px=noonStage?.x??640,py=noonStage?.y??925;
+  const fl=wc.createRadialGradient(px-70,py+375,20,px-70,py+375,230);
   fl.addColorStop(0,'rgba(4,6,14,0.38)');fl.addColorStop(.55,'rgba(4,6,14,0.15)');fl.addColorStop(1,'rgba(4,6,14,0)');
-  wc.fillStyle=fl;wc.fillRect(400,1090,340,250);
-  const wl=wc.createRadialGradient(690,985,30,690,985,220);
+  wc.fillStyle=fl;wc.fillRect(px-290,py+165,340,250);
+  const wl=wc.createRadialGradient(px,py+60,30,px,py+60,220);
   wl.addColorStop(0,'rgba(4,6,14,0.26)');wl.addColorStop(1,'rgba(4,6,14,0)');
-  wc.fillStyle=wl;wc.fillRect(470,760,440,450);
+  wc.fillStyle=wl;wc.fillRect(px-220,py-165,440,450);
  }
  wc.restore();
  // Reflect the exterior plane and broad window light. Sample the facade
@@ -155,19 +174,33 @@ export function renderSnowyFrame({sourceSeconds,elapsedSeconds,camera,shotIndex,
  }
  for(let i=-4;i<9;i++){wc.strokeStyle='rgba(3,8,18,.43)';wc.beginPath();wc.moveTo(540+i*50,GROUND);wc.lineTo(540+i*220,H);wc.stroke();}
  wc.restore();
- drawWeather(wc,et,shot);
  if(canvas.width!==innerWidth||canvas.height!==innerHeight){canvas.width=innerWidth;canvas.height=innerHeight;}
  ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#1e1838';ctx.fillRect(0,0,canvas.width,canvas.height);
  ctx.save();ctx.scale(canvas.width/W,canvas.height/H);ctx.translate(W/2,H/2);
  ctx.transform(z,0,cam.skew,z,-cam.cx*z,-cam.cy*z);ctx.drawImage(world,0,0);ctx.restore();
  drawPost(ctx,et,canvas.width,canvas.height);
+ // z100 front plane: snow outside the shop (z80) then the glazing frame,
+ // door frame and glass sheen on top, under the identical camera matrix.
+ fw.setTransform(1,0,0,1,0,0);fw.clearRect(0,0,W,H);
+ drawWeather(fw,et,shot);
+ drawFrontGlazing(fw,et);
+ fw.save();fw.beginPath();fw.rect(...ENTRY_SIGN);fw.clip();drawNeon(fw,st,shot);fw.restore();
+ if(frontCanvas){
+  if(frontCanvas.width!==innerWidth||frontCanvas.height!==innerHeight){frontCanvas.width=innerWidth;frontCanvas.height=innerHeight;}
+  fctx.setTransform(1,0,0,1,0,0);fctx.clearRect(0,0,frontCanvas.width,frontCanvas.height);
+  fctx.save();fctx.scale(frontCanvas.width/W,frontCanvas.height/H);fctx.translate(W/2,H/2);
+  fctx.transform(z,0,cam.skew,z,-cam.cx*z,-cam.cy*z);fctx.drawImage(frontWorld,0,0);fctx.restore();
+ }else{
+  ctx.save();ctx.scale(canvas.width/W,canvas.height/H);ctx.translate(W/2,H/2);
+  ctx.transform(z,0,cam.skew,z,-cam.cx*z,-cam.cy*z);ctx.drawImage(frontWorld,0,0);ctx.restore();
+ }
  // Registry character as inline SVG under the identical camera matrix. The clip
  // keeps everything below the counter top (world y1110) hidden so the
  // counter front and her legs/soles never overpaint the shop interior.
  // The y-scale uses the same animated z as the Canvas camera.
  nunCam.setAttribute('transform',`translate(${W/2} ${H/2}) matrix(${z} 0 ${cam.skew} ${z} ${-cam.cx*z} ${-cam.cy*z})`);
- nunCam.innerHTML=nunLayer(st,motionEvaluation);
- window.FRAME_META={time:st,shot,source:'procedural Canvas2D',imageInputs:0,characterModel,sourceSeconds:st,elapsedSeconds:et,camera:cam?{cx:cam.cx,cy:cam.cy,z,skew:cam.skew}:undefined,shotIndex:shot,motion:motionEvaluation?{frame:motionEvaluation.frameContext.frame,zone:motionEvaluation.lowerBodyResult?.root?.zone,scenePathSource:motionEvaluation.scenePathSource,diagnostics:motionEvaluation.diagnostics}:null};
+ nunCam.innerHTML=nunLayer(st,noonStage);
+ window.FRAME_META={time:st,shot,source:'procedural Canvas2D',imageInputs:0,characterModel,sourceSeconds:st,elapsedSeconds:et,camera:cam?{cx:cam.cx,cy:cam.cy,z,skew:cam.skew}:undefined,shotIndex:shot,noon:noonStage?{visible:noonStage.visible,x:noonStage.x,y:noonStage.y,scale:noonStage.scale,pose:noonStage.pose,facing:noonStage.facing}:null,layers:{world:10,person:50,front:100}};
  return window.FRAME_META;
 }
 // Legacy proof hook: identical to renderSnowyFrame with sourceSeconds =
