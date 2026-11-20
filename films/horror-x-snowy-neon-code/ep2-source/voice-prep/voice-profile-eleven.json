@@ -1,0 +1,20 @@
+{
+  "direction": "Noon (นุ่น), first person, whispered horror narration — same delivery as the EP1 final (voice-whisper)",
+  "voice_selection_status": "Jessica (ElevenLabs eleven_v4), same voice and [whispers] tag as Snowy Neon EP1 final",
+  "provider_priority": [
+    "elevenlabs"
+  ],
+  "cast": {
+    "narrator": {
+      "elevenlabs": {
+        "voice": "cgSgspJ2msm6clMCkdW9",
+        "model": "eleven_v4"
+      }
+    }
+  },
+  "quota": {
+    "gemini_daily_requests": null,
+    "gemini_seconds_between_requests": 0
+  },
+  "notes": "One request per caption cue (01..12). Do not run with --spend without the user's approval."
+}

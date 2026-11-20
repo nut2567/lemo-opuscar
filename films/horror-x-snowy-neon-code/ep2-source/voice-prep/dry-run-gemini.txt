@@ -1,0 +1,3 @@
+12 clips, 0 already generated, 12 to request
+gemini: unavailable (set quota.gemini_daily_requests from the AI Studio rate-limit page)
+ERROR: No single provider can voice all of "narrator" (gemini 12 requests (has None)). Nothing was generated; a part is never split between providers.
