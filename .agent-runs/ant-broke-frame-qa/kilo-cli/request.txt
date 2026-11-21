@@ -1,0 +1,2 @@
+rules-version: 2
+Read-only. Review render.py in films/ant-broke-highlights only for issues in output reliability and scene legibility. PNG files are in the same folder; inspect if supported. No changes or delegation. Route already selected. Report concrete findings and evidence.

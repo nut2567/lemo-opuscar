@@ -1,0 +1,85 @@
+{
+  "run": "run_eb6011a9b7c0",
+  "scope": [
+    [
+      "ant-broke",
+      "film"
+    ],
+    [
+      "quiz-3sec-ep25",
+      "quiz"
+    ],
+    [
+      "quiz-3sec-ep26",
+      "quiz"
+    ],
+    [
+      "factory-balcony",
+      "update"
+    ],
+    [
+      "nok-krathong",
+      "update"
+    ],
+    [
+      "crab-puu-puu",
+      "draft"
+    ],
+    [
+      "goat-scapegoat",
+      "draft"
+    ],
+    [
+      "lemo-ant-broke-empty-winter-2d",
+      "film"
+    ],
+    [
+      "hedgehog-comment",
+      "draft"
+    ],
+    [
+      "hippo-busted",
+      "draft"
+    ],
+    [
+      "peacock-busy",
+      "draft"
+    ],
+    [
+      "polar-bear-debt",
+      "draft"
+    ],
+    [
+      "seahorse-manamder",
+      "draft"
+    ],
+    [
+      "snail-slave",
+      "draft"
+    ],
+    [
+      "turtle-tycoon",
+      "draft"
+    ],
+    [
+      "lemo-ant-broke-empty-winter",
+      "film"
+    ],
+    [
+      "lemo-ant-broke-highlights",
+      "draft"
+    ]
+  ],
+  "base": "901f936",
+  "repo": "E:/AI/Ai-Video",
+  "lemo_base": "286364dd1cc7cb9c7d145d942dda891b2ec6b958",
+  "lemo_repo": "E:/AI/lemo-opuscar",
+  "publication": {
+    "target_ref": "refs/heads/main",
+    "protected_local_and_remote_branches": ["main", "pat"],
+    "pat_aivideo_local_baseline": "b12c3c3ead756ed71128bcd984b76c116707ce6c",
+    "lemo_already_merged_branch": "snowy-neon-leda-3ep",
+    "lemo_already_merged_branch_tip": "d57216aacc333e95895c222a2d57d56c7fe0109a"
+  },
+  "concurrency": 5
+}

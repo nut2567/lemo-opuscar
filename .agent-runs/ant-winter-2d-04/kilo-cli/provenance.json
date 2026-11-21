@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "status": "done",
+  "agent": "kilo-cli",
+  "task_id": "ant-winter-2d-04",
+  "cwd": "E:\\AI\\lemo-opuscar\\.agent-runs\\ant-winter-2d-04\\kilo-cli",
+  "command": [
+    "kilo",
+    "run",
+    "Read request.txt and return only this bounded task; route already selected; do not delegate.",
+    "--agent",
+    "plan",
+    "--model",
+    "kilo/kilo-auto/free",
+    "--format",
+    "json",
+    "-f",
+    "E:\\AI\\lemo-opuscar\\.agent-runs\\ant-winter-2d-04\\kilo-cli\\request.txt"
+  ],
+  "model": "kilo/kilo-auto/free",
+  "attempts": [
+    {
+      "attempt": 1,
+      "outcome": "success",
+      "returncode": 0,
+      "elapsed_seconds": 31.86,
+      "command": [
+        "C:\\Users\\Nczpa\\AppData\\Local\\Programs\\nodejs\\node.exe",
+        "C:\\Users\\Nczpa\\AppData\\Local\\Programs\\nodejs\\node_modules\\@kilocode\\cli\\bin\\kilo",
+        "run",
+        "Read request.txt and return only this bounded task; route already selected; do not delegate.",
+        "--agent",
+        "plan",
+        "--model",
+        "kilo/kilo-auto/free",
+        "--format",
+        "json",
+        "-f",
+        "E:\\AI\\lemo-opuscar\\.agent-runs\\ant-winter-2d-04\\kilo-cli\\request.txt"
+      ],
+      "request_attempted": true,
+      "stdout_file": "raw-response-1.txt",
+      "stderr_file": "raw-stderr-1.txt",
+      "reported_model": {
+        "providerID": "kilo",
+        "modelID": "nvidia/nemotron-3-ultra-550b-a55b:free"
+      },
+      "reported_cost": 0
+    }
+  ],
+  "access": "free",
+  "mode": "plan",
+  "dispatch_id": "dfc07909ab6947a4aec2045c7a8aa85b",
+  "finished_at": "2026-11-21T18:02:53.448672+00:00",
+  "timeout": 65.0,
+  "cli_version": null,
+  "cost": "unknown (free configuration only)",
+  "tokens": null,
+  "tool_calls": "See raw provider response; no recursive delegation requested"
+}

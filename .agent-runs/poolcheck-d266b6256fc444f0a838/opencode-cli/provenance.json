@@ -1,0 +1,56 @@
+{
+  "ok": false,
+  "status": "failed",
+  "agent": "opencode-cli",
+  "task_id": "poolcheck-d266b6256fc444f0a838",
+  "cwd": "E:\\AI\\lemo-opuscar\\.agent-runs\\poolcheck-d266b6256fc444f0a838\\opencode-cli",
+  "command": [
+    "opencode",
+    "run",
+    "Read the attached request.txt and return only this bounded task; route already selected; do not delegate.",
+    "--agent",
+    "plan",
+    "--model",
+    "opencode/beam-free",
+    "--format",
+    "json",
+    "-f",
+    "E:\\AI\\lemo-opuscar\\.agent-runs\\poolcheck-d266b6256fc444f0a838\\opencode-cli\\request.txt"
+  ],
+  "model": "opencode/beam-free",
+  "attempts": [
+    {
+      "attempt": 1,
+      "outcome": "failed",
+      "returncode": 1,
+      "elapsed_seconds": 2.343,
+      "command": [
+        "C:\\Users\\Nczpa\\AppData\\Local\\Programs\\nodejs\\node.exe",
+        "C:\\Users\\Nczpa\\AppData\\Local\\Programs\\nodejs\\node_modules\\@opencode\\cli\\bin\\opencode.exe",
+        "run",
+        "Read the attached request.txt and return only this bounded task; route already selected; do not delegate.",
+        "--agent",
+        "plan",
+        "--model",
+        "opencode/beam-free",
+        "--format",
+        "json",
+        "-f",
+        "E:\\AI\\lemo-opuscar\\.agent-runs\\poolcheck-d266b6256fc444f0a838\\opencode-cli\\request.txt"
+      ],
+      "request_attempted": true,
+      "stdout_file": "raw-response-1.txt",
+      "stderr_file": "raw-stderr-1.txt"
+    }
+  ],
+  "access": "free",
+  "mode": "plan",
+  "dispatch_id": "d240e6eab1384342a5c87f6b1b6b8b0e",
+  "error": "CLI attempt ended with failed",
+  "finished_at": "2026-11-21T13:44:33.534657+00:00",
+  "timeout": 120,
+  "cli_version": null,
+  "cost": "unknown (free configuration only)",
+  "tokens": null,
+  "tool_calls": "See raw provider response; no recursive delegation requested"
+}

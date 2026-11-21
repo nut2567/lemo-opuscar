@@ -1,0 +1,2 @@
+rules-version: 2
+Read-only, no edits/delegation/generation. Assess which visual gag reads best in a one-second glance and suggest one concrete clarity change per frame. Allowed inputs: E:/AI/lemo-opuscar/films/ant-broke-highlights/preview.jpg and TREATMENT.md, E:/AI/Ai-Video/episodes/ant-broke/story.json. If image access fails, say so and review the scene descriptions. Report under 150 words. Route already selected, do not ask again. No paid calls or fallback.

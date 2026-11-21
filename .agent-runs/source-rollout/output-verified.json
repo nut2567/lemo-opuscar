@@ -1,0 +1,10 @@
+{
+    "episode":  "ant-broke",
+    "output":  "E:/AI/Ai-Video/output/ant-broke.mp4",
+    "sha256":  "2B2B65494C08A8A0F62F369EA6F711F6D9F159FF8CB2E968AEBA80C7CFC39DB2",
+    "duration":  127.5,
+    "video_frames":  3825,
+    "video_codec":  "h264",
+    "audio_codec":  "aac",
+    "git_ignored":  true
+}

@@ -1,0 +1,1 @@
+{"ok":true,"result":{"dispatchId":"ctx_ec7afa828f93","taskId":"task_27c5d831eeef","runId":"run_e34592240416","state":"ready","agent":"grok","mode":"structured","terminal":"structworker_d21ee076-4659-4293-925f-31fac3c41a9d","workspace":"b5103d8a-6297-4f14-a209-66e38ea86f5e::E:/AI/lemo-opuscar","next":"Orca wakes you when workers report; end your turn when you're done."}}
