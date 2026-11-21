@@ -1,0 +1,7 @@
+# Regenerable stills and future video outputs stay out of git
+01-clay-checkout.png
+02-parcel-panic.png
+03-empty-winter.png
+preview.jpg
+out/
+*.mp4
