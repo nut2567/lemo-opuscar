@@ -1,0 +1,17 @@
+{
+  "provider": "elevenlabs",
+  "script_file": "E:\\AI\\lemo-opuscar\\films\\ant-broke-empty-winter-2d\\liam\\foley\\effects\\step.txt",
+  "script_sha256": "82ba4408de7cc17979dcf69ac8d4db87c5bcfabb2155456b73075b1b6cd4319a",
+  "audio_file": "E:\\AI\\lemo-opuscar\\films\\ant-broke-empty-winter-2d\\liam\\foley\\effects\\step.mp3",
+  "generated_at_utc": "2026-11-21T19:10:53.977007+00:00",
+  "voice_selection_status": "generated_not_auditorily_verified",
+  "duration_seconds": null,
+  "caption_alignment": "not_performed",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "prompt_influence": 0.55,
+  "loop": false,
+  "requested_duration_seconds": 0.8,
+  "bytes": 13835,
+  "sha256": "bb999ea0486ce501f2746a50b386deae5bee38f07ff6b35731617c4f8acb07f4"
+}
