@@ -24,10 +24,14 @@ SAMPLE_LIBS = ('freepats', 'karoryfer', 'salamander', 'vcsl', 'vsco2ce')
 
 # Packs downloaded by tools/fetch.sh (paths relative to the repo root). Every instruments pack carries index.json.
 PACKS = {
-    'voice': ['core/tts/kokoro-v1.0.onnx', 'core/tts/voices-v1.0.bin'],
+    'voice': ['core/tts/kokoro-v1.0.onnx', 'core/tts/voices-v1.0.bin', 'core/tts/KOKORO-SOURCES.md',
+              'core/tts/LICENSE-Apache-2.0.txt'],
     'hdri': ['core/assets/polyhaven/lythwood_lounge_2k.hdr', 'core/assets/polyhaven/photo_studio_loft_hall_2k.hdr'],
     **{f'instruments-{lib}': ['core/audio/instruments/index.json', f'core/audio/instruments/{lib}'] for lib in SAMPLE_LIBS},
 }
+# A pack whose content changes gets a new file name: a clone or plugin install that pins the old sha256 in its
+# tools/assets.json keeps downloading the old file, which stays on the release.
+FILES = {'voice': 'voice-2.tar'}
 STYLE_FIELDS = ('slug', 'en', 'cn', 'category_en', 'category_cn', 'film', 'line', 'line_cn', 'frame_sec')
 SIGN_OFF = re.compile(r'(?i:lemolab)|Opus 5\.5|Sign-off')
 # a home folder may be `Alice Smith` (up to three words, none ending in a dot, so a sentence isn't swallowed); /root/ counts when a path follows it
@@ -244,7 +248,7 @@ def hygiene(files, slugs, warn):
 
 # The README's pictures (styleboard/art/readme.mjs draws them into docs/readme/): every picture a README names is there,
 # docs/readme/ holds nothing no README names, and opening a README stays light. GitHub loads every picture of a README at once.
-README_BUDGET = 4_000_000     # bytes a reader downloads to open README.md or README.zh-CN.md, in GitHub's light or dark theme
+README_BUDGET = 4_500_000     # bytes a reader downloads to open README.md or README.zh-CN.md (both themes' pictures load: ≈ 4.05 MB on 2026-11-17)
 README_OUTSIDE = 100_000      # the badges, Trendshift and star-history pictures, counted as a fixed amount (≈ 70 KB on 2026-11-07)
 PICTURE = re.compile(r'<picture>(.*?)</picture>', re.S)
 THEMED = re.compile(r'<source media="\(prefers-color-scheme: (dark|light)\)" srcset="([^"]+)"')
@@ -260,11 +264,12 @@ def readme_pictures(bad):
         local = lambda u: not re.match(r'[a-z]+:', u)
         named |= {u for u in IMG_SRC.findall(t) + [u for _, u in THEMED.findall(t)] if local(u)}
         for theme in ('light', 'dark'):
-            got = []   # what a reader in this theme downloads: the source a <picture> picks, else its <img>; and every plain <img>
+            got = []   # what a reader in this theme downloads: the source a <picture> picks, else its <img>; and every plain <img>, the other
+                       # theme's included (GitHub hides a link ending in #gh-dark-mode-only or #gh-light-mode-only, but its picture still loads)
             rest = PICTURE.sub(lambda m: got.append(next((u for th, u in THEMED.findall(m.group(1)) if th == theme), None)
                                                     or IMG_SRC.search(m.group(1)).group(1)) or '', t)
             got += IMG_SRC.findall(rest)
-            size = README_OUTSIDE + sum(os.path.getsize(os.path.join(ROOT, u)) for u in got if local(u) and os.path.isfile(os.path.join(ROOT, u)))
+            size = README_OUTSIDE + sum(os.path.getsize(os.path.join(ROOT, u)) for u in set(got) if local(u) and os.path.isfile(os.path.join(ROOT, u)))
             notes.append(f'{fn} {theme} {size / 1e6:.2f} MB')
             if size > README_BUDGET: bad.append(f'{fn} weighs {size / 1e6:.2f} MB to open in the {theme} theme (budget {README_BUDGET / 1e6:.0f} MB): lighter pictures in styleboard/art/readme.mjs')
     for u in sorted(named):
@@ -313,12 +318,18 @@ def sha(p):
     return h.hexdigest()
 
 
-def tar(name, paths):
+def tar(name, paths, anonymous=False):
+    """anonymous: no owner names or ids in the headers. Only for packs with a new file name (FILES): rebuilding a
+    published pack this way would change its sha256 and break the clones that pin it."""
+    def keep(i):
+        if i.name.endswith('.DS_Store') or '__pycache__' in i.name: return None
+        if anonymous: i.uid = i.gid = 0; i.uname = i.gname = ''
+        return i
     os.makedirs(OUT, exist_ok=True)
     dst = os.path.join(OUT, name)
     with tarfile.open(dst + '.part', 'w') as t:
         for p in paths:
-            t.add(os.path.join(ROOT, p), arcname=p, filter=lambda i: None if i.name.endswith('.DS_Store') or '__pycache__' in i.name else i)
+            t.add(os.path.join(ROOT, p), arcname=p, filter=keep)
     os.replace(dst + '.part', dst)
     return dst
 
@@ -330,9 +341,10 @@ def pack():
             if name in old: man[name] = old[name]; print(f'  ! {name}: its files are not here, keeping the published entry')
             else: print(f'  ! {name}: its files are not here, so it is not in the manifest')
             continue
-        dst = tar(f'{name}.tar', paths)
-        man[name] = dict(file=f'{name}.tar', size=os.path.getsize(dst), sha256=sha(dst))
-        print(f'  {name}.tar  {man[name]["size"] / 1e6:.0f} MB')
+        fn = FILES.get(name, f'{name}.tar')
+        dst = tar(fn, paths, anonymous=name in FILES)
+        man[name] = dict(file=fn, size=os.path.getsize(dst), sha256=sha(dst))
+        print(f'  {fn}  {man[name]["size"] / 1e6:.0f} MB')
     json.dump(dict(repo=REPO, tag='assets', packs=man), open(MANIFEST, 'w'), indent=1)
     print(f'→ {os.path.relpath(MANIFEST, ROOT)}')
 
