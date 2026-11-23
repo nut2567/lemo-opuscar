@@ -1,7 +1,0 @@
-{
-  "taskId": "task_e25ece30e4bc",
-  "dispatchId": null,
-  "status": "pending",
-  "ledgerReceipt": "20261116-173049-7f05a1",
-  "note": "Orca task queued; dependencies delay start."
-}

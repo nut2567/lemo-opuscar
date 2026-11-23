@@ -1,1 +1,0 @@
-AGY added capture0 and60-1/30 using existing capture/cleanup, syntax check passed. Full browser QA remains pending integrated visual/runtime fixes.

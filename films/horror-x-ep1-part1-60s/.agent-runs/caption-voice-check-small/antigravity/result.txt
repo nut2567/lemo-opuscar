@@ -1,1 +1,0 @@
-AGY delivered33-line exported-captionAt integration test; actual RED21/24 reveals spoken-text mismatches and provisional timing crossing actual scene bounds. Expected RED deliverable, caption owner must correct production; no edits outside test.

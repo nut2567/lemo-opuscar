@@ -1,1 +1,0 @@
-AGY saved diagnostic helper/results then actual individual quota0017eb72-9b74-4fbc-ac85-29dbc6f7a29a prevented native completion; stopped confirmed. Valid evidence: same DOM,scene12 PNG differs2 pixels by1/255. Scene08 source changed across sessions, so cross-session inference rejected. Lead integrates locally, no paid fallback.

@@ -1,1 +1,0 @@
-Grok computed actual SHA256 of five original source files;5/5 match original manifest. Output qa/source-preservation-check.json, original files unmodified.

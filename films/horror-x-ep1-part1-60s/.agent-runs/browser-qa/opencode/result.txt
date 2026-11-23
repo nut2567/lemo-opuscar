@@ -1,1 +1,0 @@
-OpenCode delivered qa-render.mjs; syntax passes, full browser phase intentionally pending concurrent modules. Captures all12 scene mids/cut boundaries and reverse-order hash repeat checks.

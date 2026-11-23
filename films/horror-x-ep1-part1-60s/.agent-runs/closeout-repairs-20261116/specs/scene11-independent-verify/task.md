@@ -1,1 +1,0 @@
-After dependency scene11-solid-fix completes, independently verify the final films/horror-x-ep1-part1-60s/scenes/scene11.js opacity and story-fact fixes, deterministic SVG output, and no counter/character visibility regression at five representative local times. Read-only; do not touch scene11.js. Write only reviews/scene11-fix-independent-check.md. No delegation.

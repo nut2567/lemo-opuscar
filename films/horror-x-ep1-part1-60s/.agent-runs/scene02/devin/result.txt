@@ -1,1 +1,0 @@
-Devin delivered walking entry scene02 with tray, camera/parallax and step shadow; syntax checked; actor dependency pending. Lead will check cool palette and hands/feet in actual frames.

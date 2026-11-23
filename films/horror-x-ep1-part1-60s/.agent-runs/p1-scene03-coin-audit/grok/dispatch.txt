@@ -1,8 +1,0 @@
-{
-  "dispatchId": "ctx_a69d7b28507d",
-  "taskId": "task_5f5eba6459bf",
-  "agent": "grok",
-  "status": "succeeded",
-  "ledgerReceipt": "20261116-172250-8e5e3c",
-  "report": "reviews/grok-scene03-coin-audit.md"
-}

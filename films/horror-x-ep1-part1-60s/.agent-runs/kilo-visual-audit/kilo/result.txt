@@ -1,1 +1,0 @@
-Kilo delivered read-only visual audit;2 claimed new blockers in scenes08/09 plus known pending fixes. Lead will verify claims against source contracts and actual frames before accepting changes.

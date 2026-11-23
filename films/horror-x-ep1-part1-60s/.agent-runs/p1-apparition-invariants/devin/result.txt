@@ -1,1 +1,0 @@
-No customer face/body/footsteps violations; scene11 cloth fade and unsupported timestamps flagged.

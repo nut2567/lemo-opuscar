@@ -1,1 +1,0 @@
-Tiny read-only check of CREDITS.md. Verify the linked fonts/OFL.txt exists and that the font/story/voice/music-SFX attributions are supported by current project files. Report only concrete mismatches or PASS with paths; do not edit credits or other files. Write only reviews/antigravity-credits-check.md. Keep it under 150 words. No delegation.

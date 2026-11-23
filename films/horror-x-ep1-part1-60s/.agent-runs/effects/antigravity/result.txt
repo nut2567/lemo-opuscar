@@ -1,1 +1,0 @@
-Delivered effects.js; worker reports deterministic animated atmosphere and no caption-area overlap; coordinator source check pending; extra tests/test-effects.mjs observed outside declared output and preserved for review.

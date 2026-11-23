@@ -1,8 +1,0 @@
-{
-  "ok": false,
-  "status": "blocked",
-  "agent": "kirocrew-cli",
-  "access": "free",
-  "route": "direct",
-  "error": "Task evidence already exists; choose a new task id"
-}

@@ -1,1 +1,0 @@
-After dependency task_16e031bc9a71 completes, read-only verify final scenes/scene12.js against the source invariant, timeline window, Nun/counter geometry and foot-contact behavior. Render inspect representative times from that actual scene only; do not modify scene12.js or any shared code. Write report and any screenshots only under qa/scene12-final-check/. No delegation.

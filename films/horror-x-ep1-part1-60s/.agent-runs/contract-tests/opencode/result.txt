@@ -1,1 +1,0 @@
-OpenCode wrote18 behavioral contract cases; syntax passes; initial missing imports/timelines expected RED; rerun after dependencies land.
